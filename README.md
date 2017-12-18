@@ -1,2 +1,2 @@
-# traction
+# tractions
 Complete your vacation
