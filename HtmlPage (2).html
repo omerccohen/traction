@@ -1,0 +1,379 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Raleway:400,500,600,700);
+    @import url('https://fonts.googleapis.com/css?family=Lato');
+
+    main {
+        background-color: white;
+        opacity: 0.9;
+        margin-top: 65px;
+        margin-left: 290px;
+        margin-right: 290px;
+        -webkit-border-radius: 5px 5px;
+    }
+
+    body {
+        background-image: url('http://indiasmack.com/wp-content/uploads/2017/06/best-hiking-trails-canada.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-origin: content-box;
+        background-attachment: fixed;
+        font: 400 0.9em 'Raleway', sans-serif;
+    }
+
+    h2 {
+        text-align: left;
+    }
+
+    button {
+        font: 400 0.9em 'Raleway', sans-serif;
+        font-size: 26px;
+        background-color: #008D30;
+        color: white;
+        margin-bottom: 100px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        display: inline-block;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .container {
+        display: block;
+        position: relative;
+        margin: 40px auto;
+        height: auto;
+        width: 1000px;
+        padding: 20px;
+    }
+
+        .container ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+        }
+
+    ul li {
+        color: #AAAAAA;
+        display: block;
+        position: relative;
+        float: left;
+        width: 100%;
+        height: 100px;
+        border-bottom: 1px solid #333;
+    }
+
+        ul li input[type=radio] {
+            position: absolute;
+            visibility: hidden;
+        }
+
+        ul li label {
+            display: block;
+            position: relative;
+            font-weight: 300;
+            font-size: 1.35em;
+            padding: 25px 25px 25px 80px;
+            margin: 10px auto;
+            height: 30px;
+            z-index: 9;
+            cursor: pointer;
+            -webkit-transition: all 0.25s linear;
+        }
+
+        ul li:hover label {
+            color: #008D30;
+        }
+
+        ul li .check {
+            display: block;
+            position: absolute;
+            border: 5px solid #AAAAAA;
+            border-radius: 100%;
+            height: 25px;
+            width: 25px;
+            top: 30px;
+            left: 20px;
+            z-index: 5;
+            transition: border .25s linear;
+            -webkit-transition: border .25s linear;
+        }
+
+        ul li:hover .check {
+            border: 5px solid #008D30;
+        }
+
+        ul li .check::before {
+            display: block;
+            position: absolute;
+            content: '';
+            border-radius: 100%;
+            height: 15px;
+            width: 15px;
+            top: 5px;
+            left: 5px;
+            margin: auto;
+            transition: background 0.25s linear;
+            -webkit-transition: background 0.25s linear;
+        }
+
+    input[type=radio]:checked ~ .check {
+        border: 5px solid #008D30;
+    }
+
+        input[type=radio]:checked ~ .check::before {
+            background: #008D30;
+        }
+
+    input[type=radio]:checked ~ label {
+        color: #008D30;
+    }
+</style>
+<head runat="server">
+    <title>Tractions-complete your vacation</title>
+</head>
+<body>
+
+    <form action="Form.aspx" method="post">
+        <main>
+            <h1 style="text-align:left; font-size:300%; margin-left:50px;">Answer the following questions in order to get the best attractions for you:</h1>
+            <div class="container">
+                <h2 style="clear:both; text-align:left;">How much money do you want to spend every day?</h2>
+                <ul>
+                    <li>
+                        <input id='f-option' type="radio" name="budget" value="Alot" />
+                        <label for="f-option">up to 75$</label>
+                        <div class="check"></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="s-option" name="budget" value="Yes">
+                        <label for="s-option">76$ - 150$</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="t-option" name="budget" value="Maybe">
+                        <label for="t-option">151$ - 225$</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="a-option" name="budget" value="No">
+                        <label for="a-option">unlimited</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="container">
+                <h2 style="clear:both; text-align:left;">What about shopping?</h2>
+                <ul>
+                    <li>
+                        <input id='f1-option' type="radio" name="shopping" value="Alot" />
+                        <label for="f1-option">Yesssss, and a *lot* of it!</label>
+                        <div class="check"></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="s1-option" name="shopping" value="Yes">
+                        <label for="s1-option">Sounds cool</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="t1-option" name="shopping" value="Maybe">
+                        <label for="t1-option">a little bit</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="a1-option" name="shopping" value="No">
+                        <label for="a1-option">Rather kill myself..</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="container">
+                <h2 style="clear:both; text-align:left;">is a sport game optional?</h2>
+                <ul>
+                    <li>
+                        <input id='f2-option' type="radio" name="sport" value="Alot" />
+                        <label for="f2-option">Not optional, Must</label>
+                        <div class="check"></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="s2-option" name="sport" value="Yes">
+                        <label for="s2-option">It would be nice</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="t2-option" name="sport" value="Maybe">
+                        <label for="t2-option">Maybe</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="a2-option" name="sport" value="No">
+                        <label for="a2-option">Don't you dare</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="container">
+                <h2 style="clear:both; text-align:left;">And what about historical sites?</h2>
+                <ul>
+                    <li>
+                        <input id='f3-option' type="radio" name="history" value="Alot" />
+                        <label for="f3-option">The reason to my travel!</label>
+                        <div class="check"></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="s3-option" name="history" value="Yes">
+                        <label for="s3-option">pretty nice</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="t3-option" name="history" value="Maybe">
+                        <label for="t3-option">the maximum is one</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="a3-option" name="history" value="No">
+                        <label for="a3-option">makes me fall asleep faster than this boring hackathon..</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="container">
+                <h2 style="clear:both; text-align:left;">Museums for the intellectuals?</h2>
+                <ul>
+                    <li>
+                        <input id='f4-option' type="radio" name="museums" value="Alot" />
+                        <label for="f4-option">Of course dear!</label>
+                        <div class="check"></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="s4-option" name="museums" value="Yes">
+                        <label for="s4-option">I'd like to try </label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="t4-option" name="museums" value="Maybe">
+                        <label for="t4-option">Only the best of them</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="a4-option" name="museums" value="No">
+                        <label for="a4-option">Lol what? isn't Raphael that green ass ninja tutle?</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="container">
+                <h2 style="clear:both; text-align:left;">Nature lover?</h2>
+                <ul>
+                    <li>
+                        <input id='f5-option' type="radio" name="nature" value="Alot" />
+                        <label for="f5-option">hugging trees every wednesdey</label>
+                        <div class="check"></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="s5-option" name="nature" value="Yes">
+                        <label for="s5-option">It's nice </label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="t5-option" name="nature" value="Maybe">
+                        <label for="t5-option">Only if it's lovely</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="a5-option" name="nature" value="No">
+                        <label for="a5-option">No</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="container">
+                <h2 style="clear:both; text-align:left;">Restaurants?</h2>
+                <ul>
+                    <li>
+                        <input id='f6-option' type="radio" name="food" value="Alot" />
+                        <label for="f6-option">only outside</label>
+                        <div class="check"></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="s6-option" name="food" value="Yes">
+                        <label for="s6-option">Yes </label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="t6-option" name="food" value="Maybe">
+                        <label for="t6-option">once in a while</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="a6-option" name="food" value="No">
+                        <label for="a6-option">No</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="container">
+                <h2 style="clear:both; text-align:left;">Partying with the Brits?</h2>
+                <ul>
+                    <li>
+                        <input id='f7-option' type="radio" name="party" value="Alot" />
+                        <label for="f7-option">Every Night, All night</label>
+                        <div class="check"></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="s7-option" name="party" value="Yes">
+                        <label for="s7-option">Clubing is LIT </label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="t7-option" name="party" value="Maybe">
+                        <label for="t7-option">Maybe</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+
+                    <li>
+                        <input type="radio" id="a7-option" name="party" value="No">
+                        <label for="a7-option">Not for me</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+                </ul>
+            </div>
+            <center><button type="submit" style="font-size:34px;">Find the best attractions for me!</button></center>
+        </main>
+
+
+    </form>
+</body>
+</html>
