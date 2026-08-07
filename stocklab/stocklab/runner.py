@@ -50,6 +50,7 @@ def run_walk_forward(
     config: ExperimentConfig | None = None,
     dataset_biases: list[str] | None = None,
     n_prior_trials: int = 0,
+    include_holdout: bool = False,
     verbose: bool = True,
 ) -> ExperimentResult:
     cfg = config or ExperimentConfig()
@@ -69,6 +70,17 @@ def run_walk_forward(
     ).sort_values()
     folds = splitter.split(labeled_dates)
     splitter.audit(folds, labeled_dates)
+
+    hs = cfg.split.holdout_start
+    if hs is not None and not include_holdout:
+        cutoff = pd.Timestamp(hs)
+        n_before = len(folds)
+        folds = [f for f in folds if f.test_dates[-1] < cutoff]
+        if verbose and len(folds) < n_before:
+            print(f"lockbox: {n_before - len(folds)} fold(s) with test >= {hs} "
+                  "excluded from this iteration run (final run uses include_holdout=True)")
+        if not folds:
+            raise ValueError("all folds fall inside the holdout; check holdout_start")
     if verbose:
         print(f"{len(folds)} folds; gap={splitter.gap} trading days (purge+embargo)")
 

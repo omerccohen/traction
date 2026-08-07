@@ -22,18 +22,23 @@ class LabelConfig:
 
 @dataclass(frozen=True)
 class UniverseConfig:
-    min_history: int = 300          # obs needed before a ticker becomes eligible
+    min_history: int = 260          # obs needed before a ticker becomes eligible
     min_price: float = 5.0          # median close below this -> excluded (penny names)
     min_dollar_volume: float = 1e6  # median daily dollar volume floor (liquidity)
 
 
 @dataclass(frozen=True)
 class SplitConfig:
-    min_train_days: int = 550   # ~2.2 years before the first prediction
+    min_train_days: int = 420   # ~1.7 years before the first prediction
     test_span: int = 63         # one quarter per fold, retrain each fold
     embargo: int = 5            # extra buffer beyond the label-overlap purge
     # Purge is computed as label.horizon + label.lag (the label window length);
     # total train/test gap = purge + embargo trading days.
+
+    # Lockbox: iteration runs exclude test folds on/after this date; the final
+    # experiment evaluates them exactly once. Guards against the "one holdout,
+    # many glances" failure (SKEPTIC CHECKLIST #6).
+    holdout_start: str | None = "2017-06-01"
 
 
 @dataclass(frozen=True)

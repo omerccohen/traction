@@ -64,6 +64,8 @@ def main() -> None:
     ap.add_argument("--skip-leakage", action="store_true")
     ap.add_argument("--prior-trials", type=int, default=0,
                     help="configs evaluated before this run (for Sharpe deflation)")
+    ap.add_argument("--include-holdout", action="store_true",
+                    help="FINAL RUN ONLY: also evaluate the locked holdout folds")
     args = ap.parse_args()
 
     names = (
@@ -77,7 +79,8 @@ def main() -> None:
     print(f"models: {list(factories)}")
 
     res = run_walk_forward(panel, factories, cfg, dataset_biases=biases,
-                           n_prior_trials=args.prior_trials)
+                           n_prior_trials=args.prior_trials,
+                           include_holdout=args.include_holdout)
     if not args.skip_leakage:
         panel2, _ = load_bundled()
         res.leakage_results = run_leakage_suite(panel2, cfg)
