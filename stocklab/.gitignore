@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+# keep the compressed bundled dataset; never commit the uncompressed copy
+data_cache/*.csv
+!data_cache/*.csv.gz
+experiments/*/scores_*.csv.gz
