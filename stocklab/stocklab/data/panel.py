@@ -113,45 +113,66 @@ def long_to_panel(df: pd.DataFrame) -> Panel:
     )
 
 
+def eligibility_mask(
+    panel: Panel,
+    min_history: int = 260,
+    min_price: float = 5.0,
+    min_dollar_volume: float = 1e6,
+    liquidity_window: int = 63,
+) -> pd.DataFrame:
+    """POINT-IN-TIME eligibility mask (date x ticker).
+
+    A ticker is in the modeled universe at date t iff, using only information
+    available at t:
+      * it has accumulated >= min_history observations THROUGH t (this count
+        includes t itself — close(t) is in the t information set), and
+      * its trailing `liquidity_window`-day median close  >= min_price, and
+      * its trailing `liquidity_window`-day median dollar volume >= min_dollar_volume,
+      * and it actually has a price at t.
+
+    Why trailing medians and not full-sample medians: a full-sample filter
+    decides 2014 membership with 2017 information — genuine lookahead. The
+    concrete failure (review finding M2): AMD's full-sample median close is
+    $3.85, so a static $5 filter deletes it from the whole sample, including
+    2016-2018 when it traded >$10 and was a top momentum name. Trailing
+    filters admit and evict names as the information arrives, like a live
+    system would. (Penny/illiquid names are still excluded — that is where
+    fake backtest alpha lives — just excluded point-in-time.)
+    """
+    counts = panel.close.notna().cumsum()
+    hist_ok = counts >= min_history
+
+    med_price = panel.close.rolling(liquidity_window, min_periods=liquidity_window // 2).median()
+    med_dv = panel.dollar_volume().rolling(liquidity_window, min_periods=liquidity_window // 2).median()
+    liq_ok = (med_price >= min_price) & (med_dv >= min_dollar_volume)
+
+    return hist_ok & liq_ok & panel.close.notna()
+
+
 def apply_universe_filters(
     panel: Panel,
-    min_history: int = 300,
+    min_history: int = 260,
     min_price: float = 5.0,
     min_dollar_volume: float = 1e6,
 ) -> tuple[Panel, dict]:
-    """Drop tickers that fail basic history/price/liquidity hygiene.
+    """Static data-hygiene pass: drop tickers that are NEVER point-in-time
+    eligible under `eligibility_mask`.
 
-    Fake backtest alpha concentrates in penny and illiquid names whose printed
-    prices cannot actually be traded; we remove them up front and report what
-    was removed instead of failing silently.
+    This is pure column cleanup (memory/speed) — per-date membership is decided
+    solely by the point-in-time `eligibility_mask` downstream, so no date's
+    cross-section is shaped by information from another date. (The earlier
+    version filtered on FULL-SAMPLE medians, which is lookahead — see
+    eligibility_mask docstring and docs/SKEPTIC_LOG.md.)
     """
-    obs = panel.close.notna().sum()
-    med_price = panel.close.median()
-    med_dv = panel.dollar_volume().median()
-
-    ok = (obs >= min_history) & (med_price >= min_price) & (med_dv >= min_dollar_volume)
-    kept = list(panel.tickers[ok])
-    dropped = {
-        "short_history": sorted(panel.tickers[obs < min_history]),
-        "low_price": sorted(panel.tickers[med_price < min_price]),
-        "illiquid": sorted(panel.tickers[med_dv < min_dollar_volume]),
-    }
+    mask = eligibility_mask(panel, min_history, min_price, min_dollar_volume)
+    ever = mask.any()
+    kept = list(panel.tickers[ever])
     report = {
         "n_before": len(panel.tickers),
         "n_after": len(kept),
-        "dropped": {k: v for k, v in dropped.items() if v},
+        "dropped_never_eligible": sorted(panel.tickers[~ever]),
     }
     return panel.select(kept), report
-
-
-def eligibility_mask(panel: Panel, min_history: int = 300) -> pd.DataFrame:
-    """Point-in-time eligibility: True once a ticker has `min_history` past obs.
-
-    Prevents a subtle bias where a ticker's early, thin history quietly enters
-    the cross-section on day one.
-    """
-    counts = panel.close.notna().cumsum()
-    return (counts >= min_history) & panel.close.notna()
 
 
 def infer_trading_grid(dates: pd.Series) -> pd.DatetimeIndex:

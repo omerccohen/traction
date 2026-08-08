@@ -43,6 +43,11 @@ def date_train_val_split(
         n_val = max(n // 5, 10)
     val = train_dates[-n_val:]
     tr = train_dates[: n - n_val - purge]
+    if len(tr) < 30:
+        raise ValueError(
+            f"train/val split degenerate: {n} dates -> {len(tr)} train after "
+            f"val={n_val} + purge={purge}"
+        )
     return tr, val
 
 

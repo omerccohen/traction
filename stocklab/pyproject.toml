@@ -9,10 +9,14 @@ description = "An honest machine-learning stock ranking laboratory (research/edu
 requires-python = ">=3.10"
 dependencies = [
     "numpy>=1.26",
-    "pandas>=2.1",
+    # pandas >= 3.0 pinned deliberately: pct_change() padding semantics changed
+    # in 3.0; on 2.x, gaps fabricate 0.0 returns that quietly deflate
+    # volatility features for weeks after each gap (review finding m1)
+    "pandas>=3.0",
     "scikit-learn>=1.4",
     "lightgbm>=4.0",
     "scipy>=1.11",
+    "tabulate>=0.9",
 ]
 
 [project.optional-dependencies]
@@ -25,4 +29,10 @@ include = ["stocklab*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
-filterwarnings = ["ignore::FutureWarning", "ignore::DeprecationWarning"]
+# no blanket FutureWarning suppression: pandas behavior-change warnings are
+# exactly the ones this codebase must hear (review finding m1)
+filterwarnings = [
+    "ignore::DeprecationWarning:tensorflow.*",
+    "ignore::DeprecationWarning:google.protobuf.*",
+    "ignore:.*eval_set.*:UserWarning",
+]

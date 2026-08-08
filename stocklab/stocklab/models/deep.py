@@ -118,8 +118,10 @@ class _SequenceModelBase:
         tr_dates, val_dates = date_train_val_split(train_dates, purge=ds.config.purge)
         tr = self.store.batch_for(ds, pd.DatetimeIndex(tr_dates), with_labels=True,
                                   stride=self.train_stride)
+        # val at stride 1: it is small, and halving the early-stopping evidence
+        # saved nothing (review finding n5)
         va = self.store.batch_for(ds, pd.DatetimeIndex(val_dates), with_labels=True,
-                                  stride=self.train_stride)
+                                  stride=1)
         if len(tr.X) < 1000 or len(va.X) < 200:
             raise RuntimeError(f"{self.name}: not enough sequence samples to train")
         self._models = []

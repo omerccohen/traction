@@ -56,10 +56,13 @@ class SkepticReport:
         }
 
 
-# Tripwire thresholds from the literature (docs/RESEARCH_LITERATURE.md §6):
-IC_SUSPECT = 0.10          # sustained daily rank IC above this = leakage until proven otherwise
-IC_IMPLAUSIBLE = 0.20
-SHARPE_SUSPECT = 2.5       # net, daily cross-sectional equity strategy
+# Tripwire thresholds from the literature (docs/RESEARCH_LITERATURE.md §6),
+# calibrated at a 1-DAY label horizon. Cross-sectional IC scales roughly with
+# sqrt(horizon), so k-day-label ICs are compared against sqrt(k)-scaled lines
+# (unscaled lines cried leakage on honest 5d signals — review finding F4).
+IC_SUSPECT_1D = 0.10       # sustained 1d rank IC above this = leakage until proven otherwise
+IC_IMPLAUSIBLE_1D = 0.20
+SHARPE_SUSPECT = 2.5       # net, annualized, daily cross-sectional equity strategy
 SHARPE_IMPLAUSIBLE = 4.0
 
 
@@ -73,6 +76,7 @@ def review_signal(
     dsr: float | None = None,
     first_half_ic: float | None = None,
     second_half_ic: float | None = None,
+    horizon: int = 5,
 ) -> SkepticReport:
     """sig: SignalReport.to_dict(); bt: BacktestResult.to_dict() (optional)."""
     r = SkepticReport(model=model)
@@ -80,13 +84,25 @@ def review_signal(
     t = sig.get("ic_tstat_nw", np.nan)
 
     # --- leakage tripwires ---------------------------------------------------
+    # Prefer the 1-day-horizon IC (directly comparable to the literature's
+    # reference ranges) when the tear sheet computed it; otherwise scale the
+    # 1d thresholds by sqrt(horizon).
+    ic_1d = (sig.get("ic_by_horizon") or {}).get(1)
+    if ic_1d is not None and np.isfinite(ic_1d):
+        if abs(ic_1d) >= IC_IMPLAUSIBLE_1D:
+            r.add("FATAL", "too-good IC", f"1d-horizon rank IC {ic_1d:.3f} — this magnitude does "
+                  "not exist in honest daily equity signals; audit for leakage before anything else.")
+        elif abs(ic_1d) >= IC_SUSPECT_1D:
+            r.add("WARN", "high IC", f"1d-horizon rank IC {ic_1d:.3f} exceeds the 0.10 "
+                  "plausibility line (good published 1d signals: 0.02-0.06); run the leakage checklist.")
     if np.isfinite(ic):
-        if abs(ic) >= IC_IMPLAUSIBLE:
-            r.add("FATAL", "too-good IC", f"mean rank IC {ic:.3f} — this magnitude does not "
-                  "exist in honest daily equity signals; audit for leakage before anything else.")
-        elif abs(ic) >= IC_SUSPECT:
-            r.add("WARN", "high IC", f"mean rank IC {ic:.3f} exceeds the 0.10 plausibility line "
-                  "(good published signals: 0.02-0.06); run the leakage checklist.")
+        scale = np.sqrt(max(horizon, 1))
+        if abs(ic) >= IC_IMPLAUSIBLE_1D * scale:
+            r.add("FATAL", "too-good IC", f"mean rank IC {ic:.3f} at {horizon}d horizon exceeds "
+                  f"{IC_IMPLAUSIBLE_1D * scale:.2f} — audit for leakage before anything else.")
+        elif abs(ic) >= IC_SUSPECT_1D * scale:
+            r.add("WARN", "high IC", f"mean rank IC {ic:.3f} at {horizon}d horizon exceeds the "
+                  f"{IC_SUSPECT_1D * scale:.2f} plausibility line; run the leakage checklist.")
 
     # --- significance --------------------------------------------------------
     if np.isfinite(t):
@@ -131,12 +147,19 @@ def review_signal(
         legs = bt.get("leg_stats", {})
         lr = legs.get("long", {}).get("ann_return", np.nan)
         sr = legs.get("short", {}).get("ann_return", np.nan)
-        if np.isfinite(lr) and np.isfinite(sr):
-            total = abs(lr) + abs(sr)
-            if total > 0 and abs(sr) / total > 0.7:
-                r.add("WARN", "short-leg dependence", f"{abs(sr)/total:.0%} of gross alpha comes "
-                      "from the short leg — hard to implement (borrow costs/availability), and on "
-                      "survivor-biased data the short leg is precisely where the bias helps most.")
+        # short leg CONTRIBUTES only when its return is positive (it made
+        # money shorting); |abs| attribution mislabeled money-losing short
+        # legs as the alpha source — review finding F12
+        if np.isfinite(lr) and np.isfinite(sr) and sr > 0:
+            total = max(lr, 0.0) + sr
+            if total > 0 and sr / total > 0.7:
+                r.add("WARN", "short-leg dependence", f"{sr/total:.0%} of positive gross alpha "
+                      "comes from the short leg — hard to implement (borrow costs/availability), "
+                      "and on survivor-biased data the short leg is where the bias helps most.")
+        fe = bt.get("forced_exit_days", 0)
+        if fe > 0:
+            r.add("NOTE", "forced exits", f"{fe} held-name days had missing prices (forced "
+                  "liquidation at last close; delisting returns not modeled).")
         if dsr is not None and np.isfinite(dsr) and dsr < 0.95:
             r.add("WARN", "deflated Sharpe", f"DSR probability {dsr:.2f} < 0.95 given "
                   f"{n_trials} trials — the Sharpe is not distinguishable from the best of "

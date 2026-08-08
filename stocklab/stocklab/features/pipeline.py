@@ -68,9 +68,15 @@ def build_dataset(
 
     stock_feats = compute_stock_features(panel)
     mkt_feats_raw = compute_market_features(panel)
+    eligible = eligibility_mask(
+        panel, cfg.universe.min_history, cfg.universe.min_price,
+        cfg.universe.min_dollar_volume,
+    )
     fwd = forward_returns(panel, cfg.label.horizon, cfg.label.lag)
-    target = make_target(fwd, cfg.label.target)
-    eligible = eligibility_mask(panel, cfg.universe.min_history)
+    # target ranks are computed WITHIN the eligible universe: a not-yet-eligible
+    # listing's extreme week must not perturb eligible names' training target
+    # (review finding m2 — features and labels must describe the same universe)
+    target = make_target(fwd.where(eligible), cfg.label.target)
 
     # --- normalize -----------------------------------------------------------
     ranked: dict[str, pd.DataFrame] = {}

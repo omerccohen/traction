@@ -58,6 +58,11 @@ def deflated_sharpe(
     the probability that the observed Sharpe would exceed the expected maximum
     Sharpe of `n_trials` pure-noise strategies? Values < ~0.95 mean the result
     is indistinguishable from selection bias over noise.
+
+    UNITS: `sr_ann` and `sr_std_across_trials` are both ANNUALIZED; `n_obs` is
+    daily observations; `kurt` is RAW (Pearson) kurtosis, not excess — exactly
+    what perf_stats() emits. Passing a daily-units std silently inflates the
+    probability (documented after review caught the footgun).
     """
     if n_obs < 20 or not np.isfinite(sr_ann):
         return np.nan
@@ -78,19 +83,29 @@ def deflated_sharpe(
     return float(sstats.norm.cdf(z))
 
 
-def _spearman_by_date(scores: pd.Series, fwd: pd.Series, min_names: int = 20) -> pd.Series:
-    """Daily cross-sectional Spearman IC. Index of inputs: (date, ticker)."""
-    df = pd.DataFrame({"s": scores, "f": fwd}).dropna()
-    # rank within date, then Pearson of ranks == Spearman (fast, vectorized)
-    g = df.groupby(level="date")
-    n = g["s"].transform("size")
-    df = df[n >= min_names]
+def _filter_min_names(df: pd.DataFrame, min_names: int) -> pd.DataFrame:
+    """Keep only dates with at least `min_names` scored+labeled rows.
+
+    Applied ONCE to the joined frame so the IC series and the quantile panel
+    are computed on the same universe (they previously diverged — review
+    finding)."""
+    n = df.groupby(level="date")["s"].transform("size")
+    return df[n >= min_names]
+
+
+def _spearman_by_date(df: pd.DataFrame) -> pd.Series:
+    """Daily cross-sectional Spearman IC of a pre-filtered {'s','f'} frame.
+
+    Pearson correlation of within-date mid-ranks == tie-corrected Spearman
+    (verified against scipy.stats.spearmanr in review). Dates with a constant
+    score vector produce NaN and are dropped, counted by the caller."""
     rs = df.groupby(level="date")["s"].rank()
     rf = df.groupby(level="date")["f"].rank()
     d = pd.DataFrame({"rs": rs, "rf": rf})
-    ic = d.groupby(level="date").apply(
-        lambda x: np.corrcoef(x["rs"], x["rf"])[0, 1] if len(x) > 2 else np.nan
-    )
+    with np.errstate(invalid="ignore", divide="ignore"):
+        ic = d.groupby(level="date").apply(
+            lambda x: np.corrcoef(x["rs"], x["rf"])[0, 1]
+        )
     ic.name = "rank_ic"
     return ic.dropna()
 
@@ -104,14 +119,17 @@ class SignalReport:
     name: str
     ic_mean: float
     ic_std: float
-    icir: float                    # ic_mean / ic_std (daily); annualized = icir*sqrt(252)
-    ic_tstat_nw: float             # Newey-West t-stat, lag = horizon
+    icir: float                    # ic_mean / ic_std of the DAILY IC series.
+    # NOTE: do NOT annualize ICIR by sqrt(252) — overlapping k-day labels
+    # autocorrelate the IC series and the naive scaling overstates by ~sqrt(k).
+    ic_tstat_nw: float             # Newey-West t-stat, lags = 2*horizon
     ic_positive_share: float       # fraction of days with IC > 0
     n_days: int
     quantile_returns: dict         # quantile -> mean fwd return (per period)
     monotonicity: float            # Spearman corr between quantile index and mean return
     top_bottom_spread: float       # Q_top - Q_bottom mean fwd return per period
-    rank_autocorr_1d: float        # signal stability -> implied turnover/cost
+    rank_autocorr_1d: float        # per-date cross-sectional rank persistence (turnover proxy)
+    n_dates_dropped: int = 0       # dates excluded (too few names / constant scores)
     ic_by_horizon: dict = field(default_factory=dict)   # horizon -> mean rank IC
     ic_series: pd.Series = field(default=None, repr=False)
 
@@ -129,17 +147,28 @@ def signal_report(
     horizon: int,
     n_quantiles: int = 10,
     extra_horizon_rets: dict | None = None,
+    min_names: int = 20,
 ) -> SignalReport:
     """Full signal tear sheet from out-of-sample scores and realized returns.
 
     `scores` and `fwd_ret` share a (date, ticker) MultiIndex. Rows with NaN in
     either are dropped (live rows have NaN fwd_ret and are excluded here).
+    The min_names date filter applies to the IC series AND the quantile panel,
+    so both describe the same universe. NW lags = 2*horizon: label overlap
+    explains ~horizon-1 days of IC autocorrelation, and persistent signals
+    stretch it further (review finding — lags=horizon understated).
     """
-    df = pd.DataFrame({"s": scores, "f": fwd_ret}).dropna()
-    if df.empty:
+    df_all = pd.DataFrame({"s": scores, "f": fwd_ret}).dropna()
+    if df_all.empty:
         raise ValueError("no overlapping scored+labeled rows")
+    df = _filter_min_names(df_all, min_names)
+    if df.empty:
+        raise ValueError(f"no dates with >= {min_names} names")
 
-    ic = _spearman_by_date(df["s"], df["f"])
+    ic = _spearman_by_date(df)
+    n_dates_total = df.index.get_level_values("date").nunique()
+    n_dates_all = df_all.index.get_level_values("date").nunique()
+    n_dropped = (n_dates_all - n_dates_total) + (n_dates_total - len(ic))
 
     # quantile portfolio means (per-date buckets, then averaged over dates)
     def _q(x: pd.Series) -> pd.Series:
@@ -168,8 +197,9 @@ def signal_report(
     if extra_horizon_rets:
         for h, fr in extra_horizon_rets.items():
             sub = pd.DataFrame({"s": df["s"], "f": fr}).dropna()
+            sub = _filter_min_names(sub, min_names)
             if len(sub) > 100:
-                ic_by_horizon[h] = float(_spearman_by_date(sub["s"], sub["f"]).mean())
+                ic_by_horizon[h] = float(_spearman_by_date(sub).mean())
 
     return SignalReport(
         name=name,

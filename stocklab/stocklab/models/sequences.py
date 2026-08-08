@@ -66,8 +66,16 @@ class SequenceStore:
         use_dates = [d for d in dates if d in self.date_pos and self.date_pos[d] >= self.first_full_date_pos]
         if stride > 1:
             use_dates = use_dates[::stride]
+
+        def _empty() -> SequenceBatch:
+            return SequenceBatch(
+                np.empty((0, self.length, len(self.features)), np.float32),
+                np.empty((0,), np.float32) if with_labels else None,
+                pd.MultiIndex.from_tuples([], names=["date", "ticker"]),
+            )
+
         if not use_dates:
-            return SequenceBatch(np.empty((0, self.length, len(self.features)), np.float32), None, pd.Index([]))
+            return _empty()
 
         y_lookup = ds.y if with_labels else None
         Xs, ys, idx_tuples = [], [], []
@@ -92,7 +100,9 @@ class SequenceStore:
                 ys.append(yd.to_numpy(dtype=np.float32)[cols])
             idx_tuples.extend((d, self.tickers[c]) for c in cols)
 
-        X = np.concatenate(Xs, axis=0).astype(np.float32)
-        y = np.concatenate(ys).astype(np.float32) if with_labels else None
+        if not Xs:
+            return _empty()
+        X = np.concatenate(Xs, axis=0).astype(np.float32, copy=False)
+        y = np.concatenate(ys).astype(np.float32, copy=False) if with_labels else None
         index = pd.MultiIndex.from_tuples(idx_tuples, names=["date", "ticker"])
         return SequenceBatch(X=X, y=y, index=index)

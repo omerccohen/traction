@@ -59,7 +59,11 @@ class WalkForwardSplitter:
         i = 0
         while start < n:
             test = dates[start : start + span]
-            train = dates[: start - gap]
+            # last train index = start - gap, leaving exactly gap-1 dates
+            # strictly between train end and test start — the minimal spacing
+            # that satisfies purge+embargo (off-by-one forfeited a train day
+            # per fold; review finding N3)
+            train = dates[: start - gap + 1]
             if len(train) >= min_train and len(test) > 0:
                 folds.append(Fold(index=i, train_dates=train, test_dates=test))
                 i += 1

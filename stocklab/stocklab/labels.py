@@ -30,13 +30,21 @@ def forward_returns(panel: Panel, horizon: int = 5, lag: int = 1) -> pd.DataFram
 
 
 def cross_sectional_rank(wide: pd.DataFrame) -> pd.DataFrame:
-    """Per-date cross-sectional rank mapped to [-1, 1].
+    """Per-date cross-sectional rank mapped SYMMETRICALLY onto [-1, 1].
 
     Rank transforms use only same-date information — leakage-safe by
     construction — and bound the influence of outliers.
+
+    Uses (2*(r-1)/(n-1)) - 1 with average ranks r in 1..n, so the lowest name
+    maps to -1 and the highest to +1 regardless of n. (The earlier 2*(pct-.5)
+    form had range [-1+2/n, 1] and a +1/n mean that drifted with universe
+    size — review finding m3.) Single-name dates map to 0.
     """
-    r = wide.rank(axis=1, pct=True)
-    return 2.0 * (r - 0.5)
+    r = wide.rank(axis=1)                       # average ranks, NaN preserved
+    n = wide.notna().sum(axis=1)
+    out = (2.0 * (r - 1.0)).div(n - 1.0, axis=0) - 1.0
+    out[n == 1] = 0.0
+    return out
 
 
 def make_target(fwd: pd.DataFrame, kind: str = "rank") -> pd.DataFrame:

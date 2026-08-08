@@ -1,0 +1,17 @@
+{
+  "total_trials": 4,
+  "runs": [
+    {
+      "at": "2026-08-08T00:14:26.354977+00:00",
+      "out": "experiments/v2_baselines_fixed",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "momentum_12_1",
+        "ridge"
+      ],
+      "n_new_trials": 4,
+      "include_holdout": false
+    }
+  ]
+}

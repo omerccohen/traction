@@ -78,10 +78,13 @@ def make_synthetic_market(
 
     prices = 30.0 * np.exp(log_prices) * rng.uniform(0.5, 3.0, n_tickers)
     close = pd.DataFrame(prices, index=dates, columns=tickers)
-    # volume loosely tied to |return| and vol regime, log-normal noise
+    # volume tied to the PREVIOUS day's |return| (rets[t] in this generator's
+    # indexing is the close(t)->close(t+1) move, so using rets[t] would print
+    # tomorrow's move size in today's volume — review finding N2)
+    lagged_abs_ret = np.vstack([np.zeros((1, n_tickers)), np.abs(rets[:-1])])
     base_vol = rng.uniform(2e5, 5e6, n_tickers)
     vol_noise = rng.lognormal(0, 0.4, (n_days, n_tickers))
     volume = pd.DataFrame(
-        base_vol * (1 + 5 * np.abs(rets)) * vol_noise, index=dates, columns=tickers
+        base_vol * (1 + 5 * lagged_abs_ret) * vol_noise, index=dates, columns=tickers
     )
     return Panel(close=close, volume=volume)
