@@ -17,7 +17,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from stocklab.data.loaders import load_bundled
-from stocklab.fieldwatch import field_snapshot, briefing
+from stocklab.fieldwatch import field_snapshot, briefing, build_fields
 
 DC = Path(__file__).resolve().parents[1] / "data_cache"
 
@@ -25,18 +25,16 @@ DC = Path(__file__).resolve().parents[1] / "data_cache"
 def main() -> None:
     panel, _ = load_bundled()
     sectors = pd.read_csv(DC / "sp500_sectors.csv").set_index("Symbol")
-    smap = sectors["GICS Sector"]
-    sub = sectors["GICS Sub-Industry"]
 
-    fields: dict[str, list[str]] = {}
-    for t in panel.tickers:
-        if t in smap.index:
-            fields.setdefault(smap[t], []).append(t)
-    # finer chip field, per the user's interest
-    semis = [t for t in panel.tickers
-             if t in sub.index and "Semiconductor" in str(sub[t])]
-    if len(semis) >= 3:
-        fields["Semiconductors (sub-industry)"] = semis
+    # sectors + every >=5-member sub-industry + an example custom value chain
+    fields = build_fields(
+        panel.tickers, sectors, min_members=5,
+        custom={"Memory/compute chain": [
+            "MU", "INTC", "NVDA", "AMD", "TXN", "AMAT", "LRCX", "KLAC",
+            "WDC", "STX", "HPQ", "AAPL",
+        ]},
+    )
+    print(f"watching {len(fields)} fields")
 
     news = None
     news_csv = DC / "sp500_news.csv"

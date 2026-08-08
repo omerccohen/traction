@@ -26,6 +26,39 @@ import pandas as pd
 from .data.panel import Panel
 
 
+def build_fields(
+    tickers,
+    sectors_df: pd.DataFrame,
+    min_members: int = 5,
+    custom: dict[str, list[str]] | None = None,
+) -> dict[str, list[str]]:
+    """Assemble the watchable field map.
+
+    Three layers, coarse to fine:
+      1. all 11 GICS sectors,
+      2. every GICS sub-industry with >= min_members mapped names
+         (finer 'fields' like Semiconductors, Biotechnology, Regional Banks),
+      3. user-defined custom fields (cross-sector value chains, e.g. a
+         'memory chain' of designers+equipment+OEM buyers) — any list of
+         tickers becomes a watchable field.
+    """
+    smap = sectors_df["GICS Sector"]
+    sub = sectors_df["GICS Sub-Industry"]
+    fields: dict[str, list[str]] = {}
+    mapped = [t for t in tickers if t in smap.index]
+    for t in mapped:
+        fields.setdefault(str(smap[t]), []).append(t)
+    sub_counts = sub.reindex(mapped).value_counts()
+    for si, n in sub_counts.items():
+        if n >= min_members:
+            fields[f"{si} [sub]"] = [t for t in mapped if str(sub.get(t)) == si]
+    for name, members in (custom or {}).items():
+        got = [t for t in members if t in tickers]
+        if len(got) >= 3:
+            fields[f"{name} [custom]"] = got
+    return fields
+
+
 @dataclass
 class FieldSnapshot:
     name: str
