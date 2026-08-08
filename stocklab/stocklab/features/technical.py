@@ -24,6 +24,11 @@ STOCK_FEATURES = [
     "px_sma50", "sma50_sma200", "macd_hist", "boll_z",
     "pct_from_high_252", "rsi_14",
     "log_adv_21", "amihud_21", "vol_trend",
+    # v4 additions — each from a specific published anomaly, not invention:
+    "mom_vol_scaled",    # volatility-scaled momentum (Barroso & Santa-Clara 2015)
+    "mom_consistency",   # fraction of positive months in the 12-1 window
+    "max_ret_21",        # lottery-demand MAX effect (Bali, Cakici, Whitelaw 2011)
+    "beta_63",           # rolling market beta (low-beta anomaly; also enables neutralization)
 ]
 
 MARKET_FEATURES = ["mkt_ret_21", "mkt_vol_21", "mkt_dispersion_21"]
@@ -83,6 +88,26 @@ def compute_stock_features(panel: Panel) -> dict[str, pd.DataFrame]:
     out["log_adv_21"] = np.log(adv21.clip(lower=1.0))
     out["amihud_21"] = (ret1.abs() / dv.clip(lower=1.0)).rolling(21).mean() * 1e9
     out["vol_trend"] = v.rolling(21).mean() / (v.rolling(63).mean() + 1e-12) - 1.0
+
+    # ---- v4 literature additions (all trailing) ----------------------------
+    out["mom_vol_scaled"] = out["mom_12_1"] / (out["vol_63"] + 1e-6)
+
+    # consistency: share of positive non-overlapping 21d blocks in the 12-1
+    # window (12 blocks ending 21d ago) — "steady" vs "one-jump" momentum
+    pos_month = (c.pct_change(21) > 0).astype(float)
+    out["mom_consistency"] = (
+        sum(pos_month.shift(21 * i) for i in range(1, 12)) / 11.0
+    )
+
+    out["max_ret_21"] = ret1.rolling(21).max()
+
+    mkt = ret1.mean(axis=1)
+    mkt_var = mkt.rolling(63).var()
+    # beta_i = cov(r_i, mkt)/var(mkt), rolling 63d, computed without loops:
+    # cov = E[r*m] - E[r]E[m] over the window
+    rm = ret1.mul(mkt, axis=0)
+    cov = rm.rolling(63).mean() - ret1.rolling(63).mean().mul(mkt.rolling(63).mean(), axis=0)
+    out["beta_63"] = cov.div(mkt_var + 1e-12, axis=0)
 
     return out
 

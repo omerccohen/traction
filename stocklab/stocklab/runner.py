@@ -206,6 +206,18 @@ def run_walk_forward(
     elif verbose and len(model_factories) > 2:
         print("ensemble: not formed (needs >=2 candidates with prior-fold evidence)")
 
+    # ----- optional exposure neutralization (per date, same-date info only) --
+    if cfg.backtest.neutralize:
+        from .neutralize import neutralize_scores
+        cols = [c for c in cfg.backtest.neutralize if c in ds.ranked_features.columns]
+        if cols:
+            exposures = ds.ranked_features[cols]
+            res.oos_scores = {
+                n: neutralize_scores(s, exposures) for n, s in res.oos_scores.items()
+            }
+            if verbose:
+                print(f"scores neutralized against: {cols}")
+
     # ----- evaluation --------------------------------------------------------
     extra_h = {h: forward_returns(panel, h, cfg.label.lag).stack() for h in (1, 10, 21)}
     for h in extra_h:

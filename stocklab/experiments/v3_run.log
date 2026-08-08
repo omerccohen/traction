@@ -1,0 +1,12 @@
+models: ['momentum_12_1', 'ridge', 'lightgbm', 'mlp', 'lstm', 'transformer'] | prior trials: 4
+Panel: 1259 dates (2013-02-08 -> 2018-02-07), 500 tickers, 618,377 observations
+FeatureDataset: 484,529 rows, 21 features, 1000 dates (2014-02-20 -> 2018-02-07)
+lockbox: 3 fold(s) with test >= 2017-06-01 excluded from this iteration run (final run uses include_holdout=True)
+6 folds; gap=11 trading days (purge+embargo)
+Fold 0: train 2014-02-20..2015-10-20 (421d) -> test 2015-11-04..2016-02-04 (63d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1786148159.356504   26652 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1786148161.202899   26652 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.

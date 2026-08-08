@@ -47,6 +47,11 @@ class BacktestConfig:
     cost_bps: float = 10.0                     # per side, on traded notional
     cost_grid: tuple = (0.0, 5.0, 10.0, 25.0)  # sensitivity always reported
     ann_factor: int = 252
+    # Residualize every model's scores against these ranked exposures (per
+    # date) before evaluation AND portfolio formation. () = off. A momentum
+    # book carries beta/size tilts; neutralizing makes the spread a bet on
+    # the ranking, not repackaged market exposure.
+    neutralize: tuple = ()
 
 
 @dataclass(frozen=True)
