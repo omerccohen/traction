@@ -149,3 +149,24 @@ code) and attacked the interpretation and the plan. Full transcript summary:
 | R2-7 | Holdout has ~9-17% power to confirm a realistic edge; Jan-2018 is a momentum melt-up ending at the data boundary (Feb-2018 reversal missing). | docs/PREREGISTRATION.md commits the primary config, decision rule, power statement, per-month + drop-Jan-2018 sensitivities, and the exact null/positive wording BEFORE opening the lockbox. |
 | R2-8 | Report presentation: ensemble rows cover fewer days than others; edge "years" are calendar fragments. | Annotations added to the report generator. |
 | R2-9 | mom_consistency comment said 12 blocks; code (correctly) uses 11. | Comment fixed. |
+
+---
+
+## Round 3 — the pre-registered final run (outcome record)
+
+- Lockbox opened ONCE (`experiments/HOLDOUT_OPENED.json`, one entry).
+- Primary (neutralized LightGBM, h=5): holdout IC +0.0230, NW t +1.39,
+  net Sharpe −0.64, break-even 3.8 bps → **fails all three pre-registered
+  bars → NULL**, reported with the pre-committed wording in FINAL_REPORT.md.
+- All pre-committed sensitivities run and clean: no Jan-2018 dependence
+  (+0.0241 without it), no concentration (drop-top-5 raises IC), smooth IC
+  horizon profile (no 1d leakage spike), leakage suite green on both paths.
+- Ridge (secondary) t=2.45: recorded under the pre-registered constraint —
+  best-of-7-correlated-rows winner's-curse shape; "suggestive, not a
+  discovery"; requires fresh post-2018 replication. NOT promoted.
+- Trial ledger final count: 43. The ranking deliverable
+  (`experiments/final/ranking.md`) ships bound to the null evidence, with
+  the model's honest tie structure surfaced (LightGBM assigns few distinct
+  score levels; within-tie order is arbitrary).
+- Post-final display fixes (cosmetic, no metrics touched): per-stock
+  notable-features exclude market-context columns; tie count stated.

@@ -89,16 +89,26 @@ what the evidence supports: GKX 2020 and the Qlib benchmarks both find
 gradient boosting ≈ shallow nets > deep/sequence models on daily equity data,
 and our results on the bundled dataset reproduce exactly that.
 
-## What results look like (and should look like)
+## The final result (pre-registered, one-shot holdout — see FINAL_REPORT.md)
 
-On the bundled data (S&P 500, 2013-2018, survivor-biased, one bull regime),
-honest baselines report **rank IC ≈ 0** on the 2015-2017 iteration window —
-that window contains the 2016 momentum crash, and the pipeline says so rather
-than hiding it. The literature's ceiling for the best models ever published is
-IC ≈ 0.03-0.06. Any run of this system that reports dramatically more than
-that triggers the skeptic module, and the leakage suite (shuffled labels ≈ 0,
-canaries ≈ 1.0 on both tabular and sequence paths) is printed with every
-report so readers can see the measurement instrument works.
+The pre-registered primary (beta-neutralized LightGBM, 5d horizon) scored
+**holdout IC +0.023 (NW t = 1.39), net Sharpe −0.64 at 10 bps** — below every
+pre-registered bar: **null**. Across 43 logged trials, no model family
+produced evidence distinguishable from a zero-signal system with ~1.5
+effective independent bets. One secondary (ridge, holdout t = 2.45) is
+recorded as *suggestive, not a discovery* — it is the best of seven
+correlated rows on an 8-month window, the textbook winner's-curse shape, and
+only fresh post-2018 data can test it. The sensitivity checks (no Jan-2018
+boundary dependence, no day concentration, no 1d leakage spike, leakage
+suite green) are in `experiments/final/sensitivity.md`.
+
+That null **is the deliverable working as designed**: the same machinery that
+would have validated a real edge instead caught every way this dataset tries
+to fake one. The literature's ceiling for the best published models is
+IC ≈ 0.03-0.06 — any run of this system reporting dramatically more triggers
+the skeptic module, and the leakage suite (shuffled labels ≈ 0, canaries
+≈ 1.0 on both tabular and sequence paths) prints with every report so readers
+can see the measurement instrument works.
 
 ## Known limitations (disclosed, not hidden)
 

@@ -47,10 +47,15 @@ def latest_ranking(
     pct = s.rank(pct=True)
 
     x_today = ds.X.xs(as_of, level="date")
+    # market-context features are identical across stocks on a date — showing
+    # them per name is noise; display only stock-specific features
+    from .features.technical import MARKET_FEATURES
+    stock_cols = [c for c in x_today.columns if c not in MARKET_FEATURES]
 
+    n_distinct = s.round(10).nunique()
     rows = []
     for tkr, sc in s.items():
-        feats = x_today.loc[tkr]
+        feats = x_today.loc[tkr, stock_cols]
         top_feats = feats.abs().sort_values(ascending=False).head(3).index.tolist()
         rows.append({
             "ticker": tkr,
@@ -83,6 +88,10 @@ def latest_ranking(
         f"## Bottom {top_n} (lowest scores)",
         "",
         table.tail(top_n).iloc[::-1].to_markdown(index=False),
+        "",
+        f"*The model assigns only {n_distinct} distinct score levels across "
+        f"{len(s)} names — tied scores mean the model genuinely cannot "
+        "distinguish those stocks; the within-tie ordering is arbitrary.*",
         "",
         "*Scores are cross-sectional relative rankings for the configured horizon — "
         "not price targets, not probabilities, not advice.*",
