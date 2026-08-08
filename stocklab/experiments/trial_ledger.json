@@ -1,5 +1,5 @@
 {
-  "total_trials": 77,
+  "total_trials": 82,
   "runs": [
     {
       "at": "2026-08-07T23:55:00+00:00",
@@ -132,6 +132,15 @@
         "news_sentiment_ab"
       ],
       "n_new_trials": 4,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T17:33:22.103147+00:00",
+      "out": "experiments/perstock_news",
+      "models": [
+        "perstock_news_ab"
+      ],
+      "n_new_trials": 5,
       "include_holdout": false
     }
   ]

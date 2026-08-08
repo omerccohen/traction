@@ -1,0 +1,15 @@
+{
+  "diagnostics": {
+    "sent_vs_same_day_ret": 0.09110291059272473,
+    "sent_vs_past_ret_t-1": 0.05967090184098109,
+    "sent_vs_fwd5_ret": -0.01236872721180076
+  },
+  "void": false,
+  "universe": "33 matched mega-caps (chosen-in-2020 caveat)",
+  "ic_delta_news_minus_base": {
+    "ridge": -0.0089,
+    "lightgbm": 0.0039
+  },
+  "univariate_news_ic": 0.0024,
+  "univariate_news_t": 0.14
+}

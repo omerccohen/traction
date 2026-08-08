@@ -170,3 +170,47 @@ code) and attacked the interpretation and the plan. Full transcript summary:
   score levels; within-tie order is arbitrary).
 - Post-final display fixes (cosmetic, no metrics touched): per-stock
   notable-features exclude market-context columns; tie count stated.
+
+---
+
+## Round 4 — user-hypothesis tests (post-final; holdout stays sealed)
+
+User asked for (a) "the combination of inputs that solves this" and
+(b) "news plus sentiment", and authorized a data-sourcing hunt.
+
+### Combination sweep (experiments/combination_sweep)
+30 trials over 15 feature-family combinations x {ridge, lightgbm}, noise
+expectation pre-declared IN THE SCRIPT (+0.025..+0.035 expected max under
+pure noise). Best: VOLA+LIQ lightgbm IC +0.0154 (t 2.15), net Sharpe
+-0.23, breakeven 8.4 bps. **Verdict: noise-consistent** — below even the
+noise band and fails the economic bar. Live demonstration that combination
+search manufactures its own winners.
+
+### Data-sourcing hunt
+Blocked: Ken French library, GDELT, Wikimedia pageviews, SEC EDGAR,
+HuggingFace, Kaggle, all market-data vendors, GitHub codeload/LFS/release
+assets. Reachable: raw.githubusercontent.com only. Found and used:
+1. Index-level Reddit r/worldnews top-25 daily headlines 2008-2016
+   (Kaggle 'stocknews' mirror), VADER-scored.
+2. **Per-stock** news sentiment for 34 mega-caps 2010-2020 (research-repo
+   processing of the Kaggle Benzinga headlines; transformer-scored).
+   FNSPID confirmed HuggingFace-only.
+
+### Index-level news A/B (experiments/news_sentiment)
+Ridge delta exactly 0.000 — structural proof that a per-date-constant
+feature cannot re-rank a cross-section. LightGBM delta -0.0101 (more
+overfitting room). No value.
+
+### Per-stock news A/B (experiments/perstock_news)
+Pre-declared hindsight gate PASSED, and the diagnostics are the finding:
+sentiment vs same-day return **+0.091**; vs yesterday's return +0.060;
+vs NEXT-5d return **-0.012**. News in mega-caps is contemporaneous and
+reactive, not predictive — assimilated the same day, gone by the time
+lag-1 execution can trade it (Ke-Kelly-Xiu reproduced in miniature).
+Univariate news signal: IC +0.0024 (t 0.14). A/B deltas straddle zero
+(ridge -0.0089, lightgbm +0.0039; se of the paired delta > |delta|).
+Caveat documented: the 33-name 2020-chosen universe inflates absolute
+ICs (BASE ridge +0.041 here vs ~0 on the honest 500-name universe) —
+survivorship in miniature; only the within-universe DELTA is meaningful.
+
+Ledger after round 4: **82 trials.**
