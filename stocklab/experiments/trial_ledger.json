@@ -1,5 +1,5 @@
 {
-  "total_trials": 43,
+  "total_trials": 77,
   "runs": [
     {
       "at": "2026-08-07T23:55:00+00:00",
@@ -115,6 +115,24 @@
       ],
       "n_new_trials": 7,
       "include_holdout": true
+    },
+    {
+      "at": "2026-08-08T11:24:47.417644+00:00",
+      "out": "experiments/combination_sweep",
+      "models": [
+        "combination_sweep"
+      ],
+      "n_new_trials": 30,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T11:27:02.045140+00:00",
+      "out": "experiments/news_sentiment",
+      "models": [
+        "news_sentiment_ab"
+      ],
+      "n_new_trials": 4,
+      "include_holdout": false
     }
   ]
 }

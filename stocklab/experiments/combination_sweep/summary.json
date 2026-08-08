@@ -1,0 +1,14 @@
+{
+  "preregistered_noise_max_ic": "+0.025..+0.035",
+  "n_trials": 30,
+  "best": {
+    "combo": "VOLA+LIQ",
+    "model": "lightgbm",
+    "n_features": 8,
+    "ic": 0.0154,
+    "nw_t": 2.15,
+    "net_sharpe": -0.23,
+    "breakeven_bps": 8.4
+  },
+  "verdict": "NOISE-CONSISTENT: best result is within the pre-registered expected-max-of-noise band (+0.025..+0.035) or fails the economic bar"
+}

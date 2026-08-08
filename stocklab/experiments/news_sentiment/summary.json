@@ -1,0 +1,9 @@
+{
+  "news_dataset": "Reddit r/worldnews top-25 daily (index-level), Kaggle 'stocknews' via GitHub mirror; VADER sentiment",
+  "limitation": "index-level sentiment is constant per date; it cannot rank stocks directly, only condition nonlinear models",
+  "ic_delta_news_minus_base": {
+    "ridge": 0.0,
+    "lightgbm": -0.0101
+  },
+  "verdict": "delta exceeds 0.01 \u2014 inspect before believing"
+}
