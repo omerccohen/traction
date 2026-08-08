@@ -1,0 +1,114 @@
+{
+  "h1/momentum_12_1": {
+    "ic": 0.0022,
+    "nw_t": 0.26,
+    "net_sharpe": -0.31,
+    "breakeven_bps": 4.8,
+    "turnover": 0.33
+  },
+  "h1/ridge": {
+    "ic": 0.0071,
+    "nw_t": 1.07,
+    "net_sharpe": -2.35,
+    "breakeven_bps": -0.4,
+    "turnover": 1.0
+  },
+  "h1/lightgbm": {
+    "ic": 0.0005,
+    "nw_t": 0.07,
+    "net_sharpe": -4.25,
+    "breakeven_bps": -4.3,
+    "turnover": 1.43
+  },
+  "h1/ensemble": {
+    "ic": -0.0016,
+    "nw_t": -0.18,
+    "net_sharpe": -4.17,
+    "breakeven_bps": -5.6,
+    "turnover": 0.69
+  },
+  "h5/momentum_12_1": {
+    "ic": -0.0091,
+    "nw_t": -0.58,
+    "net_sharpe": -0.19,
+    "breakeven_bps": 3.4,
+    "turnover": 0.15
+  },
+  "h5/ridge": {
+    "ic": 0.0005,
+    "nw_t": 0.05,
+    "net_sharpe": -1.35,
+    "breakeven_bps": -7.0,
+    "turnover": 0.33
+  },
+  "h5/lightgbm": {
+    "ic": 0.0064,
+    "nw_t": 0.66,
+    "net_sharpe": -0.46,
+    "breakeven_bps": 5.7,
+    "turnover": 0.39
+  },
+  "h5/ensemble": {
+    "ic": -0.0026,
+    "nw_t": -0.18,
+    "net_sharpe": -1.61,
+    "breakeven_bps": -4.3,
+    "turnover": 0.4
+  },
+  "h10/momentum_12_1": {
+    "ic": -0.018,
+    "nw_t": -0.89,
+    "net_sharpe": -0.02,
+    "breakeven_bps": 9.0,
+    "turnover": 0.11
+  },
+  "h10/ridge": {
+    "ic": -0.0091,
+    "nw_t": -0.68,
+    "net_sharpe": -1.35,
+    "breakeven_bps": -12.1,
+    "turnover": 0.23
+  },
+  "h10/lightgbm": {
+    "ic": 0.0067,
+    "nw_t": 0.5,
+    "net_sharpe": -0.36,
+    "breakeven_bps": 4.8,
+    "turnover": 0.25
+  },
+  "h10/ensemble": {
+    "ic": 0.0005,
+    "nw_t": 0.03,
+    "net_sharpe": 0.01,
+    "breakeven_bps": 10.1,
+    "turnover": 0.24
+  },
+  "h21/momentum_12_1": {
+    "ic": -0.0326,
+    "nw_t": -1.32,
+    "net_sharpe": -0.23,
+    "breakeven_bps": -6.3,
+    "turnover": 0.07
+  },
+  "h21/ridge": {
+    "ic": -0.0251,
+    "nw_t": -1.33,
+    "net_sharpe": -1.45,
+    "breakeven_bps": -27.3,
+    "turnover": 0.13
+  },
+  "h21/lightgbm": {
+    "ic": -0.0136,
+    "nw_t": -0.77,
+    "net_sharpe": -0.58,
+    "breakeven_bps": -2.9,
+    "turnover": 0.13
+  },
+  "h21/ensemble": {
+    "ic": -0.0246,
+    "nw_t": -0.85,
+    "net_sharpe": -1.25,
+    "breakeven_bps": -17.5,
+    "turnover": 0.12
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "total_trials": 16,
+  "total_trials": 32,
   "runs": [
     {
       "at": "2026-08-08T00:14:26.354977+00:00",
@@ -39,6 +39,54 @@
         "ridge"
       ],
       "n_new_trials": 5,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T01:03:25.044914+00:00",
+      "out": "experiments/h1_sweep",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "momentum_12_1",
+        "ridge"
+      ],
+      "n_new_trials": 4,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T01:04:09.002218+00:00",
+      "out": "experiments/h5_sweep",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "momentum_12_1",
+        "ridge"
+      ],
+      "n_new_trials": 4,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T01:04:44.585778+00:00",
+      "out": "experiments/h10_sweep",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "momentum_12_1",
+        "ridge"
+      ],
+      "n_new_trials": 4,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T01:05:20.152048+00:00",
+      "out": "experiments/h21_sweep",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "momentum_12_1",
+        "ridge"
+      ],
+      "n_new_trials": 4,
       "include_holdout": false
     }
   ]
