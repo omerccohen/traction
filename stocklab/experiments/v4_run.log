@@ -16,3 +16,31 @@ Fold 1: train 2014-02-20..2016-01-21 (484d) -> test 2016-02-05..2016-05-05 (63d)
 Fold 2: train 2014-02-20..2016-04-21 (547d) -> test 2016-05-06..2016-08-04 (63d)
 /usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
   eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+Fold 3: train 2014-02-20..2016-07-21 (610d) -> test 2016-08-05..2016-11-02 (63d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+Fold 4: train 2014-02-20..2016-10-19 (673d) -> test 2016-11-03..2017-02-03 (63d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+Fold 5: train 2014-02-20..2017-01-20 (736d) -> test 2017-02-06..2017-05-05 (63d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+ensemble: walk-forward admission active on 3 folds
+scores neutralized against: ['beta_63']
+leakage suite: {
+  "tabular_shuffled_ic": -0.003564588632355059,
+  "tabular_shuffled_verdict": "PASS (no train/test row contamination detected)",
+  "tabular_canary_ic": 0.980994452484759,
+  "tabular_canary_verdict": "PASS (detector fires on planted leak)",
+  "sequence_shuffled_ic": -0.0047032219326492795,
+  "sequence_shuffled_verdict": "PASS (no train/test row contamination detected)",
+  "sequence_canary_ic": 0.9999999200710789,
+  "sequence_canary_verdict": "PASS (window indexing exposes the current row, as designed; detector fires)"
+}
+
+saved -> experiments/v4_neutralized/report.md
+  lightgbm       IC=+0.0064 ICIR=+0.057 t=+0.66
+  ridge          IC=+0.0005 ICIR=+0.005 t=+0.05
+  mlp            IC=-0.0015 ICIR=-0.014 t=-0.15
+  momentum_12_1  IC=-0.0091 ICIR=-0.057 t=-0.58
+  ensemble       IC=-0.0110 ICIR=-0.113 t=-0.96

@@ -1,0 +1,7 @@
+
+=== horizon 1d ===
+Panel: 1259 dates (2013-02-08 -> 2018-02-07), 500 tickers, 618,377 observations
+FeatureDataset: 484,533 rows, 25 features, 1000 dates (2014-02-20 -> 2018-02-07)
+lockbox: 4 fold(s) with test >= 2017-06-01 excluded from this iteration run (final run uses include_holdout=True)
+6 folds; gap=7 trading days (purge+embargo)
+Fold 0: train 2014-02-20..2015-10-20 (421d) -> test 2015-10-29..2016-01-29 (63d)

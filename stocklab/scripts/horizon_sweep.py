@@ -15,7 +15,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from stocklab.config import ExperimentConfig, LabelConfig
+from stocklab.config import ExperimentConfig, LabelConfig, BacktestConfig
 from stocklab.data.loaders import load_bundled
 from stocklab.runner import run_walk_forward, save_experiment
 from run_experiment import build_factories, read_ledger, append_ledger
@@ -26,7 +26,12 @@ def main() -> None:
     prior = read_ledger()["total_trials"]
     summary = {}
     for h in horizons:
-        cfg = ExperimentConfig(label=LabelConfig(horizon=h))
+        # neutralization on: the sweep chooses the horizon for the final run,
+        # which will use the neutralized configuration — compare like with like
+        cfg = ExperimentConfig(
+            label=LabelConfig(horizon=h),
+            backtest=BacktestConfig(neutralize=("beta_63",)),
+        )
         panel, biases = load_bundled()
         factories = build_factories(["momentum", "ridge", "lightgbm"], cfg)
         print(f"\n=== horizon {h}d ===")

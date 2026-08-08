@@ -1,5 +1,5 @@
 {
-  "total_trials": 11,
+  "total_trials": 16,
   "runs": [
     {
       "at": "2026-08-08T00:14:26.354977+00:00",
@@ -26,6 +26,19 @@
         "transformer"
       ],
       "n_new_trials": 7,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T01:02:12.375448+00:00",
+      "out": "experiments/v4_neutralized",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "mlp",
+        "momentum_12_1",
+        "ridge"
+      ],
+      "n_new_trials": 5,
       "include_holdout": false
     }
   ]
