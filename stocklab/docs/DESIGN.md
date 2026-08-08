@@ -76,25 +76,42 @@ Every rung must beat the rung below it out-of-sample, or it is not used:
 1. **MomentumBaseline** — score = 12-1 momentum. Zero parameters. The floor.
 2. **Ridge** — linear, heavily regularized. What GKX (2020) found hard to beat.
 3. **LightGBM** — gradient boosting, the strongest tabular-data prior.
-4. **MLP** (Keras) — 2 hidden layers, dropout, early stopping.
-5. **LSTM** — 40-day sequences of a compact feature subset.
-6. **Transformer** — small encoder (2 blocks) on the same sequences.
-7. **Ensemble** — average of per-date z-scored member predictions (only members that
-   individually beat the momentum floor are admitted).
+4. **MLP** (Keras) — 2 hidden layers, dropout, early stopping, 3 seeds averaged.
+5. **LSTM** — 40-day sequences of a compact feature subset, 2 seeds.
+6. **Transformer** — small encoder (2 blocks) on the same sequences, 2 seeds.
+7. **Ensemble** — average of per-date z-scored member predictions with
+   **walk-forward admission**: membership for fold k is decided only on folds
+   < k's out-of-sample record (fold 0 has no ensemble). An ensemble admitted
+   on the data it is graded on is a winner-picking machine — review finding
+   R1-2 — so this one is a strategy that could actually have been run.
 
 Deep nets are deliberately small: the empirical finance literature (GKX 2020) finds
 *shallow* networks beat deep ones on this data regime — signal-to-noise, not capacity,
 is the binding constraint.
 
-## 6. Validation — purged walk-forward
+Optionally, all scores are **neutralized** per date against ranked exposures
+(rolling beta, size) before evaluation and portfolio formation
+(`backtest.neutralize`): a dollar-neutral momentum book still carries beta
+tilts, and the v1 legs (+15% long / −15% short in a bull market) were market
+exposure wearing an alpha costume.
+
+## 6. Validation — purged walk-forward + a frozen holdout
 
 - Expanding-window walk-forward: train on everything up to fold start, minus a
   **purge+embargo gap of `k+1+5` trading days** (so no training label window overlaps a
   test date), then predict a 63-day out-of-sample block; retrain and roll.
 - All reported numbers are **concatenated out-of-sample predictions only**.
+- **Lockbox**: test folds on/after `holdout_start` (2017-06-01) are excluded
+  from every iteration run. The final run evaluates them once, reports a
+  **HOLDOUT-ONLY section as the headline**, and writes an opened-marker that
+  warns loudly if the holdout is ever opened again.
 - Primary metric: daily cross-sectional **rank IC** (Spearman), with a **Newey–West
-  t-statistic** (lag = k) because overlapping k-day labels autocorrelate IC series.
+  t-statistic** (lags = 2k) because overlapping k-day labels — and persistent
+  signals — autocorrelate the IC series.
 - Secondary: decile portfolio monotonicity, long-short top-vs-bottom-decile returns.
+- **Trial ledger**: every run appends its model count to
+  `experiments/trial_ledger.json`; the deflated Sharpe always answers for the
+  accumulated search history, not the last run's.
 
 ## 7. Backtest — costs are not optional
 
