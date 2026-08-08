@@ -38,9 +38,13 @@ def load_panel() -> tuple[object, str]:
     store = PriceStore(ROOT / "data_cache" / "live")
     fresh = store.freshness()
     if fresh.get("has_data"):
+        from stocklab.data.live import apply_split_adjustments
         df = store.load()
         panel = long_to_panel(df)
-        panel, _notes = sanitize_corporate_actions(panel)
+        # exact split factors first (recorded corporate actions); the
+        # heuristic sanitizer only as fallback for unrecorded events
+        panel, _notes = apply_split_adjustments(panel, store.load_actions())
+        panel, _notes2 = sanitize_corporate_actions(panel)
         return panel, "live"
     panel, _ = load_bundled()
     return panel, "bundled-demo"

@@ -1,27 +1,34 @@
 """Live price feed: multi-source daily OHLCV updater with an append-only store.
 
-Design constraints (from docs/BUILD_PLAN.md Phase 1):
-* NETWORK-AWARE: every source is probed before use; when the environment's
-  network policy blocks all sources, the updater exits cleanly with a clear
-  status instead of failing — scheduled runs stay green and become productive
-  the moment the policy allows a source.
-* APPEND-ONLY + REVISION LOG: existing rows are never silently rewritten.
-  Overlapping fetches that disagree with stored history beyond a tolerance are
-  logged as conflicts and the STORED value wins (restatements must be explicit).
-* SANITIZE ON LOAD, NOT ON WRITE: the store keeps raw prints; the
-  corporate-action sanitizer runs at load time (same policy as the bundled
-  dataset), so repairs are reproducible and never destructive.
-* One code path for all ingestion: network sources and user-dropped CSVs go
-  through the same validation.
+Design (rebuilt after the Phase-1 adversarial audit — docs/SKEPTIC_LOG.md):
+* NETWORK-AWARE: sources probed before use; when the environment blocks all of
+  them the updater exits cleanly with status "no_network".
+* CANONICAL REGIME = RAW PRINTS: every source contributes UNadjusted prices
+  (yahoo's raw close, not adjclose — mixing adjusted closes with raw OHLV was
+  incoherent). Corporate actions (splits/dividends) are captured into their own
+  table and applied EXACTLY at load time; the heuristic sanitizer remains only
+  as a fallback for events with no recorded factor.
+* SETTLEMENT WINDOW: rows younger than `SETTLEMENT_DAYS` are replaceable
+  (intraday partial prints get corrected by the next run — logged as
+  restatements). Immutability starts after settlement; conflicts against
+  settled history are logged IN DETAIL and the stored value wins. Explicit
+  per-ticker `restate()` exists for deliberate history rewrites.
+* DURABILITY: atomic tmp+rename writes; an inter-process lock around
+  read-modify-write; the store can never be half-written or clobbered by a
+  concurrent run.
+* One validation path for network and CSV-drop ingestion, run against the
+  STORED TAIL so single-new-row batches still get spike protection.
 """
 from __future__ import annotations
 
-import gzip
+import fcntl
 import io
 import json
+import os
 import time
 import urllib.request
 import urllib.error
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -30,12 +37,16 @@ import numpy as np
 import pandas as pd
 
 STORE_COLUMNS = ["date", "ticker", "open", "high", "low", "close", "volume"]
-CONFLICT_TOL = 0.005          # >0.5% disagreement with stored history = conflict
-MAX_ABS_DAILY_MOVE = 0.75     # reject prints implying >75% single-day moves as bad rows
+ACTION_COLUMNS = ["date", "ticker", "type", "value"]   # type: split|dividend
+CONFLICT_TOL = 0.005
+MAX_ABS_DAILY_MOVE = 0.75
+SETTLEMENT_DAYS = 3          # rows younger than this are replaceable
+ABORT_AFTER_CONSECUTIVE_FAILURES = 10
+MAX_CONFLICT_DETAILS = 20
 
 
 # ---------------------------------------------------------------------------
-# source adapters — each returns a long-form frame in STORE_COLUMNS, or raises
+# source adapters — RAW prints only; splits/dividends returned separately
 # ---------------------------------------------------------------------------
 
 def _http_get(url: str, timeout: int = 20) -> bytes:
@@ -48,51 +59,74 @@ def _stooq_symbol(ticker: str) -> str:
     return ticker.lower().replace(".", "-") + ".us"
 
 
-def fetch_stooq(ticker: str, start: str | None = None) -> pd.DataFrame:
-    url = f"https://stooq.com/q/d/l/?s={_stooq_symbol(ticker)}&i=d"
+def fetch_stooq(ticker: str, start: str | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
+    d1 = pd.Timestamp(start or "2018-01-01").strftime("%Y%m%d")
+    d2 = datetime.now(timezone.utc).strftime("%Y%m%d")
+    url = (f"https://stooq.com/q/d/l/?s={_stooq_symbol(ticker)}&i=d"
+           f"&d1={d1}&d2={d2}")          # bounded fetch (full-history was M6)
     raw = _http_get(url)
     df = pd.read_csv(io.BytesIO(raw))
     if "Close" not in df.columns or df.empty:
         raise ValueError(f"stooq: empty/invalid payload for {ticker}")
     df = df.rename(columns={c: c.lower() for c in df.columns})
+    if "volume" not in df.columns:
+        df["volume"] = np.nan
     df["ticker"] = ticker
     df["date"] = pd.to_datetime(df["date"])
-    if start:
-        df = df[df["date"] >= pd.Timestamp(start)]
-    return df[STORE_COLUMNS]
+    actions = pd.DataFrame(columns=ACTION_COLUMNS)   # stooq daily CSV carries none
+    return df[STORE_COLUMNS], actions
 
 
-def fetch_yahoo(ticker: str, start: str | None = None) -> pd.DataFrame:
+def fetch_yahoo(ticker: str, start: str | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
     y_t = ticker.replace(".", "-")
-    p1 = int(pd.Timestamp(start or "2000-01-01").timestamp())
+    p1 = int(pd.Timestamp(start or "2018-01-01").timestamp())
     p2 = int(time.time()) + 86400
     url = (f"https://query1.finance.yahoo.com/v8/finance/chart/{y_t}"
            f"?period1={p1}&period2={p2}&interval=1d&events=div%2Csplit")
     data = json.loads(_http_get(url))
-    res = data["chart"]["result"][0]
+    res = (data.get("chart", {}).get("result") or [None])[0]
+    if res is None:
+        raise ValueError(f"yahoo: no result for {ticker}: "
+                         f"{str(data.get('chart', {}).get('error'))[:120]}")
     ts = res["timestamp"]
     q = res["indicators"]["quote"][0]
-    adj = res["indicators"].get("adjclose", [{}])[0].get("adjclose")
+    # yahoo timestamps are session-anchored; convert via the exchange tz (US
+    # assumption documented — non-US listings would need per-exchange tz)
+    dates = (pd.to_datetime(ts, unit="s", utc=True)
+             .tz_convert("America/New_York").tz_localize(None).normalize())
     df = pd.DataFrame({
-        "date": pd.to_datetime(ts, unit="s").normalize(),
+        "date": dates,
         "open": q["open"], "high": q["high"], "low": q["low"],
-        "close": adj if adj is not None else q["close"],
+        "close": q["close"],            # RAW close — canonical regime (M3)
         "volume": q["volume"],
     })
     df["ticker"] = ticker
     df = df.dropna(subset=["close"])
-    return df[STORE_COLUMNS]
+
+    acts = []
+    ev = res.get("events", {}) or {}
+    for _, s in (ev.get("splits") or {}).items():
+        num, den = float(s.get("numerator", 1)), float(s.get("denominator", 1))
+        if den > 0 and num > 0:
+            acts.append({"date": pd.to_datetime(s["date"], unit="s", utc=True)
+                         .tz_convert("America/New_York").tz_localize(None).normalize(),
+                         "ticker": ticker, "type": "split", "value": num / den})
+    for _, d in (ev.get("dividends") or {}).items():
+        acts.append({"date": pd.to_datetime(d["date"], unit="s", utc=True)
+                     .tz_convert("America/New_York").tz_localize(None).normalize(),
+                     "ticker": ticker, "type": "dividend", "value": float(d["amount"])})
+    actions = pd.DataFrame(acts, columns=ACTION_COLUMNS)
+    return df[STORE_COLUMNS], actions
 
 
 SOURCES = {"stooq": fetch_stooq, "yahoo": fetch_yahoo}
 PROBE_URLS = {
-    "stooq": "https://stooq.com/q/d/l/?s=aapl.us&i=d",
+    "stooq": "https://stooq.com/q/d/l/?s=aapl.us&i=d&d1=20240101&d2=20240110",
     "yahoo": "https://query1.finance.yahoo.com/v8/finance/chart/AAPL?range=5d&interval=1d",
 }
 
 
 def probe_sources(timeout: int = 8) -> dict[str, bool]:
-    """Which sources does the current network policy allow?"""
     out = {}
     for name, url in PROBE_URLS.items():
         try:
@@ -104,47 +138,75 @@ def probe_sources(timeout: int = 8) -> dict[str, bool]:
 
 
 # ---------------------------------------------------------------------------
-# validation + store
+# validation
 # ---------------------------------------------------------------------------
 
-def validate_rows(df: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
-    """Schema + sanity validation for ANY ingested rows (network or CSV drop)."""
+def validate_rows(df: pd.DataFrame, prior_tail: pd.DataFrame | None = None
+                  ) -> tuple[pd.DataFrame, list[str]]:
+    """Schema + sanity validation for ANY ingested rows.
+
+    `prior_tail` (recent stored rows per ticker) is prepended for the spike
+    check so a one-row daily batch still has context (audit M7) — tail rows
+    themselves are never dropped here.
+    """
     problems: list[str] = []
     missing = [c for c in STORE_COLUMNS if c not in df.columns]
     if missing:
         raise ValueError(f"ingest missing columns: {missing}")
     df = df[STORE_COLUMNS].copy()
     df["date"] = pd.to_datetime(df["date"]).dt.normalize()
+    df["close"] = pd.to_numeric(df["close"], errors="coerce")
+    df["volume"] = pd.to_numeric(df["volume"], errors="coerce")
     n0 = len(df)
     df = df.dropna(subset=["date", "ticker", "close"])
     df = df[df["close"] > 0]
+    df = df[~(df["volume"] < 0)]
     if len(df) < n0:
-        problems.append(f"dropped {n0 - len(df)} rows (missing/nonpositive close)")
+        problems.append(f"dropped {n0 - len(df)} rows (missing/nonpositive close or negative volume)")
+
+    # internal consistency where OHL present (cheap; would have caught the
+    # adjusted-close-with-raw-high/low adapter bug on day one)
+    with np.errstate(invalid="ignore"):
+        bad_range = (df["high"].notna() & df["low"].notna()
+                     & ((df["close"] > df["high"] * 1.02) | (df["close"] < df["low"] * 0.98)))
+    if bad_range.any():
+        problems.append(f"dropped {int(bad_range.sum())} rows (close outside high/low)")
+        df = df[~bad_range]
 
     dupes = df.duplicated(["date", "ticker"]).sum()
     if dupes:
         problems.append(f"dropped {dupes} duplicate (date,ticker) rows")
         df = df.drop_duplicates(["date", "ticker"], keep="last")
 
-    # implausible single prints: a large move into a day that immediately
-    # reverses out of it is a bad row, not a real move. LOG returns make the
-    # test symmetric (+300% and its -75% reversal have equal magnitude —
-    # simple returns let V-spikes slip under a linear threshold).
+    # V-spike detection on log returns, WITH stored context, and requiring the
+    # two-day compounded move to roughly cancel (a real crash-then-bounce that
+    # nets -28% must be kept — audit finding)
     log_thresh = np.log(1.0 + MAX_ABS_DAILY_MOVE)
-    bad_rows = 0
-    for t, g in df.groupby("ticker", sort=False):
+    incoming_idx = df.index
+    ctx = df if prior_tail is None or prior_tail.empty else pd.concat(
+        [prior_tail[STORE_COLUMNS], df], ignore_index=False)
+    drop: list = []
+    for t, g in ctx.groupby("ticker", sort=False):
         g = g.sort_values("date")
-        lr = np.log(g["close"]).diff()
-        lr_next = np.log(g["close"]).shift(-1) - np.log(g["close"])
-        spike = (lr.abs() > log_thresh) & (lr_next.abs() > log_thresh) & \
-                (np.sign(lr) == -np.sign(lr_next))
-        if spike.any():
-            bad_rows += int(spike.sum())
-            df = df.drop(g.index[spike])
-    if bad_rows:
-        problems.append(f"dropped {bad_rows} implausible spike rows")
+        lc = np.log(g["close"].to_numpy(dtype=float))
+        lr = np.diff(lc, prepend=np.nan)
+        lr_next = np.append(np.diff(lc), np.nan)
+        two_day = np.abs(lr + lr_next)
+        spike = ((np.abs(lr) > log_thresh) & (np.abs(lr_next) > log_thresh)
+                 & (np.sign(lr) == -np.sign(lr_next)) & (two_day < np.log(1.15)))
+        for pos in np.where(spike)[0]:
+            idx = g.index[pos]
+            if idx in incoming_idx:          # never drop stored context rows
+                drop.append(idx)
+    if drop:
+        problems.append(f"dropped {len(drop)} implausible spike rows")
+        df = df.drop(index=drop)
     return df, problems
 
+
+# ---------------------------------------------------------------------------
+# store
+# ---------------------------------------------------------------------------
 
 @dataclass
 class UpdateReport:
@@ -154,29 +216,63 @@ class UpdateReport:
     tickers_requested: int = 0
     tickers_updated: int = 0
     tickers_failed: list = field(default_factory=list)
+    tickers_skipped: int = 0
     rows_appended: int = 0
-    conflicts: int = 0
+    rows_restated: int = 0            # settlement-window replacements
+    conflicts: int = 0                # settled-history disagreements (stored wins)
+    conflict_details: list = field(default_factory=list)
+    actions_recorded: int = 0
+    aborted_after_failures: bool = False
     problems: list = field(default_factory=list)
-    status: str = "unknown"   # updated | no_network | nothing_new | error
+    status: str = "unknown"   # updated | partial | no_network | nothing_new | error
 
     def to_dict(self) -> dict:
         return self.__dict__.copy()
 
 
 class PriceStore:
-    """Append-only long-form store: data_cache/live/prices.csv.gz + update log."""
+    """Long-form store with settlement-window semantics, atomic writes and an
+    inter-process lock. Files: prices.csv.gz, corporate_actions.csv,
+    updates.log.jsonl, meta.json."""
 
     def __init__(self, root: str | Path):
         self.root = Path(root)
         self.path = self.root / "prices.csv.gz"
+        self.actions_path = self.root / "corporate_actions.csv"
         self.log_path = self.root / "updates.log.jsonl"
+        self.meta_path = self.root / "meta.json"
+        self.lock_path = self.root / ".lock"
         self.root.mkdir(parents=True, exist_ok=True)
 
+    # -- concurrency + atomicity -------------------------------------------
+    @contextmanager
+    def _locked(self):
+        with open(self.lock_path, "w") as f:
+            fcntl.flock(f, fcntl.LOCK_EX)
+            try:
+                yield
+            finally:
+                fcntl.flock(f, fcntl.LOCK_UN)
+
+    @staticmethod
+    def _atomic_write(df: pd.DataFrame, path: Path, **to_csv_kw) -> None:
+        tmp = path.with_suffix(path.suffix + ".tmp")
+        df.to_csv(tmp, index=False, **to_csv_kw)
+        os.replace(tmp, path)
+
+    # -- IO -----------------------------------------------------------------
     def load(self) -> pd.DataFrame:
         if not self.path.exists():
             return pd.DataFrame(columns=STORE_COLUMNS)
-        df = pd.read_csv(self.path, parse_dates=["date"])
+        df = pd.read_csv(self.path, parse_dates=["date"],
+                         converters={"ticker": str})   # ticker "NA" stays "NA"
         return df[STORE_COLUMNS]
+
+    def load_actions(self) -> pd.DataFrame:
+        if not self.actions_path.exists():
+            return pd.DataFrame(columns=ACTION_COLUMNS)
+        return pd.read_csv(self.actions_path, parse_dates=["date"],
+                           converters={"ticker": str})
 
     def last_dates(self) -> pd.Series:
         df = self.load()
@@ -184,34 +280,99 @@ class PriceStore:
             return pd.Series(dtype="datetime64[ns]")
         return df.groupby("ticker")["date"].max()
 
-    def append(self, new: pd.DataFrame) -> tuple[int, int]:
-        """Merge validated rows. Returns (rows_appended, conflicts).
+    def meta(self) -> dict:
+        return json.loads(self.meta_path.read_text()) if self.meta_path.exists() else {}
 
-        Existing (date,ticker) rows are immutable: incoming rows that disagree
-        with stored close by > CONFLICT_TOL are counted and DISCARDED (the
-        stored value wins); agreeing overlaps are discarded silently.
+    def _write_meta_once(self) -> None:
+        if not self.meta_path.exists():
+            self.meta_path.write_text(json.dumps({
+                "backfill_before": datetime.now(timezone.utc).date().isoformat(),
+                "note": "rows dated before first live update inherit current-"
+                        "constituent survivorship bias (audit note)",
+            }, indent=2))
+
+    # -- mutation ------------------------------------------------------------
+    def append(self, new: pd.DataFrame) -> tuple[int, int, int, list]:
+        """Merge validated rows under the settlement policy.
+
+        Returns (appended, restated, conflicts, conflict_details).
+        * dates within SETTLEMENT_DAYS of the newest incoming date are
+          REPLACEABLE: incoming wins, counted as restatements;
+        * older overlaps are immutable: stored wins; disagreements beyond
+          CONFLICT_TOL are logged with detail.
         """
-        cur = self.load()
-        if cur.empty:
-            merged = new.sort_values(["ticker", "date"])
-            merged.to_csv(self.path, index=False, compression="gzip")
-            return len(new), 0
+        if new.empty:
+            return 0, 0, 0, []
+        assert not new.duplicated(["date", "ticker"]).any(), \
+            "append() requires unique (date,ticker) — run validate_rows first"
+        with self._locked():
+            cur = self.load()
+            self._write_meta_once()
+            if cur.empty:
+                self._atomic_write(new.sort_values(["ticker", "date"]),
+                                   self.path, compression="gzip")
+                return len(new), 0, 0, []
 
-        key_cur = cur.set_index(["date", "ticker"])
-        incoming = new.set_index(["date", "ticker"])
-        overlap = incoming.index.intersection(key_cur.index)
-        conflicts = 0
-        if len(overlap) > 0:
-            a = incoming.loc[overlap, "close"].astype(float)
-            b = key_cur.loc[overlap, "close"].astype(float)
-            rel = (a - b).abs() / b.clip(lower=1e-9)
-            conflicts = int((rel > CONFLICT_TOL).sum())
-        fresh = incoming.loc[incoming.index.difference(key_cur.index)].reset_index()
-        if len(fresh) == 0:
-            return 0, conflicts
-        merged = pd.concat([cur, fresh[STORE_COLUMNS]]).sort_values(["ticker", "date"])
-        merged.to_csv(self.path, index=False, compression="gzip")
-        return len(fresh), conflicts
+            settle_cut = new["date"].max() - pd.Timedelta(days=SETTLEMENT_DAYS)
+            incoming = new.set_index(["date", "ticker"])
+            key_cur = cur.set_index(["date", "ticker"])
+            overlap = incoming.index.intersection(key_cur.index)
+
+            ov_dates = overlap.get_level_values("date")
+            recent_ov = overlap[ov_dates >= settle_cut]
+            settled_ov = overlap[ov_dates < settle_cut]
+
+            conflicts, details = 0, []
+            if len(settled_ov):
+                a = incoming.loc[settled_ov, "close"].astype(float)
+                b = key_cur.loc[settled_ov, "close"].astype(float)
+                rel = (a - b).abs() / b.clip(lower=1e-9)
+                bad = rel[rel > CONFLICT_TOL]
+                conflicts = int(len(bad))
+                for (d, t), r in bad.iloc[:MAX_CONFLICT_DETAILS].items():
+                    details.append({"date": str(pd.Timestamp(d).date()), "ticker": t,
+                                    "stored": float(key_cur.loc[(d, t), "close"]),
+                                    "incoming": float(incoming.loc[(d, t), "close"]),
+                                    "rel": round(float(r), 4)})
+
+            restated = int(len(recent_ov))
+            keep_cur = key_cur.drop(index=recent_ov)          # replaceable rows out
+            fresh_idx = incoming.index.difference(keep_cur.index)
+            fresh = incoming.loc[fresh_idx].reset_index()
+            appended = int(len(fresh_idx.difference(recent_ov)))
+            merged = pd.concat([keep_cur.reset_index(), fresh[STORE_COLUMNS]])
+            merged = merged.drop_duplicates(["date", "ticker"], keep="last") \
+                           .sort_values(["ticker", "date"])
+            self._atomic_write(merged, self.path, compression="gzip")
+            return appended, restated, conflicts, details
+
+    def append_actions(self, actions: pd.DataFrame) -> int:
+        if actions is None or actions.empty:
+            return 0
+        with self._locked():
+            cur = self.load_actions()
+            merged = pd.concat([cur, actions[ACTION_COLUMNS]])
+            merged = merged.drop_duplicates(["date", "ticker", "type"], keep="first")
+            n_new = len(merged) - len(cur)
+            if n_new > 0:
+                self._atomic_write(merged.sort_values(["ticker", "date"]),
+                                   self.actions_path)
+            return int(max(n_new, 0))
+
+    def restate(self, ticker: str) -> int:
+        """Explicit history rewrite: drop a ticker's rows (logged); the next
+        update refetches it in full. THE sanctioned path for fixing settled
+        history (audit M3)."""
+        with self._locked():
+            cur = self.load()
+            n = int((cur["ticker"] == ticker).sum())
+            if n:
+                self._atomic_write(cur[cur["ticker"] != ticker],
+                                   self.path, compression="gzip")
+        with open(self.log_path, "a") as f:
+            f.write(json.dumps({"restate": ticker, "rows_dropped": n,
+                                "at": datetime.now(timezone.utc).isoformat()}) + "\n")
+        return n
 
     def log(self, report: UpdateReport) -> None:
         with open(self.log_path, "a") as f:
@@ -226,22 +387,63 @@ class PriceStore:
             "has_data": True,
             "newest_date": str(newest.date()),
             "n_tickers": int(len(ld)),
-            "days_stale": int((pd.Timestamp.now(tz=timezone.utc).tz_localize(None)
-                               - newest).days),
+            "days_stale_calendar": int(
+                (pd.Timestamp.now(tz=timezone.utc).tz_localize(None) - newest).days),
+            "meta": self.meta(),
         }
+
+
+# ---------------------------------------------------------------------------
+# corporate-action application (exact factors; heuristics only as fallback)
+# ---------------------------------------------------------------------------
+
+def apply_split_adjustments(panel, actions: pd.DataFrame):
+    """Back-adjust close AND volume by exact split factors so the series is
+    split-continuous (price-return regime; dividends stay unapplied and
+    documented). Returns (panel, notes)."""
+    from .panel import Panel
+    notes = []
+    if actions is None or actions.empty:
+        return panel, notes
+    close = panel.close.copy()
+    volume = panel.volume.copy()
+    splits = actions[actions["type"] == "split"]
+    for _, row in splits.iterrows():
+        t, d, f = row["ticker"], pd.Timestamp(row["date"]), float(row["value"])
+        if t not in close.columns or f <= 0 or abs(f - 1) < 1e-9:
+            continue
+        mask = close.index < d
+        close.loc[mask, t] = close.loc[mask, t] / f
+        volume.loc[mask, t] = volume.loc[mask, t] * f
+        notes.append(f"{t} {d.date()}: split factor {f:g} back-applied (close/volume)")
+    return Panel(close=close, volume=volume, open=panel.open,
+                 high=panel.high, low=panel.low), notes
+
+
+# ---------------------------------------------------------------------------
+# update flows
+# ---------------------------------------------------------------------------
+
+def _tail_for(store: PriceStore, tickers: list[str], n: int = 5) -> pd.DataFrame:
+    cur = store.load()
+    if cur.empty:
+        return cur
+    cur = cur[cur["ticker"].isin(tickers)]
+    return cur.sort_values("date").groupby("ticker", sort=False).tail(n)
 
 
 def update_from_network(
     store: PriceStore,
     tickers: list[str],
     default_start: str = "2018-01-01",
+    source_order: tuple = ("stooq", "yahoo"),
     max_tickers_per_run: int = 600,
     pause_s: float = 0.4,
 ) -> UpdateReport:
     rep = UpdateReport(started_at=datetime.now(timezone.utc).isoformat(),
                        tickers_requested=len(tickers))
     rep.sources_available = probe_sources()
-    usable = [s for s, ok in rep.sources_available.items() if ok]
+    usable = [s for s in source_order if rep.sources_available.get(s)]
     if not usable:
         rep.status = "no_network"
         store.log(rep)
@@ -252,46 +454,78 @@ def update_from_network(
     fetch = SOURCES[src]
     last = store.last_dates()
 
-    frames = []
-    for t in tickers[:max_tickers_per_run]:
-        start = str(last.get(t, pd.Timestamp(default_start)).date()) if t in last.index \
-            else default_start
+    # stalest-first ordering: a hit-limit cutoff must not starve the same
+    # alphabetical tail forever (audit M6)
+    order = sorted(tickers, key=lambda t: (last.get(t, pd.Timestamp("1900-01-01")), t))
+    rep.tickers_skipped = max(len(order) - max_tickers_per_run, 0)
+    order = order[:max_tickers_per_run]
+
+    frames, all_actions = [], []
+    consecutive_failures = 0
+    for t in order:
+        start = (str(last[t].date()) if t in last.index else default_start)
         try:
-            frames.append(fetch(t, start=start))
+            df, acts = fetch(t, start=start)
+            frames.append(df)
+            if acts is not None and not acts.empty:
+                all_actions.append(acts)
+            consecutive_failures = 0
         except Exception as e:
-            rep.tickers_failed.append(f"{t}: {type(e).__name__}")
+            consecutive_failures += 1
+            rep.tickers_failed.append(f"{t}: {type(e).__name__}: {str(e)[:80]}")
+            if consecutive_failures >= ABORT_AFTER_CONSECUTIVE_FAILURES:
+                rep.aborted_after_failures = True
+                break
         time.sleep(pause_s)
 
-    if frames:
-        new = pd.concat(frames, ignore_index=True)
-        new, problems = validate_rows(new)
-        rep.problems = problems
-        appended, conflicts = store.append(new)
-        rep.rows_appended = appended
-        rep.conflicts = conflicts
-        rep.tickers_updated = int(new["ticker"].nunique())
-        rep.status = "updated" if appended else "nothing_new"
-    else:
-        rep.status = "error" if rep.tickers_failed else "nothing_new"
+    try:
+        if frames:
+            new = pd.concat(frames, ignore_index=True)
+            tail = _tail_for(store, list(new["ticker"].unique()))
+            new, problems = validate_rows(new, prior_tail=tail)
+            rep.problems = problems
+            appended, restated, conflicts, details = store.append(new)
+            rep.rows_appended, rep.rows_restated = appended, restated
+            rep.conflicts, rep.conflict_details = conflicts, details
+            rep.tickers_updated = int(new["ticker"].nunique())
+            if all_actions:
+                rep.actions_recorded = store.append_actions(pd.concat(all_actions))
+            fail_share = len(rep.tickers_failed) / max(len(order), 1)
+            rep.status = ("partial" if fail_share > 0.10 or rep.aborted_after_failures
+                          else ("updated" if appended or restated else "nothing_new"))
+        else:
+            rep.status = "error" if rep.tickers_failed else "nothing_new"
+    except Exception as e:
+        rep.problems.append(f"merge failed: {type(e).__name__}: {str(e)[:200]}")
+        rep.status = "error"
     store.log(rep)
     return rep
 
 
 def update_from_csv(store: PriceStore, csv_path: str | Path) -> UpdateReport:
-    """Path B/C ingestion: a user-dropped CSV through the SAME validation."""
+    """Path B/C ingestion: a user-dropped CSV through the SAME validation.
+    Never raises — failures become a logged report with status='error'."""
     rep = UpdateReport(started_at=datetime.now(timezone.utc).isoformat())
-    from .loaders import _normalize_columns
-    df = pd.read_csv(csv_path)
-    df, _note = _normalize_columns(df)
-    if "open" not in df.columns:
-        for c in ("open", "high", "low"):
+    try:
+        from .loaders import _normalize_columns
+        df = pd.read_csv(csv_path)
+        df, _note = _normalize_columns(df)
+        for c in ("open", "high", "low"):     # per-column fill (audit M1)
             if c not in df.columns:
                 df[c] = np.nan
-    df, problems = validate_rows(df)
-    rep.problems = problems
-    appended, conflicts = store.append(df)
-    rep.rows_appended, rep.conflicts = appended, conflicts
-    rep.tickers_requested = rep.tickers_updated = int(df["ticker"].nunique())
-    rep.status = "updated" if appended else "nothing_new"
+        if "volume" not in df.columns:
+            df["volume"] = np.nan
+        tickers = df["ticker"].astype(str).unique().tolist() if "ticker" in df.columns else []
+        tail = _tail_for(store, tickers)
+        df, problems = validate_rows(df, prior_tail=tail)
+        rep.problems = problems
+        appended, restated, conflicts, details = store.append(df)
+        rep.rows_appended, rep.rows_restated = appended, restated
+        rep.conflicts, rep.conflict_details = conflicts, details
+        rep.tickers_requested = rep.tickers_updated = int(df["ticker"].nunique())
+        rep.status = "updated" if (appended or restated) else "nothing_new"
+    except Exception as e:
+        rep.problems.append(f"{type(e).__name__}: {str(e)[:200]}")
+        rep.status = "error"
     store.log(rep)
     return rep

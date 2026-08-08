@@ -40,6 +40,9 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--from-csv", default=None)
     ap.add_argument("--status", action="store_true")
+    ap.add_argument("--restate", default=None, metavar="TICKER",
+                    help="drop one ticker's history (refetched next run) — the "
+                         "sanctioned path for fixing settled history")
     ap.add_argument("--start", default="2018-01-01",
                     help="history start for first-time fetches")
     args = ap.parse_args()
@@ -47,6 +50,10 @@ def main() -> None:
     store = PriceStore(STORE)
     if args.status:
         print(json.dumps(store.freshness(), indent=2))
+        return
+    if args.restate:
+        n = store.restate(args.restate)
+        print(f"restated {args.restate}: {n} rows dropped (refetch on next update)")
         return
 
     if args.from_csv:
@@ -62,6 +69,13 @@ def main() -> None:
               "domain (e.g. stooq.com or query1.finance.yahoo.com),\nor use "
               "--from-csv with a dropped file. The store and all downstream "
               "steps continue to work on existing data.")
+    # exit codes: green for expected idle states, loud for real failures
+    # (audit finding: 'error' previously exited 0 and let the store rot silently)
+    if rep.status == "error":
+        sys.exit(2)
+    if rep.status == "partial":
+        print(f"\nWARNING: partial update — {len(rep.tickers_failed)} tickers failed"
+              + (" (aborted after consecutive failures)" if rep.aborted_after_failures else ""))
 
 
 if __name__ == "__main__":
