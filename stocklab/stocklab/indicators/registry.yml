@@ -1,0 +1,73 @@
+# Pre-registered indicator thresholds — committed BEFORE use, per the
+# project's pre-registration discipline. Edit = re-registration (git history
+# is the audit trail). Crossings are research events, never trade signals.
+#
+# transform: level | yoy (percent change vs 1y ago) | yoy_diff (difference vs 1y ago)
+# threshold rule language: "<var> <op> <number>" with var in {value, pctile}
+
+indicators:
+
+  # ---- macro regime (the mechanical, non-forecast layer) -------------------
+  us10y_yield:
+    source: fred
+    series_id: DGS10
+    description: 10y Treasury yield; yoy_diff > +1.5pp = rate shock in progress
+    transform: yoy_diff
+    thresholds:
+      elevated: "value > 1.0"
+      triggered: "value > 1.5"
+
+  yield_curve_10y2y:
+    source: fred
+    series_id: T10Y2Y
+    description: 10y-2y curve; inversion (< 0) = classic late-cycle state
+    transform: level
+    thresholds:
+      elevated: "value < 0.25"
+      triggered: "value < 0"
+
+  hy_credit_spread:
+    source: fred
+    series_id: BAMLH0A0HYM2
+    description: ICE BofA HY OAS; stress regime when wide vs 5y history
+    transform: level
+    thresholds:
+      elevated: "pctile > 0.8"
+      triggered: "pctile > 0.95"
+
+  breakeven_10y:
+    source: fred
+    series_id: T10YIE
+    description: 10y breakeven inflation; yoy_diff moves = inflation repricing
+    transform: yoy_diff
+    thresholds:
+      elevated: "value > 0.5"
+      triggered: "value > 1.0"
+
+  # ---- semiconductors field (the user's chosen chain) ----------------------
+  semis_industrial_production:
+    source: fred
+    series_id: IPG3344S
+    description: US industrial production, semiconductors & components; yoy contraction = downcycle
+    transform: yoy
+    thresholds:
+      elevated: "value < 0.02"
+      triggered: "value < 0"
+
+  electronics_new_orders:
+    source: fred
+    series_id: A34SNO
+    description: Manufacturers' new orders, computers & electronic products; yoy = demand cycle
+    transform: yoy
+    thresholds:
+      elevated: "value < 0"
+      triggered: "value < -0.05"
+
+  semis_producer_prices:
+    source: fred
+    series_id: PCU33443344
+    description: PPI, semiconductor & electronic component manufacturing; yoy > 0 = pricing power (shortage symptom)
+    transform: yoy
+    thresholds:
+      elevated: "value > 0.01"
+      triggered: "value > 0.03"

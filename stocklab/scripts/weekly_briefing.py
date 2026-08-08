@@ -121,6 +121,15 @@ def main() -> None:
         text = ("> **DEMO MODE**: running on the bundled 2013-2018 dataset — "
                 "this describes a historical market. Wire the live feed "
                 "(scripts/update_prices.py) for current briefings.\n\n") + text
+
+    # physical/macro indicator dashboard (Phase 3) — refresh + render
+    try:
+        from stocklab.indicators import load_registry, refresh_all, dashboard_markdown
+        inds = load_registry()
+        states = refresh_all(inds)
+        text += "\n" + dashboard_markdown(inds, states) + "\n"
+    except Exception as e:  # the briefing must never die on the indicator layer
+        text += f"\n## Physical & macro indicators\n\n*indicator layer error: {e}*\n"
     if deltas:
         lines = ["", "## Movers since last briefing "
                      f"({prev.get('as_of', 'n/a')} -> {as_of.date()})", ""]
