@@ -22,3 +22,26 @@ Fold 3: train 2014-02-20..2016-07-21 (610d) -> test 2016-08-05..2016-11-02 (63d)
 Fold 4: train 2014-02-20..2016-10-19 (673d) -> test 2016-11-03..2017-02-03 (63d)
 /usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
   eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+Fold 5: train 2014-02-20..2017-01-20 (736d) -> test 2017-02-06..2017-05-05 (63d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+ensemble: walk-forward admission active on 2 folds
+leakage suite: {
+  "tabular_shuffled_ic": -0.0019927303953861893,
+  "tabular_shuffled_verdict": "PASS (no train/test row contamination detected)",
+  "tabular_canary_ic": 0.9809771401245135,
+  "tabular_canary_verdict": "PASS (detector fires on planted leak)",
+  "sequence_shuffled_ic": -0.0047032219326492795,
+  "sequence_shuffled_verdict": "PASS (no train/test row contamination detected)",
+  "sequence_canary_ic": 0.9999999200710789,
+  "sequence_canary_verdict": "PASS (window indexing exposes the current row, as designed; detector fires)"
+}
+
+saved -> experiments/v3_full_ladder/report.md
+  lightgbm       IC=-0.0061 ICIR=-0.036 t=-0.37
+  ridge          IC=-0.0143 ICIR=-0.078 t=-0.82
+  ensemble       IC=-0.0190 ICIR=-0.163 t=-1.17
+  momentum_12_1  IC=-0.0221 ICIR=-0.096 t=-0.99
+  transformer    IC=-0.0224 ICIR=-0.120 t=-1.24
+  lstm           IC=-0.0254 ICIR=-0.152 t=-1.62
+  mlp            IC=-0.0288 ICIR=-0.165 t=-1.72

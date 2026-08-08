@@ -94,6 +94,9 @@ def main() -> None:
                     help="override the trial ledger (default: read accumulated total)")
     ap.add_argument("--include-holdout", action="store_true",
                     help="FINAL RUN ONLY: also evaluate the locked holdout folds")
+    ap.add_argument("--neutralize", default="",
+                    help="comma-separated ranked exposures to residualize scores "
+                         "against per date (e.g. beta_63 or beta_63,log_adv_21)")
     args = ap.parse_args()
 
     names = (
@@ -121,10 +124,12 @@ def main() -> None:
         HOLDOUT_MARKER.parent.mkdir(parents=True, exist_ok=True)
         HOLDOUT_MARKER.write_text(json.dumps(opened, indent=2))
 
-    cfg = ExperimentConfig()
+    from stocklab.config import BacktestConfig
+    neut = tuple(x.strip() for x in args.neutralize.split(",") if x.strip())
+    cfg = ExperimentConfig(backtest=BacktestConfig(neutralize=neut)) if neut else ExperimentConfig()
     panel, biases = load_bundled()
     factories = build_factories(names, cfg)
-    print(f"models: {list(factories)} | prior trials: {prior}")
+    print(f"models: {list(factories)} | prior trials: {prior} | neutralize: {neut or 'off'}")
 
     res = run_walk_forward(panel, factories, cfg, dataset_biases=biases,
                            n_prior_trials=prior,
