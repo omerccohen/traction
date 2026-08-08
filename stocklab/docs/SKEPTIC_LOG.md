@@ -214,3 +214,25 @@ ICs (BASE ridge +0.041 here vs ~0 on the honest 500-name universe) —
 survivorship in miniature; only the within-universe DELTA is meaningful.
 
 Ledger after round 4: **82 trials.**
+
+### Field-level effects (experiments/field_effects) — user hypothesis
+"overall sentiment of the specific field (e.g. SanDisk and memory chips)"
+
+Two testable forms, both run on iteration folds, holdout sealed:
+- **A. Sector momentum** (355 GICS-mapped names, 11 sectors, leave-one-out
+  peer trailing returns): univariate sector-momentum IC **-0.0145**
+  (t -1.21) — sector trends mean-reverted in this window (2016 rotations);
+  A/B deltas -0.001..-0.006 (worse with the features, inside noise).
+- **B. Peer news sentiment** (33 names, leave-one-out field news, semis =
+  AMD/NVDA/INTC/QCOM/AVGO/AMAT): univariate peer-news IC **-0.0190**
+  (t -1.21); SEMIS-only anecdote (n=6) **-0.0222**; A/B ridge +0.0004,
+  lgbm -0.016. The field's news does not predict its members at lag-1.
+
+Literature reconciliation: Moskowitz-Grinblatt industry momentum is a
+MONTHLY effect measured on 1963-1995 data and weakened post-publication;
+Cohen-Frazzini spillovers concentrate in less-followed small caps. Nulls
+in the most-covered mega-caps at 5d horizon confirm, not contradict, the
+arbitrage of published effects. SanDisk itself is absent from the panel
+(acquired 2016 — deleted by the dataset's survivorship bias).
+
+Ledger after field effects: **90 trials.**

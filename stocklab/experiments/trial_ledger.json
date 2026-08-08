@@ -1,5 +1,5 @@
 {
-  "total_trials": 82,
+  "total_trials": 90,
   "runs": [
     {
       "at": "2026-08-07T23:55:00+00:00",
@@ -141,6 +141,15 @@
         "perstock_news_ab"
       ],
       "n_new_trials": 5,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T17:42:14.606982+00:00",
+      "out": "experiments/field_effects",
+      "models": [
+        "field_effects"
+      ],
+      "n_new_trials": 8,
       "include_holdout": false
     }
   ]
