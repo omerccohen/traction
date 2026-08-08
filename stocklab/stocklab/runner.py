@@ -99,7 +99,11 @@ def _walk_forward_ensemble(
                     continue
                 s_prior = pd.concat(have)
                 ic = _quick_ic(s_prior, fwd_ret.loc[s_prior.index.intersection(fwd_ret.index)])
-                if np.isfinite(ic) and (not np.isfinite(base_ic) or ic > base_ic):
+                # bar = max(baseline, 0): in a crash window the baseline can be
+                # deeply negative, and "less negative than -0.03" must not admit
+                # a negative-IC model (round-2 review recommendation)
+                bar = max(base_ic, 0.0) if np.isfinite(base_ic) else 0.0
+                if np.isfinite(ic) and ic > bar:
                     admitted.append(name)
         else:
             admitted = list(candidates)
@@ -498,6 +502,11 @@ def result_to_markdown(res: ExperimentResult, title: str) -> str:
     lines.append("")
     lines += _signal_table(res.signal_reports, order)
     lines.append("")
+    lines.append("*Rows are NOT all on the same window: the ensemble starts at fold 1 "
+                 "(walk-forward admission needs prior-fold evidence) and sequence models "
+                 "lose a lookback warm-up — compare via the `n days` column, and only "
+                 "compare models pairwise on their overlapping days.*")
+    lines.append("")
 
     lines.append("## IC by horizon (days)")
     lines.append("")
@@ -567,7 +576,8 @@ def result_to_markdown(res: ExperimentResult, title: str) -> str:
                  if y in bt.by_year else "—") for y in years
             )
             lines.append(f"| {name} | {row} |")
-        lines.append("  (cells: ann return / Sharpe)")
+        lines.append("  (cells: ann return / Sharpe; edge years are CALENDAR-YEAR FRAGMENTS "
+                 "clipped to the OOS window, and stubs under 40 days are omitted)")
         lines.append("")
 
     lines.append("## Skeptic reports")

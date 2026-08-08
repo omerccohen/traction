@@ -93,7 +93,7 @@ def compute_stock_features(panel: Panel) -> dict[str, pd.DataFrame]:
     out["mom_vol_scaled"] = out["mom_12_1"] / (out["vol_63"] + 1e-6)
 
     # consistency: share of positive non-overlapping 21d blocks in the 12-1
-    # window (12 blocks ending 21d ago) — "steady" vs "one-jump" momentum
+    # window (11 blocks spanning t-252..t-21) — "steady" vs "one-jump" momentum
     pos_month = (c.pct_change(21) > 0).astype(float)
     out["mom_consistency"] = (
         sum(pos_month.shift(21 * i) for i in range(1, 12)) / 11.0

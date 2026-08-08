@@ -206,7 +206,7 @@ def signal_report(
         ic_mean=float(ic.mean()),
         ic_std=float(ic.std()),
         icir=float(ic.mean() / (ic.std() + 1e-12)),
-        ic_tstat_nw=newey_west_tstat(ic, lags=horizon),
+        ic_tstat_nw=newey_west_tstat(ic, lags=2 * horizon),
         ic_positive_share=float((ic > 0).mean()),
         n_days=int(len(ic)),
         quantile_returns=quantile_returns,

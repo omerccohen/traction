@@ -102,3 +102,50 @@ test suite (26 tests) and a clean re-run (`experiments/v2_baselines_fixed`).
   canary 1.000). Baselines on the iteration window remain honestly null
   (momentum -0.022, ridge -0.014, LightGBM -0.006) — early 2016 was a
   momentum crash and the pipeline reports it as such.
+
+---
+
+## Round 2 — adversarial review of the RESULTS (v2/v3/v4 + sweep)
+
+A results-skeptic agent recomputed every headline number independently
+(scipy on the raw bundled prices and the shipped score files, no repo metric
+code) and attacked the interpretation and the plan. Full transcript summary:
+
+### Verified clean (with receipts)
+
+- **Sign-error hypothesis REFUTED four ways.** A label inversion would leave
+  the fit-free momentum baseline untouched while flipping learned models
+  (trained on +0.035-IC 2014-15 data they'd have learned ANTI-momentum and
+  scored positive in 2016); a return inversion contradicts the raw data; a
+  feature inversion would split baseline from learners; a metric inversion
+  is excluded by exact independent reproduction (all reported ICs matched
+  to 4 decimals). Raw-data yearly momentum ICs: 2014 +0.015, 2015 +0.065,
+  **2016 -0.049**, 2017 +0.023, Jan-2018 +0.098 — sign structure varying by
+  year cannot come from a global inversion, and 2016 matches the external
+  record (worst US momentum year since 2009, Ken French UMD ~ -20%).
+- **IC ↔ P&L coherence exact**: Grinold-Kahn arithmetic reproduces the
+  backtest gross to within measurement, the cost drag to the decimal
+  (0.1256 turnover × 252 × 10 bps = 3.17%/yr), and the hand-computed NW
+  t equals the reported one. "t=-0.99 but -35% in 2016" is one fact, not a
+  contradiction: one se of IC IS ±12%/yr at this dispersion.
+- **"All seven negative" is a P≈0.26 event** under a zero-signal null with
+  the measured 0.685 mean pairwise IC correlation (~1.4-1.7 effective
+  independent bets; moving-block bootstrap B=20k). It deserves no narrative.
+- **mlp-vs-lightgbm ordering is noise** (paired NW t -1.58, sign flips
+  across folds; no model distinguishable from the free baseline either).
+- Ensemble admission arithmetic, determinism across runs (byte-identical
+  score files), forced-exit counts, cost asymmetries: all verified coherent.
+
+### Findings and dispositions
+
+| # | Finding | Disposition |
+|---|---|---|
+| R2-1 | **NW lags fix recorded in round 1 was in the docs but NOT in the code** (metrics.py still passed lags=horizon). Numeric impact negligible here, but a "verified" fix missing from code is a process failure. | Fixed (lags=2×horizon); full grep audit of all 12 round-1 fixes run — all present. |
+| R2-2 | Trial ledger never backfilled v1's pre-ledger trials. | Backfilled +4 (3 models + 1 nominal for the fold-layout change); total 36 before the final run. |
+| R2-3 | v3's blanket narrative "deep nets amplified the momentum bet" is half wrong: in the crash quarter itself LightGBM scored +0.092; LightGBM's losses are 2017-concentrated (a decaying 1d effect), a different failure mode. | Narrative corrected here and in the final report. |
+| R2-4 | v4 confounds the new features with neutralization (one bundled step). | Accepted as one design step; no ablation trials will be spent (2^4 noise-mining refused). ~60% of the momentum book's 2016 loss was un-hedged beta — v4's improvement is precisely the predicted de-beta effect, and at t=0.66 it is a noise-level positive, not "an edge revealed". |
+| R2-5 | Ensemble admission could admit negative-IC members when the baseline was more negative. | Bar raised to max(baseline, 0). |
+| R2-6 | Horizon sweep's expected best-of-N under pure noise ≈ +0.014..+0.022 IC — a manufactured winner. | Pre-registered rule applied: no switch without paired NW t≥2 vs h=5 (observed deltas t<1) → **h=5 kept**. |
+| R2-7 | Holdout has ~9-17% power to confirm a realistic edge; Jan-2018 is a momentum melt-up ending at the data boundary (Feb-2018 reversal missing). | docs/PREREGISTRATION.md commits the primary config, decision rule, power statement, per-month + drop-Jan-2018 sensitivities, and the exact null/positive wording BEFORE opening the lockbox. |
+| R2-8 | Report presentation: ensemble rows cover fewer days than others; edge "years" are calendar fragments. | Annotations added to the report generator. |
+| R2-9 | mom_consistency comment said 12 blocks; code (correctly) uses 11. | Comment fixed. |
