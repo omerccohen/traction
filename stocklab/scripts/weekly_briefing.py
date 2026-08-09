@@ -66,7 +66,8 @@ def load_field_config(tickers) -> tuple[dict[str, list[str]], str]:
     """Returns (fields, warning_banner). NEVER raises: a user-editable file
     must not be able to kill the weekly run (audit F9)."""
     cfgp = ROOT / "fields.yml"
-    sectors_csv = ROOT / "data_cache" / "sp500_sectors.csv"
+    broad = ROOT / "data_cache" / "universe" / "broad_sectors.csv"
+    sectors_csv = broad if broad.exists() else ROOT / "data_cache" / "sp500_sectors.csv"
     warn = ""
     try:
         cfg = (yaml.safe_load(cfgp.read_text()) or {}) if cfgp.exists() else {}

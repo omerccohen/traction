@@ -526,7 +526,7 @@ def update_from_network(
     tickers: list[str],
     default_start: str = "2018-01-01",
     source_order: tuple = ("stockanalysis", "stooq", "yahoo"),
-    max_tickers_per_run: int = 600,
+    max_tickers_per_run: int = 4000,
     pause_s: float = 0.4,
 ) -> UpdateReport:
     rep = UpdateReport(started_at=datetime.now(timezone.utc).isoformat(),

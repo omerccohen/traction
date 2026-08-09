@@ -28,7 +28,16 @@ STORE = ROOT / "data_cache" / "live"
 SECTORS = ROOT / "data_cache" / "sp500_sectors.csv"
 
 
+BROAD = ROOT / "data_cache" / "universe" / "universe_tickers.txt"
+
+
 def universe() -> list[str]:
+    # broad NYSE+Nasdaq+AMEX universe (liquid operating companies) when present,
+    # else the S&P 500 sector map, else the bundled tickers
+    if BROAD.exists():
+        syms = [s.strip() for s in BROAD.read_text().splitlines() if s.strip()]
+        if syms:
+            return sorted(set(syms))
     if SECTORS.exists():
         return sorted(pd.read_csv(SECTORS)["Symbol"].dropna().unique().tolist())
     from stocklab.data.loaders import load_bundled
