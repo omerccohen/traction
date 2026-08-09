@@ -1,0 +1,85 @@
+{
+  "n_asof_dates": 44,
+  "n_obs": 2068,
+  "asof_range": [
+    "2024-08-07",
+    "2026-05-07"
+  ],
+  "universe": 501,
+  "n_fields": 47,
+  "H1_attention_predicts_fwd_ret21": {
+    "mean_ic": 0.01415692725159655,
+    "n_dates": 44,
+    "nw_t": 0.39224456663610047
+  },
+  "H1_attention_predicts_fwd_ret63": {
+    "mean_ic": 0.10795875282565981,
+    "n_dates": 44,
+    "nw_t": 3.8823038952724462
+  },
+  "H2_vol_pctile_predicts_fwd_vol": {
+    "mean_ic": 0.1216377639710504,
+    "n_dates": 44,
+    "nw_t": 2.8677861785948964
+  },
+  "H2_disp_pctile_predicts_fwd_disp": {
+    "mean_ic": 0.13831297069846188,
+    "n_dates": 44,
+    "nw_t": 3.5760718085941376
+  },
+  "H4_trend_predicts_fwd_ret21": {
+    "mean_ic": 0.10573593505236895,
+    "n_dates": 44,
+    "nw_t": 1.9138256341243207
+  },
+  "H4_trend_predicts_fwd_ret63": {
+    "mean_ic": 0.06383347746060526,
+    "n_dates": 44,
+    "nw_t": 0.8423235225755139
+  },
+  "H3_character_forward_behavior": {
+    "DISPERSION": {
+      "n": 211,
+      "fwd_ret_21_demeaned_mean": 0.0027,
+      "fwd_ret_63_demeaned_mean": 0.02,
+      "fwd_ret_21_raw_mean": 0.0017,
+      "fwd_vol_21_mean": 0.2254
+    },
+    "MIXED": {
+      "n": 1048,
+      "fwd_ret_21_demeaned_mean": 0.0,
+      "fwd_ret_63_demeaned_mean": -0.003,
+      "fwd_ret_21_raw_mean": 0.0157,
+      "fwd_vol_21_mean": 0.2046
+    },
+    "MOMENTUM": {
+      "n": 175,
+      "fwd_ret_21_demeaned_mean": 0.0078,
+      "fwd_ret_63_demeaned_mean": 0.0174,
+      "fwd_ret_21_raw_mean": -0.0107,
+      "fwd_vol_21_mean": 0.2422
+    },
+    "QUIET": {
+      "n": 292,
+      "fwd_ret_21_demeaned_mean": -0.0089,
+      "fwd_ret_63_demeaned_mean": -0.0217,
+      "fwd_ret_21_raw_mean": 0.0175,
+      "fwd_vol_21_mean": 0.1916
+    },
+    "STRESS": {
+      "n": 195,
+      "fwd_ret_21_demeaned_mean": 0.0026,
+      "fwd_ret_63_demeaned_mean": 0.0234,
+      "fwd_ret_21_raw_mean": 0.0195,
+      "fwd_vol_21_mean": 0.33
+    },
+    "VOLATILE": {
+      "n": 147,
+      "fwd_ret_21_demeaned_mean": 0.0008,
+      "fwd_ret_63_demeaned_mean": -0.0156,
+      "fwd_ret_21_raw_mean": 0.0236,
+      "fwd_vol_21_mean": 0.2068
+    }
+  },
+  "sample_mean_fwd_ret21_all_fields": 0.0132
+}
