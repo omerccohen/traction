@@ -1,0 +1,205 @@
+{
+  "as_of": "2026-08-07",
+  "source": "live",
+  "universe_size": 501,
+  "regime": {
+    "vol": {
+      "value": 14.9,
+      "pctile": 0.21,
+      "band": "calm",
+      "age_days": 2
+    },
+    "trend": {
+      "value": 0.1882,
+      "band": "uptrend",
+      "age_days": 39
+    },
+    "valuation": {
+      "value": 30.81,
+      "pctile": 0.59,
+      "age_days": 1073
+    },
+    "triggered": [],
+    "elevated": []
+  },
+  "top_fields": [
+    {
+      "name": "Specialty Chemicals [sub]",
+      "n_members": 6,
+      "attention": 0.767,
+      "character": "QUIET",
+      "headline": "activity draining \u2014 calm, being ignored",
+      "trend_21d": 0.068,
+      "volatility_pctile": 0.0873015873015873,
+      "dispersion_pctile": 0.7420634920634921,
+      "cohesion_pctile": 0.0,
+      "movers": [
+        "ALB +2%",
+        "PPG +3%",
+        "IFF +9%",
+        "SHW +11%"
+      ],
+      "flags": "depressed: volatility, volume_influx, cohesion"
+    },
+    {
+      "name": "Semiconductor Materials & Equipment [sub]",
+      "n_members": 5,
+      "attention": 0.732,
+      "character": "STRESS",
+      "headline": "under pressure \u2014 falling with elevated volatility",
+      "trend_21d": -0.065,
+      "volatility_pctile": 0.8611111111111112,
+      "dispersion_pctile": 0.7023809523809523,
+      "cohesion_pctile": 0.11764705882352941,
+      "movers": [
+        "KLAC -14%",
+        "LRCX -12%",
+        "Q -4%",
+        "TER +5%"
+      ],
+      "flags": "depressed: trend_21d, volume_influx"
+    },
+    {
+      "name": "Information Technology",
+      "n_members": 73,
+      "attention": 0.719,
+      "character": "DISPERSION",
+      "headline": "splitting into winners and losers (stock-picker's phase)",
+      "trend_21d": 0.0389,
+      "volatility_pctile": 0.8928571428571429,
+      "dispersion_pctile": 0.9047619047619048,
+      "cohesion_pctile": 0.0,
+      "movers": [
+        "SNDK -35%",
+        "WDC -25%",
+        "ZBRA +38%",
+        "IT +40%"
+      ],
+      "flags": "elevated: dispersion; depressed: volume_influx, cohesion"
+    },
+    {
+      "name": "Property & Casualty Insurance [sub]",
+      "n_members": 8,
+      "attention": 0.712,
+      "character": "MOMENTUM",
+      "headline": "attracting money on a rising trend",
+      "trend_21d": 0.0204,
+      "volatility_pctile": 0.9365079365079365,
+      "dispersion_pctile": 0.9880952380952381,
+      "cohesion_pctile": 0.8823529411764706,
+      "movers": [
+        "PGR -6%",
+        "ACGL -3%",
+        "ALL +7%",
+        "TRV +14%"
+      ],
+      "flags": "elevated: volatility, dispersion"
+    },
+    {
+      "name": "Insurance Brokers [sub]",
+      "n_members": 6,
+      "attention": 0.696,
+      "character": "MIXED",
+      "headline": "mixed signals",
+      "trend_21d": 0.0543,
+      "volatility_pctile": 0.8412698412698413,
+      "dispersion_pctile": 0.9801587301587301,
+      "cohesion_pctile": 0.9019607843137255,
+      "movers": [
+        "AJG -2%",
+        "AON +1%",
+        "MRSH +7%",
+        "WTW +19%"
+      ],
+      "flags": "elevated: dispersion, cohesion"
+    },
+    {
+      "name": "Technology Hardware, Storage & Peripherals [sub]",
+      "n_members": 9,
+      "attention": 0.68,
+      "character": "DISPERSION",
+      "headline": "splitting into winners and losers (stock-picker's phase)",
+      "trend_21d": -0.0151,
+      "volatility_pctile": 0.9206349206349206,
+      "dispersion_pctile": 0.9047619047619048,
+      "cohesion_pctile": 0.058823529411764705,
+      "movers": [
+        "SNDK -35%",
+        "WDC -25%",
+        "NTAP +10%",
+        "HPQ +25%"
+      ],
+      "flags": "elevated: volatility, dispersion; depressed: cohesion"
+    }
+  ],
+  "cross_cutting": [
+    "Breadth: 2/6 top fields are in a stock-picker's phase (names decoupling) \u2014 a selection market, not a beta market."
+  ],
+  "dislocations": [
+    {
+      "ticker": "IT",
+      "move_21d": 0.4,
+      "field": "Information Technology"
+    },
+    {
+      "ticker": "ZBRA",
+      "move_21d": 0.38,
+      "field": "Information Technology"
+    },
+    {
+      "ticker": "SNDK",
+      "move_21d": -0.35,
+      "field": "Information Technology"
+    },
+    {
+      "ticker": "PLTR",
+      "move_21d": 0.33,
+      "field": "Application Software [sub]"
+    },
+    {
+      "ticker": "APP",
+      "move_21d": -0.33,
+      "field": "Communication Services"
+    },
+    {
+      "ticker": "PYPL",
+      "move_21d": 0.3,
+      "field": "Financials"
+    },
+    {
+      "ticker": "WDAY",
+      "move_21d": 0.3,
+      "field": "Application Software [sub]"
+    },
+    {
+      "ticker": "TTD",
+      "move_21d": -0.3,
+      "field": "Communication Services"
+    },
+    {
+      "ticker": "MSFT",
+      "move_21d": 0.3,
+      "field": "Systems Software [sub]"
+    },
+    {
+      "ticker": "LDOS",
+      "move_21d": 0.29,
+      "field": "Industrials"
+    },
+    {
+      "ticker": "GRMN",
+      "move_21d": 0.27,
+      "field": "Consumer Discretionary"
+    },
+    {
+      "ticker": "WDC",
+      "move_21d": -0.25,
+      "field": "Information Technology"
+    }
+  ],
+  "caveats": [
+    "'Attention' marks unusual activity, NOT direction \u2014 field momentum's forward IC on this data measured ~zero.",
+    "This is research triage (where to look), not buy/sell advice.",
+    "Universe is current-constituent (survivorship-flagged); corporate actions handled heuristically, not from an exact event feed."
+  ]
+}
