@@ -62,6 +62,18 @@ indicators:
       elevated: "pctile > 0.9"
       triggered: "pctile > 0.97"
 
+  sp500_trend_12m:
+    registered_on: 2026-08-09
+    source: github_csv
+    series_id: https://raw.githubusercontent.com/datasets/s-and-p-500/main/data/data.csv
+    date_col: Date
+    value_col: SP500
+    description: S&P 500 12-month trend (monthly level, current); negative = downtrend regime — the mechanical trend layer (AQR century-of-evidence), reaction not forecast
+    transform: yoy
+    thresholds:
+      elevated: "value < 0"
+      triggered: "value < -0.10"
+
   # ---- macro regime (the mechanical, non-forecast layer) -------------------
   us10y_yield:
     registered_on: 2026-08-08
