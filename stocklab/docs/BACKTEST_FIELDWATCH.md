@@ -100,3 +100,32 @@ activity and asking the right supply-demand question — is validated. Its job i
 constituents (survivorship-flagged), ~7 independent quarters at the 63d
 horizon. These results describe this sample; they are not a promise about
 other regimes. Reproduce with `python scripts/backtest_fieldwatch.py`.*
+
+---
+
+## Broad-universe replication (2,969 stocks, 128 fields) — the verdict holds, and gets *cleaner*
+
+Re-ran the identical test on the full liquid US universe: **2,969 companies,
+128 fields, 5,632 (date × field) observations**, same 44 as-of dates. This is a
+much harder, more honest test — 2.7× the fields, no S&P survivorship tilt.
+
+| what was tested | S&P (47 fields) | Broad (128 fields) | read |
+|---|---|---|---|
+| H1 attention → 21d return | IC +0.014, t 0.39 | IC +0.013, **t 0.67** | still a clean **zero** ✓ |
+| H1 attention → 63d return | IC +0.108, **t 3.88** | IC +0.027, **t 1.13** | **the "signal" collapsed to noise** |
+| H2 vol state → forward vol | IC +0.122, t 2.87 | IC +0.109, **t 4.13** | real job, **stronger** ✓ |
+| H2 dispersion → forward disp | IC +0.138, t 3.58 | IC +0.056, t 1.54 | weaker, now marginal |
+| H4 trend → 21d return | IC +0.106, t 1.9 | IC +0.070, t 2.43 | weak momentum, consistent |
+
+**The headline:** the one number this doc flagged as *"a single-regime artifact,
+not an edge"* (the 63d attention IC, t 3.88 on the S&P set) **fell apart when the
+universe broadened — t 3.88 → t 1.13.** Broadening the test *removed a false
+signal*, exactly as predicted. Meanwhile the mechanism's actual job —
+volatility-regime persistence — got **more** significant (t 2.87 → 4.13). H3
+character labels replicate too: STRESS fields carry the highest forward vol
+(0.348) and QUIET the lowest (0.233); the return-direction tilts stay tiny.
+
+**Conclusion:** the honest result is not fragile. On 6× the universe it is the
+same and better — *cannot predict direction, reliably reads volatility regime.*
+Reproduce with `python scripts/backtest_fieldwatch.py` (auto-detects
+`data_cache/universe/broad_sectors.csv`).
