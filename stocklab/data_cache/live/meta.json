@@ -1,0 +1,4 @@
+{
+  "backfill_before": "2026-08-09",
+  "note": "rows dated before first live update inherit current-constituent survivorship bias (audit note)"
+}
