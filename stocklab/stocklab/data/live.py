@@ -25,6 +25,7 @@ import fcntl
 import io
 import json
 import os
+import subprocess
 import time
 import urllib.request
 import urllib.error
@@ -133,8 +134,63 @@ def fetch_yahoo(ticker: str, start: str | None = None) -> tuple[pd.DataFrame, pd
     return df[STORE_COLUMNS], actions
 
 
-SOURCES = {"stooq": fetch_stooq, "yahoo": fetch_yahoo}
+def _http_get_curl(url: str, timeout: int = 15) -> bytes:
+    """curl transport — this environment's egress proxy is configured for curl
+    (CURL_CA_BUNDLE set); urllib times out through it. HTTP/1.1 forced (proxy
+    returns 'HTTP/2 stream not closed cleanly' otherwise). Verified 2026-08-09."""
+    r = subprocess.run(
+        ["curl", "-sS", "--fail", "--http1.1", "-m", str(timeout),
+         "-H", "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+               "(KHTML, like Gecko) Chrome/126.0 Safari/537.36", url],
+        capture_output=True, timeout=timeout + 8,
+    )
+    if r.returncode != 0:
+        raise RuntimeError(f"curl failed ({r.returncode}) for {url}")
+    return r.stdout
+
+
+def fetch_stockanalysis(ticker: str, start: str | None = None
+                        ) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """stockanalysis.com keyless daily OHLCV. Reachable and CURRENT where the
+    vendors are blocked/challenged (yahoo 429s the shared egress IP; stooq
+    serves a bot-challenge). Verified 2026-08-09: 503-ticker coverage incl.
+    dotted symbols, data through T-2, 5y history via range=5Y.
+
+    Canonical raw prints: uses 'c' (raw close) + o/h/l/v; the JSON also carries
+    'a' (adjusted close) which we ignore to keep the store split-continuity to
+    the load-time corporate-action machinery, consistent with the other
+    adapters. Data is returned newest-first; we sort ascending."""
+    # pick the smallest range that covers `start` (fewer bytes for daily jobs)
+    span_days = (datetime.now(timezone.utc) - pd.Timestamp(start or "2018-01-01")
+                 .tz_localize("UTC")).days if start else 3650
+    rng = "1M" if span_days <= 25 else ("1Y" if span_days <= 366
+          else ("5Y" if span_days <= 1830 else "10Y"))
+    sym = ticker.replace(".", "-")   # stockanalysis uses BRK-B style
+    url = (f"https://stockanalysis.com/api/symbol/s/{sym}/history"
+           f"?range={rng}&period=Daily")
+    data = json.loads(_http_get_curl(url))
+    rows = data.get("data")
+    if not rows:
+        raise ValueError(f"stockanalysis: empty payload for {ticker} "
+                         f"({str(data)[:80]})")
+    df = pd.DataFrame(rows)
+    df = df.rename(columns={"t": "date", "o": "open", "h": "high",
+                            "l": "low", "c": "close", "v": "volume"})
+    df["date"] = pd.to_datetime(df["date"])
+    df["ticker"] = ticker
+    for c in ("open", "high", "low", "close", "volume"):
+        if c not in df.columns:
+            df[c] = np.nan
+    df = df.sort_values("date")
+    if start:
+        df = df[df["date"] >= pd.Timestamp(start)]
+    actions = pd.DataFrame(columns=ACTION_COLUMNS)   # not provided by this source
+    return df[STORE_COLUMNS], actions
+
+
+SOURCES = {"stockanalysis": fetch_stockanalysis, "stooq": fetch_stooq, "yahoo": fetch_yahoo}
 PROBE_URLS = {
+    "stockanalysis": "https://stockanalysis.com/api/symbol/s/AAPL/history?range=1M&period=Daily",
     "stooq": "https://stooq.com/q/d/l/?s=aapl.us&i=d&d1=20240101&d2=20240110",
     "yahoo": "https://query1.finance.yahoo.com/v8/finance/chart/AAPL?range=5d&interval=1d",
 }
@@ -148,11 +204,14 @@ def probe_sources(timeout: int = 8) -> dict[str, bool]:
     out = {}
     for name, url in PROBE_URLS.items():
         try:
-            body = _http_get(url, timeout=timeout)
+            getter = _http_get_curl if name == "stockanalysis" else _http_get
+            body = getter(url, timeout=timeout)
             if name == "stooq":
                 out[name] = body[:5] == b"Date," or b"Date,Open" in body[:200]
             elif name == "yahoo":
                 out[name] = b'"chart"' in body[:200]
+            elif name == "stockanalysis":
+                out[name] = b'"data"' in body[:200] and b'"t"' in body[:400]
             else:
                 out[name] = True
         except Exception:
@@ -466,7 +525,7 @@ def update_from_network(
     store: PriceStore,
     tickers: list[str],
     default_start: str = "2018-01-01",
-    source_order: tuple = ("stooq", "yahoo"),
+    source_order: tuple = ("stockanalysis", "stooq", "yahoo"),
     max_tickers_per_run: int = 600,
     pause_s: float = 0.4,
 ) -> UpdateReport:
