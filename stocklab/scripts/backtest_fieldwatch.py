@@ -84,7 +84,9 @@ def _field_fwd_dispersion(close: pd.DataFrame, members, start, end) -> float:
 def run() -> dict:
     panel = load_live_panel()
     dates = panel.dates
-    sectors = pd.read_csv(ROOT / "data_cache" / "sp500_sectors.csv").set_index("Symbol")
+    _broad = ROOT / "data_cache" / "universe" / "broad_sectors.csv"
+    _sf = _broad if _broad.exists() else ROOT / "data_cache" / "sp500_sectors.csv"
+    sectors = pd.read_csv(_sf).set_index("Symbol")
     fields = build_fields(list(panel.tickers), sectors, min_members=5)
 
     # as-of grid: every ~10 trading days over the last 2 years, leaving room
