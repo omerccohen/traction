@@ -1,7 +1,7 @@
 {
   "as_of": "2026-08-07",
   "source": "live",
-  "universe_size": 501,
+  "universe_size": 2969,
   "regime": {
     "vol": {
       "value": 14.9,
@@ -24,177 +24,178 @@
   },
   "top_fields": [
     {
-      "name": "Specialty Chemicals [sub]",
-      "n_members": 6,
-      "attention": 0.767,
-      "character": "QUIET",
-      "headline": "activity draining \u2014 calm, being ignored",
-      "trend_21d": 0.068,
-      "volatility_pctile": 0.0873015873015873,
-      "dispersion_pctile": 0.7420634920634921,
+      "name": "Utilities",
+      "n_members": 108,
+      "attention": 0.884,
+      "character": "DISPERSION",
+      "headline": "splitting into winners and losers (stock-picker's phase)",
+      "trend_21d": -0.0277,
+      "volatility_pctile": 0.7777777777777778,
+      "dispersion_pctile": 0.9920634920634921,
       "cohesion_pctile": 0.0,
       "movers": [
-        "ALB +2%",
-        "PPG +3%",
-        "IFF +9%",
-        "SHW +11%"
+        "ADTN -44%",
+        "FISN -19%",
+        "CEG +8%",
+        "FN +16%"
       ],
-      "flags": "depressed: volatility, volume_influx, cohesion"
+      "flags": "elevated: dispersion; depressed: trend_21d, volume_influx, cohesion"
     },
     {
-      "name": "Semiconductor Materials & Equipment [sub]",
-      "n_members": 5,
-      "attention": 0.732,
+      "name": "Electric Utilities: Central [sub]",
+      "n_members": 45,
+      "attention": 0.884,
       "character": "STRESS",
       "headline": "under pressure \u2014 falling with elevated volatility",
-      "trend_21d": -0.065,
-      "volatility_pctile": 0.8611111111111112,
-      "dispersion_pctile": 0.7023809523809523,
-      "cohesion_pctile": 0.11764705882352941,
-      "movers": [
-        "KLAC -14%",
-        "LRCX -12%",
-        "Q -4%",
-        "TER +5%"
-      ],
-      "flags": "depressed: trend_21d, volume_influx"
-    },
-    {
-      "name": "Information Technology",
-      "n_members": 73,
-      "attention": 0.719,
-      "character": "DISPERSION",
-      "headline": "splitting into winners and losers (stock-picker's phase)",
-      "trend_21d": 0.0389,
-      "volatility_pctile": 0.8928571428571429,
-      "dispersion_pctile": 0.9047619047619048,
+      "trend_21d": -0.0273,
+      "volatility_pctile": 0.9642857142857143,
+      "dispersion_pctile": 0.9880952380952381,
       "cohesion_pctile": 0.0,
       "movers": [
-        "SNDK -35%",
-        "WDC -25%",
-        "ZBRA +38%",
-        "IT +40%"
+        "FISN -19%",
+        "NRG -16%",
+        "OTTR +7%",
+        "CEG +8%"
       ],
-      "flags": "elevated: dispersion; depressed: volume_influx, cohesion"
+      "flags": "elevated: volatility, dispersion; depressed: volume_influx, cohesion"
     },
     {
-      "name": "Property & Casualty Insurance [sub]",
-      "n_members": 8,
-      "attention": 0.712,
-      "character": "MOMENTUM",
-      "headline": "attracting money on a rising trend",
-      "trend_21d": 0.0204,
-      "volatility_pctile": 0.9365079365079365,
-      "dispersion_pctile": 0.9880952380952381,
-      "cohesion_pctile": 0.8823529411764706,
-      "movers": [
-        "PGR -6%",
-        "ACGL -3%",
-        "ALL +7%",
-        "TRV +14%"
-      ],
-      "flags": "elevated: volatility, dispersion"
-    },
-    {
-      "name": "Insurance Brokers [sub]",
-      "n_members": 6,
-      "attention": 0.696,
-      "character": "MIXED",
-      "headline": "mixed signals",
-      "trend_21d": 0.0543,
-      "volatility_pctile": 0.8412698412698413,
-      "dispersion_pctile": 0.9801587301587301,
-      "cohesion_pctile": 0.9019607843137255,
-      "movers": [
-        "AJG -2%",
-        "AON +1%",
-        "MRSH +7%",
-        "WTW +19%"
-      ],
-      "flags": "elevated: dispersion, cohesion"
-    },
-    {
-      "name": "Technology Hardware, Storage & Peripherals [sub]",
-      "n_members": 9,
-      "attention": 0.68,
+      "name": "Finance/Investors Services [sub]",
+      "n_members": 16,
+      "attention": 0.881,
       "character": "DISPERSION",
       "headline": "splitting into winners and losers (stock-picker's phase)",
-      "trend_21d": -0.0151,
-      "volatility_pctile": 0.9206349206349206,
-      "dispersion_pctile": 0.9047619047619048,
-      "cohesion_pctile": 0.058823529411764705,
+      "trend_21d": 0.0524,
+      "volatility_pctile": 0.9642857142857143,
+      "dispersion_pctile": 0.9087301587301587,
+      "cohesion_pctile": 0.09803921568627451,
       "movers": [
-        "SNDK -35%",
-        "WDC -25%",
-        "NTAP +10%",
-        "HPQ +25%"
+        "NMCO -3%",
+        "KYN -0%",
+        "MAIN +14%",
+        "CION +20%"
       ],
-      "flags": "elevated: volatility, dispersion; depressed: cohesion"
+      "flags": "elevated: trend_21d, volatility, dispersion; depressed: volume_influx, cohesion"
+    },
+    {
+      "name": "Engineering & Construction [sub]",
+      "n_members": 10,
+      "attention": 0.88,
+      "character": "STRESS",
+      "headline": "under pressure \u2014 falling with elevated volatility",
+      "trend_21d": -0.048,
+      "volatility_pctile": 0.9841269841269841,
+      "dispersion_pctile": 0.9920634920634921,
+      "cohesion_pctile": 0.09803921568627451,
+      "movers": [
+        "LMB -37%",
+        "AGX -13%",
+        "EME +4%",
+        "IESC +19%"
+      ],
+      "flags": "elevated: volatility, dispersion; depressed: volume_influx, cohesion"
+    },
+    {
+      "name": "Packaged Foods [sub]",
+      "n_members": 23,
+      "attention": 0.857,
+      "character": "DISPERSION",
+      "headline": "splitting into winners and losers (stock-picker's phase)",
+      "trend_21d": 0.0625,
+      "volatility_pctile": 0.8968253968253969,
+      "dispersion_pctile": 0.9880952380952381,
+      "cohesion_pctile": 0.0392156862745098,
+      "movers": [
+        "SMPL -15%",
+        "FLO -8%",
+        "FRPT +21%",
+        "UTZ +83%"
+      ],
+      "flags": "elevated: trend_21d, dispersion; depressed: cohesion"
+    },
+    {
+      "name": "Oil and Gas Field Machinery [sub]",
+      "n_members": 12,
+      "attention": 0.838,
+      "character": "DISPERSION",
+      "headline": "splitting into winners and losers (stock-picker's phase)",
+      "trend_21d": 0.1062,
+      "volatility_pctile": 0.9047619047619048,
+      "dispersion_pctile": 0.9523809523809523,
+      "cohesion_pctile": 0.0196078431372549,
+      "movers": [
+        "SEI -15%",
+        "FTI -1%",
+        "DNOW +29%",
+        "FET +53%"
+      ],
+      "flags": "elevated: volatility, dispersion; depressed: volume_influx, cohesion"
     }
   ],
   "cross_cutting": [
-    "Breadth: 2/6 top fields are in a stock-picker's phase (names decoupling) \u2014 a selection market, not a beta market."
+    "Breadth: 4/6 top fields are in a stock-picker's phase (names decoupling) \u2014 a selection market, not a beta market.",
+    "Stress cluster: Electric Utilities: Central [sub], Engineering & Construction [sub] under pressure together."
   ],
   "dislocations": [
     {
-      "ticker": "IT",
-      "move_21d": 0.4,
-      "field": "Information Technology"
+      "ticker": "UTZ",
+      "move_21d": 0.83,
+      "field": "Packaged Foods [sub]"
     },
     {
-      "ticker": "ZBRA",
-      "move_21d": 0.38,
-      "field": "Information Technology"
+      "ticker": "EFOR",
+      "move_21d": 0.74,
+      "field": "Professional Services [sub]"
     },
     {
-      "ticker": "SNDK",
-      "move_21d": -0.35,
-      "field": "Information Technology"
+      "ticker": "LIFE",
+      "move_21d": 0.68,
+      "field": "Specialty Insurers [sub]"
     },
     {
-      "ticker": "PLTR",
-      "move_21d": 0.33,
-      "field": "Application Software [sub]"
+      "ticker": "MATV",
+      "move_21d": 0.67,
+      "field": "Paper [sub]"
     },
     {
-      "ticker": "APP",
-      "move_21d": -0.33,
-      "field": "Communication Services"
+      "ticker": "TEAM",
+      "move_21d": 0.64,
+      "field": "Computer Software: Prepackaged Software [sub]"
     },
     {
-      "ticker": "PYPL",
-      "move_21d": 0.3,
-      "field": "Financials"
+      "ticker": "CDNA",
+      "move_21d": 0.6,
+      "field": "Medical Specialities [sub]"
     },
     {
-      "ticker": "WDAY",
-      "move_21d": 0.3,
-      "field": "Application Software [sub]"
+      "ticker": "WPP",
+      "move_21d": 0.59,
+      "field": "Advertising [sub]"
     },
     {
-      "ticker": "TTD",
-      "move_21d": -0.3,
-      "field": "Communication Services"
+      "ticker": "BLKB",
+      "move_21d": 0.57,
+      "field": "Computer Software: Prepackaged Software [sub]"
     },
     {
-      "ticker": "MSFT",
-      "move_21d": 0.3,
-      "field": "Systems Software [sub]"
+      "ticker": "NEWP",
+      "move_21d": 0.56,
+      "field": "Precious Metals [sub]"
     },
     {
-      "ticker": "LDOS",
-      "move_21d": 0.29,
-      "field": "Industrials"
+      "ticker": "PLSE",
+      "move_21d": 0.56,
+      "field": "Medical/Dental Instruments [sub]"
     },
     {
-      "ticker": "GRMN",
-      "move_21d": 0.27,
-      "field": "Consumer Discretionary"
+      "ticker": "RNG",
+      "move_21d": 0.54,
+      "field": "EDP Services [sub]"
     },
     {
-      "ticker": "WDC",
-      "move_21d": -0.25,
-      "field": "Information Technology"
+      "ticker": "FET",
+      "move_21d": 0.53,
+      "field": "Oil and Gas Field Machinery [sub]"
     }
   ],
   "caveats": [
