@@ -49,10 +49,24 @@ MAX_CONFLICT_DETAILS = 20
 # source adapters — RAW prints only; splits/dividends returned separately
 # ---------------------------------------------------------------------------
 
-def _http_get(url: str, timeout: int = 20) -> bytes:
-    req = urllib.request.Request(url, headers={"User-Agent": "stocklab/0.3"})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        return r.read()
+def _http_get(url: str, timeout: int = 20, retries_on_429: int = 3) -> bytes:
+    """GET with browser UA (yahoo 429s bot UAs — verified live) and
+    exponential backoff on 429 (verified: yahoo throttles bursts per IP)."""
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                      "(KHTML, like Gecko) Chrome/126.0 Safari/537.36"})
+    delay = 20.0
+    for attempt in range(retries_on_429 + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                return r.read()
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < retries_on_429:
+                time.sleep(delay)
+                delay *= 2
+                continue
+            raise
+    raise RuntimeError("unreachable")
 
 
 def _stooq_symbol(ticker: str) -> str:
@@ -127,11 +141,20 @@ PROBE_URLS = {
 
 
 def probe_sources(timeout: int = 8) -> dict[str, bool]:
+    """Content-validating probes: stooq answers its bot-challenge page with
+    HTTP 200, so a status-only probe selected a source whose every fetch
+    then failed (verified live 2026-08-09). A source is usable only if the
+    payload parses as what the adapter expects."""
     out = {}
     for name, url in PROBE_URLS.items():
         try:
-            _http_get(url, timeout=timeout)
-            out[name] = True
+            body = _http_get(url, timeout=timeout)
+            if name == "stooq":
+                out[name] = body[:5] == b"Date," or b"Date,Open" in body[:200]
+            elif name == "yahoo":
+                out[name] = b'"chart"' in body[:200]
+            else:
+                out[name] = True
         except Exception:
             out[name] = False
     return out

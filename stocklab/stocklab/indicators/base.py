@@ -14,7 +14,7 @@ source, the cache serves the last-good data, clearly aged.
 from __future__ import annotations
 
 import io
-import urllib.request
+import subprocess
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -28,10 +28,25 @@ CACHE_DIR = PKG_ROOT / "data_cache" / "indicators"
 REGISTRY = Path(__file__).resolve().parent / "registry.yml"
 
 
-def _http_get(url: str, timeout: int = 20) -> bytes:
-    req = urllib.request.Request(url, headers={"User-Agent": "stocklab/0.3"})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        return r.read()
+def _http_get(url: str, timeout: int = 15) -> bytes:
+    """Fetch via curl — the HTTP client this environment's egress proxy is
+    configured for (CURL_CA_BUNDLE is set; verified 2026-08-09: FRED/github
+    reachable via curl where Python urllib times out through the same proxy).
+    curl inherits HTTPS_PROXY and the CA bundle from the environment.
+
+    BEST-EFFORT + FAST: one bounded attempt. FRED is intermittently throttled
+    at the shared egress, so a miss must not hang the weekly briefing — the
+    vintage cache serves last-good data and the next run retries. HTTP/1.1
+    forced (proxy returns 'HTTP/2 stream not closed cleanly' otherwise)."""
+    r = subprocess.run(
+        ["curl", "-sS", "--fail", "--http1.1", "-m", str(timeout),
+         "-H", "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+               "(KHTML, like Gecko) Chrome/126.0 Safari/537.36", url],
+        capture_output=True, timeout=timeout + 8,
+    )
+    if r.returncode != 0:
+        raise RuntimeError(f"curl failed ({r.returncode}) for {url}")
+    return r.stdout
 
 
 def fetch_fred_csv(spec: dict) -> pd.DataFrame:
