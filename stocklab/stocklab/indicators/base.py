@@ -34,9 +34,9 @@ def _http_get(url: str, timeout: int = 20) -> bytes:
         return r.read()
 
 
-def fetch_fred_csv(series_id: str) -> pd.DataFrame:
+def fetch_fred_csv(spec: dict) -> pd.DataFrame:
     """FRED's keyless CSV endpoint. Returns columns [date, value]."""
-    url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}"
+    url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={spec['series_id']}"
     raw = _http_get(url)
     df = pd.read_csv(io.BytesIO(raw))
     df.columns = ["date", "value"]
@@ -45,7 +45,33 @@ def fetch_fred_csv(series_id: str) -> pd.DataFrame:
     return df.dropna()
 
 
-FETCHERS = {"fred": fetch_fred_csv}
+def fetch_github_csv(spec: dict) -> pd.DataFrame:
+    """Auto-updated CSV mirrors on raw.githubusercontent.com (datahub core
+    datasets et al.) — the one host the default network policy allows, and
+    several are refreshed by upstream GitHub Actions (VIX daily is current).
+
+    spec fields: series_id = raw URL, date_col, value_col, and
+    zero_as_missing (the Shiller dataset pads recent rows of derived columns
+    with 0.0 — impossible values for CPI/rates/PE10 — which would poison yoy
+    transforms if kept).
+    """
+    raw = _http_get(spec["series_id"])
+    df = pd.read_csv(io.BytesIO(raw))
+    date_col = spec.get("date_col", "date")
+    value_col = spec["value_col"]
+    if date_col not in df.columns or value_col not in df.columns:
+        raise ValueError(f"github_csv: columns {date_col!r}/{value_col!r} not in "
+                         f"{list(df.columns)[:8]}")
+    out = pd.DataFrame({
+        "date": pd.to_datetime(df[date_col]),
+        "value": pd.to_numeric(df[value_col], errors="coerce"),
+    })
+    if spec.get("zero_as_missing"):
+        out.loc[out["value"] == 0.0, "value"] = np.nan
+    return out.dropna()
+
+
+FETCHERS = {"fred": fetch_fred_csv, "github_csv": fetch_github_csv}
 
 
 @dataclass
@@ -66,6 +92,7 @@ class IndicatorStatus:
 class Indicator:
     def __init__(self, name: str, spec: dict):
         self.name = name
+        self.spec = dict(spec)
         self.source = spec["source"]
         self.series_id = spec["series_id"]
         self.description = spec.get("description", "")
@@ -86,7 +113,7 @@ class Indicator:
         series_asof() answers "what did we know on date X".
         """
         try:
-            new = FETCHERS[self.source](self.series_id)
+            new = FETCHERS[self.source](self.spec)
         except Exception:
             return "cache" if self.cache_path.exists() else "none"
         new = new.copy()

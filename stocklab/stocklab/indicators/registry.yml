@@ -7,6 +7,61 @@
 
 indicators:
 
+  # ---- LIVE NOW via auto-updated GitHub mirrors (network-policy-proof) -----
+  # datahub core datasets refresh via upstream GitHub Actions and are served
+  # from raw.githubusercontent.com — the one host the default policy allows.
+
+  vix_level:
+    registered_on: 2026-08-09
+    source: github_csv
+    series_id: https://raw.githubusercontent.com/datasets/finance-vix/main/data/vix-daily.csv
+    date_col: DATE
+    value_col: CLOSE
+    description: CBOE VIX close (daily, current); vol regime of the whole market
+    transform: level
+    thresholds:
+      elevated: "pctile > 0.8"
+      triggered: "pctile > 0.95"
+
+  us_cpi_yoy:
+    registered_on: 2026-08-09
+    source: github_csv
+    series_id: https://raw.githubusercontent.com/datasets/s-and-p-500/main/data/data.csv
+    date_col: Date
+    value_col: Consumer Price Index
+    zero_as_missing: true    # Shiller dataset pads recent derived columns with 0.0
+    description: US CPI yoy (Shiller monthly, lags a few months); inflation regime
+    transform: yoy
+    thresholds:
+      elevated: "value > 0.04"
+      triggered: "value > 0.06"
+
+  us10y_rate_monthly:
+    registered_on: 2026-08-09
+    source: github_csv
+    series_id: https://raw.githubusercontent.com/datasets/s-and-p-500/main/data/data.csv
+    date_col: Date
+    value_col: Long Interest Rate
+    zero_as_missing: true
+    description: 10y rate (Shiller monthly mirror of the FRED series); rate-shock watch
+    transform: yoy_diff
+    thresholds:
+      elevated: "value > 1.0"
+      triggered: "value > 1.5"
+
+  sp500_pe10:
+    registered_on: 2026-08-09
+    source: github_csv
+    series_id: https://raw.githubusercontent.com/datasets/s-and-p-500/main/data/data.csv
+    date_col: Date
+    value_col: PE10
+    zero_as_missing: true
+    description: Shiller CAPE (PE10); valuation-stretch regime (context, not timing)
+    transform: level
+    thresholds:
+      elevated: "pctile > 0.9"
+      triggered: "pctile > 0.97"
+
   # ---- macro regime (the mechanical, non-forecast layer) -------------------
   us10y_yield:
     registered_on: 2026-08-08

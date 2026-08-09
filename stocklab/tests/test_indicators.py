@@ -25,7 +25,8 @@ def test_registry_loads():
     inds = load_registry()
     names = [i.name for i in inds]
     assert "semis_industrial_production" in names and "hy_credit_spread" in names
-    assert all(i.source == "fred" for i in inds)
+    assert "vix_level" in names                      # live github_csv source
+    assert all(i.source in ("fred", "github_csv") for i in inds)
 
 
 def test_yoy_transform_and_trigger(sandbox_cache):
@@ -68,7 +69,7 @@ def test_refresh_keeps_vintages(sandbox_cache, monkeypatch):
     DISCARDED — that enshrined statuses evaluated on stale prints forever."""
     _write_cache(sandbox_cache, "s1", ["2025-01-01", "2025-02-01"], [1.0, 2.0])
 
-    def fake_fetch(series_id):
+    def fake_fetch(spec):
         return pd.DataFrame({
             "date": pd.to_datetime(["2025-01-01", "2025-02-01", "2025-03-01"]),
             "value": [1.5, 2.0, 3.0],     # 2025-01 REVISED 1.0 -> 1.5
