@@ -163,6 +163,13 @@ def validate_rows(df: pd.DataFrame, prior_tail: pd.DataFrame | None = None
     df = df[~(df["volume"] < 0)]
     if len(df) < n0:
         problems.append(f"dropped {n0 - len(df)} rows (missing/nonpositive close or negative volume)")
+    # audit F5: a single future-dated row permanently defeats the briefing's
+    # freshness guard (append-only store) — reject at the door
+    tomorrow = pd.Timestamp(datetime.now(timezone.utc).date()) + pd.Timedelta(days=1)
+    future = df["date"] > tomorrow
+    if future.any():
+        problems.append(f"dropped {int(future.sum())} future-dated rows")
+        df = df[~future]
 
     # internal consistency where OHL present (cheap; would have caught the
     # adjusted-close-with-raw-high/low adapter bug on day one)

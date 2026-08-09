@@ -139,18 +139,22 @@ def field_snapshot(
     }
 
     # average pairwise correlation over 63d vs its history: a BREAK in
-    # co-movement often marks a regime change inside the field
+    # co-movement often marks a regime change inside the field.
+    # History windows must NOT overlap the current 63d (self-comparison) and
+    # there must be enough of them for a percentile to mean anything —
+    # audit F2: a single comparison point made pctile ∈ {0,1} and let one
+    # data point rocket a field to the top of the briefing.
     if len(cols) >= 4:
         r63 = ret1.iloc[-63:]
         cm = r63.corr().to_numpy()
         avg_corr_now = float(cm[np.triu_indices_from(cm, 1)].mean())
         hist = []
-        for end in range(126, len(ret1), 21):
+        for end in range(126, len(ret1) - 63, 21):
             sub = ret1.iloc[max(0, end - 63):end]
             if len(sub) >= 40:
                 c = sub.corr().to_numpy()
                 hist.append(c[np.triu_indices_from(c, 1)].mean())
-        if hist:
+        if len(hist) >= 8:
             pct = float((np.array(hist) <= avg_corr_now).mean())
             ind["cohesion"] = {
                 "value": round(avg_corr_now, 3),

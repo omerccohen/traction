@@ -4,7 +4,10 @@ __pycache__/
 .pytest_cache/
 build/
 dist/
-# keep the compressed bundled dataset; never commit the uncompressed copy
-data_cache/*.csv
-!data_cache/*.csv.gz
+# never commit the uncompressed bundled dataset (the .gz IS committed);
+# audit F25: the old blanket data_cache/*.csv silently gitignored the
+# sector map and indicator caches that fresh clones depend on
+data_cache/all_stocks_5yr.csv
+data_cache/Combined_News_DJIA.csv
+data_cache/live/.lock
 experiments/*/scores_*.csv.gz

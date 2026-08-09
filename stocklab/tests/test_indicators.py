@@ -60,22 +60,85 @@ def test_no_data_state(sandbox_cache):
     assert st.threshold_state == "NO_DATA"
 
 
-def test_refresh_appends_not_rewrites(sandbox_cache, monkeypatch):
+def test_refresh_keeps_vintages(sandbox_cache, monkeypatch):
+    """FRED revises history. The cache is a VINTAGE LOG (audit F13):
+    revisions are appended with their own retrieved_at; series() reads the
+    latest vintage (status stays current); series_asof() answers what was
+    known before the revision. The old test asserted revisions must be
+    DISCARDED — that enshrined statuses evaluated on stale prints forever."""
     _write_cache(sandbox_cache, "s1", ["2025-01-01", "2025-02-01"], [1.0, 2.0])
 
     def fake_fetch(series_id):
         return pd.DataFrame({
             "date": pd.to_datetime(["2025-01-01", "2025-02-01", "2025-03-01"]),
-            # revised history (1.5 vs stored 1.0) must NOT overwrite the cache
-            "value": [1.5, 2.0, 3.0],
+            "value": [1.5, 2.0, 3.0],     # 2025-01 REVISED 1.0 -> 1.5
         })
     monkeypatch.setitem(ib.FETCHERS, "fred", fake_fetch)
     ind = Indicator("s1", {"source": "fred", "series_id": "X"})
     assert ind.refresh() == "fresh"
+
     s = ind.series()
     assert len(s) == 3
-    assert s.loc[pd.Timestamp("2025-01-01")] == 1.0   # original retained
-    assert s.loc[pd.Timestamp("2025-03-01")] == 3.0   # new appended
+    assert s.loc[pd.Timestamp("2025-01-01")] == 1.5   # latest vintage wins for status
+    assert s.loc[pd.Timestamp("2025-03-01")] == 3.0
+
+    # the original print is retained in the log and PIT-recoverable
+    # (fixture rows carry retrieved_at 2026-01-01; the revision is stamped
+    # now — a cutoff between the two must see the original)
+    asof = ind.series_asof("2026-02-01T00:00:00+00:00")
+    assert asof.loc[pd.Timestamp("2025-01-01")] == 1.0
+
+    # unchanged values are NOT duplicated in the cache
+    raw = pd.read_csv(ind.cache_path)
+    assert len(raw[raw["date"] == "2025-02-01"]) == 1
+
+
+def test_malformed_threshold_rule_raises():
+    """A typo in a rule must scream, not silently disable the alarm (F14)."""
+    from stocklab.indicators.base import parse_rule
+    with pytest.raises(ValueError):
+        parse_rule("value>1.5")          # missing spaces
+    with pytest.raises(ValueError):
+        parse_rule("Value > 1.5")        # case
+    with pytest.raises(ValueError):
+        parse_rule("value > 1,5")        # locale comma
+    assert parse_rule("value >= -0.5") == ("value", ">=", -0.5)
+
+
+def test_registry_rules_all_parse_and_are_registered():
+    from stocklab.indicators.base import parse_rule
+    inds = load_registry()
+    for ind in inds:
+        assert ind.registered_on, f"{ind.name} missing registered_on"
+        for rule in ind.thresholds.values():
+            parse_rule(rule)
+
+
+def test_short_history_pctile_rule_is_unknown_not_ok(sandbox_cache):
+    """9 monthly points must NOT fire (or pass) a '5y percentile' rule as if
+    the window meant something (F15/F16)."""
+    dates = pd.date_range("2025-01-01", periods=9, freq="MS")
+    _write_cache(sandbox_cache, "short", dates, list(np.linspace(4, 6, 9)))
+    ind = Indicator("short", {
+        "source": "fred", "series_id": "X", "transform": "level",
+        "thresholds": {"triggered": "pctile > 0.95"},
+    })
+    st = ind.status()
+    assert st.threshold_state == "UNKNOWN"
+
+
+def test_flat_series_does_not_trigger_pctile(sandbox_cache):
+    """A perfectly flat series had pctile 1.0 under <=-counting (F15);
+    midrank puts it at 0.5."""
+    dates = pd.date_range("2020-01-01", periods=260, freq="W")
+    _write_cache(sandbox_cache, "flat", dates, [4.0] * 260)
+    ind = Indicator("flat", {
+        "source": "fred", "series_id": "X", "transform": "level",
+        "thresholds": {"triggered": "pctile > 0.95"},
+    })
+    st = ind.status()
+    assert st.threshold_state == "OK"
+    assert st.pctile_5y == pytest.approx(0.5, abs=0.01)
 
 
 def test_dashboard_renders_without_data(sandbox_cache):

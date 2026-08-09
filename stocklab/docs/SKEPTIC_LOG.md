@@ -236,3 +236,65 @@ arbitrage of published effects. SanDisk itself is absent from the panel
 (acquired 2016 — deleted by the dataset's survivorship bias).
 
 Ledger after field effects: **90 trials.**
+
+---
+
+## Round 5 — build-phase audits (BUILD_PLAN Phases 1-3, per-phase CR)
+
+Two adversarial reviews of the live-operation build; 15 MAJORs total, all
+reproduced by the reviewers before acceptance, all fixed with tests.
+
+### Phase 1 (price feed) — 7 MAJORs fixed
+- In-place store rewrite (crash destroys all history) -> atomic tmp+rename.
+- No concurrency control (parallel runs clobber silently) -> flock lock.
+- Intraday partial prints became immutable "final" closes -> settlement
+  window: rows younger than 3 days are replaceable (logged restatements);
+  immutability starts at settlement; explicit restate() for history rewrites.
+- Adjustment-regime incoherence (yahoo adjclose mixed with raw OHLV; reverse
+  splits NEVER healed -> permanent fake +700% days) -> canonical raw prints
+  from all sources; split/dividend events captured into a corporate-actions
+  table; exact factors applied at load (close AND volume); heuristic
+  sanitizer demoted to fallback.
+- V-spike validator blind on 1-2 row daily batches -> validates against the
+  stored tail; genuine crash-then-bounce days preserved (compounded-move
+  condition).
+- Stooq full-history downloads per ticker per run + alphabetical starvation
+  under hit limits -> bounded d1/d2 fetches, stalest-first ordering,
+  abort-after-consecutive-failures, "partial" status.
+- CSV-drop path crashed on partial OHLC columns and raw-raised on any error
+  -> per-column fill, never raises (reports status=error, logged).
+- Plus: future-dated row rejection (a single one permanently defeated the
+  freshness guard), close-outside-high/low check, conflict DETAILS logged,
+  survivorship marker (backfill_before) in store meta, exit codes that
+  distinguish expected idle from real failure.
+
+### Phases 2-3 (briefing + indicators) — 8 MAJORs fixed
+- Gitignored sp500_sectors.csv would have silently collapsed every fresh-
+  clone briefing from 38 fields to 1 and frozen the update universe -> file
+  force-added; gitignore narrowed; missing-file path now prints a loud banner.
+- Indicator PIT cache was outside the Routine's commit scope (destroyed
+  weekly) -> committed; Routine prompt updated.
+- Bundled->live transition produced NaN/degenerate percentiles for months
+  -> live store gates at >= 252 trading days with an "accumulating N/252"
+  banner until then.
+- Cohesion percentile could rest on ONE comparison point (score 1.0 from a
+  single number) -> >= 8 non-overlapping history windows required.
+- Go-live delta section would have compared 2026 vs 2018 as "movers" ->
+  deltas suppressed across source changes, >31d gaps, or membership changes.
+- First-print-wins indicator cache made statuses permanently wrong on
+  revised FRED series -> vintage log: revisions appended with retrieved_at;
+  series() = latest vintage; series_asof() = point-in-time view. The old
+  test ENSHRINED the harmful behavior and was rewritten.
+- Malformed threshold rules silently evaluated False (a typo = permanently
+  disabled alarm shown as OK) -> parse-at-load, loud failure; every
+  registered rule test-verified.
+- Empty/commented fields.yml crashed the weekly run -> never-raises config
+  loading with warning banners.
+- Plus: registered_on dates required + rendered (pre-registration
+  enforcement), midrank percentiles (flat series no longer p100), UNKNOWN
+  state for short-history percentile rules, per-frequency staleness flags,
+  per-transform value formatting, semis-PPI trigger re-registered to a
+  percentile rule (the absolute one would not have fired in the 2021-22
+  shortage it exists to catch), Routine path/rebase fixes, pyyaml declared.
+
+Post-fix: 54/54 tests green; briefing regenerates end-to-end on demo data.

@@ -9,6 +9,7 @@ indicators:
 
   # ---- macro regime (the mechanical, non-forecast layer) -------------------
   us10y_yield:
+    registered_on: 2026-08-08
     source: fred
     series_id: DGS10
     description: 10y Treasury yield; yoy_diff > +1.5pp = rate shock in progress
@@ -18,6 +19,7 @@ indicators:
       triggered: "value > 1.5"
 
   yield_curve_10y2y:
+    registered_on: 2026-08-08
     source: fred
     series_id: T10Y2Y
     description: 10y-2y curve; inversion (< 0) = classic late-cycle state
@@ -27,6 +29,7 @@ indicators:
       triggered: "value < 0"
 
   hy_credit_spread:
+    registered_on: 2026-08-08
     source: fred
     series_id: BAMLH0A0HYM2
     description: ICE BofA HY OAS; stress regime when wide vs 5y history
@@ -36,6 +39,7 @@ indicators:
       triggered: "pctile > 0.95"
 
   breakeven_10y:
+    registered_on: 2026-08-08
     source: fred
     series_id: T10YIE
     description: 10y breakeven inflation; yoy_diff moves = inflation repricing
@@ -46,6 +50,7 @@ indicators:
 
   # ---- semiconductors field (the user's chosen chain) ----------------------
   semis_industrial_production:
+    registered_on: 2026-08-08
     source: fred
     series_id: IPG3344S
     description: US industrial production, semiconductors & components; yoy contraction = downcycle
@@ -55,6 +60,7 @@ indicators:
       triggered: "value < 0"
 
   electronics_new_orders:
+    registered_on: 2026-08-08
     source: fred
     series_id: A34SNO
     description: Manufacturers' new orders, computers & electronic products; yoy = demand cycle
@@ -64,10 +70,15 @@ indicators:
       triggered: "value < -0.05"
 
   semis_producer_prices:
+    registered_on: 2026-08-08
     source: fred
     series_id: PCU33443344
-    description: PPI, semiconductor & electronic component manufacturing; yoy > 0 = pricing power (shortage symptom)
+    description: PPI, semiconductor & electronic component manufacturing; positive yoy = pricing power (shortage symptom)
     transform: yoy
     thresholds:
+      # re-registered 2026-08-08 (audit F21): the series is structurally
+      # deflationary (hedonic adjustment); the old absolute trigger (>3%)
+      # would NOT have fired in the 2021-22 shortage it exists to catch.
+      # Percentile rule self-calibrates to the deflationary base rate.
       elevated: "value > 0.01"
-      triggered: "value > 0.03"
+      triggered: "pctile > 0.95"
