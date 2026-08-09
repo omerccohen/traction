@@ -12,3 +12,4 @@ data_cache/Combined_News_DJIA.csv
 data_cache/live/.lock
 experiments/*/scores_*.csv.gz
 data_cache/live/backfill.log
+data_cache/live/backfill*.log
