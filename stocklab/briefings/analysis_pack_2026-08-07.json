@@ -1,28 +1,64 @@
 {
   "as_of": "2026-08-07",
   "source": "live",
-  "universe_size": 2969,
+  "universe_size": 2989,
   "regime": {
     "vol": {
       "value": 14.9,
       "pctile": 0.21,
       "band": "calm",
-      "age_days": 2
+      "age_days": 3
     },
     "trend": {
       "value": 0.1882,
       "band": "uptrend",
-      "age_days": 39
+      "age_days": 40
     },
     "valuation": {
       "value": 30.81,
       "pctile": 0.59,
-      "age_days": 1073
+      "age_days": 1074
     },
     "triggered": [],
     "elevated": []
   },
   "top_fields": [
+    {
+      "name": "Finance/Investors Services [sub]",
+      "n_members": 16,
+      "attention": 0.904,
+      "character": "DISPERSION",
+      "headline": "splitting into winners and losers (stock-picker's phase)",
+      "trend_21d": 0.0524,
+      "volatility_pctile": 0.9642857142857143,
+      "dispersion_pctile": 0.9087301587301587,
+      "cohesion_pctile": 0.0425531914893617,
+      "movers": [
+        "NMCO -3%",
+        "KYN -0%",
+        "MAIN +14%",
+        "CION +20%"
+      ],
+      "flags": "elevated: trend_21d, volatility, dispersion; depressed: volume_influx, cohesion"
+    },
+    {
+      "name": "Engineering & Construction [sub]",
+      "n_members": 10,
+      "attention": 0.898,
+      "character": "STRESS",
+      "headline": "under pressure \u2014 falling with elevated volatility",
+      "trend_21d": -0.048,
+      "volatility_pctile": 0.9841269841269841,
+      "dispersion_pctile": 0.9920634920634921,
+      "cohesion_pctile": 0.05319148936170213,
+      "movers": [
+        "LMB -37%",
+        "AGX -13%",
+        "EME +4%",
+        "IESC +19%"
+      ],
+      "flags": "elevated: volatility, dispersion; depressed: volume_influx, cohesion"
+    },
     {
       "name": "Utilities",
       "n_members": 108,
@@ -60,51 +96,33 @@
       "flags": "elevated: volatility, dispersion; depressed: volume_influx, cohesion"
     },
     {
-      "name": "Finance/Investors Services [sub]",
-      "n_members": 16,
-      "attention": 0.881,
+      "name": "Advertising [sub]",
+      "n_members": 7,
+      "attention": 0.875,
       "character": "DISPERSION",
       "headline": "splitting into winners and losers (stock-picker's phase)",
-      "trend_21d": 0.0524,
-      "volatility_pctile": 0.9642857142857143,
-      "dispersion_pctile": 0.9087301587301587,
-      "cohesion_pctile": 0.09803921568627451,
+      "trend_21d": 0.1204,
+      "volatility_pctile": 1.0,
+      "dispersion_pctile": 1.0,
+      "cohesion_pctile": 0.10638297872340426,
       "movers": [
-        "NMCO -3%",
-        "KYN -0%",
-        "MAIN +14%",
-        "CION +20%"
+        "CRTO -21%",
+        "GRPN -6%",
+        "IBTA +21%",
+        "WPP +59%"
       ],
-      "flags": "elevated: trend_21d, volatility, dispersion; depressed: volume_influx, cohesion"
-    },
-    {
-      "name": "Engineering & Construction [sub]",
-      "n_members": 10,
-      "attention": 0.88,
-      "character": "STRESS",
-      "headline": "under pressure \u2014 falling with elevated volatility",
-      "trend_21d": -0.048,
-      "volatility_pctile": 0.9841269841269841,
-      "dispersion_pctile": 0.9920634920634921,
-      "cohesion_pctile": 0.09803921568627451,
-      "movers": [
-        "LMB -37%",
-        "AGX -13%",
-        "EME +4%",
-        "IESC +19%"
-      ],
-      "flags": "elevated: volatility, dispersion; depressed: volume_influx, cohesion"
+      "flags": "elevated: volatility, dispersion; depressed: volume_influx"
     },
     {
       "name": "Packaged Foods [sub]",
       "n_members": 23,
-      "attention": 0.857,
+      "attention": 0.865,
       "character": "DISPERSION",
       "headline": "splitting into winners and losers (stock-picker's phase)",
       "trend_21d": 0.0625,
       "volatility_pctile": 0.8968253968253969,
       "dispersion_pctile": 0.9880952380952381,
-      "cohesion_pctile": 0.0392156862745098,
+      "cohesion_pctile": 0.02127659574468085,
       "movers": [
         "SMPL -15%",
         "FLO -8%",
@@ -112,29 +130,11 @@
         "UTZ +83%"
       ],
       "flags": "elevated: trend_21d, dispersion; depressed: cohesion"
-    },
-    {
-      "name": "Oil and Gas Field Machinery [sub]",
-      "n_members": 12,
-      "attention": 0.838,
-      "character": "DISPERSION",
-      "headline": "splitting into winners and losers (stock-picker's phase)",
-      "trend_21d": 0.1062,
-      "volatility_pctile": 0.9047619047619048,
-      "dispersion_pctile": 0.9523809523809523,
-      "cohesion_pctile": 0.0196078431372549,
-      "movers": [
-        "SEI -15%",
-        "FTI -1%",
-        "DNOW +29%",
-        "FET +53%"
-      ],
-      "flags": "elevated: volatility, dispersion; depressed: volume_influx, cohesion"
     }
   ],
   "cross_cutting": [
     "Breadth: 4/6 top fields are in a stock-picker's phase (names decoupling) \u2014 a selection market, not a beta market.",
-    "Stress cluster: Electric Utilities: Central [sub], Engineering & Construction [sub] under pressure together."
+    "Stress cluster: Engineering & Construction [sub], Electric Utilities: Central [sub] under pressure together."
   ],
   "dislocations": [
     {
@@ -202,5 +202,152 @@
     "'Attention' marks unusual activity, NOT direction \u2014 field momentum's forward IC on this data measured ~zero.",
     "This is research triage (where to look), not buy/sell advice.",
     "Universe is current-constituent (survivorship-flagged); corporate actions handled heuristically, not from an exact event feed."
-  ]
+  ],
+  "physical_proxies": {
+    "field": "Thematic Proxies",
+    "n": 20,
+    "note": "Commodity/theme ETFs \u2014 physical supply/demand cross-check. Real 21d/63d moves; use to confirm or question equity themes.",
+    "movers": [
+      {
+        "ticker": "COPX",
+        "ret_21d": 0.1675,
+        "ret_63d": 0.0656,
+        "last_close": 88.03,
+        "tracks": "Copper Miners"
+      },
+      {
+        "ticker": "SLX",
+        "ret_21d": 0.1332,
+        "ret_63d": 0.0333,
+        "last_close": 110.02,
+        "tracks": "Steel"
+      },
+      {
+        "ticker": "XME",
+        "ret_21d": 0.1211,
+        "ret_63d": -0.0396,
+        "last_close": 115.74,
+        "tracks": "Metals & Mining"
+      },
+      {
+        "ticker": "WOOD",
+        "ret_21d": 0.1069,
+        "ret_63d": 0.0652,
+        "last_close": 73.55,
+        "tracks": "Timber & Forestry"
+      },
+      {
+        "ticker": "USO",
+        "ret_21d": 0.0823,
+        "ret_63d": -0.1259,
+        "last_close": 117.98,
+        "tracks": "Crude Oil"
+      },
+      {
+        "ticker": "URA",
+        "ret_21d": 0.0604,
+        "ret_63d": -0.2017,
+        "last_close": 44.91,
+        "tracks": "Uranium & Nuclear Fuel"
+      },
+      {
+        "ticker": "GLD",
+        "ret_21d": 0.0537,
+        "ret_63d": -0.0769,
+        "last_close": 398.47,
+        "tracks": "Gold"
+      },
+      {
+        "ticker": "XLE",
+        "ret_21d": 0.0489,
+        "ret_63d": 0.0277,
+        "last_close": 57.5,
+        "tracks": "Energy Sector"
+      },
+      {
+        "ticker": "ITA",
+        "ret_21d": 0.0464,
+        "ret_63d": 0.1269,
+        "last_close": 250.75,
+        "tracks": "Aerospace & Defense ETF"
+      },
+      {
+        "ticker": "NLR",
+        "ret_21d": 0.042,
+        "ret_63d": -0.1826,
+        "last_close": 117.82,
+        "tracks": "Nuclear Energy"
+      },
+      {
+        "ticker": "PAVE",
+        "ret_21d": 0.0402,
+        "ret_63d": 0.0331,
+        "last_close": 58.69,
+        "tracks": "Infrastructure"
+      },
+      {
+        "ticker": "XHB",
+        "ret_21d": 0.0296,
+        "ret_63d": 0.0793,
+        "last_close": 110.8,
+        "tracks": "Homebuilders"
+      },
+      {
+        "ticker": "KRE",
+        "ret_21d": 0.0209,
+        "ret_63d": 0.0895,
+        "last_close": 76.21,
+        "tracks": "Regional Banks ETF"
+      },
+      {
+        "ticker": "LIT",
+        "ret_21d": 0.0163,
+        "ret_63d": -0.1717,
+        "last_close": 74.01,
+        "tracks": "Lithium & Battery"
+      },
+      {
+        "ticker": "JETS",
+        "ret_21d": 0.004,
+        "ret_63d": 0.1794,
+        "last_close": 32.54,
+        "tracks": "Airlines"
+      },
+      {
+        "ticker": "DBA",
+        "ret_21d": -0.0032,
+        "ret_63d": -0.0065,
+        "last_close": 27.62,
+        "tracks": "Agriculture"
+      },
+      {
+        "ticker": "IYT",
+        "ret_21d": -0.0108,
+        "ret_63d": 0.08,
+        "last_close": 87.23,
+        "tracks": "Transports"
+      },
+      {
+        "ticker": "REMX",
+        "ret_21d": -0.0374,
+        "ret_63d": -0.277,
+        "last_close": 77.04,
+        "tracks": "Rare Earth & Strategic Metals"
+      },
+      {
+        "ticker": "TAN",
+        "ret_21d": -0.04,
+        "ret_63d": -0.1173,
+        "last_close": 52.75,
+        "tracks": "Solar"
+      },
+      {
+        "ticker": "SOXX",
+        "ret_21d": -0.0661,
+        "ret_63d": 0.1034,
+        "last_close": 543.27,
+        "tracks": "Semiconductors ETF"
+      }
+    ]
+  }
 }
