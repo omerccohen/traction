@@ -44,9 +44,36 @@ def main() -> None:
         snaps, inds, states, as_of=as_of, source=source,
         universe_size=len(panel.tickers), top_n=6,
     )
+    pack_dict = pack.to_dict()
+
+    # Physical-proxy panel: the commodity/theme ETF field is a physical
+    # supply/demand cross-check, but it rarely ranks top-6 (percentiles are vs
+    # its own history), so inject it explicitly so the analyst ALWAYS sees which
+    # physical thing is actually moving. Real moves only, from the same panel.
+    try:
+        from stocklab.target_finder import member_moves
+        etfs = fields.get("Thematic Proxies", [])
+        if etfs:
+            import pandas as pd
+            sec = pd.read_csv(ROOT / "data_cache" / "universe" / "broad_sectors.csv").set_index("Symbol")
+            sub = sec["GICS Sub-Industry"]
+            mv = member_moves(panel, etfs, as_of)
+            recs = []
+            for r in mv.to_dict("records"):
+                r["tracks"] = str(sub.get(r["ticker"], ""))
+                recs.append(r)
+            pack_dict["physical_proxies"] = {
+                "field": "Thematic Proxies", "n": len(recs),
+                "note": "Commodity/theme ETFs — physical supply/demand cross-check. "
+                        "Real 21d/63d moves; use to confirm or question equity themes.",
+                "movers": recs,
+            }
+    except Exception as e:  # never let the cross-check kill the pack
+        pack_dict["physical_proxies"] = {"error": str(e)}
+
     out = ROOT / "briefings" / f"analysis_pack_{pack.as_of}.json"
-    out.write_text(json.dumps(pack.to_dict(), indent=2, default=float))
-    print(json.dumps(pack.to_dict(), indent=2, default=float))
+    out.write_text(json.dumps(pack_dict, indent=2, default=float))
+    print(json.dumps(pack_dict, indent=2, default=float))
     print(f"\nsaved -> {out}", file=sys.stderr)
 
 

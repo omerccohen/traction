@@ -48,8 +48,18 @@ def main() -> None:
                              as_of)
 
     sectors = pd.read_csv(ROOT / "data_cache" / "universe" / "broad_sectors.csv").set_index("Symbol")
-    inp["value_chain_pulls"] = {}
     from stocklab.target_finder import member_moves
+
+    # physical-proxy panel: which commodity/theme ETF is actually moving, so the
+    # target-finder can verify a supply/demand thesis against the physical tape
+    etfs = list(fields.get("Thematic Proxies", []))
+    if etfs:
+        sub = sectors["GICS Sub-Industry"]
+        pmv = member_moves(panel, etfs, as_of)
+        recs = [{**r, "tracks": str(sub.get(r["ticker"], ""))} for r in pmv.to_dict("records")]
+        inp["physical_proxies"] = {"n": len(recs), "movers": recs}
+
+    inp["value_chain_pulls"] = {}
     for theme, kws in THEME_KEYWORDS.items():
         hits = keyword_universe_search(sectors, kws)
         mv = member_moves(panel, list(hits["ticker"]), as_of)

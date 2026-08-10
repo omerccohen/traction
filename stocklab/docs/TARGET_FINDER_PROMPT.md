@@ -33,6 +33,12 @@ confirm."
 3. **Populate each role with REAL tickers** from the provided dossier + the
    field roster + (if needed) a keyword search over the universe. Use the
    supplied winners/losers data — do not invent tickers or numbers.
+   - **Physical-proxy check:** the field roster includes a `Thematic Proxies`
+     group of commodity/theme ETFs (URA, SOXX, COPX, USO, SLX, LIT, REMX, GLD,
+     XHB, KRE, …). Before trusting a supply/demand thesis, check whether its
+     physical proxy is actually moving — a "copper shortage" thesis is stronger
+     if COPX is up; a nuclear-power thesis is stronger if URA is up. Cite the
+     proxy's real move as verification (or note its absence as a red flag).
 4. **Gather evidence** — use web search for the concrete physical/supply-demand
    data the desk note named (interconnection-queue MW, hyperscaler capex, PPAs,
    13D filings, memory pricing, etc.). Cite what you find with the source.
