@@ -43,6 +43,25 @@ def main() -> None:
     packs = sorted(ROOT.glob("briefings/analysis_pack_*.json"))
     pack = json.loads(packs[-1].read_text()) if packs else {}
 
+    # ORDERING GUARD (skill-level): this phase is DOWNSTREAM of analyze.py's
+    # pack. Both scripts read the "newest" file by glob, so a silently-failed
+    # upstream step would let us build targets on last cycle's pack. Refuse to
+    # start a downstream phase whose prerequisite didn't finish for THIS data:
+    # the pack's as_of must equal the current live-data date. Fail loud (exit 3,
+    # no stale file written) so the Routine can skip the target-groups step
+    # rather than answer this week's desk note with last week's dossier.
+    data_asof = str(as_of.date())
+    if not pack:
+        print("find_targets: STALE PREREQUISITE — no analysis_pack found; run "
+              "scripts/analyze.py first. Not building targets.", file=sys.stderr)
+        sys.exit(3)
+    if pack.get("as_of") != data_asof:
+        print(f"find_targets: STALE PREREQUISITE — newest pack is "
+              f"{pack.get('as_of')} but live data is {data_asof}; analyze.py did "
+              "not finish for this cycle. Not building targets on a stale pack "
+              "(re-run scripts/analyze.py first).", file=sys.stderr)
+        sys.exit(3)
+
     inp = build_target_input(pack, panel, fields,
                              pd.read_csv(ROOT / "data_cache" / "universe" / "broad_sectors.csv").set_index("Symbol"),
                              as_of)
