@@ -64,6 +64,50 @@ Top-decile-minus-bottom-decile of `fundamental+momentum` was **+15.2% over 6
 months (64% of months)** — but t 1.89, and it's carried entirely by momentum, not
 by the fundamental "positioning" it was supposed to test. Not a dependable edge.
 
+## Why is it NEGATIVE, not merely zero? (diagnostics)
+
+A −2.27 t is "systematically backwards," which demands an explanation. Tested,
+not assumed:
+
+**It is not a sector artifact.** The composite does carry a big sector tilt —
+the bottom decile is **44% Finance** vs 15% in the top (the leverage screen
+structurally shorts banks/BDCs, which are levered by construction, and
+financials rallied in this window). But **sector-neutralizing makes the result
+slightly WORSE, not better**: 63d IC −0.031 (t −2.27) → **−0.032 (t −3.00)**.
+The effect survives *within* every sector.
+
+**It is not the tagging contamination.** Only 9% of margin observations look
+like gross margin (mis-tagged) vs 61% clean operating margin — real but far too
+small to drive the result.
+
+**Cause 1 — the ranking contains no price.** Ranking "who is the best company"
+without "what am I paying" is effectively ranking *how loved and expensive* a
+name already is. Good fundamentals are public, so they are in the price; the
+composite ends up long the crowded, high-expectation side. This is the textbook
+value/asset-growth effect, and the data reproduces it cleanly.
+
+**Cause 2 — LEVELS are priced; CHANGES are what pay.** Splitting the composite
+is the most useful result of the whole exercise:
+
+| signal | 6-month IC | NW t |
+|---|---|---|
+| **LEVELS** (margin level, low leverage) — "how good it IS" | **−0.076** | **−2.79** |
+| **CHANGES** (revenue growth, margin change) — "how fast it's IMPROVING" | +0.033 | +0.99 |
+| — margin *change* alone | **+0.042** | **+2.89** |
+| — margin *level* alone | −0.064 | −1.72 |
+
+The level of quality is **negatively** related to forward returns; the
+*improvement* in quality is **positively** related. Markets price the level and
+pay for the delta. (Honest caveat: margin-change's t 2.89 is one horizon — it is
+*not* significant at 3 months, t 1.20 — on ~25 overlapping dates in one regime.
+Suggestive, not established.)
+
+**Cause 3 — the "28% hit rate with a positive mean" is skew, not contradiction.**
+The monthly top-minus-bottom spread has **median −4.0%, mean +1.2%, skew +3.0**,
+best month **+75%**, worst −13%. The best-positioned decile is lottery-shaped:
+it *usually* lags slightly and *occasionally* explodes. So it isn't reliably
+bad — it's reliably *un-timeable*.
+
 ## Bottom line
 
 **Ranking by "best positioned to solve the thesis" does not forecast which
