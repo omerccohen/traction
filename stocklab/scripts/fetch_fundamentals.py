@@ -39,6 +39,14 @@ FAMILIES = {
                "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"],
     "liabilities": ["Liabilities"],
     "assets": ["Assets"],
+    # --- valuation layer: shares outstanding -> market cap, plus EV pieces ---
+    "shares": ["EntityCommonStockSharesOutstanding",          # dei (cover page)
+               "CommonStockSharesOutstanding",
+               "WeightedAverageNumberOfDilutedSharesOutstanding",
+               "WeightedAverageNumberOfSharesOutstandingBasic"],
+    "cash": ["CashAndCashEquivalentsAtCarryingValue",
+             "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents"],
+    "debt": ["LongTermDebt", "LongTermDebtNoncurrent", "DebtLongtermAndShorttermCombinedAmount"],
 }
 
 
@@ -52,12 +60,15 @@ def curl(url: str) -> bytes | None:
 
 
 def compact(facts: dict) -> dict:
-    gaap = facts.get("facts", {}).get("us-gaap", {})
+    allfacts = facts.get("facts", {})
+    # shares outstanding lives in the `dei` taxonomy (cover page), the rest in
+    # us-gaap — search both so one lookup covers every family.
+    taxonomies = [allfacts.get("us-gaap", {}), allfacts.get("dei", {})]
     out: dict[str, list] = {}
     for fam, concepts in FAMILIES.items():
         seen = {}
         for c in concepts:
-            node = gaap.get(c)
+            node = next((t[c] for t in taxonomies if c in t), None)
             if not node:
                 continue
             units = node.get("units", {})
