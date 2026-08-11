@@ -94,10 +94,37 @@ class AnalysisPack:
         return self.__dict__.copy()
 
 
+STALE_AFTER_DAYS = 45          # beyond this an input describes a different world
+
+
 def _regime_from_indicators(inds, states: dict) -> dict:
-    """Compact market-regime read from the live indicator statuses."""
+    """Compact market-regime read from the live indicator statuses.
+
+    Carries an explicit data-quality census. The refresh layer reports state
+    'fresh' when the FETCH succeeded — including when it succeeded by serving a
+    three-year-old cache — so 'fresh' alone must never be read as 'current'.
+    Anything past STALE_AFTER_DAYS is named here so the analyst discounts it
+    instead of quoting a stale number as today's regime.
+    """
     reg = {"vol": None, "trend": None, "valuation": None,
-           "triggered": [], "elevated": []}
+           "triggered": [], "elevated": [],
+           "data_quality": {"live": [], "stale": [], "missing": []}}
+    for ind in inds:
+        st = ind.status(states.get(ind.name, "cache"))
+        age = st.data_age_days
+        if age is None or st.latest_value is None:
+            reg["data_quality"]["missing"].append(ind.name)
+        elif age > STALE_AFTER_DAYS:
+            reg["data_quality"]["stale"].append(f"{ind.name} ({age}d old)")
+        else:
+            reg["data_quality"]["live"].append(f"{ind.name} ({age}d)")
+    dq = reg["data_quality"]
+    if len(dq["live"]) <= 2:
+        dq["warning"] = (
+            f"MACRO LAYER DEGRADED: only {len(dq['live'])} of {len(inds)} "
+            f"indicators carry current data ({len(dq['missing'])} unavailable, "
+            f"{len(dq['stale'])} stale). Treat the regime read as thin — do not "
+            "describe macro conditions the data cannot support.")
     for ind in inds:
         st = ind.status(states.get(ind.name, "cache"))
         if st.threshold_state == "TRIGGERED":
