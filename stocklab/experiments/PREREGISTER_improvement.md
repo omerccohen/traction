@@ -44,3 +44,33 @@ Even full support would mean a **weak tilt**, not a stock-picking edge: an IC
 around 0.04 explains well under 1% of cross-sectional return variance, before
 costs and turnover. It would justify saying "rank research attention by
 improvement, not by quality" — never "these stocks will rise."
+
+---
+
+# Addendum — valuation layer (written BEFORE running `backtest_valuation.py`)
+
+The levels test concluded the composite failed because it **contained no price**.
+This tests that diagnosis directly.
+
+**H2:** A `VALUE` composite (earnings yield, book/price, sales/price — higher =
+cheaper) has a **positive** forward IC, and `IMPROVEMENT + VALUE` ("improving,
+and not already priced for it") beats either alone.
+
+**Prior, declared:** the value premium is a long-documented result (Fama-French
+HML), so unlike margin-change this is NOT a hypothesis I mined from this data.
+That makes a positive result less surprising — and a NEGATIVE result more
+informative.
+
+**Same decision rule as H1:** primary evidence is the held-out period
+(2022-03 → 2023-12). Supported only if positive in BOTH sub-periods AND
+|t| >= 2 over the full sample; weakly supported if positive in both but t < 2;
+rejected if held-out IC <= 0.
+
+**Fixed list, no post-hoc additions:** VALUE, IMPROVEMENT, LEVELS,
+IMPROVEMENT+VALUE, LEVELS+VALUE, momentum, IMPROVEMENT+VALUE+momentum.
+Horizons 63d and 126d, both reported. Sector-neutral reported alongside raw.
+
+**Pre-committed interpretation:** even a clean positive would be a *tilt*
+(IC ~0.05 explains <1% of cross-sectional variance) before costs, turnover and
+the fact that value has multi-year losing stretches. It would justify "rank the
+research queue by improvement-relative-to-price" — never "these will rise."
