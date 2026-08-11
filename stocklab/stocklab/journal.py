@@ -113,8 +113,13 @@ def review(path: Path, panel) -> pd.DataFrame:
     as_of = panel.dates[-1]
     out = []
     for _, r in df.iterrows():
-        end = (pd.Timestamp(r["close_date"]) if str(r.get("close_date") or "").strip()
-               else as_of)
+        # an open entry's close_date round-trips through CSV as NaN, and
+        # str(NaN) == "nan" — truthy. That silently produced NaT dates, which
+        # made `days` NaN and quietly disabled the falsifier check on every
+        # open entry. Test for real emptiness, not truthiness.
+        cd = r.get("close_date")
+        closed = pd.notna(cd) and str(cd).strip().lower() not in ("", "nan", "nat")
+        end = pd.Timestamp(cd) if closed else as_of
         px = _price_on(panel, r["ticker"], end)
         bpx = _price_on(panel, BENCHMARK, end)
         ret = ((px / float(r["entry_price"]) - 1)
@@ -122,7 +127,7 @@ def review(path: Path, panel) -> pd.DataFrame:
         bret = ((bpx / float(r["benchmark_price"]) - 1)
                 if bpx and pd.notna(r["benchmark_price"]) and float(r["benchmark_price"])
                 else np.nan)
-        days = (pd.Timestamp(end) - pd.Timestamp(r["date"])).days
+        days = int((pd.Timestamp(end) - pd.Timestamp(r["date"])).days)
         out.append({**r.to_dict(), "current_price": px, "return": ret,
                     "benchmark_return": bret, "excess": ret - bret, "days": days,
                     # a falsifier you have not looked at in a month is not a

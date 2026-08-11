@@ -66,8 +66,12 @@ def main() -> None:
     panel = _panel()
 
     if args.cmd == "add":
-        row = J.add(JOURNAL, panel, args.ticker, args.action, args.thesis,
-                    args.falsifier, when=args.date, notes=args.notes)
+        try:
+            row = J.add(JOURNAL, panel, args.ticker, args.action, args.thesis,
+                        args.falsifier, when=args.date, notes=args.notes)
+        except ValueError as e:      # a rejected entry is user feedback, not a crash
+            print(f"NOT LOGGED: {e}")
+            sys.exit(1)
         print(f"logged #{row['id']}  {row['ticker']} {row['action']} "
               f"@ ${row['entry_price']:.2f} on {row['date']} "
               f"(SPY ${row['benchmark_price']:.2f})")
@@ -92,8 +96,8 @@ def main() -> None:
         for _, r in rev.iterrows():
             f = "CHECK FALSIFIER" if r["check_falsifier"] else ""
             fmt = lambda v: f"{v*100:+.1f}%" if pd.notna(v) else "    n/a"
-            print(f"{str(r['id']):4s} {r['date']:11s} {r['ticker']:6s} "
-                  f"{r['action']:8s} {r['days']:5d} {fmt(r['return']):>8s} "
+            print(f"{str(r['id']):4s} {str(r['date']):11s} {r['ticker']:6s} "
+                  f"{r['action']:8s} {int(r['days']):5d} {fmt(r['return']):>8s} "
                   f"{fmt(r['benchmark_return']):>8s} {fmt(r['excess']):>8s}  {f}")
             if r["check_falsifier"]:
                 print(f"     -> {r['falsifier']}")
