@@ -20,7 +20,28 @@
       "age_days": 1075
     },
     "triggered": [],
-    "elevated": []
+    "elevated": [],
+    "data_quality": {
+      "live": [
+        "vix_level (1d)",
+        "sp500_trend_12m (41d)"
+      ],
+      "stale": [
+        "us_cpi_yoy (1075d old)",
+        "us10y_rate_monthly (1075d old)",
+        "sp500_pe10 (1075d old)"
+      ],
+      "missing": [
+        "us10y_yield",
+        "yield_curve_10y2y",
+        "hy_credit_spread",
+        "breakeven_10y",
+        "semis_industrial_production",
+        "electronics_new_orders",
+        "semis_producer_prices"
+      ],
+      "warning": "MACRO LAYER DEGRADED: only 2 of 12 indicators carry current data (7 unavailable, 3 stale). Treat the regime read as thin \u2014 do not describe macro conditions the data cannot support."
+    }
   },
   "top_fields": [
     {
