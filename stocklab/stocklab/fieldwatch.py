@@ -187,8 +187,18 @@ def field_snapshot(
 
     score = float(np.nanmean([abs(v["pctile"] - 0.5) * 2 for v in ind.values()]))
 
-    m21 = close.pct_change(21).iloc[-1].sort_values()
-    movers = [f"{t} {m21[t]:+.0%}" for t in list(m21.index[:2]) + list(m21.index[-2:])]
+    # Extremes must never be contaminated by MISSING data. Vendors publish some
+    # tickers a day late, so on any given as_of a slice of the universe has no
+    # print yet — and NaN sorts LAST in pandas, which silently promoted
+    # not-yet-reported names to "biggest gainer" in the movers list the analyst
+    # reads. Tolerate a few days of per-ticker lag (measure each name from its
+    # own last real price), then drop anything still unknown.
+    m21 = close.ffill(limit=3).pct_change(21).iloc[-1].dropna().sort_values()
+    if len(m21) >= 4:
+        picks = list(m21.index[:2]) + list(m21.index[-2:])
+    else:
+        picks = list(m21.index)
+    movers = [f"{t} {m21[t]:+.0%}" for t in picks]
 
     return FieldSnapshot(
         name=name, n_members=len(cols), score=round(score, 3),
