@@ -96,6 +96,15 @@ def main() -> None:
     uni["IMPROVEMENT"] = pd.concat([_z(uni[c]) for c in IMPROV], axis=1).mean(axis=1, skipna=True)
     uni["cheap_pct"] = uni["VALUE"].rank(pct=True) * 100
     uni["improve_pct"] = uni["IMPROVEMENT"].rank(pct=True) * 100
+    # sector-relative cheapness: a BDC and a software firm are not comparable on
+    # raw multiples — lenders ALWAYS look "cheap" on P/E and book-to-price, which
+    # made every BDC read as a bargain in the first cut of this table.
+    sectors = pd.read_csv(ROOT / "data_cache" / "universe" / "broad_sectors.csv"
+                          ).set_index("Symbol")["GICS Sector"]
+    uni["sector"] = uni.index.map(sectors)
+    uni["cheap_pct_sector"] = (uni.groupby("sector")["VALUE"]
+                               .transform(lambda s: s.rank(pct=True) * 100
+                                          if s.notna().sum() >= 5 else np.nan))
 
     out = [f"# Positioning vs price — as of {iso}",
            "",
@@ -112,23 +121,22 @@ def main() -> None:
 
     for thesis, names in POSITIONING.items():
         out += [f"## {thesis}", "",
-                "| Ticker | Positioned | Cheapness (pct) | Improving (pct) | P/E | Read |",
-                "|---|---|---|---|---|---|"]
+                "| Ticker | Positioned | Cheap vs all | Cheap vs sector | Improving | P/E | Read |",
+                "|---|---|---|---|---|---|---|"]
         recs = []
         for t, pos in names.items():
             if t not in uni.index:
-                recs.append((t, pos, None, None, None, "no filings data"))
+                recs.append((t, pos, None, None, None, "no filings data", None))
                 continue
             r = uni.loc[t]
             ey = r.get("earnings_yield")
             pe = (1 / ey) if (ey is not None and pd.notna(ey) and ey > 0) else None
             recs.append((t, pos, r["cheap_pct"], r["improve_pct"], pe,
-                         quadrant(pos, r["cheap_pct"])))
-        for t, pos, cp, ip, pe, q in sorted(recs, key=lambda x: -(x[1] or 0)):
-            cps = f"{cp:.0f}" if cp is not None and np.isfinite(cp) else "—"
-            ips = f"{ip:.0f}" if ip is not None and np.isfinite(ip) else "—"
+                         quadrant(pos, r["cheap_pct"]), r.get("cheap_pct_sector")))
+        for t, pos, cp, ip, pe, q, cs in sorted(recs, key=lambda x: -(x[1] or 0)):
+            f0 = lambda v: f"{v:.0f}" if v is not None and np.isfinite(v) else "—"
             pes = f"{pe:.0f}" if pe is not None and np.isfinite(pe) else "n/m"
-            out.append(f"| **{t}** | {pos}% | {cps} | {ips} | {pes} | {q} |")
+            out.append(f"| **{t}** | {pos}% | {f0(cp)} | {f0(cs)} | {f0(ip)} | {pes} | {q} |")
         out.append("")
 
     out += ["## How to read the four quadrants", "",
@@ -141,11 +149,28 @@ def main() -> None:
             "says it is weakly positioned. Usually the market is right.",
             "- **weak and not cheap** — neither the filings nor the price argue for it.",
             "",
-            "*Honest footer: cheapness percentiles are relative to this liquid "
-            "universe, not to each company's own history or sector norms — a bank "
-            "and a software firm are not comparable on raw multiples. Positioning "
-            "comes from one-quarter filings. Nothing here forecasts returns; the "
-            "measured forward information in these ranks is ~zero.*"]
+            "## What the backtest says about using this (read before acting)",
+            "",
+            "Adding price genuinely **fixed the direction** of the ranking: "
+            "positioning alone had a forward rank-IC of −0.058, positioning+price "
+            "+0.042 (t 2.7, and it held in a period never used to build it). That "
+            "is a real, replicated sign flip.",
+            "",
+            "**But it is NOT a buy rule.** Sorting the universe into cheapness "
+            "deciles over 2022-2026, the *most expensive* decile returned **+22.6%** "
+            "per 6 months versus **+14.6%** for the cheapest — the giant winners "
+            "lived in the expensive names. Cheap stocks won slightly more *often* "
+            "(hence the positive rank-IC) while expensive stocks won far *bigger*. "
+            "Buying the cheap end would have underperformed.",
+            "",
+            "So use the two columns to ask *\"is my thesis already in the price?\"* — "
+            "never as a screen to buy the cheap end.",
+            "",
+            "*Honest footer: 'Cheap vs all' compares a bank to a software firm on raw "
+            "multiples, which is why lenders (BDCs) look uniformly cheap — read "
+            "'Cheap vs sector' for those. Positioning comes from one quarter of "
+            "filings. Every decile was positive in this sample (2022-2026 was a bull "
+            "market); none of this forecasts returns.*"]
 
     dest = ROOT / "briefings" / f"price_vs_position_{iso}.md"
     dest.write_text("\n".join(out))
