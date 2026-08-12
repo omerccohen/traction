@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import re
 import sys
+from datetime import date, timedelta
 from pathlib import Path
 
 import numpy as np
@@ -32,25 +33,41 @@ from stocklab.fundamentals import (load_facts, improvement_features,
                                    valuation_features)
 
 ROOT = Path(__file__).resolve().parents[1]
+MAX_RESEARCH_AGE_DAYS = 100   # filings are quarterly; research stays useful until the next season
 
 def load_positioning() -> tuple[dict, str]:
-    """Read positioning scores from the NEWEST deep-research ranking files.
+    """Read positioning scores from ALL recent deep-research ranking files.
 
-    These were hardcoded, which silently produced a table dated this week that
-    actually described LAST week's theses — the most misleading failure mode
-    available, since the date implies freshness. Now the tables are parsed from
-    briefings/rank_thesis*_<date>.md, and only the newest date is used, so the
-    price view can never drift out of sync with the research it annotates.
-    Table rows look like:  | **PWR** | 89% | ... |
+    Two bugs lived here in turn. First the company list was hardcoded, so a table
+    dated this week silently described last week's theses. The fix — use only the
+    newest date — then created the opposite bug: each week's research DELETED the
+    week before, and on 2026-08-12 the table showed metals and steel alone,
+    dropping 63 researched companies including PWR, CEG, ARCC and AEP.
+
+    Research accumulates. Backlogs, contracts and non-accruals are quarterly
+    facts, so every group is kept until MAX_RESEARCH_AGE_DAYS and labelled with
+    its own research date and age, making staleness visible per group instead of
+    silently discarding work. Table rows look like: | 1 | **PWR** | **89%** | ...
     """
     files = sorted(ROOT.glob("briefings/rank_thesis*_*.md"))
     if not files:
         return {}, ""
     newest = max(f.stem.rsplit("_", 1)[-1] for f in files)
+    # Research ACCUMULATES — it does not expire weekly. Using only the newest
+    # date silently deleted every prior week's work: on 2026-08-12 the table
+    # showed metals and steel alone, dropping 63 researched companies including
+    # PWR, CEG, ARCC and AEP — the single strongest disagreement on the board.
+    # Backlogs, contracts and non-accruals are QUARTERLY facts, so a ranking
+    # stays informative until the next filing season. Keep every group, label it
+    # with its research date, and drop only what is genuinely stale.
+    cutoff = (date.fromisoformat(newest) - timedelta(days=MAX_RESEARCH_AGE_DAYS)).isoformat()
     out: dict[str, dict] = {}
-    for f in [f for f in files if f.stem.endswith(newest)]:
-        title = re.sub(r"^rank_thesis\d*_?", "", f.stem.replace(f"_{newest}", ""))
+    for f in [f for f in files if f.stem.rsplit("_", 1)[-1] >= cutoff]:
+        fdate = f.stem.rsplit("_", 1)[-1]
+        title = re.sub(r"^rank_thesis\d*_?", "", f.stem[: -(len(fdate) + 1)])
         title = title.replace("_", " ").title() or f.stem
+        age = (date.fromisoformat(newest) - date.fromisoformat(fdate)).days
+        title = f"{title} — researched {fdate}" + (f" ({age}d ago)" if age else " (today)")
         rows = {}
         for line in f.read_text().splitlines():
             # ticker is the SECOND cell (a rank column precedes it) and the score
