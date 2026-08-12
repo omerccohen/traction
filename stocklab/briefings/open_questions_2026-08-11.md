@@ -41,6 +41,19 @@
 - **Computer Software: Prepackaged Software [sub]** — +11.4%/21d at the 96th pctile of its own history, volume p42, but attention rank **53/129**
 - **Aerospace [sub]** — +11.3%/21d at the 94th pctile of its own history, volume p65, but attention rank **30/129**
 
+## 2c. Groups that look calm but are split inside
+
+*Average move near zero, but the members are pulling violently apart — the winners and losers cancel out in the headline number. The group looks asleep; individual companies are not.*
+
+- **Consumer Staples** — average -0.2% but best +84% / worst -46% across 74 companies, attention rank **51/130**
+- **Finance** — average +2.0% but best +73% / worst -33% across 509 companies, attention rank **59/130**
+- **Finance: Consumer Services [sub]** — average -0.6% but best +51% / worst -33% across 65 companies, attention rank **93/130**
+- **Medical/Nursing Services [sub]** — average +0.6% but best +39% / worst -45% across 20 companies, attention rank **68/130**
+- **Business Services [sub]** — average +2.8% but best +45% / worst -35% across 61 companies, attention rank **27/130**
+- **Restaurants [sub]** — average -1.3% but best +38% / worst -35% across 32 companies, attention rank **119/130**
+- **Telecommunications Equipment [sub]** — average +0.6% but best +34% / worst -38% across 45 companies, attention rank **61/130**
+- **Integrated Freight & Logistics [sub]** — average +1.2% but best +45% / worst -26% across 5 companies, attention rank **55/130**
+
 ## 3. Rated highly by the research, never price-checked
 
 *Deep-research score >= 70% but missing from the price table — the positioning is known, what you would pay for it is not.*

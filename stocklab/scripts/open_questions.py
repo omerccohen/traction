@@ -32,6 +32,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 ROOT = Path(__file__).resolve().parents[1]
+_CLOSE = _FIELDS = None   # shared by sections 2b/2c, built once
 
 # proxy ETF -> the equity fields that SHOULD light up if the move is real.
 # Explicit and auditable: an unmapped proxy is reported as unmapped rather than
@@ -61,6 +62,8 @@ PROXY_TO_FIELDS = {
 BIG_MOVE = 0.10          # a proxy move worth explaining
 TOP_N_ATTENTION = 15     # "has equity attention" = inside the top N of 130
 TREND_PCTILE = 0.80      # a move this extreme should not be buried by averaging
+FLAT_AVG = 0.03          # group average this small reads as "nothing happening"
+SPLIT_SPREAD = 0.50      # ...while members this far apart means plenty happened
 
 
 def _latest(pattern: str) -> Path | None:
@@ -155,6 +158,7 @@ def main() -> None:
             "gets diluted — these are large one-sided moves the ranking "
             "de-emphasised.*", ""]
     buried = []
+    global _CLOSE, _FIELDS
     try:
         import numpy as np
         import pandas as pd
@@ -168,6 +172,7 @@ def main() -> None:
         pnl, _ = sanitize_corporate_actions(pnl)
         sec = pd.read_csv(ROOT / "data_cache" / "universe" / "broad_sectors.csv").set_index("Symbol")
         flds = build_fields(list(pnl.tickers), sec, min_members=5)
+        _CLOSE, _FIELDS = pnl.close.ffill(limit=3), flds
         rows = []
         for n, mem in flds.items():
             sn = field_snapshot(pnl, mem, n, as_of=pnl.dates[-1])
@@ -189,6 +194,42 @@ def main() -> None:
         buried = [f"*could not compute: {type(e).__name__}: {e}*"]
     out += buried if buried else ["*None — no large move is being hidden by the "
                                   "composite this week.*"]
+    out.append("")
+
+    # --- 2c. groups that look calm but are violently split inside ------------
+    # The SECOND averaging trap, found the same way as 2b. A field's headline
+    # return is the equal-weight MEAN of its members, so big winners and big
+    # losers cancel and the group reads "asleep". The `dispersion` indicator is
+    # supposed to catch this, but it is scored against the field's OWN history —
+    # a field that is always dispersed never looks unusually dispersed. Measured
+    # on 2026-08-11: 17 of 129 fields had a near-flat average with a >50-point
+    # internal spread, and 6 of the 8 largest were ranked outside the top 40
+    # (Restaurants 119/130 with a member at +38% and another at -35%).
+    out += ["## 2c. Groups that look calm but are split inside", "",
+            "*Average move near zero, but the members are pulling violently "
+            "apart — the winners and losers cancel out in the headline number. "
+            "The group looks asleep; individual companies are not.*", ""]
+    split = []
+    try:
+        import numpy as np
+        r21 = _CLOSE.iloc[-1] / _CLOSE.iloc[-22] - 1
+        for n, mem in _FIELDS.items():
+            cols = [t for t in mem if t in r21.index and np.isfinite(r21.get(t, np.nan))]
+            if len(cols) < 5:
+                continue
+            v = r21[cols]
+            avg, spread = float(v.mean()), float(v.max() - v.min())
+            rk, _ = field_rank(n.split(" [")[0])
+            if abs(avg) < FLAT_AVG and spread > SPLIT_SPREAD and rk and rk > TOP_N_ATTENTION:
+                split.append((spread, f"- **{n}** — average {avg:+.1%} but best "
+                                      f"{v.max():+.0%} / worst {v.min():+.0%} across "
+                                      f"{len(cols)} companies, attention rank "
+                                      f"**{rk}/{len(scores)}**"))
+        split = [s for _, s in sorted(split, key=lambda x: -x[0])][:8]
+    except Exception as e:
+        split = [f"*could not compute: {type(e).__name__}: {e}*"]
+    out += split if split else ["*None — no group is hiding a violent internal "
+                                "split behind a calm average.*"]
     out.append("")
 
     # --- 3. highly-ranked names with no price check -------------------------
