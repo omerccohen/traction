@@ -8,6 +8,19 @@ is a successful outcome, not a wasted week.**
 
 ---
 
+## Step 0 — Read the open questions FIRST.
+`briefings/open_questions_<date>.md`
+
+This file is **computed, not written** — no human or LLM decides what goes in
+it. It lists every name where the research and the price disagree, every
+physical move with no equity attention behind it, and anything rated highly that
+never got a price check.
+
+Read it before the prose. The narrative layers are good at *debunking* a story;
+this file is what is left standing afterwards, and it exists because a summary
+once reported a week as "nothing to do" while nine live leads sat unread in the
+outputs.
+
 ## Step 1 — Read the desk note. Pick ONE theme.
 `briefings/desk_note_<date>.md`
 
