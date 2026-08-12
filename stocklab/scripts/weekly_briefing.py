@@ -36,6 +36,7 @@ STATE = BRIEF_DIR / "state.json"
 
 
 MIN_LIVE_HISTORY_DAYS = 252   # audit F1: FieldWatch percentiles need a year
+MIN_ALIGNED_SHARE = 0.80      # share of tickers that must share the newest date
 
 
 def load_panel() -> tuple[object, str, str]:
@@ -51,6 +52,25 @@ def load_panel() -> tuple[object, str, str]:
         panel, _notes = apply_split_adjustments(panel, store.load_actions())
         panel, _notes2 = sanitize_corporate_actions(panel)
         if len(panel.dates) >= MIN_LIVE_HISTORY_DAYS:
+            # ALIGNMENT GUARD: a partial refresh (vendor rate-limits mid-run and
+            # the updater aborts) leaves the store with tickers sitting on
+            # different last dates. Every field statistic is then computed across
+            # misaligned days — momentum silently compares a name's Tuesday to
+            # another's Thursday — and nothing downstream would notice. Refuse to
+            # call the store "live" unless most of the universe shares the newest
+            # date. Caught by hand on 2026-08-12 (135 tickers on Aug 12, 2,648 on
+            # Aug 11, 205 on Aug 10); a hand check is not a safeguard.
+            last = store.last_dates()
+            newest = last.max()
+            share = float((last == newest).mean())
+            if share < MIN_ALIGNED_SHARE:
+                banner = (f"> **PARTIAL DATA**: only {share:.0%} of tickers have "
+                          f"the newest date ({newest.date()}) — the last price "
+                          "refresh did not complete, so the store is misaligned "
+                          "and field statistics would compare different days. "
+                          "Re-run scripts/update_prices.py until it reports "
+                          "'updated' before trusting a briefing.\n\n")
+                return panel, "live-misaligned", banner
             return panel, "live", ""
         banner = (f"> **LIVE STORE ACCUMULATING**: {len(panel.dates)}/"
                   f"{MIN_LIVE_HISTORY_DAYS} trading days collected — briefings "
