@@ -4,32 +4,32 @@
   "universe_size": 2992,
   "regime": {
     "vol": {
-      "value": 15.46,
-      "pctile": 0.26,
+      "value": 15.28,
+      "pctile": 0.24,
       "band": "calm",
       "age_days": 1
     },
     "trend": {
       "value": 0.1882,
       "band": "uptrend",
-      "age_days": 41
+      "age_days": 42
     },
     "valuation": {
       "value": 30.81,
       "pctile": 0.59,
-      "age_days": 1075
+      "age_days": 1076
     },
     "triggered": [],
     "elevated": [],
     "data_quality": {
       "live": [
         "vix_level (1d)",
-        "sp500_trend_12m (41d)"
+        "sp500_trend_12m (42d)"
       ],
       "stale": [
-        "us_cpi_yoy (1075d old)",
-        "us10y_rate_monthly (1075d old)",
-        "sp500_pe10 (1075d old)"
+        "us_cpi_yoy (1076d old)",
+        "us10y_rate_monthly (1076d old)",
+        "sp500_pe10 (1076d old)"
       ],
       "missing": [
         "us10y_yield",
