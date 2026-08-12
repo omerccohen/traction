@@ -17,6 +17,7 @@ is already priced, not what will happen. It is not advice.
 """
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -32,14 +33,38 @@ from stocklab.fundamentals import (load_facts, improvement_features,
 
 ROOT = Path(__file__).resolve().parents[1]
 
-# positioning probabilities from the deep-research rankings (briefings/rank_thesis*)
-POSITIONING = {
-    "Construction / build-out": {"PWR": 89, "EME": 87, "FIX": 86, "IESC": 83, "AGX": 78,
-                                 "HUBB": 71, "PLPC": 62, "ITRI": 55, "LMB": 48, "MTRX": 35},
-    "Power / firm supply": {"CEG": 82, "VST": 74, "TLN": 67, "NRG": 44, "OTTR": 16},
-    "Private credit / BDCs": {"ARCC": 82, "MAIN": 80, "FDUS": 75, "SLRC": 67, "BCSF": 63,
-                              "NMFC": 57, "CION": 52, "MFIC": 45},
-}
+def load_positioning() -> tuple[dict, str]:
+    """Read positioning scores from the NEWEST deep-research ranking files.
+
+    These were hardcoded, which silently produced a table dated this week that
+    actually described LAST week's theses — the most misleading failure mode
+    available, since the date implies freshness. Now the tables are parsed from
+    briefings/rank_thesis*_<date>.md, and only the newest date is used, so the
+    price view can never drift out of sync with the research it annotates.
+    Table rows look like:  | **PWR** | 89% | ... |
+    """
+    files = sorted(ROOT.glob("briefings/rank_thesis*_*.md"))
+    if not files:
+        return {}, ""
+    newest = max(f.stem.rsplit("_", 1)[-1] for f in files)
+    out: dict[str, dict] = {}
+    for f in [f for f in files if f.stem.endswith(newest)]:
+        title = re.sub(r"^rank_thesis\d*_?", "", f.stem.replace(f"_{newest}", ""))
+        title = title.replace("_", " ").title() or f.stem
+        rows = {}
+        for line in f.read_text().splitlines():
+            # ticker is the SECOND cell (a rank column precedes it) and the score
+            # may be bolded and may or may not carry a '%': | 1 | **PWR** | **89** |
+            # the score cell may carry trailing annotation, e.g.
+            # | 5 | **BCSF** | **63%** *(LOW-conf.)* | — so don't demand the cell
+            # end right after the number.
+            m = re.search(r"\*\*([A-Z][A-Z0-9.\-]{0,5})\*\*\s*\|\s*\*{0,2}\s*(\d{1,3})\s*%?",
+                          line)
+            if m and 0 <= int(m.group(2)) <= 100:
+                rows.setdefault(m.group(1), int(m.group(2)))
+        if rows:
+            out[title] = rows
+    return out, newest
 VALUE = ["earnings_yield", "book_to_price", "sales_to_price"]
 IMPROV = ["rev_growth", "rev_accel", "margin_chg", "margin_accel"]
 
@@ -106,6 +131,15 @@ def main() -> None:
                                .transform(lambda s: s.rank(pct=True) * 100
                                           if s.notna().sum() >= 5 else np.nan))
 
+    POSITIONING, rank_date = load_positioning()
+    if not POSITIONING:
+        print("no rank_thesis*.md files found — run the deep-research rankings first")
+        return
+    stale_note = ("" if rank_date == iso else
+                  f"\n> **NOTE:** positioning scores come from the deep-research "
+                  f"rankings dated **{rank_date}**, while prices are as of **{iso}**. "
+                  "Re-run the rankings for the current week's theses to realign.\n")
+
     out = [f"# Positioning vs price — as of {iso}",
            "",
            f"*Universe for percentiles: {len(uni)} liquid US companies with usable "
@@ -117,6 +151,7 @@ def main() -> None:
            "Positioning alone sorts *backwards* because it is public and already "
            "in the price. This shows what the market already charges for it. "
            "**Descriptive, not advice — it does not predict returns.**",
+           stale_note,
            ""]
 
     for thesis, names in POSITIONING.items():
