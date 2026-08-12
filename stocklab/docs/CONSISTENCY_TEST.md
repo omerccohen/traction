@@ -90,3 +90,45 @@ and down on 63.
 
 *Reproduce: re-run `scripts/analyze.py` and diff; compare `briefings/state.json`
 across two commits; spawn N analysts on one pack and compare their themes.*
+
+---
+
+## Test 4 — where else does averaging hide things?
+
+Two more averaging points were checked after the field-score blind spot (see
+`open_questions.py` sections 2b/2c, which fixed the first two).
+
+**Company-level composites — real but negligible.** The improvement and value
+scores each average 3-4 standardised factors, so one extreme factor can be
+diluted by ordinary ones. Measured: only **351 of 23,336 rows (1.5%)** have a
+factor at |z| >= 2 while both composites read below 0.5. Too rare to justify a
+fix; noted and left alone.
+
+**Time-averaged backtest results — a near-miss worth recording.** The reported
+value IC is a weak **+0.039** averaged over 47 monthly dates. Looking underneath,
+that average hides a wide range (-0.15 to +0.27) that is **strongly positive in
+13 months and strongly negative in only 4**. A runs test gave **z = -4.52**
+(clustering far beyond chance) and lag-1 autocorrelation of **+0.69** — which
+reads as a persistent, potentially identifiable regime. That would have been a
+significant finding.
+
+**It is an artifact.** The forward window is 126 days and the sampling step is 21
+days, so consecutive monthly observations share **83% of the same forward
+window** — they are largely re-measuring one period. Autocorrelation decays
+exactly in step with the overlap and turns NEGATIVE the moment the windows
+separate:
+
+| gap | 1m | 2m | 3m | 4m | 5m | **6m** | **7m** |
+|---|---|---|---|---|---|---|---|
+| shared window | 83% | 67% | 50% | 33% | 17% | **0%** | **0%** |
+| autocorrelation | +0.69 | +0.52 | +0.32 | +0.11 | -0.03 | **-0.32** | **-0.37** |
+
+The same check on the 63-day horizon at a 3-month (non-overlapping) gap gives
+**-0.27**. So a good stretch does not predict another good stretch; if anything
+it mildly predicts the opposite, though on ~8 independent observations that is
+not strong either.
+
+**Conclusion: on this one the average was honest.** It was not concealing a
+usable regime. Any apparent persistence in an overlapping-window backtest must
+be re-checked at a gap wider than the forward horizon before it is believed —
+this one collapsed and inverted.
