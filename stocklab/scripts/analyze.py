@@ -71,6 +71,41 @@ def main() -> None:
     except Exception as e:  # never let the cross-check kill the pack
         pack_dict["physical_proxies"] = {"error": str(e)}
 
+    # Buried moves: the attention score is a MEAN over ~5 indicators, so one
+    # extreme reading gets diluted by four ordinary ones. Measured on 2026-08-11:
+    # 24 of 129 fields had a 21d trend at/above the 80th percentile of their own
+    # history yet ranked outside the top 15 (Basic Materials +20.5% at rank 68,
+    # Paper +19.0% at rank 63). The analyst only ever sees `top_fields`, so those
+    # moves were invisible to it. Surfaced here so a large one-sided move cannot
+    # be averaged out of the briefing.
+    try:
+        import numpy as np
+        ranked_all = sorted([s for s in snaps if s and np.isfinite(s.score)],
+                            key=lambda s: -s.score)
+        top_names = {s.name for s in ranked_all[:6]}
+        buried = []
+        for i, s in enumerate(ranked_all, start=1):
+            tr = s.indicators.get("trend_21d", {})
+            if i > 15 and (tr.get("pctile") or 0) >= 0.80 and s.name not in top_names:
+                buried.append({
+                    "field": s.name, "attention_rank": i, "n_fields": len(ranked_all),
+                    "ret_21d": tr.get("value"), "trend_pctile": tr.get("pctile"),
+                    "volume_influx_pctile": s.indicators.get("volume_influx", {}).get("pctile"),
+                    "movers": s.members_moving,
+                })
+        buried.sort(key=lambda b: -abs(b["ret_21d"] or 0))
+        pack_dict["buried_moves"] = {
+            "n": len(buried),
+            "note": "Large one-sided moves the composite attention score ranked "
+                    "OUTSIDE the top 15. Trend at/above the 80th percentile of the "
+                    "field's own history. A high trend with LOW volume_influx means "
+                    "the price moved without money arriving — treat as unexplained, "
+                    "not as confirmation.",
+            "fields": buried[:12],
+        }
+    except Exception as e:
+        pack_dict["buried_moves"] = {"error": str(e)}
+
     out = ROOT / "briefings" / f"analysis_pack_{pack.as_of}.json"
     out.write_text(json.dumps(pack_dict, indent=2, default=float))
     print(json.dumps(pack_dict, indent=2, default=float))

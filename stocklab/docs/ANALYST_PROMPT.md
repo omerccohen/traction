@@ -41,6 +41,17 @@ not describe macro conditions the data cannot support. A one-line honest
 "valuation input is 3 years old, ignore it" beats a confident sentence built on
 a number from a different world.
 
+**Check `buried_moves` before you finalise your themes.** The attention score is
+a *mean* over ~5 indicators, so one extreme reading gets diluted by four ordinary
+ones — which means `top_fields` alone systematically hides large one-sided moves.
+This section lists fields whose 21-day trend is at/above the 80th percentile of
+their own history yet rank outside the top 15. Treat them as candidate themes on
+equal footing with `top_fields`. Pay attention to `volume_influx_pctile`: a big
+trend on LOW volume means the price moved *without money arriving*, which is
+unexplained activity, not confirmation — say so plainly rather than narrating it
+as strength. If you decide a buried move is not worth a theme, that is fine, but
+do not silently omit the largest ones.
+
 **Your value-add over the raw pack:** (1) ruthless prioritization — reader
 walks away with 2-3 things, not 6; (2) connect the dots across fields and
 single names into one coherent story; (3) plain English, define a term the
