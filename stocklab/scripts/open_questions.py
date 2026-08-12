@@ -60,6 +60,7 @@ PROXY_TO_FIELDS = {
 }
 BIG_MOVE = 0.10          # a proxy move worth explaining
 TOP_N_ATTENTION = 15     # "has equity attention" = inside the top N of 130
+TREND_PCTILE = 0.80      # a move this extreme should not be buried by averaging
 
 
 def _latest(pattern: str) -> Path | None:
@@ -136,6 +137,58 @@ def main() -> None:
     if unmapped:
         out += ["", f"*Unmapped proxies (no equity field assigned, so not checked): "
                     f"{', '.join(unmapped)}*"]
+    out.append("")
+
+    # --- 2b. big moves the composite attention score buried ------------------
+    # Measured failure, not a hypothetical: attention = mean(|pctile-0.5|) across
+    # ~5 indicators, so ONE extreme reading is diluted by four middling ones. On
+    # 2026-08-11, 24 of 129 fields had a trend at/above the 80th percentile of
+    # their own history yet ranked outside the top 15 — Basic Materials was
+    # +20.5% (92nd pctile) at rank 68, Paper +19.0% (98th) at rank 63. The
+    # metals move was found by LLM analysts DESPITE the score, not because of it.
+    # A big one-sided move on draining volume is precisely the shape the
+    # composite hides, so it is surfaced here directly.
+    out += ["## 2b. Big moves the attention score buried", "",
+            f"*Trend at/above the {int(TREND_PCTILE*100)}th percentile of the "
+            f"field's own history, yet ranked outside the top {TOP_N_ATTENTION}. "
+            "The composite averages five indicators, so a single extreme reading "
+            "gets diluted — these are large one-sided moves the ranking "
+            "de-emphasised.*", ""]
+    buried = []
+    try:
+        import numpy as np
+        import pandas as pd
+        from stocklab.data.live import PriceStore, apply_split_adjustments
+        from stocklab.data.loaders import sanitize_corporate_actions
+        from stocklab.data.panel import long_to_panel
+        from stocklab.fieldwatch import field_snapshot, build_fields
+        st = PriceStore(ROOT / "data_cache" / "live")
+        pnl = long_to_panel(st.load())
+        pnl, _ = apply_split_adjustments(pnl, st.load_actions())
+        pnl, _ = sanitize_corporate_actions(pnl)
+        sec = pd.read_csv(ROOT / "data_cache" / "universe" / "broad_sectors.csv").set_index("Symbol")
+        flds = build_fields(list(pnl.tickers), sec, min_members=5)
+        rows = []
+        for n, mem in flds.items():
+            sn = field_snapshot(pnl, mem, n, as_of=pnl.dates[-1])
+            if sn and np.isfinite(sn.score):
+                i = sn.indicators
+                rows.append({"field": n, "att": sn.score,
+                             "ret": i.get("trend_21d", {}).get("value"),
+                             "tp": i.get("trend_21d", {}).get("pctile"),
+                             "vi": i.get("volume_influx", {}).get("pctile")})
+        d = pd.DataFrame(rows).dropna(subset=["att", "tp"])
+        d["rk"] = d["att"].rank(ascending=False)
+        hit = d[(d["tp"] >= TREND_PCTILE) & (d["rk"] > TOP_N_ATTENTION)]
+        for r in hit.sort_values("ret", key=abs, ascending=False).head(10).itertuples():
+            vi = f"volume p{r.vi*100:.0f}" if r.vi == r.vi else "volume n/a"
+            buried.append(f"- **{r.field}** — {r.ret:+.1%}/21d at the "
+                          f"{r.tp*100:.0f}th pctile of its own history, {vi}, "
+                          f"but attention rank **{r.rk:.0f}/{len(d)}**")
+    except Exception as e:
+        buried = [f"*could not compute: {type(e).__name__}: {e}*"]
+    out += buried if buried else ["*None — no large move is being hidden by the "
+                                  "composite this week.*"]
     out.append("")
 
     # --- 3. highly-ranked names with no price check -------------------------

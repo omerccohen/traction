@@ -26,6 +26,21 @@
 - **XME +15.4%/21d** (Metals & Mining) — equity attention absent: Metal Mining rank 72/130, Steel/Iron Ore rank 86/130, Metal Fabrications rank 43/130
 - **SLX +11.1%/21d** (Steel) — equity attention absent: Steel/Iron Ore rank 86/130
 
+## 2b. Big moves the attention score buried
+
+*Trend at/above the 80th percentile of the field's own history, yet ranked outside the top 15. The composite averages five indicators, so a single extreme reading gets diluted — these are large one-sided moves the ranking de-emphasised.*
+
+- **Precious Metals [sub]** — +26.1%/21d at the 95th pctile of its own history, volume p10, but attention rank **24/129**
+- **Basic Materials** — +20.5%/21d at the 92th pctile of its own history, volume p8, but attention rank **68/129**
+- **Plastic Products [sub]** — +20.0%/21d at the 96th pctile of its own history, volume p37, but attention rank **21/129**
+- **Paper [sub]** — +19.0%/21d at the 98th pctile of its own history, volume p40, but attention rank **63/129**
+- **Biotechnology: Laboratory Analytical Instruments [sub]** — +15.4%/21d at the 94th pctile of its own history, volume p79, but attention rank **26/129**
+- **Biotechnology: Electromedical & Electrotherapeutic Apparatus [sub]** — +13.5%/21d at the 92th pctile of its own history, volume p16, but attention rank **57/129**
+- **Home Furnishings [sub]** — +13.3%/21d at the 94th pctile of its own history, volume p17, but attention rank **73/129**
+- **RETAIL: Building Materials [sub]** — +11.8%/21d at the 98th pctile of its own history, volume p20, but attention rank **48/129**
+- **Computer Software: Prepackaged Software [sub]** — +11.4%/21d at the 96th pctile of its own history, volume p42, but attention rank **53/129**
+- **Aerospace [sub]** — +11.3%/21d at the 94th pctile of its own history, volume p65, but attention rank **30/129**
+
 ## 3. Rated highly by the research, never price-checked
 
 *Deep-research score >= 70% but missing from the price table — the positioning is known, what you would pay for it is not.*
