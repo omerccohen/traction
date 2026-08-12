@@ -370,5 +370,179 @@
         "tracks": "Semiconductors ETF"
       }
     ]
+  },
+  "buried_moves": {
+    "n": 24,
+    "note": "Large one-sided moves the composite attention score ranked OUTSIDE the top 15. Trend at/above the 80th percentile of the field's own history. A high trend with LOW volume_influx means the price moved without money arriving \u2014 treat as unexplained, not as confirmation.",
+    "fields": [
+      {
+        "field": "Precious Metals [sub]",
+        "attention_rank": 24,
+        "n_fields": 130,
+        "ret_21d": 0.2611,
+        "trend_pctile": 0.9484126984126984,
+        "volume_influx_pctile": 0.10317460317460317,
+        "movers": [
+          "VMET +7%",
+          "MUX +10%",
+          "AYA +46%",
+          "NEWP +65%"
+        ]
+      },
+      {
+        "field": "Basic Materials",
+        "attention_rank": 69,
+        "n_fields": 130,
+        "ret_21d": 0.2054,
+        "trend_pctile": 0.9246031746031746,
+        "volume_influx_pctile": 0.07936507936507936,
+        "movers": [
+          "ALM -11%",
+          "LXU -10%",
+          "MATV +65%",
+          "NEWP +65%"
+        ]
+      },
+      {
+        "field": "Plastic Products [sub]",
+        "attention_rank": 21,
+        "n_fields": 130,
+        "ret_21d": 0.2,
+        "trend_pctile": 0.9603174603174603,
+        "volume_influx_pctile": 0.36904761904761907,
+        "movers": [
+          "ENTG +6%",
+          "MYE +6%",
+          "SWIM +28%",
+          "KRT +44%"
+        ]
+      },
+      {
+        "field": "Paper [sub]",
+        "attention_rank": 64,
+        "n_fields": 130,
+        "ret_21d": 0.1904,
+        "trend_pctile": 0.9801587301587301,
+        "volume_influx_pctile": 0.4007936507936508,
+        "movers": [
+          "MAGN -4%",
+          "SUZ -3%",
+          "CLW +49%",
+          "MATV +65%"
+        ]
+      },
+      {
+        "field": "Biotechnology: Laboratory Analytical Instruments [sub]",
+        "attention_rank": 26,
+        "n_fields": 130,
+        "ret_21d": 0.1545,
+        "trend_pctile": 0.9444444444444444,
+        "volume_influx_pctile": 0.7857142857142857,
+        "movers": [
+          "EYPT -9%",
+          "BRKR -3%",
+          "ALMR +33%",
+          "TXG +40%"
+        ]
+      },
+      {
+        "field": "Biotechnology: Electromedical & Electrotherapeutic Apparatus [sub]",
+        "attention_rank": 58,
+        "n_fields": 130,
+        "ret_21d": 0.1346,
+        "trend_pctile": 0.9246031746031746,
+        "volume_influx_pctile": 0.15873015873015872,
+        "movers": [
+          "LIVN -5%",
+          "INMD -0%",
+          "BLFS +24%",
+          "ITGR +30%"
+        ]
+      },
+      {
+        "field": "Home Furnishings [sub]",
+        "attention_rank": 74,
+        "n_fields": 130,
+        "ret_21d": 0.1333,
+        "trend_pctile": 0.9365079365079365,
+        "volume_influx_pctile": 0.16666666666666666,
+        "movers": [
+          "LEG -12%",
+          "SGI -10%",
+          "MHK +26%",
+          "HBB +52%"
+        ]
+      },
+      {
+        "field": "RETAIL: Building Materials [sub]",
+        "attention_rank": 48,
+        "n_fields": 130,
+        "ret_21d": 0.1185,
+        "trend_pctile": 0.9761904761904762,
+        "volume_influx_pctile": 0.20238095238095238,
+        "movers": [
+          "BLDR +2%",
+          "HD +5%",
+          "TSCO +17%",
+          "ASPN +19%"
+        ]
+      },
+      {
+        "field": "Computer Software: Prepackaged Software [sub]",
+        "attention_rank": 54,
+        "n_fields": 130,
+        "ret_21d": 0.1138,
+        "trend_pctile": 0.9642857142857143,
+        "volume_influx_pctile": 0.42063492063492064,
+        "movers": [
+          "RBLX -34%",
+          "BAND -30%",
+          "LIME +56%",
+          "TEAM +60%"
+        ]
+      },
+      {
+        "field": "Aerospace [sub]",
+        "attention_rank": 31,
+        "n_fields": 130,
+        "ret_21d": 0.113,
+        "trend_pctile": 0.9444444444444444,
+        "volume_influx_pctile": 0.6507936507936508,
+        "movers": [
+          "HONA -22%",
+          "PAC -7%",
+          "BETA +41%",
+          "ACHR +49%"
+        ]
+      },
+      {
+        "field": "Medical/Dental Instruments [sub]",
+        "attention_rank": 41,
+        "n_fields": 130,
+        "ret_21d": 0.1099,
+        "trend_pctile": 0.9563492063492064,
+        "volume_influx_pctile": 0.32936507936507936,
+        "movers": [
+          "LMAT -17%",
+          "TCMD -17%",
+          "SGHT +44%",
+          "PLSE +71%"
+        ]
+      },
+      {
+        "field": "Steel/Iron Ore [sub]",
+        "attention_rank": 86,
+        "n_fields": 130,
+        "ret_21d": 0.1045,
+        "trend_pctile": 0.8412698412698413,
+        "volume_influx_pctile": 0.36904761904761907,
+        "movers": [
+          "NWPX -16%",
+          "CRS -5%",
+          "FRD +24%",
+          "ATI +25%"
+        ]
+      }
+    ]
   }
 }
