@@ -1,5 +1,46 @@
 # Does adding PRICE fix the ranking? — pre-registered test (H2)
 
+> ## RETRACTED 2026-08-13 — read this before the rest of the page
+>
+> **Everything below was measured on a universe selected with hindsight, and
+> none of it survives without that.** `liquid_universe()` ranked names by dollar
+> volume over the **last 252 days of the store** and applied that list back to
+> 2018, so a company is in the sample *because of what it became*. 78 names
+> climbed more than 500 liquidity places since 2022; 247 of 611 (40%) traded
+> under $150M/day at the time. QBTS was rank 2531 at **$474K/day** in 2022 and
+> is rank 157 today.
+>
+> Re-run with the trailing-252d median dollar volume measured **as of each
+> date** and screened at $150M/day — the bar this page already claimed the
+> universe met — on repaired price data (see the crash-deletion fix in
+> `docs/AUDIT_DATA_LAYER.md`):
+>
+> | signal, 126d | as published | tradeable universe |
+> |---|---|---|
+> | IMPROVEMENT + VALUE | +0.045, **t 2.73** | +0.038, **t 1.45** |
+> | LEVELS ("sorts backwards") | −0.053, **t −3.15** | −0.029, **t −0.96** |
+> | VALUE | +0.051, t 2.21 | +0.037, t 1.07 |
+> | IMPROVEMENT | +0.018, t 1.93 | +0.003, t 0.17 |
+> | momentum | +0.087, t 3.10 | +0.043, t 1.38 |
+> | cheap-vs-expensive decile spread | **−11.3 pts** | **+3.3 pts** |
+> | spread hit rate | — | **50%** |
+>
+> **Nothing clears t = 2.** The sign flip, the backwards-levels finding and the
+> momentum result are all artifacts of the universe. Result 2 below — "rank-IC
+> said yes, the money said no" — inverts: the −11.3pt spread is **+3.3pts** on
+> tradeable names, and was 52% produced by 76 observations of 22 microcaps
+> (QBTS, IONQ, RGTI, SOUN, CVNA and similar) at a median $35.5M/day, each
+> counted six times through overlapping 126-day windows.
+>
+> `scripts/backtest_valuation.py` now reports `full` and `pit_screened` side by
+> side so this cannot recur silently. **Read `pit_screened`.**
+>
+> One bias the screen does NOT repair: names that were liquid then and are gone
+> or illiquid now were never downloaded at all, so survivorship remains and the
+> screened numbers are still the optimistic end.
+>
+> Kept below unedited as the record of what was claimed and how it failed.
+
 **Verdict: H2 passes the pre-registered test, and the result is still not a buy
 rule.** Adding valuation flipped the ranking from backwards to forwards — a
 real, out-of-sample-replicated improvement. But the decile curve shows the money

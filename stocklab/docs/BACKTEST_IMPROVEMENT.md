@@ -1,5 +1,30 @@
 # Does ranking by IMPROVEMENT beat ranking by LEVELS? — pre-registered test
 
+> ## RETRACTED 2026-08-13 — the comparison had no legs on either side
+>
+> This page's verdict rests on improvement (t 1.93) beating levels (t −3.15).
+> Both numbers came from a universe chosen by **today's** liquidity applied back
+> to 2018 (full detail in the banner on `docs/BACKTEST_VALUATION.md`). Screened
+> to names actually tradeable on each date, at $150M/day:
+>
+> | signal, 126d | as published | tradeable universe |
+> |---|---|---|
+> | IMPROVEMENT | +0.018, t 1.93 | **+0.003, t 0.17** |
+> | LEVELS | −0.053, t −3.15 | **−0.029, t −0.96** |
+>
+> Improvement is **zero**, not faint. Levels do **not** sort backwards. So H1's
+> comparison is not "weakly supported" — it is untestable on this evidence,
+> because neither side is distinguishable from noise once the sample is
+> restricted to companies a book could have owned.
+>
+> The audit also found the pre-registration was written first (git confirms the
+> order) but **not applied**: the primary "combination beats either alone" test
+> fails on IC (0.045 < 0.051) and this page states it backwards, and the
+> held-out window had already been opened 2h31m earlier by the improvement run
+> without being logged in `HOLDOUT_OPENED.json`.
+>
+> Kept below unedited as the record.
+
 **Verdict, by the rule fixed in advance: H1 is WEAKLY SUPPORTED.**
 Improvement beats levels decisively — but improvement on its own is a faint
 tilt, not a stock-picking edge, and the one number that looked exciting last
