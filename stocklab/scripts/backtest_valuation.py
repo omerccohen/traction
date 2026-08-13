@@ -42,6 +42,9 @@ from stocklab.fundamentals import (load_facts, improvement_features,
 ROOT = Path(__file__).resolve().parents[1]
 FWD = [63, 126]
 SPLIT = pd.Timestamp("2024-01-01")
+MIN_PIT_DV = 150e6      # $/day, trailing 252d median AS OF each date — the
+                        # tradeability bar docs/BACKTEST_VALUATION.md already
+                        # claimed the universe met but never enforced
 
 IMPROV = ["rev_growth", "rev_accel", "margin_chg", "margin_accel"]
 VALUE = ["earnings_yield", "book_to_price", "sales_to_price"]
@@ -76,6 +79,18 @@ def run():
     tickers = [t for t in funds if t in close.columns]
     asof_idx = list(range(147, len(dates) - max(FWD) - 1, 21))
 
+    # Point-in-time tradeability. The fundamental universe on disk was chosen by
+    # `liquid_universe()`, which ranks by dollar volume over the LAST 252 days of
+    # the store and applies that list back to 2018 — so a name is in the sample
+    # because of what it became. Measured: 78 names climbed more than 500
+    # liquidity places since 2022, and 247 of 611 (40%) traded under $150M/day
+    # then. QBTS was rank 2531 at $474K/day in 2022 and is rank 157 today.
+    # We cannot un-choose the downloaded pool, but we CAN refuse to count an
+    # observation on a date when the name was not actually tradeable. Record the
+    # trailing median dollar volume AS OF each date and report every result both
+    # ways, so the hindsight-dependence is visible instead of assumed away.
+    dv_pit = (close * panel.volume).rolling(252, min_periods=200).median()
+
     rows = []
     for i in asof_idx:
         as_of = dates[i]
@@ -99,6 +114,8 @@ def run():
                                    if j < len(dates) and np.isfinite(close[t].iloc[j])
                                    else np.nan)
             rows.append({"as_of": as_of, "ticker": t, "sector": sectors.get(t),
+                         "pit_dv": float(dv_pit[t].iloc[i])
+                         if np.isfinite(dv_pit[t].iloc[i]) else np.nan,
                          "momentum": float(px / s.iloc[-127] - 1),
                          "leverage": lev["leverage"], **imp,
                          **{k: v for k, v in val.items()}, **fwd})
@@ -122,9 +139,10 @@ def run():
         parts.append(g)
     df = pd.concat(parts, ignore_index=True)
 
-    def ic(sig, tgt):
+    def ic(sig, tgt, frame=None):
+        frame = df if frame is None else frame
         ics, idx = [], []
-        for d0, g in df.groupby("as_of"):
+        for d0, g in frame.groupby("as_of"):
             gg = g[[sig, tgt]].dropna()
             if len(gg) >= 20 and gg[sig].nunique() > 5:
                 r = sstats.spearmanr(gg[sig], gg[tgt]).statistic
@@ -139,9 +157,10 @@ def run():
                 "held_out_ic": float(h.mean()) if len(h) else None, "held_out_n": int(len(h)),
                 "tainted_ic": float(tn.mean()) if len(tn) else None, "tainted_n": int(len(tn))}
 
-    def spread(sig, tgt):
+    def spread(sig, tgt, frame=None):
+        frame = df if frame is None else frame
         sp, idx = [], []
-        for d0, g in df.groupby("as_of"):
+        for d0, g in frame.groupby("as_of"):
             gg = g[[sig, tgt]].dropna().sort_values(sig)
             if len(gg) < 40:
                 continue
@@ -155,20 +174,42 @@ def run():
                 "tainted_mean": float(s[s.index >= SPLIT].mean()) if (s.index >= SPLIT).any() else None}
 
     named = ["IMPROVEMENT", "VALUE", "LEVELS", "IMPROV_VALUE", "LEVELS_VALUE"]
-    out = {"universe": len(tickers), "n_obs": int(len(df)),
-           "n_asof_dates": int(df["as_of"].nunique()),
+
+    def report(frame):
+        blk = {"n_obs": int(len(frame)),
+               "n_asof_dates": int(frame["as_of"].nunique()),
+               "median_names_per_date": int(frame.groupby("as_of").size().median()),
+               "median_pit_dv_musd": round(float(frame["pit_dv"].median()) / 1e6, 1)
+               if frame["pit_dv"].notna().any() else None}
+        for h in FWD:
+            tgt = f"fwd_{h}"
+            b = {n: ic("z_" + n, tgt, frame) for n in named}
+            b.update({n + "_sn": ic("sn_" + n, tgt, frame) for n in named})
+            b["momentum"] = ic("z_mom", tgt, frame)
+            b["ALL"] = ic("z_ALL", tgt, frame)
+            blk[f"IC_{h}d"] = b
+            blk[f"components_{h}d"] = {c: ic("z_" + c, tgt, frame) for c in VALUE}
+            blk[f"spread_{h}d"] = {n: spread("z_" + n, tgt, frame)
+                                   for n in ["VALUE", "IMPROV_VALUE", "ALL"]}
+        return blk
+
+    # Both cuts, always. The screened one is the honest answer to "would this
+    # have worked?"; the full one is kept beside it so the gap between them is
+    # the measured cost of the hindsight-selected pool rather than a claim.
+    screened = df[df["pit_dv"] >= MIN_PIT_DV]
+    out = {"universe": len(tickers),
            "asof_range": [str(df["as_of"].min().date()), str(df["as_of"].max().date())],
-           "median_names_per_date": int(df.groupby("as_of").size().median())}
-    for h in FWD:
-        tgt = f"fwd_{h}"
-        block = {n: ic("z_" + n, tgt) for n in named}
-        block.update({n + "_sn": ic("sn_" + n, tgt) for n in named})
-        block["momentum"] = ic("z_mom", tgt)
-        block["ALL"] = ic("z_ALL", tgt)
-        out[f"IC_{h}d"] = block
-        out[f"components_{h}d"] = {c: ic("z_" + c, tgt) for c in VALUE}
-        out[f"spread_{h}d"] = {n: spread("z_" + n, tgt)
-                               for n in ["VALUE", "IMPROV_VALUE", "ALL"]}
+           "pit_screen_usd_per_day": MIN_PIT_DV,
+           "note": ("`full` includes every observation, including names that were "
+                    "microcaps on the as-of date and only became liquid later. "
+                    "`pit_screened` keeps only observations whose trailing 252d "
+                    "median dollar volume ON THAT DATE cleared the screen — the "
+                    "cut a real book could have traded. Read pit_screened. "
+                    "NOTE: the screen cannot repair the other half of the "
+                    "selection — companies that were liquid then and are gone or "
+                    "illiquid now were never downloaded, so survivorship remains."),
+           "full": report(df),
+           "pit_screened": report(screened)}
     df.to_csv(ROOT / "experiments" / "valuation_backtest_rows.csv", index=False)
     return out
 

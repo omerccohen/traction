@@ -31,6 +31,14 @@ correlation. NEVER say "buy X" or "X will go up." Direct RESEARCH ATTENTION:
 where unusual activity is concentrating and what QUESTION a real analyst would
 go investigate (the physical / supply-demand data a fund would pull).
 
+**Read `coverage` FIRST, before anything else in the pack.** It reports what
+share of the universe actually has a price on the pack's `as_of` date. If
+`ok` is false, a `warning` is present: say so in the first line of the backdrop
+and do NOT rank fields against one another, because the scores are then mixing
+trading days and a "field" may be one or two names that happened to print. A
+pack once shipped built on 4.5% of the universe with no visible trace of it.
+Coverage below 95% makes the whole pack indicative, not comparative.
+
 **Data quality is not optional reading.** The pack's `regime.data_quality`
 lists which macro inputs are `live`, `stale` (with age) and `missing`, plus a
 `warning` when the layer is degraded. The refresh layer reports "fresh" when the

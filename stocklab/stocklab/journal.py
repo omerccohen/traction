@@ -41,7 +41,17 @@ def load(path: Path) -> pd.DataFrame:
     for c in COLUMNS:
         if c not in df.columns:
             df[c] = np.nan
-    return df[COLUMNS]
+    df = df[COLUMNS]
+    # An all-empty text column round-trips from CSV as float64, and assigning a
+    # date string into it raises "Invalid value ... for dtype 'float64'" on
+    # pandas 2.x. That is why `journal.py close` failed on every journal where
+    # nothing had been closed yet — which is every new journal — so no entry
+    # could ever leave `open`. Force the text columns to object on load.
+    for c in ("close_date", "close_reason", "notes", "status", "thesis",
+              "falsifier", "ticker", "action", "date"):
+        if df[c].dtype != object:
+            df[c] = df[c].astype(object).where(df[c].notna(), "")
+    return df
 
 
 def save(df: pd.DataFrame, path: Path) -> None:
@@ -95,9 +105,16 @@ def add(path: Path, panel, ticker: str, action: str, thesis: str,
 
 def close(path: Path, entry_id: str, reason: str, when=None) -> None:
     df = load(path)
-    m = df["id"].astype(str) == str(entry_id)
+    # ids are stored zero-padded ("0001"), so an exact string compare rejected
+    # the "1" a human actually types. Match on the padded form, the raw form,
+    # and the numeric value.
+    ids = df["id"].astype(str).str.strip()
+    want = str(entry_id).strip()
+    m = (ids == want) | (ids.str.lstrip("0") == want.lstrip("0"))
     if not m.any():
-        raise ValueError(f"no journal entry with id {entry_id}")
+        raise ValueError(
+            f"no journal entry with id {entry_id!r}. Known ids: "
+            + (", ".join(ids.tolist()) if len(ids) else "(journal is empty)"))
     df.loc[m, "status"] = "closed"
     df.loc[m, "close_date"] = str(pd.Timestamp(
         when or datetime.now(timezone.utc).date()).date())

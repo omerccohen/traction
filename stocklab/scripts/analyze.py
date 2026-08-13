@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main() -> None:
-    panel, source, _banner = wb.load_panel()
+    panel, source, banner = wb.load_panel()
     as_of = panel.dates[-1]
     fields, _warn = wb.load_field_config(list(panel.tickers))
     snaps = [field_snapshot(panel, members, name, as_of=as_of)
@@ -45,6 +45,31 @@ def main() -> None:
         universe_size=len(panel.tickers), top_n=6,
     )
     pack_dict = pack.to_dict()
+
+    # Coverage warning. load_panel() already DETECTS a partial store and builds
+    # the banner; this line used to drop it into `_banner` and the pack shipped
+    # with no trace of it. On 2026-08-12 a pack went out built on 135 of 2,992
+    # tickers (4.5%) with four of the six top fields carrying 0-1 members that
+    # had actually printed, and nothing in the file said so. The check is
+    # worthless if its answer is discarded, so it rides at the top of the pack
+    # and the analyst brief is required to read it.
+    ld = panel.close.apply(lambda s: s.last_valid_index())
+    share = float((ld == as_of).mean())
+    pack_dict["coverage"] = {
+        "as_of": str(as_of.date()),
+        "tickers_total": int(len(ld)),
+        "tickers_priced_on_as_of": int((ld == as_of).sum()),
+        "share_on_as_of": round(share, 4),
+        "banner": banner or "",
+        "ok": bool(share >= 0.95),
+    }
+    if share < 0.95:
+        pack_dict["coverage"]["warning"] = (
+            f"PARTIAL DATA: only {share:.1%} of tickers are priced on {as_of.date()}. "
+            "Field scores mix trading days and thin fields may be built on one or "
+            "two names. Do not rank fields against each other from this pack — "
+            "re-run the price update first.")
+        print(f"WARNING: pack built on {share:.1%} coverage", file=sys.stderr)
 
     # Physical-proxy panel: the commodity/theme ETF field is a physical
     # supply/demand cross-check, but it rarely ranks top-6 (percentiles are vs
