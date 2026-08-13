@@ -15,8 +15,8 @@ ACHC,Health Care,Medical Specialities
 ACHV,Health Care,Biotechnology: In Vitro & In Vivo Diagnostic Substances
 ACIC,Finance,Property-Casualty Insurers
 ACIW,Technology,Computer Software: Prepackaged Software
-ACLS,Technology,Industrial Machinery/Components
-ACMR,Technology,Industrial Machinery/Components
+ACLS,Industrials,Industrial Machinery/Components
+ACMR,Industrials,Industrial Machinery/Components
 ACRS,Health Care,Biotechnology: Pharmaceutical Preparations
 ACT,Finance,Specialty Insurers
 ADAM,Real Estate,Real Estate Investment Trusts
@@ -27,13 +27,13 @@ ADMA,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 ADP,Technology,EDP Services
 ADPT,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 ADSK,Technology,Computer Software: Prepackaged Software
-ADTN,Utilities,Telecommunications Equipment
+ADTN,Telecommunications,Telecommunications Equipment
 ADUR,Industrials,Major Chemicals
 ADUS,Health Care,Medical/Nursing Services
 ADV,Consumer Discretionary,Business Services
 AEBI,Industrials,Auto Manufacturing
-AEHR,Industrials,Electrical Products
-AEIS,Technology,Industrial Machinery/Components
+AEHR,Technology,Electrical Products
+AEIS,Industrials,Industrial Machinery/Components
 AEP,Utilities,Electric Utilities: Central
 AEVA,Consumer Discretionary,Auto Parts:O.E.M.
 AFRM,Finance,Finance: Consumer Services
@@ -62,9 +62,9 @@ ALM,Basic Materials,Other Metals and Minerals
 ALMR,Industrials,Biotechnology: Laboratory Analytical Instruments
 ALMS,Health Care,Biotechnology: Pharmaceutical Preparations
 ALMU,Technology,Semiconductors
-ALNT,Industrials,Electrical Products
+ALNT,Technology,Electrical Products
 ALNY,Health Care,Biotechnology: Pharmaceutical Preparations
-ALOY,Basic Materials,Metal Mining
+ALOY,Miscellaneous,Development Stage/Pre-Revenue
 ALRM,Technology,Computer Software: Prepackaged Software
 ALRS,Finance,Major Banks
 AMAL,Finance,Major Banks
@@ -78,11 +78,11 @@ AMLX,Health Care,Biotechnology: Pharmaceutical Preparations
 AMPH,Health Care,Biotechnology: Pharmaceutical Preparations
 AMPL,Technology,Computer Software: Prepackaged Software
 AMRX,Health Care,Biotechnology: Pharmaceutical Preparations
-AMSC,Consumer Discretionary,Metal Fabrications
+AMSC,Industrials,Metal Fabrications
 AMSF,Finance,Property-Casualty Insurers
 AMZN,Consumer Discretionary,Catalog/Specialty Distribution
 ANAB,Health Care,Biotechnology: Pharmaceutical Preparations
-ANDE,Industrials,Farming/Seeds/Milling
+ANDE,Consumer Staples,Farming/Seeds/Milling
 ANGO,Health Care,Medical/Dental Instruments
 ANIP,Health Care,Biotechnology: Pharmaceutical Preparations
 ANL,Health Care,Biotechnology: Pharmaceutical Preparations
@@ -99,10 +99,10 @@ APPF,Technology,Computer Software: Prepackaged Software
 APPN,Technology,Computer Software: Prepackaged Software
 APPS,Miscellaneous,Multi-Sector Companies
 ARCB,Industrials,Trucking Freight/Courier Services
-ARCC,Finance,Finance: Consumer Services
+ARCC,Finance,Finance/Investors Services
 ARGX,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 ARHS,Consumer Discretionary,Other Specialty Stores
-ARKO,Consumer Staples,Food Chains
+ARKO,Consumer Discretionary,Retail-Auto Dealers and Gas Stations
 ARLP,Energy,Coal Mining
 ARM,Technology,Semiconductors
 ARQQ,Technology,Computer Software: Prepackaged Software
@@ -113,13 +113,13 @@ ARVN,Health Care,Biotechnology: Pharmaceutical Preparations
 ARWR,Health Care,Biotechnology: Pharmaceutical Preparations
 ARXS,Industrials,Military/Government/Technical
 ASMB,Health Care,Biotechnology: Pharmaceutical Preparations
-ASML,Technology,Industrial Machinery/Components
+ASML,Industrials,Industrial Machinery/Components
 ASND,Health Care,Biotechnology: Pharmaceutical Preparations
 ASO,Consumer Discretionary,Other Specialty Stores
 ASST,Technology,Computer Software: Prepackaged Software
 ASTE,Industrials,Construction/Ag Equipment/Trucks
 ASTH,Consumer Discretionary,Professional Services
-ASTS,Consumer Discretionary,Telecommunications Equipment
+ASTS,Telecommunications,Telecommunications Equipment
 ATAI,Health Care,Biotechnology: Pharmaceutical Preparations
 ATAT,Consumer Discretionary,Hotels/Resorts
 ATEC,Health Care,Medical/Dental Instruments
@@ -149,7 +149,7 @@ AXON,Industrials,Ordnance And Accessories
 AXSM,Health Care,Biotechnology: Pharmaceutical Preparations
 AXTI,Technology,Semiconductors
 AYA,Basic Materials,Precious Metals
-AZTA,Technology,Industrial Machinery/Components
+AZTA,Industrials,Industrial Machinery/Components
 BAND,Technology,Computer Software: Prepackaged Software
 BANR,Finance,Major Banks
 BATRK,Consumer Discretionary,Services-Misc. Amusement & Recreation
@@ -174,7 +174,7 @@ BJRI,Consumer Discretionary,Restaurants
 BKNG,Consumer Discretionary,Transportation Services
 BKR,Consumer Discretionary,Oil and Gas Field Machinery
 BL,Technology,Computer Software: Prepackaged Software
-BLBD,Consumer Discretionary,Construction/Ag Equipment/Trucks
+BLBD,Industrials,Construction/Ag Equipment/Trucks
 BLFS,Health Care,Biotechnology: Electromedical & Electrotherapeutic Apparatus
 BLKB,Technology,Computer Software: Prepackaged Software
 BLLN,Health Care,Medical Specialities
@@ -204,7 +204,7 @@ BWMN,Consumer Discretionary,Professional Services
 BZ,Technology,Computer Software: Programming Data Processing
 CACC,Finance,Finance: Consumer Services
 CADL,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
-CAE,Miscellaneous,Industrial Machinery/Components
+CAE,Industrials,Industrial Machinery/Components
 CAI,Health Care,Medical Specialities
 CAKE,Consumer Discretionary,Restaurants
 CALM,Consumer Staples,Farming/Seeds/Milling
@@ -227,7 +227,7 @@ CCB,Finance,Major Banks
 CCC,Technology,Computer Software: Prepackaged Software
 CCEP,Consumer Staples,Beverages (Production/Distribution)
 CCNE,Finance,Major Banks
-CCOI,Consumer Discretionary,Telecommunications Equipment
+CCOI,Telecommunications,Telecommunications Equipment
 CCSI,Technology,Computer Software: Prepackaged Software
 CDNA,Health Care,Medical Specialities
 CDNL,Industrials,Military/Government/Technical
@@ -265,7 +265,7 @@ CIVB,Finance,Major Banks
 CLBK,Finance,Savings Institutions
 CLBT,Technology,Computer Software: Prepackaged Software
 CLDX,Health Care,Biotechnology: In Vitro & In Vivo Diagnostic Substances
-CLFD,Utilities,Telecommunications Equipment
+CLFD,Telecommunications,Telecommunications Equipment
 CLMB,Technology,Retail: Computer Software & Peripheral Equipment
 CLMT,Energy,Integrated oil Companies
 CLPT,Health Care,Medical/Dental Instruments
@@ -282,7 +282,7 @@ CNXN,Consumer Discretionary,Catalog/Specialty Distribution
 COAG,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 COCO,Consumer Staples,Beverages (Production/Distribution)
 COGT,Health Care,Biotechnology: Pharmaceutical Preparations
-COHU,Industrials,Electrical Products
+COHU,Technology,Electrical Products
 COIN,Finance,Finance: Consumer Services
 COKE,Consumer Staples,Beverages (Production/Distribution)
 COLB,Finance,Major Banks
@@ -294,12 +294,12 @@ CORZ,Finance,Finance: Consumer Services
 COST,Consumer Discretionary,Department/Specialty Retail Stores
 CPB,Consumer Staples,Packaged Foods
 CPRT,Consumer Discretionary,Retail-Auto Dealers and Gas Stations
-CRAI,Consumer Discretionary,Other Consumer Services
-CRCT,Technology,Industrial Machinery/Components
+CRAI,Real Estate,Other Consumer Services
+CRCT,Industrials,Industrial Machinery/Components
 CRDO,Technology,Semiconductors
 CRESY,Finance,Real Estate
 CRMD,Health Care,Biotechnology: Pharmaceutical Preparations
-CRML,Basic Materials,Metal Mining
+CRML,Miscellaneous,Development Stage/Pre-Revenue
 CRNC,Technology,Computer Software: Prepackaged Software
 CRNX,Health Care,Biotechnology: Pharmaceutical Preparations
 CROX,Consumer Discretionary,Shoe Manufacturing
@@ -352,7 +352,7 @@ DMRA,Health Care,Biotechnology: Pharmaceutical Preparations
 DNLI,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 DNTH,Health Care,Biotechnology: Pharmaceutical Preparations
 DOCU,Technology,Computer Software: Prepackaged Software
-DOO,Consumer Discretionary,Industrial Specialties
+DOO,Health Care,Industrial Specialties
 DORM,Consumer Discretionary,Auto Parts:O.E.M.
 DOX,Technology,EDP Services
 DPZ,Consumer Discretionary,Food Distributors
@@ -362,7 +362,7 @@ DRTS,Health Care,Medical/Dental Instruments
 DRUG,Health Care,Biotechnology: Pharmaceutical Preparations
 DRVN,Consumer Discretionary,Automotive Aftermarket
 DSGN,Health Care,Biotechnology: Pharmaceutical Preparations
-DSGR,Consumer Discretionary,Industrial Specialties
+DSGR,Health Care,Industrial Specialties
 DSGX,Technology,Computer Software: Prepackaged Software
 DSP,Technology,Computer Software: Programming Data Processing
 DUOL,Technology,Computer Software: Prepackaged Software
@@ -371,7 +371,7 @@ DXPE,Industrials,Industrial Machinery/Components
 DYN,Health Care,Biotechnology: Pharmaceutical Preparations
 EBAY,Consumer Discretionary,Business Services
 EBC,Finance,Savings Institutions
-ECHO,Consumer Discretionary,Telecommunications Equipment
+ECHO,Telecommunications,Telecommunications Equipment
 ECPG,Finance,Finance Companies
 EEFT,Finance,Investment Bankers/Brokers/Service
 EFSC,Finance,Major Banks
@@ -380,7 +380,7 @@ EH,Industrials,Aerospace
 EIKN,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 ELE,Basic Materials,Precious Metals
 ELMT,Industrials,Metal Fabrications
-ELVA,Miscellaneous,Industrial Machinery/Components
+ELVA,Industrials,Industrial Machinery/Components
 ELVN,Health Care,Biotechnology: Pharmaceutical Preparations
 ENPH,Technology,Semiconductors
 ENSG,Health Care,Hospital/Nursing Management
@@ -393,7 +393,7 @@ EQPT,Consumer Discretionary,Diversified Commercial Services
 ERAS,Health Care,Biotechnology: Pharmaceutical Preparations
 ERIC,Technology,Radio And Television Broadcasting And Communications Equipment
 ERIE,Finance,Specialty Insurers
-ERII,Technology,Industrial Machinery/Components
+ERII,Industrials,Industrial Machinery/Components
 ESTA,Health Care,Industrial Specialties
 ETON,Health Care,Biotechnology: Pharmaceutical Preparations
 ETOR,Finance,Investment Bankers/Brokers/Service
@@ -414,18 +414,18 @@ EYE,Health Care,Ophthalmic Goods
 EYPT,Industrials,Biotechnology: Laboratory Analytical Instruments
 EZPW,Consumer Discretionary,Other Specialty Stores
 FA,Technology,EDP Services
-FAC,Miscellaneous,Industrial Machinery/Components
+FAC,Industrials,Industrial Machinery/Components
 FANG,Energy,Oil & Gas Production
 FAST,Consumer Discretionary,RETAIL: Building Materials
 FBNC,Finance,Major Banks
 FBRX,Health Care,Biotechnology: Pharmaceutical Preparations
 FBYD,Consumer Discretionary,Services-Misc. Amusement & Recreation
-FCEL,Energy,Industrial Machinery/Components
+FCEL,Industrials,Industrial Machinery/Components
 FCFS,Consumer Discretionary,Other Specialty Stores
 FDMT,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 FDUS,Finance,Finance/Investors Services
-FEIM,Industrials,Electrical Products
-FELE,Consumer Discretionary,Metal Fabrications
+FEIM,Technology,Electrical Products
+FELE,Industrials,Metal Fabrications
 FENC,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 FER,Industrials,Military/Government/Technical
 FFBC,Finance,Major Banks
@@ -436,14 +436,14 @@ FHTX,Health Care,Biotechnology: Pharmaceutical Preparations
 FIBK,Finance,Major Banks
 FIGR,Finance,Finance: Consumer Services
 FISI,Finance,Major Banks
-FISN,Utilities,Electric Utilities: Central
+FISN,Miscellaneous,Development Stage/Pre-Revenue
 FISV,Consumer Discretionary,Business Services
 FIVE,Consumer Discretionary,Department/Specialty Retail Stores
 FIVN,Technology,EDP Services
 FIZZ,Consumer Staples,Beverages (Production/Distribution)
 FLEX,Technology,Electrical Products
 FLGT,Health Care,Medical Specialities
-FLNC,Miscellaneous,Industrial Machinery/Components
+FLNC,Industrials,Industrial Machinery/Components
 FLY,Industrials,Military/Government/Technical
 FLYW,Consumer Discretionary,Business Services
 FMAO,Finance,Savings Institutions
@@ -464,7 +464,7 @@ FRPH,Finance,Real Estate
 FRPT,Consumer Staples,Packaged Foods
 FRSH,Technology,Computer Software: Prepackaged Software
 FRST,Finance,Major Banks
-FRVO,Utilities,Electric Utilities: Central
+FRVO,Miscellaneous,Development Stage/Pre-Revenue
 FSBC,Finance,Major Banks
 FSLR,Technology,Semiconductors
 FSLY,Technology,Computer Software: Prepackaged Software
@@ -492,7 +492,7 @@ GEHC,Health Care,Medical Electronics
 GEN,Technology,Computer Software: Prepackaged Software
 GENB,Health Care,Biotechnology: Pharmaceutical Preparations
 GFS,Technology,Semiconductors
-GFUZ,Utilities,Electric Utilities: Central
+GFUZ,Miscellaneous,Development Stage/Pre-Revenue
 GGAL,Finance,Commercial Banks
 GH,Health Care,Medical Specialities
 GHRS,Health Care,Biotechnology: Pharmaceutical Preparations
@@ -510,7 +510,7 @@ GLXY,Finance,Investment Bankers/Brokers/Service
 GMAB,Health Care,Biotechnology: Pharmaceutical Preparations
 GNTX,Consumer Discretionary,Auto Parts:O.E.M.
 GO,Consumer Staples,Food Chains
-GOOD,Real Estate,Real Estate
+GOOD,Finance,Real Estate
 GOOG,Technology,Computer Software: Programming Data Processing
 GOOGL,Technology,Computer Software: Programming Data Processing
 GOOGM,Technology,Computer Software: Programming Data Processing
@@ -522,7 +522,7 @@ GRFS,Health Care,Biotechnology: Pharmaceutical Preparations
 GRPN,Consumer Discretionary,Advertising
 GRRR,Technology,Computer Software: Prepackaged Software
 GRVY,Technology,EDP Services
-GSAT,Consumer Discretionary,Telecommunications Equipment
+GSAT,Telecommunications,Telecommunications Equipment
 GSBC,Finance,Major Banks
 GSHD,Finance,Specialty Insurers
 GT,Consumer Discretionary,Automotive Aftermarket
@@ -542,7 +542,7 @@ HELP,Health Care,Biotechnology: Pharmaceutical Preparations
 HFWA,Finance,Banks
 HIMX,Technology,Semiconductors
 HLIT,Technology,Radio And Television Broadcasting And Communications Equipment
-HLMN,Consumer Discretionary,Industrial Machinery/Components
+HLMN,Industrials,Industrial Machinery/Components
 HLNE,Finance,Investment Managers
 HMH,Consumer Discretionary,Oil and Gas Field Machinery
 HNRG,Utilities,Electric Utilities: Central
@@ -584,7 +584,7 @@ IDCC,Miscellaneous,Multi-Sector Companies
 IDXX,Health Care,Biotechnology: In Vitro & In Vivo Diagnostic Substances
 IDYA,Health Care,Biotechnology: Pharmaceutical Preparations
 IEP,Energy,Integrated oil Companies
-IESC,Industrials,Engineering & Construction
+IESC,Consumer Discretionary,Engineering & Construction
 IGIC,Finance,Property-Casualty Insurers
 IIIV,Technology,Computer Software: Prepackaged Software
 ILMN,Health Care,Medical Specialities
@@ -601,7 +601,7 @@ INBX,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 INCY,Health Care,Biotechnology: Commercial Physical & Biological Resarch
 INDB,Finance,Major Banks
 INDV,Health Care,Biotechnology: Pharmaceutical Preparations
-INIO,Consumer Discretionary,Metal Fabrications
+INIO,Industrials,Metal Fabrications
 INMD,Health Care,Biotechnology: Electromedical & Electrotherapeutic Apparatus
 INNV,Health Care,Medical/Nursing Services
 INOD,Technology,EDP Services
@@ -619,14 +619,14 @@ IPAR,Consumer Discretionary,Package Goods/Cosmetics
 IPGP,Technology,Semiconductors
 IPX,Basic Materials,Other Metals and Minerals
 IQMX,Technology,Computer Software: Prepackaged Software
-IRDM,Consumer Discretionary,Telecommunications Equipment
+IRDM,Telecommunications,Telecommunications Equipment
 IREN,Finance,Finance: Consumer Services
 IRON,Health Care,Biotechnology: Pharmaceutical Preparations
 IRTC,Health Care,Medical/Dental Instruments
 ISRG,Health Care,Industrial Specialties
 ISSC,Technology,EDP Services
 ITIC,Finance,Specialty Insurers
-ITRI,Industrials,Electrical Products
+ITRI,Technology,Electrical Products
 ITRN,Technology,Electronic Components
 JACK,Consumer Discretionary,Restaurants
 JANX,Health Care,Biotechnology: Pharmaceutical Preparations
@@ -681,7 +681,7 @@ LEGH,Consumer Discretionary,Homebuilding
 LEGN,Health Care,Biotechnology: Pharmaceutical Preparations
 LFST,Health Care,Medical/Nursing Services
 LFTO,Technology,EDP Services
-LFUS,Energy,Electrical Products
+LFUS,Technology,Electrical Products
 LGIH,Consumer Discretionary,Homebuilding
 LGN,Consumer Discretionary,Engineering & Construction
 LGND,Health Care,Biotechnology: Pharmaceutical Preparations
@@ -692,7 +692,7 @@ LILA,Telecommunications,Cable & Other Pay Television Services
 LILAK,Telecommunications,Cable & Other Pay Television Services
 LILAP,Telecommunications,Cable & Other Pay Television Services
 LIME,Technology,Computer Software: Prepackaged Software
-LIN,Basic Materials,Major Chemicals
+LIN,Industrials,Major Chemicals
 LINC,Real Estate,Other Consumer Services
 LIND,Consumer Discretionary,Transportation Services
 LINE,Real Estate,Real Estate Investment Trusts
@@ -713,16 +713,16 @@ LPLA,Finance,Investment Bankers/Brokers/Service
 LPTH,Technology,Semiconductors
 LQDA,Health Care,Biotechnology: Pharmaceutical Preparations
 LQDT,Consumer Discretionary,Business Services
-LRCX,Technology,Industrial Machinery/Components
+LRCX,Industrials,Industrial Machinery/Components
 LSCC,Technology,Semiconductors
 LSTR,Industrials,Trucking Freight/Courier Services
-LTBR,Basic Materials,Major Chemicals
+LTBR,Industrials,Major Chemicals
 LULU,Consumer Discretionary,Apparel
 LUNR,Industrials,Industrial Machinery/Components
-LWLG,Industrials,Containers/Packaging
+LWLG,Consumer Discretionary,Containers/Packaging
 LYEL,Health Care,Biotechnology: Pharmaceutical Preparations
 LYFT,Consumer Discretionary,Business Services
-LYTS,Consumer Discretionary,Building Products
+LYTS,Industrials,Building Products
 LZ,Technology,EDP Services
 MAKO,Basic Materials,Precious Metals
 MAMA,Consumer Staples,Specialty Foods
@@ -731,14 +731,14 @@ MAR,Consumer Discretionary,Hotels/Resorts
 MARA,Finance,Finance: Consumer Services
 MASS,Industrials,Industrial Machinery/Components
 MAT,Consumer Discretionary,Recreational Games/Products/Toys
-MATW,Telecommunications,Metal Fabrications
+MATW,Industrials,Metal Fabrications
 MAZE,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 MBIN,Finance,Major Banks
 MBLY,Technology,Computer Software: Prepackaged Software
-MBUU,Industrials,Marine Transportation
+MBUU,Consumer Discretionary,Marine Transportation
 MBWM,Finance,Major Banks
 MBX,Health Care,Biotechnology: Pharmaceutical Preparations
-MCFT,Industrials,Marine Transportation
+MCFT,Consumer Discretionary,Marine Transportation
 MCHB,Finance,Major Banks
 MCHP,Technology,Semiconductors
 MDB,Technology,Computer Software: Prepackaged Software
@@ -753,7 +753,7 @@ METC,Energy,Coal Mining
 METCB,Energy,Coal Mining
 MFIC,Finance,Finance/Investors Services
 MFP,Industrials,Industrial Machinery/Components
-MGEE,Energy,Electric Utilities: Central
+MGEE,Utilities,Electric Utilities: Central
 MGNI,Technology,Computer Software: Programming Data Processing
 MGPI,Consumer Staples,Beverages (Production/Distribution)
 MGRC,Consumer Discretionary,Diversified Commercial Services
@@ -765,7 +765,7 @@ MKSI,Industrials,Industrial Machinery/Components
 MKTX,Finance,Investment Bankers/Brokers/Service
 MLAB,Industrials,Industrial Machinery/Components
 MLCO,Consumer Discretionary,Hotels/Resorts
-MLKN,Consumer Discretionary,Office Equipment/Supplies/Services
+MLKN,Miscellaneous,Office Equipment/Supplies/Services
 MLTX,Health Care,Biotechnology: Pharmaceutical Preparations
 MLYS,Health Care,Biotechnology: Pharmaceutical Preparations
 MMED,Health Care,Medical/Dental Instruments
@@ -803,7 +803,7 @@ MZTI,Consumer Staples,Packaged Foods
 NAMS,Health Care,Biotechnology: Pharmaceutical Preparations
 NAVI,Finance,Investment Bankers/Brokers/Service
 NAVN,Technology,Computer Software: Prepackaged Software
-NB,Basic Materials,Metal Mining
+NB,Miscellaneous,Development Stage/Pre-Revenue
 NBBK,Finance,Banks
 NBIS,Technology,Computer Software: Programming Data Processing
 NBIX,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
@@ -818,7 +818,7 @@ NEOG,Health Care,Biotechnology: In Vitro & In Vivo Diagnostic Substances
 NESR,Energy,Oilfield Services/Equipment
 NEWT,Finance,Major Banks
 NEXN,Technology,Computer Software: Programming Data Processing
-NEXT,Utilities,Oil & Gas Production
+NEXT,Energy,Oil & Gas Production
 NFLX,Consumer Discretionary,Consumer Electronics/Video Chains
 NGNE,Health Care,Biotechnology: Pharmaceutical Preparations
 NHP,Real Estate,Real Estate Investment Trusts
@@ -830,8 +830,8 @@ NMFC,Finance,Finance/Investors Services
 NMIH,Finance,Property-Casualty Insurers
 NMRK,Finance,Real Estate
 NN,Industrials,Industrial Machinery/Components
-NNE,Utilities,Electric Utilities: Central
-NOVT,Miscellaneous,Industrial Machinery/Components
+NNE,Miscellaneous,Development Stage/Pre-Revenue
+NOVT,Industrials,Industrial Machinery/Components
 NPCE,Health Care,Medical/Dental Instruments
 NRC,Health Care,Biotechnology: Commercial Physical & Biological Resarch
 NRDS,Technology,EDP Services
@@ -842,7 +842,7 @@ NSSC,Telecommunications,Telecommunications Equipment
 NTAP,Technology,Electronic Components
 NTCT,Technology,EDP Services
 NTES,Technology,Computer Software: Prepackaged Software
-NTGR,Utilities,Telecommunications Equipment
+NTGR,Telecommunications,Telecommunications Equipment
 NTLA,Health Care,Biotechnology: In Vitro & In Vivo Diagnostic Substances
 NTNX,Technology,Computer Software: Prepackaged Software
 NTRA,Health Care,Medical Specialities
@@ -897,12 +897,12 @@ OSPN,Technology,EDP Services
 OSS,Technology,Computer Manufacturing
 OSW,Consumer Discretionary,Hotels/Resorts
 OTEX,Technology,EDP Services
-OTTR,Utilities,Electric Utilities: Central
+OTTR,Miscellaneous,Multi-Sector Companies
 OUST,Industrials,Industrial Machinery/Components
 OXLC,Finance,Investment Managers
 OZK,Finance,Major Banks
-PAA,Energy,Natural Gas Distribution
-PAGP,Energy,Natural Gas Distribution
+PAA,Utilities,Natural Gas Distribution
+PAGP,Utilities,Natural Gas Distribution
 PAHC,Health Care,Biotechnology: Pharmaceutical Preparations
 PANL,Consumer Discretionary,Marine Transportation
 PANW,Technology,Computer peripheral equipment
@@ -911,7 +911,7 @@ PAX,Finance,Investment Managers
 PAYO,Consumer Discretionary,Business Services
 PAYP,Consumer Discretionary,Business Services
 PAYS,Technology,EDP Services
-PAYX,Industrials,Diversified Commercial Services
+PAYX,Consumer Discretionary,Diversified Commercial Services
 PBLS,Health Care,Biotechnology: Pharmaceutical Preparations
 PBYI,Health Care,Biotechnology: Pharmaceutical Preparations
 PCAR,Industrials,Auto Manufacturing
@@ -928,7 +928,7 @@ PENG,Technology,Semiconductors
 PENN,Consumer Discretionary,Hotels/Resorts
 PEP,Consumer Staples,Beverages (Production/Distribution)
 PERI,Technology,EDP Services
-PESI,Industrials,Environmental Services
+PESI,Utilities,Environmental Services
 PFG,Finance,Accident &Health Insurance
 PGC,Finance,Commercial Banks
 PGEN,Health Care,Biotechnology: Pharmaceutical Preparations
@@ -936,13 +936,13 @@ PGNY,Health Care,Misc Health and Biotechnology Services
 PGY,Finance,Finance: Consumer Services
 PHAT,Health Care,Biotechnology: Pharmaceutical Preparations
 PHVS,Health Care,Biotechnology: Pharmaceutical Preparations
-PI,Technology,Industrial Machinery/Components
+PI,Industrials,Industrial Machinery/Components
 PICS,Finance,Finance: Consumer Services
-PKOH,Industrials,Industrial Specialties
+PKOH,Health Care,Industrial Specialties
 PLAB,Technology,Semiconductors
 PLAY,Consumer Discretionary,Restaurants
 PLMR,Finance,Property-Casualty Insurers
-PLPC,Industrials,Water Sewer Pipeline Comm & Power Line Construction
+PLPC,Technology,Electrical Products
 PLSE,Health Care,Medical/Dental Instruments
 PLTR,Technology,Computer Software: Prepackaged Software
 PLUS,Technology,Retail: Computer Software & Peripheral Equipment
@@ -952,9 +952,9 @@ PNTG,Health Care,Medical/Nursing Services
 PODD,Health Care,Medical/Dental Instruments
 POET,Technology,Semiconductors
 PONY,Technology,EDP Services
-POOL,Consumer Discretionary,Industrial Specialties
+POOL,Health Care,Industrial Specialties
 POWI,Technology,Semiconductors
-POWL,Energy,Electrical Products
+POWL,Technology,Electrical Products
 PPC,Consumer Staples,Meat/Poultry/Fish
 PPLI,Technology,Computer Software: Programming Data Processing
 PPTA,Basic Materials,Precious Metals
@@ -981,7 +981,7 @@ PUBM,Technology,Computer Software: Programming Data Processing
 PURR,Finance,Finance: Consumer Services
 PVLA,Health Care,Biotechnology: Pharmaceutical Preparations
 PWP,Finance,Finance: Consumer Services
-PYPL,Industrials,Diversified Commercial Services
+PYPL,Consumer Discretionary,Diversified Commercial Services
 PZZA,Consumer Discretionary,Restaurants
 QBTS,Technology,EDP Services
 QCOM,Technology,Radio And Television Broadcasting And Communications Equipment
@@ -992,7 +992,7 @@ QMCO,Technology,Electronic Components
 QNST,Consumer Discretionary,Business Services
 QNT,Technology,EDP Services
 QRVO,Technology,Semiconductors
-QS,Miscellaneous,Industrial Machinery/Components
+QS,Industrials,Industrial Machinery/Components
 QTTB,Health Care,Biotechnology: Pharmaceutical Preparations
 QUBT,Technology,Computer Software: Prepackaged Software
 QURE,Health Care,Biotechnology: Pharmaceutical Preparations
@@ -1013,7 +1013,7 @@ REPL,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 REYN,Consumer Discretionary,Containers/Packaging
 RGC,Health Care, Medicinal Chemicals and Botanical Products 
 RGEN,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
-RGLD,Industrials,Precious Metals
+RGLD,Basic Materials,Precious Metals
 RGNX,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 RGTI,Technology,EDP Services
 RIGL,Health Care,Biotechnology: Pharmaceutical Preparations
@@ -1027,7 +1027,7 @@ RMNI,Consumer Discretionary,Business Services
 RMR,Consumer Discretionary,Professional Services
 RNW,Utilities,Electric Utilities: Central
 ROAD,Industrials,Military/Government/Technical
-ROCK,Industrials,Steel/Iron Ore
+ROCK,Industrials,Building Products
 ROIV,Health Care,Biotechnology: Pharmaceutical Preparations
 ROKU,Telecommunications,Cable & Other Pay Television Services
 ROOT,Finance,Property-Casualty Insurers
@@ -1037,7 +1037,7 @@ RPD,Technology,Computer Software: Prepackaged Software
 RPRX,Health Care,Biotechnology: Pharmaceutical Preparations
 RRR,Consumer Discretionary,Hotels/Resorts
 RUM,Technology,Computer Software: Programming Data Processing
-RUN,Miscellaneous,Industrial Machinery/Components
+RUN,Industrials,Industrial Machinery/Components
 RUSHA,Consumer Discretionary,Retail-Auto Dealers and Gas Stations
 RVMD,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 RYAAY,Consumer Discretionary,Air Freight/Delivery Services
@@ -1087,7 +1087,7 @@ SIBN,Health Care,Medical/Dental Instruments
 SIGI,Finance,Property-Casualty Insurers
 SIMO,Technology,Semiconductors
 SION,Health Care,Biotechnology: Pharmaceutical Preparations
-SIRI,Consumer Discretionary,Broadcasting
+SIRI,Industrials,Broadcasting
 SITM,Technology,Semiconductors
 SKHY,Technology,Semiconductors
 SKWD,Finance,Property-Casualty Insurers
@@ -1112,7 +1112,7 @@ SNPS,Technology,Computer Software: Prepackaged Software
 SNY,Health Care,Biotechnology: Pharmaceutical Preparations
 SOFI,Finance,Finance: Consumer Services
 SOLS,Industrials,Major Chemicals
-SONO,Consumer Staples,Consumer Electronics/Appliances
+SONO,Technology,Consumer Electronics/Appliances
 SOPH,Technology,EDP Services
 SOUN,Technology,Computer Software: Prepackaged Software
 SPCX,Technology,Computer Software: Programming Data Processing
@@ -1126,7 +1126,7 @@ SRPT,Health Care,Biotechnology: Pharmaceutical Preparations
 SRRK,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 SRTA,Health Care,Medical/Nursing Services
 SSNC,Technology,Computer Software: Prepackaged Software
-SSRM,Industrials,Precious Metals
+SSRM,Basic Materials,Precious Metals
 SSYS,Technology,Computer peripheral equipment
 STAA,Health Care,Ophthalmic Goods
 STBA,Finance,Major Banks
@@ -1170,7 +1170,7 @@ TECX,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 TEM,Technology,Computer Software: Programming Data Processing
 TENB,Technology,Computer Software: Prepackaged Software
 TENX,Health Care,Biotechnology: Pharmaceutical Preparations
-TER,Industrials,Electrical Products
+TER,Technology,Electrical Products
 TFSL,Finance,Savings Institutions
 TGTX,Health Care,Biotechnology: Pharmaceutical Preparations
 TH,Consumer Discretionary,Hotels/Resorts
@@ -1197,9 +1197,9 @@ TRIP,Technology,Computer Software: Programming Data Processing
 TRMB,Industrials,Industrial Machinery/Components
 TRMD,Consumer Discretionary,Marine Transportation
 TRMK,Finance,Major Banks
-TRNS,Industrials,Electrical Products
+TRNS,Technology,Electrical Products
 TROW,Finance,Investment Managers
-TRS,Industrials,Industrial Specialties
+TRS,Health Care,Industrial Specialties
 TRST,Finance,Major Banks
 TRUP,Health Care,Medical Specialities
 TRVG,Technology,EDP Services
@@ -1212,7 +1212,7 @@ TSLA,Industrials,Auto Manufacturing
 TSSI,Consumer Discretionary,Professional Services
 TTAN,Technology,Computer Software: Prepackaged Software
 TTD,Technology,Computer Software: Programming Data Processing
-TTEK,Consumer Discretionary,Military/Government/Technical
+TTEK,Industrials,Military/Government/Technical
 TTMI,Technology,Electrical Products
 TTWO,Technology,Computer Software: Prepackaged Software
 TVTX,Health Care,Biotechnology: Pharmaceutical Preparations
@@ -1237,7 +1237,7 @@ UPST,Finance,Finance: Consumer Services
 UPWK,Technology,EDP Services
 URBN,Consumer Discretionary,Clothing/Shoe/Accessory Stores
 URGN,Health Care,Biotechnology: Pharmaceutical Preparations
-USAR,Basic Materials,Metal Mining
+USAR,Miscellaneous,Development Stage/Pre-Revenue
 USLM,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels)
 UTHR,Health Care,Biotechnology: Pharmaceutical Preparations
 UVSP,Finance,Major Banks
@@ -1245,19 +1245,19 @@ VC,Consumer Discretionary,Auto Parts:O.E.M.
 VCEL,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 VCTR,Finance,Investment Managers
 VCYT,Health Care,Medical Specialities
-VECO,Technology,Industrial Machinery/Components
-VELO,Technology,Industrial Machinery/Components
+VECO,Industrials,Industrial Machinery/Components
+VELO,Industrials,Industrial Machinery/Components
 VERA,Health Care,Biotechnology: Pharmaceutical Preparations
 VERX,Technology,Computer Software: Prepackaged Software
 VIAV,Technology,Semiconductors
-VICR,Technology,Industrial Machinery/Components
+VICR,Industrials,Industrial Machinery/Components
 VIR,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 VISN,Technology,Radio And Television Broadcasting And Communications Equipment
 VITL,Consumer Staples,Packaged Foods
 VKTX,Health Care,Biotechnology: Pharmaceutical Preparations
 VLY,Finance,Major Banks
 VMD,Health Care,Misc Health and Biotechnology Services
-VMET,Industrials,Precious Metals
+VMET,Basic Materials,Precious Metals
 VNDA,Health Care,Biotechnology: Pharmaceutical Preparations
 VNET,Technology,Computer Software: Programming Data Processing
 VNOM,Energy,Oil & Gas Production
@@ -1265,13 +1265,13 @@ VOD,Telecommunications,Telecommunications Equipment
 VOR,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
 VOXR,Basic Materials,Precious Metals
 VRDN,Health Care,Biotechnology: Pharmaceutical Preparations
-VREX,Technology,Industrial Machinery/Components
+VREX,Industrials,Industrial Machinery/Components
 VRNS,Technology,Computer Software: Prepackaged Software
 VRSK,Technology,EDP Services
 VRSN,Technology,EDP Services
 VRTX,Health Care,Biotechnology: Pharmaceutical Preparations
-VSAT,Consumer Discretionary,Telecommunications Equipment
-VSEC,Consumer Discretionary,Military/Government/Technical
+VSAT,Telecommunications,Telecommunications Equipment
+VSEC,Industrials,Military/Government/Technical
 VSNT,Industrials,Broadcasting
 VSTM,Health Care,Biotechnology: Pharmaceutical Preparations
 VTRS,Health Care,Biotechnology: Pharmaceutical Preparations
@@ -1291,21 +1291,21 @@ WFRD,Consumer Discretionary,Oil and Gas Field Machinery
 WGS,Health Care,Medical/Nursing Services
 WING,Consumer Discretionary,Restaurants
 WIX,Technology,Computer Software: Programming Data Processing
-WLDN,Consumer Discretionary,Military/Government/Technical
-WLFC,Consumer Discretionary,Industrial Specialties
+WLDN,Industrials,Military/Government/Technical
+WLFC,Health Care,Industrial Specialties
 WLTH,Finance,Finance: Consumer Services
 WMG,Consumer Discretionary,Services-Misc. Amusement & Recreation
 WMT,Consumer Discretionary,Department/Specialty Retail Stores
 WRD,Technology,EDP Services
 WSBC,Finance,Major Banks
 WSC,Industrials,Misc Corporate Leasing Services
-WSE,Industrials,Diversified Commercial Services
+WSE,Consumer Discretionary,Diversified Commercial Services
 WSFS,Finance,Major Banks
 WTFC,Finance,Major Banks
 WTW,Finance,Specialty Insurers
 WULF,Finance,Finance: Consumer Services
 WVE,Health Care,Biotechnology: Pharmaceutical Preparations
-WWD,Energy,Industrial Machinery/Components
+WWD,Industrials,Industrial Machinery/Components
 WYFI,Finance,Finance: Consumer Services
 WYNN,Consumer Discretionary,Hotels/Resorts
 XE,Industrials,Metal Fabrications
@@ -1318,10 +1318,10 @@ XNCR,Health Care,Biotechnology: Pharmaceutical Preparations
 XNDU,Technology,Computer Manufacturing
 XNET,Technology,Computer Software: Prepackaged Software
 XP,Finance,Investment Bankers/Brokers/Service
-XPEL,Industrials,Industrial Specialties
+XPEL,Health Care,Industrial Specialties
 XRAY,Health Care,Medical/Dental Instruments
 YORW,Utilities,Water Supply
-YSWY,Consumer Staples,Food Chains
+YSWY,Consumer Discretionary,Retail-Auto Dealers and Gas Stations
 Z,Consumer Discretionary,Business Services
 ZBIO,Health Care,Biotechnology: Pharmaceutical Preparations
 ZBRA,Industrials,Industrial Machinery/Components
@@ -1353,7 +1353,7 @@ ACA,Industrials,Metal Fabrications
 ACEL,Consumer Discretionary,Services-Misc. Amusement & Recreation
 ACHR,Industrials,Aerospace
 ACI,Consumer Staples,Food Chains
-ACM,Consumer Discretionary,Military/Government/Technical
+ACM,Industrials,Military/Government/Technical
 ACN,Consumer Discretionary,Business Services
 ACVA,Consumer Discretionary,Business Services
 AD,Telecommunications,Telecommunications Equipment
@@ -1368,7 +1368,7 @@ AEM,Basic Materials,Precious Metals
 AEO,Consumer Discretionary,Clothing/Shoe/Accessory Stores
 AER,Consumer Discretionary,Diversified Commercial Services
 AERO,Consumer Discretionary,Air Freight/Delivery Services
-AES,Industrials,Electric Utilities: Central
+AES,Utilities,Electric Utilities: Central
 AESI,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels)
 AFG,Finance,Property-Casualty Insurers
 AFL,Finance,Accident &Health Insurance
@@ -1386,7 +1386,7 @@ AI,Technology,Computer Software: Prepackaged Software
 AIG,Finance,Property-Casualty Insurers
 AIN,Consumer Discretionary,Textiles
 AIR,Industrials,Aerospace
-AIT,Consumer Discretionary,Industrial Specialties
+AIT,Health Care,Industrial Specialties
 AIZ,Finance,Property-Casualty Insurers
 AJG,Finance,Specialty Insurers
 AKR,Real Estate,Real Estate Investment Trusts
@@ -1402,7 +1402,7 @@ ALLY,Finance,Major Banks
 ALSN,Consumer Discretionary,Auto Parts:O.E.M.
 ALV,Consumer Discretionary,Auto Parts:O.E.M.
 AM,Utilities,Natural Gas Distribution
-AMBP,Industrials,Containers/Packaging
+AMBP,Consumer Discretionary,Containers/Packaging
 AMBQ,Technology,Semiconductors
 AMCR,Consumer Discretionary,Miscellaneous manufacturing industries
 AME,Industrials,Industrial Machinery/Components
@@ -1410,7 +1410,7 @@ AMG,Finance,Investment Managers
 AMH,Real Estate,Real Estate Investment Trusts
 AMN,Consumer Discretionary,Professional Services
 AMP,Finance,Investment Managers
-AMPX,Miscellaneous,Industrial Machinery/Components
+AMPX,Industrials,Industrial Machinery/Components
 AMR,Energy,Coal Mining
 AMRC,Consumer Discretionary,Engineering & Construction
 AMRZ,Industrials,Building Materials
@@ -1425,9 +1425,9 @@ ANF,Consumer Discretionary,Clothing/Shoe/Accessory Stores
 ANRO,Health Care,Biotechnology: Pharmaceutical Preparations
 AON,Finance,Specialty Insurers
 AORT,Health Care,Medical/Dental Instruments
-AOS,Consumer Discretionary,Consumer Electronics/Appliances
+AOS,Technology,Consumer Electronics/Appliances
 APAM,Finance,Investment Managers
-APD,Basic Materials,Major Chemicals
+APD,Industrials,Major Chemicals
 APG,Consumer Discretionary,Diversified Commercial Services
 APH,Technology,Electrical Products
 APLE,Real Estate,Real Estate Investment Trusts
@@ -1456,8 +1456,8 @@ ASPN,Consumer Discretionary,RETAIL: Building Materials
 ASX,Technology,Semiconductors
 ATEN,Telecommunications,Computer Communications Equipment
 ATHM,Technology,EDP Services
-ATI,Industrials,Steel/Iron Ore
-ATKR,Miscellaneous,Industrial Machinery/Components
+ATI,Basic Materials,Other Metals and Minerals
+ATKR,Industrials,Industrial Machinery/Components
 ATMU,Consumer Discretionary,Auto Parts:O.E.M.
 ATO,Utilities,Oil/Gas Transmission
 ATR,Industrials,Plastic Products
@@ -1479,16 +1479,16 @@ AX,Finance,Savings Institutions
 AXP,Finance,Finance: Consumer Services
 AXS,Finance,Property-Casualty Insurers
 AXTA,Consumer Discretionary,Paints/Coatings
-AYI,Consumer Discretionary,Building Products
+AYI,Industrials,Building Products
 AZN,Health Care,Biotechnology: Pharmaceutical Preparations
 AZO,Consumer Discretionary,Auto & Home Supply Stores
-AZZ,Industrials,Industrial Specialties
+AZZ,Health Care,Industrial Specialties
 B,Basic Materials,Precious Metals
 BA,Industrials,Aerospace
 BABA,Consumer Discretionary,Business Services
 BAC,Finance,Major Banks
 BAH,Consumer Discretionary,Professional Services
-BALL,Industrials,Containers/Packaging
+BALL,Consumer Discretionary,Containers/Packaging
 BAM,Real Estate,Building operators
 BANC,Finance,Major Banks
 BAP,Finance,Commercial Banks
@@ -1511,16 +1511,16 @@ BCO,Industrials,Integrated Freight & Logistics
 BCS,Finance,Commercial Banks
 BCSF,Finance,Finance/Investors Services
 BCX,Finance,Finance/Investors Services
-BDC,Industrials,Telecommunications Equipment
+BDC,Telecommunications,Telecommunications Equipment
 BDJ,Finance,Finance Companies
 BDX,Health Care,Medical/Dental Instruments
-BE,Energy,Industrial Machinery/Components
+BE,Industrials,Industrial Machinery/Components
 BEKE,Finance,Real Estate
 BEN,Finance,Investment Managers
 BEP,Utilities,Electric Utilities: Central
 BEPC,Utilities,Electric Utilities: Central
 BETA,Industrials,Aerospace
-BFAM,Consumer Discretionary,Other Consumer Services
+BFAM,Real Estate,Other Consumer Services
 BFH,Consumer Discretionary,Business Services
 BFLY,Health Care,Medical Electronics
 BFS,Real Estate,Real Estate Investment Trusts
@@ -1590,7 +1590,7 @@ BWA,Consumer Discretionary,Auto Parts:O.E.M.
 BWLP,Consumer Discretionary,Transportation Services
 BWXT,Industrials,Industrial Machinery/Components
 BX,Finance,Investment Managers
-BXC,Consumer Discretionary,Wholesale Distributors
+BXC,Industrials,Wholesale Distributors
 BXDC,Finance,Real Estate
 BXMT,Real Estate,Real Estate Investment Trusts
 BXP,Real Estate,Real Estate Investment Trusts
@@ -1598,12 +1598,12 @@ BY,Finance,Major Banks
 BYD,Consumer Discretionary,Hotels/Resorts
 BZH,Consumer Discretionary,Homebuilding
 C,Finance,Major Banks
-CAAP,Consumer Discretionary,Aerospace
+CAAP,Industrials,Aerospace
 CACI,Technology,EDP Services
 CAG,Consumer Staples,Packaged Foods
 CAH,Health Care,Other Pharmaceuticals
 CAL,Consumer Discretionary,Shoe Manufacturing
-CALX,Consumer Discretionary,Telecommunications Equipment
+CALX,Telecommunications,Telecommunications Equipment
 CALY,Consumer Discretionary,Recreational Games/Products/Toys
 CARR,Industrials,Industrial Machinery/Components
 CARS,Technology,EDP Services
@@ -1619,7 +1619,7 @@ CBZ,Consumer Discretionary,Business Services
 CC,Industrials,Major Chemicals
 CCI,Real Estate,Real Estate Investment Trusts
 CCJ,Basic Materials,Other Metals and Minerals
-CCK,Industrials,Containers/Packaging
+CCK,Consumer Discretionary,Containers/Packaging
 CCL,Consumer Discretionary,Marine Transportation
 CCS,Consumer Discretionary,Homebuilding
 CCU,Consumer Staples,Beverages (Production/Distribution)
@@ -1640,14 +1640,14 @@ CHT,Telecommunications,Telecommunications Equipment
 CHWY,Consumer Discretionary,Catalog/Specialty Distribution
 CI,Health Care,Medical Specialities
 CIB,Finance,Commercial Banks
-CIEN,Utilities,Telecommunications Equipment
+CIEN,Telecommunications,Telecommunications Equipment
 CIM,Real Estate,Real Estate Investment Trusts
 CION,Finance,Finance/Investors Services
 CL,Consumer Discretionary,Package Goods/Cosmetics
 CLB,Energy,Oilfield Services/Equipment
 CLDT,Real Estate,Real Estate Investment Trusts
-CLF,Basic Materials,Metal Mining
-CLH,Industrials,Environmental Services
+CLF,Industrials,Steel/Iron Ore
+CLH,Utilities,Environmental Services
 CLS,Technology,Electrical Products
 CLW,Basic Materials,Paper
 CLX,Consumer Discretionary,Specialty Chemicals
@@ -1686,7 +1686,7 @@ CP,Industrials,Railroads
 CPA,Consumer Discretionary,Air Freight/Delivery Services
 CPAY,Consumer Discretionary,Business Services
 CPF,Finance,Major Banks
-CPK,Utilities,Oil & Gas Production
+CPK,Energy,Oil & Gas Production
 CPNG,Consumer Discretionary,Catalog/Specialty Distribution
 CPRI,Consumer Discretionary,Apparel
 CPS,Consumer Discretionary,Auto Parts:O.E.M.
@@ -1702,17 +1702,17 @@ CRK,Energy,Oil & Gas Production
 CRL,Health Care,Biotechnology: Commercial Physical & Biological Resarch
 CRM,Technology,Computer Software: Prepackaged Software
 CRS,Industrials,Steel/Iron Ore
-CSL,Industrials,Specialty Chemicals
+CSL,Consumer Discretionary,Specialty Chemicals
 CSQR,Technology,Computer Software: Programming Data Processing
 CSR,Real Estate,Real Estate Investment Trusts
 CSTM,Industrials,Metal Fabrications
-CSV,Consumer Discretionary,Other Consumer Services
-CSW,Industrials,Home Furnishings
+CSV,Real Estate,Other Consumer Services
+CSW,Consumer Discretionary,Home Furnishings
 CTEV,Consumer Discretionary,Business Services
 CTO,Real Estate,Real Estate Investment Trusts
 CTOS,Consumer Discretionary,Diversified Commercial Services
 CTRE,Real Estate,Real Estate Investment Trusts
-CTRI,Utilities,Oil & Gas Production
+CTRI,Energy,Oil & Gas Production
 CTS,Technology,Electrical Products
 CTVA,Consumer Staples,Farming/Seeds/Milling
 CUBE,Real Estate,Real Estate Investment Trusts
@@ -1727,7 +1727,7 @@ CVNA,Consumer Discretionary,Retail-Auto Dealers and Gas Stations
 CVS,Consumer Staples,Retail-Drug Stores and Proprietary Stores
 CVSA,Real Estate,Other Consumer Services
 CVX,Energy,Integrated oil Companies
-CW,Technology,Industrial Machinery/Components
+CW,Industrials,Industrial Machinery/Components
 CWEN,Utilities,Electric Utilities: Central
 CWH,Consumer Discretionary,Retail-Auto Dealers and Gas Stations
 CWK,Finance,Real Estate
@@ -1758,17 +1758,17 @@ DEI,Real Estate,Real Estate Investment Trusts
 DELL,Technology,Computer Manufacturing
 DEO,Consumer Staples,Beverages (Production/Distribution)
 DFH,Consumer Discretionary,Homebuilding
-DFIN,Consumer Discretionary,Other Consumer Services
+DFIN,Real Estate,Other Consumer Services
 DG,Consumer Discretionary,Department/Specialty Retail Stores
 DGX,Health Care,Medical Specialities
 DHI,Consumer Discretionary,Homebuilding
 DHR,Industrials,Industrial Machinery/Components
 DHT,Consumer Discretionary,Marine Transportation
 DIN,Consumer Discretionary,Restaurants
-DINO,Energy,Natural Gas Distribution
+DINO,Utilities,Natural Gas Distribution
 DIS,Consumer Discretionary,Services-Misc. Amusement & Recreation
 DK,Energy,Integrated oil Companies
-DKL,Energy,Natural Gas Distribution
+DKL,Utilities,Natural Gas Distribution
 DKS,Consumer Discretionary,Other Specialty Stores
 DLB,Miscellaneous,Multi-Sector Companies
 DLR,Real Estate,Real Estate Investment Trusts
@@ -1776,14 +1776,14 @@ DLX,Consumer Discretionary,Publishing
 DLY,Finance,Investment Managers
 DMC,Consumer Staples,Farming/Seeds/Milling
 DNA,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
-DNOW,Consumer Discretionary,Oil and Gas Field Machinery
+DNOW,Industrials,Wholesale Distributors
 DOC,Real Estate,Real Estate Investment Trusts
 DOCN,Technology,Computer Software: Programming Data Processing
 DOCS,Technology,EDP Services
 DOLE,Consumer Staples,Farming/Seeds/Milling
 DOV,Industrials,Industrial Machinery/Components
 DOW,Industrials,Major Chemicals
-DPC,Telecommunications,Metal Fabrications
+DPC,Industrials,Metal Fabrications
 DQ,Technology,Semiconductors
 DRD,Basic Materials,Precious Metals
 DRI,Consumer Discretionary,Restaurants
@@ -1800,7 +1800,7 @@ DXC,Technology,EDP Services
 DY,Industrials,Water Sewer Pipeline Comm & Power Line Construction
 E,Energy,Oil & Gas Production
 EAT,Consumer Discretionary,Restaurants
-EBF,Consumer Discretionary,Office Equipment/Supplies/Services
+EBF,Miscellaneous,Office Equipment/Supplies/Services
 EC,Energy,Oil & Gas Production
 ECAT,Finance,Finance/Investors Services
 ECG,Consumer Discretionary,Homebuilding
@@ -1830,16 +1830,16 @@ ELS,Real Estate,Real Estate Investment Trusts
 ELV,Health Care,Medical Specialities
 EMA,Utilities,Electric Utilities: Central
 EMBJ,Industrials,Aerospace
-EME,Industrials,Engineering & Construction
+EME,Consumer Discretionary,Engineering & Construction
 EMN,Industrials,Major Chemicals
 EMR,Technology,Consumer Electronics/Appliances
-ENB,Energy,Natural Gas Distribution
+ENB,Utilities,Natural Gas Distribution
 ENOV,Health Care,Industrial Specialties
-ENR,Miscellaneous,Industrial Machinery/Components
-ENS,Miscellaneous,Industrial Machinery/Components
+ENR,Industrials,Industrial Machinery/Components
+ENS,Industrials,Industrial Machinery/Components
 ENVA,Finance,Finance: Consumer Services
 EOG,Energy,Oil & Gas Production
-EPAC,Technology,Industrial Machinery/Components
+EPAC,Industrials,Industrial Machinery/Components
 EPAM,Technology,EDP Services
 EPC,Consumer Discretionary,Package Goods/Cosmetics
 EPD,Utilities,Natural Gas Distribution
@@ -1850,7 +1850,7 @@ EQNR,Energy,Integrated oil Companies
 EQR,Real Estate,Real Estate Investment Trusts
 EQT,Energy,Oil & Gas Production
 ERO,Basic Materials,Metal Mining
-EROC,Energy,Industrial Machinery/Components
+EROC,Industrials,Industrial Machinery/Components
 EROK,Energy,Oil & Gas Production
 ES,Utilities,Electric Utilities: Central
 ESAB,Industrials,Industrial Machinery/Components
@@ -1861,7 +1861,7 @@ ESS,Real Estate,Real Estate Investment Trusts
 ESTC,Technology,Computer Software: Prepackaged Software
 ET,Utilities,Natural Gas Distribution
 ETD,Consumer Discretionary,Home Furnishings
-ETN,Technology,Industrial Machinery/Components
+ETN,Industrials,Industrial Machinery/Components
 ETR,Utilities,Electric Utilities: Central
 ETSY,Consumer Discretionary,Business Services
 ETV,Finance,Investment Bankers/Brokers/Service
@@ -1899,7 +1899,7 @@ FIG,Technology,Computer Software: Prepackaged Software
 FIGS,Consumer Discretionary,Apparel
 FIS,Consumer Discretionary,Business Services
 FITB,Finance,Major Banks
-FIX,Industrials,Engineering & Construction
+FIX,Consumer Discretionary,Engineering & Construction
 FLG,Finance,Banks
 FLNG,Consumer Discretionary,Marine Transportation
 FLO,Consumer Staples,Packaged Foods
@@ -1910,7 +1910,7 @@ FLUT,Technology,Computer Software: Programming Data Processing
 FMC,Industrials,Major Chemicals
 FMS,Health Care,Misc Health and Biotechnology Services
 FMX,Consumer Staples,Beverages (Production/Distribution)
-FN,Utilities,Telecommunications Equipment
+FN,Telecommunications,Telecommunications Equipment
 FNB,Finance,Major Banks
 FND,Consumer Discretionary,RETAIL: Building Materials
 FNF,Finance,Specialty Insurers
@@ -1918,7 +1918,7 @@ FNV,Basic Materials,Precious Metals
 FOUR,Consumer Discretionary,Business Services
 FPH,Finance,Real Estate
 FPI,Real Estate,Real Estate Investment Trusts
-FPS,Energy,Industrial Machinery/Components
+FPS,Industrials,Industrial Machinery/Components
 FR,Real Estate,Real Estate Investment Trusts
 FRA,Finance,Investment Bankers/Brokers/Service
 FRO,Consumer Discretionary,Marine Transportation
@@ -1932,7 +1932,7 @@ FTK,Industrials,Major Chemicals
 FTS,Utilities,Electric Utilities: Central
 FTV,Industrials,Industrial Machinery/Components
 FUBO,Consumer Discretionary,Movies/Entertainment
-FUL,Industrials,Home Furnishings
+FUL,Consumer Discretionary,Home Furnishings
 FUN,Consumer Discretionary,Services-Misc. Amusement & Recreation
 FVR,Real Estate,Real Estate Investment Trusts
 FVRR,Consumer Discretionary,Business Services
@@ -1945,7 +1945,7 @@ GBCI,Finance,Major Banks
 GBTG,Consumer Discretionary,Transportation Services
 GBX,Industrials,Railroads
 GCO,Consumer Discretionary,Clothing/Shoe/Accessory Stores
-GD,Industrials,Marine Transportation
+GD,Consumer Discretionary,Marine Transportation
 GDDY,Technology,EDP Services
 GDOT,Finance,Finance: Consumer Services
 GE,Technology,Consumer Electronics/Appliances
@@ -1968,16 +1968,16 @@ GL,Finance,Life Insurance
 GLAS,Health Care, Medicinal Chemicals and Botanical Products 
 GLOB,Technology,EDP Services
 GLP,Energy,Oil Refining/Marketing
-GLW,Industrials,Telecommunications Equipment
+GLW,Telecommunications,Telecommunications Equipment
 GM,Industrials,Auto Manufacturing
 GME,Consumer Discretionary,Electronics Distribution
 GMED,Health Care,Medical/Dental Instruments
 GMRS,Consumer Discretionary,Transportation Services
 GNK,Consumer Discretionary,Marine Transportation
 GNL,Real Estate,Real Estate Investment Trusts
-GNRC,Consumer Discretionary,Metal Fabrications
+GNRC,Industrials,Metal Fabrications
 GNW,Finance,Life Insurance
-GOLD,Industrials,Other Specialty Stores
+GOLD,Consumer Discretionary,Other Specialty Stores
 GOLF,Consumer Discretionary,Recreational Games/Products/Toys
 GOOS,Consumer Discretionary,Apparel
 GPC,Consumer Discretionary,Automotive Aftermarket
@@ -2002,7 +2002,7 @@ GTY,Finance,Real Estate
 GUT,Finance,Trusts Except Educational Religious and Charitable
 GVA,Industrials,Military/Government/Technical
 GWRE,Technology,Computer Software: Prepackaged Software
-GWW,Industrials,Office Equipment/Supplies/Services
+GWW,Miscellaneous,Office Equipment/Supplies/Services
 GXO,Consumer Discretionary,Transportation Services
 H,Consumer Discretionary,Hotels/Resorts
 HAE,Health Care,Medical/Dental Instruments
@@ -2026,7 +2026,7 @@ HGTY,Finance,Specialty Insurers
 HGV,Consumer Discretionary,Hotels/Resorts
 HHH,Real Estate,Real Estate Investment Trusts
 HIG,Finance,Property-Casualty Insurers
-HII,Industrials,Marine Transportation
+HII,Consumer Discretionary,Marine Transportation
 HIMS,Health Care,Medical/Nursing Services
 HIPO,Finance,Property-Casualty Insurers
 HIW,Real Estate,Real Estate Investment Trusts
@@ -2041,7 +2041,7 @@ HMC,Industrials,Auto Manufacturing
 HMN,Finance,Property-Casualty Insurers
 HMY,Basic Materials,Precious Metals
 HNGE,Technology,EDP Services
-HNI,Consumer Discretionary,Office Equipment/Supplies/Services
+HNI,Miscellaneous,Office Equipment/Supplies/Services
 HOG,Consumer Discretionary,Motor Vehicles
 HOMB,Finance,Major Banks
 HP,Energy,Oil & Gas Production
@@ -2051,7 +2051,7 @@ HPQ,Technology,Computer Manufacturing
 HQH,Finance,Finance Companies
 HQL,Finance,Investment Managers
 HR,Real Estate,Real Estate Investment Trusts
-HRB,Consumer Discretionary,Other Consumer Services
+HRB,Real Estate,Other Consumer Services
 HRI,Industrials,Misc Corporate Leasing Services
 HRL,Consumer Staples,Meat/Poultry/Fish
 HRTG,Finance,Property-Casualty Insurers
@@ -2085,7 +2085,7 @@ IHG,Consumer Discretionary,Hotels/Resorts
 IHS,Telecommunications,Telecommunications Equipment
 IIIN,Industrials,Steel/Iron Ore
 IIPR,Finance,Real Estate
-IMAX,Consumer Discretionary,Industrial Machinery/Components
+IMAX,Industrials,Industrial Machinery/Components
 INFQ,Technology,EDP Services
 INFY,Technology,EDP Services
 ING,Finance,Commercial Banks
@@ -2105,9 +2105,9 @@ IQI,Finance,Finance Companies
 IQV,Health Care,Biotechnology: Commercial Physical & Biological Resarch
 IR,Industrials,Industrial Machinery/Components
 IRM,Real Estate,Real Estate Investment Trusts
-IRS,Real Estate,Homebuilding
+IRS,Consumer Discretionary,Homebuilding
 IRT,Real Estate,Real Estate Investment Trusts
-IT,Consumer Discretionary,Other Consumer Services
+IT,Real Estate,Other Consumer Services
 ITGR,Health Care,Biotechnology: Electromedical & Electrotherapeutic Apparatus
 ITT,Industrials,Fluid Controls
 ITUB,Finance,Major Banks
@@ -2132,7 +2132,7 @@ JMIA,Consumer Discretionary,Catalog/Specialty Distribution
 JMKE,Consumer Discretionary,Restaurants
 JNJ,Health Care,Biotechnology: Pharmaceutical Preparations
 JOBY,Industrials,Aerospace
-JOE,Real Estate,Homebuilding
+JOE,Consumer Discretionary,Homebuilding
 JPM,Finance,Major Banks
 JXN,Finance,Life Insurance
 KAI,Industrials,Industrial Machinery/Components
@@ -2151,18 +2151,18 @@ KGS,Utilities,Natural Gas Distribution
 KIM,Real Estate,Real Estate Investment Trusts
 KKR,Finance,Investment Managers
 KLAR,Finance,Finance: Consumer Services
-KLC,Consumer Discretionary,Other Consumer Services
+KLC,Real Estate,Other Consumer Services
 KMI,Utilities,Natural Gas Distribution
 KMPR,Finance,Property-Casualty Insurers
 KMT,Industrials,Industrial Machinery/Components
 KMX,Consumer Discretionary,Retail-Auto Dealers and Gas Stations
-KN,Consumer Staples,Consumer Electronics/Appliances
+KN,Technology,Consumer Electronics/Appliances
 KNF,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels)
 KNSL,Finance,Property-Casualty Insurers
 KNTK,Utilities,Natural Gas Distribution
 KNX,Industrials,Trucking Freight/Courier Services
 KO,Consumer Staples,Beverages (Production/Distribution)
-KODK,Consumer Discretionary,Industrial Machinery/Components
+KODK,Industrials,Industrial Machinery/Components
 KOF,Consumer Staples,Beverages (Production/Distribution)
 KOP,Basic Materials,Forest Products
 KR,Consumer Staples,Food Chains
@@ -2170,7 +2170,7 @@ KRC,Real Estate,Real Estate Investment Trusts
 KREF,Real Estate,Real Estate Investment Trusts
 KRG,Real Estate,Real Estate Investment Trusts
 KRMN,Industrials,Military/Government/Technical
-KRO,Basic Materials,Major Chemicals
+KRO,Industrials,Major Chemicals
 KRP,Energy,Oil & Gas Production
 KSS,Consumer Discretionary,Department/Specialty Retail Stores
 KT,Telecommunications,Telecommunications Equipment
@@ -2222,7 +2222,7 @@ LUXE,Consumer Discretionary,Catalog/Specialty Distribution
 LVS,Consumer Discretionary,Hotels/Resorts
 LW,Consumer Staples,Packaged Foods
 LXP,Real Estate,Real Estate Investment Trusts
-LXU,Basic Materials,Major Chemicals
+LXU,Industrials,Major Chemicals
 LYB,Industrials,Major Chemicals
 LYG,Finance,Commercial Banks
 LYV,Consumer Discretionary,Services-Misc. Amusement & Recreation
@@ -2237,7 +2237,7 @@ MAIR,Industrials,Pollution Control Equipment
 MAN,Consumer Discretionary,Professional Services
 MANE,Health Care,Biotechnology: Pharmaceutical Preparations
 MANU,Consumer Discretionary,Services-Misc. Amusement & Recreation
-MAS,Industrials,Industrial Specialties
+MAS,Health Care,Industrial Specialties
 MATV,Basic Materials,Paper
 MATX,Consumer Discretionary,Marine Transportation
 MAX,Consumer Discretionary,Business Services
@@ -2250,10 +2250,10 @@ MCO,Finance,Finance: Consumer Services
 MCS,Consumer Discretionary,Movies/Entertainment
 MCY,Finance,Property-Casualty Insurers
 MD,Health Care,Hospital/Nursing Management
-MDA,Consumer Discretionary,Electronic Components
+MDA,Technology,Electronic Components
 MDT,Health Care,Biotechnology: Electromedical & Electrotherapeutic Apparatus
 MDU,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels)
-MEC,Industrials,Industrial Specialties
+MEC,Health Care,Industrial Specialties
 MEI,Technology,Electrical Products
 MET,Finance,Life Insurance
 MFA,Real Estate,Real Estate Investment Trusts
@@ -2272,7 +2272,7 @@ MIR,Industrials,Industrial Machinery/Components
 MKC,Consumer Staples,Packaged Foods
 MLI,Industrials,Metal Fabrications
 MLM,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels)
-MLR,Consumer Discretionary,Construction/Ag Equipment/Trucks
+MLR,Industrials,Construction/Ag Equipment/Trucks
 MMI,Finance,Real Estate
 MMM,Health Care,Medical/Dental Instruments
 MMS,Consumer Discretionary,Business Services
@@ -2286,7 +2286,7 @@ MOS,Industrials,Agricultural Chemicals
 MOV,Consumer Discretionary,Consumer Specialties
 MP,Basic Materials,Metal Mining
 MPC,Energy,Integrated oil Companies
-MPLX,Energy,Natural Gas Distribution
+MPLX,Utilities,Natural Gas Distribution
 MQY,Finance,Investment Bankers/Brokers/Service
 MRK,Health Care,Biotechnology: Pharmaceutical Preparations
 MRP,Finance,Real Estate
@@ -2306,10 +2306,10 @@ MTDR,Energy,Oil & Gas Production
 MTG,Finance,Property-Casualty Insurers
 MTH,Consumer Discretionary,Homebuilding
 MTN,Consumer Discretionary,Services-Misc. Amusement & Recreation
-MTRN,Industrials,Industrial Specialties
+MTRN,Health Care,Industrial Specialties
 MTUS,Industrials,Steel/Iron Ore
 MTW,Industrials,Construction/Ag Equipment/Trucks
-MTX,Basic Materials,Major Chemicals
+MTX,Industrials,Major Chemicals
 MTZ,Industrials,Water Sewer Pipeline Comm & Power Line Construction
 MUA,Finance,Investment Bankers/Brokers/Service
 MUC,Finance,Investment Bankers/Brokers/Service
@@ -2372,7 +2372,7 @@ NUE,Industrials,Steel/Iron Ore
 NUVB,Health Care,Biotechnology: Pharmaceutical Preparations
 NVGS,Consumer Discretionary,Marine Transportation
 NVO,Health Care,Biotechnology: Pharmaceutical Preparations
-NVRI,Miscellaneous,Diversified Commercial Services
+NVRI,Consumer Discretionary,Diversified Commercial Services
 NVS,Health Care,Biotechnology: Pharmaceutical Preparations
 NVST,Health Care,Medical/Dental Instruments
 NVT,Industrials,Industrial Machinery/Components
@@ -2398,8 +2398,8 @@ OHI,Real Estate,Real Estate Investment Trusts
 OI,Consumer Discretionary,Containers/Packaging
 OII,Energy,Oilfield Services/Equipment
 OIS,Consumer Discretionary,Oil and Gas Field Machinery
-OKE,Utilities,Oil & Gas Production
-OKLO,Utilities,Electric Utilities: Central
+OKE,Energy,Oil & Gas Production
+OKLO,Miscellaneous,Development Stage/Pre-Revenue
 OLN,Industrials,Major Chemicals
 OMC,Consumer Discretionary,Advertising
 OMF,Finance,Finance: Consumer Services
@@ -2426,7 +2426,7 @@ OXM,Industrials,Garments and Clothing
 OXY,Energy,Oil & Gas Production
 P,Technology,Electronic Components
 PAAS,Basic Materials,Precious Metals
-PAC,Consumer Discretionary,Aerospace
+PAC,Industrials,Aerospace
 PACK,Consumer Discretionary,Containers/Packaging
 PACS,Health Care,Hospital/Nursing Management
 PAG,Consumer Discretionary,Retail-Auto Dealers and Gas Stations
@@ -2467,7 +2467,7 @@ PHG,Health Care,Medical Electronics
 PHIN,Consumer Discretionary,Auto Parts:O.E.M.
 PHM,Consumer Discretionary,Homebuilding
 PHR,Consumer Discretionary,Business Services
-PII,Consumer Discretionary,Industrial Specialties
+PII,Health Care,Industrial Specialties
 PINS,Technology,Computer Software: Programming Data Processing
 PIPR,Finance,Investment Bankers/Brokers/Service
 PJT,Finance,Investment Managers
@@ -2512,7 +2512,7 @@ PTA,Finance,Trusts Except Educational Religious and Charitable
 PUK,Finance,Life Insurance
 PUMP,Energy,Oilfield Services/Equipment
 PVH,Industrials,Garments and Clothing
-PWR,Industrials,Engineering & Construction
+PWR,Consumer Discretionary,Engineering & Construction
 PXED,Real Estate,Other Consumer Services
 Q,Technology,Semiconductors
 QGEN,Health Care,Biotechnology: Biological Products (No Diagnostic Substances)
@@ -2575,7 +2575,7 @@ RS,Industrials,Metal Fabrications
 RSG,Utilities,Environmental Services
 RSI,Consumer Discretionary,Services-Misc. Amusement & Recreation
 RSKD,Consumer Discretionary,Business Services
-RTO,Consumer Discretionary,Other Consumer Services
+RTO,Real Estate,Other Consumer Services
 RTX,Industrials,Aerospace
 RVLV,Consumer Discretionary,Catalog/Specialty Distribution
 RVT,Finance,Trusts Except Educational Religious and Charitable
@@ -2602,14 +2602,14 @@ SBSI,Finance,Major Banks
 SBSW,Basic Materials,Precious Metals
 SCCO,Basic Materials,Metal Mining
 SCHW,Finance,Investment Bankers/Brokers/Service
-SCI,Consumer Discretionary,Other Consumer Services
+SCI,Real Estate,Other Consumer Services
 SCL,Consumer Discretionary,Package Goods/Cosmetics
 SD,Energy,Oil & Gas Production
 SDRL,Energy,Oil & Gas Production
-SE,Consumer Discretionary,Other Consumer Services
+SE,Real Estate,Other Consumer Services
 SECZ,Finance,Finance: Consumer Services
 SEG,Consumer Discretionary,Services-Misc. Amusement & Recreation
-SEI,Consumer Discretionary,Oil and Gas Field Machinery
+SEI,Utilities,Power Generation
 SF,Finance,Investment Bankers/Brokers/Service
 SFBS,Finance,Major Banks
 SFL,Consumer Discretionary,Marine Transportation
@@ -2633,7 +2633,7 @@ SKY,Consumer Discretionary,Homebuilding
 SLB,Energy,Oilfield Services/Equipment
 SLF,Finance,Life Insurance
 SLG,Real Estate,Real Estate Investment Trusts
-SLGN,Industrials,Containers/Packaging
+SLGN,Consumer Discretionary,Containers/Packaging
 SLVM,Basic Materials,Paper
 SM,Energy,Oil & Gas Production
 SMA,Real Estate,Real Estate Investment Trusts
@@ -2643,8 +2643,8 @@ SMG,Industrials,Agricultural Chemicals
 SMP,Consumer Discretionary,Auto Parts:O.E.M.
 SMR,Industrials,Metal Fabrications
 SMWB,Technology,Computer Software: Programming Data Processing
-SN,Consumer Discretionary,Consumer Electronics/Appliances
-SNA,Consumer Discretionary,Industrial Machinery/Components
+SN,Technology,Consumer Electronics/Appliances
+SNA,Industrials,Industrial Machinery/Components
 SNAP,Technology,Computer Software: Programming Data Processing
 SNDA,Health Care,Hospital/Nursing Management
 SNDR,Industrials,Trucking Freight/Courier Services
@@ -2652,34 +2652,34 @@ SNN,Health Care,Industrial Specialties
 SNOW,Technology,Computer Software: Prepackaged Software
 SNX,Technology,Retail: Computer Software & Peripheral Equipment
 SO,Utilities,Electric Utilities: Central
-SOBO,Energy,Natural Gas Distribution
+SOBO,Utilities,Natural Gas Distribution
 SOLV,Health Care,Medical/Dental Instruments
 SON,Consumer Discretionary,Containers/Packaging
-SONY,Consumer Staples,Consumer Electronics/Appliances
-SPB,Miscellaneous,Industrial Machinery/Components
+SONY,Technology,Consumer Electronics/Appliances
+SPB,Industrials,Industrial Machinery/Components
 SPG,Real Estate,Real Estate Investment Trusts
 SPGI,Finance,Finance: Consumer Services
 SPH,Consumer Discretionary,Other Specialty Stores
 SPHR,Consumer Discretionary,Services-Misc. Amusement & Recreation
-SPIR,Consumer Discretionary,Telecommunications Equipment
+SPIR,Telecommunications,Telecommunications Equipment
 SPNT,Finance,Property-Casualty Insurers
-SPOT,Consumer Discretionary,Broadcasting
+SPOT,Industrials,Broadcasting
 SPXC,Industrials,Industrial Machinery/Components
 SQM,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels)
 SR,Utilities,Oil/Gas Transmission
 SRE,Utilities,Natural Gas Distribution
 SSB,Finance,Major Banks
-SSD,Consumer Discretionary,Industrial Machinery/Components
+SSD,Industrials,Industrial Machinery/Components
 SSL,Energy,Oil & Gas Production
 SSMR,Basic Materials,Precious Metals
 ST,Industrials,Industrial Machinery/Components
 STAG,Real Estate,Real Estate Investment Trusts
 STC,Finance,Specialty Insurers
-STDN,Basic Materials,Major Chemicals
+STDN,Industrials,Major Chemicals
 STE,Health Care,Industrial Specialties
 STLA,Industrials,Auto Manufacturing
 STM,Technology,Semiconductors
-STN,Consumer Discretionary,Military/Government/Technical
+STN,Industrials,Military/Government/Technical
 STNG,Consumer Discretionary,Marine Transportation
 STT,Finance,Major Banks
 STUB,Consumer Discretionary,Services-Misc. Amusement & Recreation
@@ -2695,9 +2695,9 @@ SUPV,Finance,Commercial Banks
 SUZ,Basic Materials,Paper
 SVV,Consumer Discretionary,Other Specialty Stores
 SW,Consumer Discretionary,Containers/Packaging
-SWK,Consumer Discretionary,Industrial Machinery/Components
-SWX,Utilities,Oil & Gas Production
-SXC,Industrials,Steel/Iron Ore
+SWK,Industrials,Industrial Machinery/Components
+SWX,Energy,Oil & Gas Production
+SXC,Energy,Coal Mining
 SXI,Industrials,Industrial Machinery/Components
 SXT,Industrials,Major Chemicals
 SYF,Finance,Finance: Consumer Services
@@ -2729,15 +2729,15 @@ TEX,Industrials,Construction/Ag Equipment/Trucks
 TFC,Finance,Major Banks
 TFII,Industrials,Trucking Freight/Courier Services
 TFIN,Finance,Major Banks
-TFPM,Industrials,Precious Metals
+TFPM,Basic Materials,Precious Metals
 TFX,Health Care,Medical/Dental Instruments
 TG,Industrials,Metal Fabrications
-TGLS,Consumer Discretionary,Electronic Components
+TGLS,Technology,Electronic Components
 TGS,Utilities,Natural Gas Distribution
 TGT,Consumer Discretionary,Department/Specialty Retail Stores
 THC,Health Care,Hospital/Nursing Management
 THG,Finance,Property-Casualty Insurers
-THO,Industrials,Homebuilding
+THO,Consumer Discretionary,Homebuilding
 TIC,Consumer Discretionary,Business Services
 TIMB,Telecommunications,Telecommunications Equipment
 TJX,Consumer Discretionary,Clothing/Shoe/Accessory Stores
@@ -2747,7 +2747,7 @@ TKO,Consumer Discretionary,Services-Misc. Amusement & Recreation
 TKR,Industrials,Metal Fabrications
 TLK,Telecommunications,Telecommunications Equipment
 TM,Industrials,Auto Manufacturing
-TME,Consumer Discretionary,Broadcasting
+TME,Industrials,Broadcasting
 TMO,Industrials,Industrial Machinery/Components
 TNC,Industrials,Industrial Machinery/Components
 TNET,Consumer Discretionary,Business Services
@@ -2766,7 +2766,7 @@ TRIN,Finance,Finance: Consumer Services
 TRLV,Health Care, Medicinal Chemicals and Botanical Products 
 TRN,Industrials,Railroads
 TRNO,Finance,Real Estate
-TROX,Basic Materials,Major Chemicals
+TROX,Industrials,Major Chemicals
 TRP,Utilities,Natural Gas Distribution
 TRTX,Real Estate,Real Estate Investment Trusts
 TRU,Finance,Finance: Consumer Services
@@ -2775,13 +2775,13 @@ TS,Industrials,Steel/Iron Ore
 TSLX,Finance,Investment Managers
 TSM,Technology,Semiconductors
 TSN,Consumer Staples,Meat/Poultry/Fish
-TT,Industrials,Auto Parts:O.E.M.
+TT,Consumer Discretionary,Auto Parts:O.E.M.
 TTAM,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels)
 TTC,Consumer Discretionary,Tools/Hardware
 TTE,Energy,Oil & Gas Production
 TTI,Energy,Oil & Gas Production
 TU,Telecommunications,Telecommunications Equipment
-TWI,Industrials,Steel/Iron Ore
+TWI,Industrials,Construction/Ag Equipment/Trucks
 TWLO,Technology,Computer Software: Prepackaged Software
 TWO,Real Estate,Real Estate Investment Trusts
 TX,Industrials,Steel/Iron Ore
@@ -2808,7 +2808,7 @@ UL,Consumer Discretionary,Package Goods/Cosmetics
 ULS,Health Care,Precision Instruments
 UMC,Technology,Semiconductors
 UMH,Real Estate,Real Estate Investment Trusts
-UNF,Consumer Discretionary,Other Consumer Services
+UNF,Real Estate,Other Consumer Services
 UNFI,Consumer Discretionary,Food Distributors
 UNH,Health Care,Medical Specialities
 UNM,Finance,Accident &Health Insurance
@@ -2822,7 +2822,7 @@ USPH,Health Care,Medical/Nursing Services
 UTI,Real Estate,Other Consumer Services
 UTZ,Consumer Staples,Packaged Foods
 UVE,Finance,Property-Casualty Insurers
-UVV,Industrials,Farming/Seeds/Milling
+UVV,Consumer Staples,Farming/Seeds/Milling
 V,Consumer Discretionary,Business Services
 VAC,Finance,Real Estate
 VAL,Energy,Oil & Gas Production
@@ -2844,7 +2844,7 @@ VIV,Telecommunications,Telecommunications Equipment
 VKQ,Finance,Trusts Except Educational Religious and Charitable
 VLO,Energy,Integrated oil Companies
 VLRS,Consumer Discretionary,Air Freight/Delivery Services
-VLTO,Industrials,Electrical Products
+VLTO,Technology,Electrical Products
 VMC,Industrials,Mining & Quarrying of Nonmetallic Minerals (No Fuels)
 VMI,Industrials,Metal Fabrications
 VMO,Finance,Trusts Except Educational Religious and Charitable
@@ -2853,7 +2853,7 @@ VNT,Industrials,Industrial Machinery/Components
 VOYA,Finance,Life Insurance
 VOYG,Industrials,Military/Government/Technical
 VPG,Technology,Electrical Products
-VRT,Technology,Industrial Machinery/Components
+VRT,Industrials,Industrial Machinery/Components
 VSH,Technology,Electrical Products
 VST,Utilities,Electric Utilities: Central
 VSTS,Consumer Discretionary,Consumer Specialties
@@ -2871,7 +2871,7 @@ WAL,Finance,Major Banks
 WAT,Industrials,Biotechnology: Laboratory Analytical Instruments
 WBI,Energy,Oilfield Services/Equipment
 WBS,Finance,Major Banks
-WCC,Consumer Discretionary,Telecommunications Equipment
+WCC,Telecommunications,Telecommunications Equipment
 WCN,Utilities,Environmental Services
 WD,Finance,Finance: Consumer Services
 WDS,Energy,Oil & Gas Production
@@ -2883,10 +2883,10 @@ WEX,Consumer Discretionary,Business Services
 WF,Finance,Commercial Banks
 WFC,Finance,Major Banks
 WFG,Basic Materials,Forest Products
-WGO,Industrials,Homebuilding
+WGO,Consumer Discretionary,Homebuilding
 WH,Consumer Discretionary,Hotels/Resorts
 WHD,Consumer Discretionary,Oil and Gas Field Machinery
-WHR,Consumer Discretionary,Consumer Electronics/Appliances
+WHR,Technology,Consumer Electronics/Appliances
 WK,Technology,Computer Software: Prepackaged Software
 WKC,Energy,Oil Refining/Marketing
 WLK,Industrials,Major Chemicals
@@ -2896,7 +2896,7 @@ WMB,Utilities,Natural Gas Distribution
 WMS,Consumer Discretionary,Containers/Packaging
 WNC,Industrials,Construction/Ag Equipment/Trucks
 WOLF,Technology,Semiconductors
-WOR,Industrials,Steel/Iron Ore
+WOR,Industrials,Building Products
 WPC,Real Estate,Real Estate Investment Trusts
 WPM,Basic Materials,Precious Metals
 WPP,Consumer Discretionary,Advertising
@@ -2904,7 +2904,7 @@ WRB,Finance,Property-Casualty Insurers
 WRBY,Health Care,Ophthalmic Goods
 WS,Industrials,Steel/Iron Ore
 WSM,Consumer Discretionary,Home Furnishings
-WSO,Consumer Discretionary,Industrial Machinery/Components
+WSO,Industrials,Industrial Machinery/Components
 WST,Health Care,Medical/Dental Instruments
 WT,Finance,Investment Bankers/Brokers/Service
 WTRG,Utilities,Water Supply
@@ -2924,7 +2924,7 @@ XYL,Industrials,Fluid Controls
 XYZ,Technology,Computer Software: Prepackaged Software
 XZO,Technology,Computer Software: Prepackaged Software
 YALA,Technology,Computer Software: Programming Data Processing
-YELP,Consumer Discretionary,Other Consumer Services
+YELP,Real Estate,Other Consumer Services
 YETI,Consumer Discretionary,Recreational Games/Products/Toys
 YEXT,Technology,EDP Services
 YMM,Technology,Computer Software: Prepackaged Software
@@ -2945,17 +2945,17 @@ ASM,Basic Materials,Metal Mining
 BTG,Basic Materials,Precious Metals
 CMCL,Basic Materials,Precious Metals
 CTGO,Basic Materials,Precious Metals
-DC,Basic Materials,Metal Mining
+DC,Miscellaneous,Development Stage/Pre-Revenue
 ELA,Consumer Discretionary,Consumer Specialties
 EQX,Basic Materials,Precious Metals
 GMTL,Basic Materials,Metal Mining
 GTE,Energy,Oil & Gas Production
 IDR,Basic Materials,Precious Metals
-IE,Basic Materials,Metal Mining
+IE,Miscellaneous,Development Stage/Pre-Revenue
 IMC,Basic Materials,Metal Mining
 IMO,Energy,Integrated oil Companies
-LXFR,Basic Materials,Major Chemicals
-MPTI,Technology,Industrial Machinery/Components
+LXFR,Industrials,Major Chemicals
+MPTI,Industrials,Industrial Machinery/Components
 MTA,Basic Materials,Precious Metals
 NEWP,Basic Materials,Precious Metals
 NG,Basic Materials,Precious Metals
