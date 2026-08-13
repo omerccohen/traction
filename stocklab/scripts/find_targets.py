@@ -83,9 +83,26 @@ def main() -> None:
         hits = keyword_universe_search(sectors, kws)
         mv = member_moves(panel, list(hits["ticker"]), as_of)
         merged = hits.merge(mv, on="ticker", how="inner").sort_values("ret_21d", ascending=False)
+        # `n` used to report the full match count beside a head(40) list, so a
+        # theme with 112 matches shipped its 40 best 21-day performers labelled
+        # "n: 112" — for two of three themes the subagent never saw a single
+        # negative name and read a truncated winners' list as the whole
+        # population. Take from BOTH ends when truncating, and say so.
+        keep = 40
+        if len(merged) > keep:
+            head, tail = merged.head(keep // 2), merged.tail(keep - keep // 2)
+            shown = pd.concat([head, tail])
+        else:
+            shown = merged
         inp["value_chain_pulls"][theme] = {
-            "n": int(len(merged)),
-            "companies": merged.head(40).to_dict("records"),
+            "n_matched": int(len(merged)),
+            "n_shown": int(len(shown)),
+            "truncated": bool(len(merged) > keep),
+            "selection": ("all matches" if len(merged) <= keep else
+                          f"top {keep // 2} and bottom {keep - keep // 2} by 21d "
+                          f"move of {len(merged)} matches — the middle is NOT "
+                          "shown, so this is not a census"),
+            "companies": shown.to_dict("records"),
         }
 
     out = ROOT / "briefings" / f"target_input_{inp['as_of']}.json"
@@ -93,7 +110,8 @@ def main() -> None:
     print(f"saved -> {out}")
     print(f"themes: {list(THEME_KEYWORDS)} | fields dossiered: {len(inp['field_dossiers'])}")
     for t, d in inp["value_chain_pulls"].items():
-        print(f"  {t}: {d['n']} companies matched")
+        print(f"  {t}: {d['n_matched']} matched, {d['n_shown']} shown"
+              + (" (TRUNCATED — top and bottom only)" if d["truncated"] else ""))
 
 
 if __name__ == "__main__":

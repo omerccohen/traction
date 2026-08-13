@@ -111,6 +111,16 @@ def main() -> None:
         out += ["| Ticker | Positioned | Cheap vs all | Cheap vs sector | Improving | P/E |",
                 "|---|---|---|---|---|---|"]
         out += [f"| **{t}** | {p}% | {c} | {cs} | {i} | {pe} |" for t, p, c, cs, i, pe in disagree]
+    elif not pvp.exists():
+        # "no disagreements" and "the input file is not there" are different
+        # answers, and this printed the reassuring one for both. Moving the
+        # price table aside turned 17 disagreements into a confident "that is a
+        # complete answer" — the exact failure this whole file exists to
+        # prevent. The two cases must never share a sentence again.
+        out.append(f"> **CANNOT ANSWER — `{pvp.name}` does not exist.** This "
+                   "section is blank because its input is MISSING, not because "
+                   "nothing survived. Run `scripts/price_vs_position.py` first; "
+                   "until then this week's disagreements are unknown.")
     else:
         out.append("*None this week — every researched name is either priced for "
                    "perfection or cheap for a reason. That is a complete answer.*")
@@ -185,11 +195,17 @@ def main() -> None:
         d = pd.DataFrame(rows).dropna(subset=["att", "tp"])
         d["rk"] = d["att"].rank(ascending=False)
         hit = d[(d["tp"] >= TREND_PCTILE) & (d["rk"] > TOP_N_ATTENTION)]
+        n_qual, n_shown = len(hit), min(len(hit), 10)
         for r in hit.sort_values("ret", key=abs, ascending=False).head(10).itertuples():
             vi = f"volume p{r.vi*100:.0f}" if r.vi == r.vi else "volume n/a"
             buried.append(f"- **{r.field}** — {r.ret:+.1%}/21d at the "
                           f"{r.tp*100:.0f}th pctile of its own history, {vi}, "
                           f"but attention rank **{r.rk:.0f}/{len(d)}**")
+        # a cap that does not announce itself reads as a census — Steel/Iron Ore
+        # was one of the entries silently dropped here
+        if n_qual > n_shown:
+            buried.append(f"- *…and {n_qual - n_shown} more qualifying fields not "
+                          f"shown ({n_qual} qualified, top {n_shown} by size listed).*")
     except Exception as e:
         buried = [f"*could not compute: {type(e).__name__}: {e}*"]
     out += buried if buried else ["*None — no large move is being hidden by the "
@@ -225,7 +241,11 @@ def main() -> None:
                                       f"{v.max():+.0%} / worst {v.min():+.0%} across "
                                       f"{len(cols)} companies, attention rank "
                                       f"**{rk}/{len(scores)}**"))
+        n_split = len(split)
         split = [s for _, s in sorted(split, key=lambda x: -x[0])][:8]
+        if n_split > len(split):
+            split.append(f"- *…and {n_split - len(split)} more split groups not "
+                         f"shown ({n_split} qualified, widest {len(split) - 1} listed).*")
     except Exception as e:
         split = [f"*could not compute: {type(e).__name__}: {e}*"]
     out += split if split else ["*None — no group is hiding a violent internal "
@@ -239,12 +259,27 @@ def main() -> None:
     priced = {d[0] for d in disagree}
     if pvp.exists():
         priced |= set(re.findall(r"\|\s*\*\*([A-Z][A-Z0-9.\-]{0,5})\*\*\s*\|", pvp.read_text()))
+    # Two bugs lived here. It globbed ONE exact date while the price table
+    # accumulates 100 days of research, so the committed 2026-08-11 file
+    # announced "every highly-rated name has a price read" while 17 names at
+    # 70%+ (SCCO 91, PWR 89, NUE 88, EME 87) had none. And it re-implemented the
+    # loose ticker regex that read FCX's short-interest share count as its
+    # score. Reuse price_vs_position's parser — one accumulation window, one
+    # ranking-table anchor, one place to fix.
     unchecked = []
-    for f in sorted(ROOT.glob(f"briefings/rank_thesis*_{as_of}.md")):
-        for line in f.read_text().splitlines():
-            m = re.search(r"\*\*([A-Z][A-Z0-9.\-]{0,5})\*\*\s*\|\s*\*{0,2}\s*(\d{1,3})\s*%?", line)
-            if m and int(m.group(2)) >= 70 and m.group(1) not in priced:
-                unchecked.append(f"- **{m.group(1)}** ({m.group(2)}%) — from {f.name}")
+    try:
+        import importlib.util
+        _s = importlib.util.spec_from_file_location(
+            "pvp", Path(__file__).resolve().parent / "price_vs_position.py")
+        _pvp = importlib.util.module_from_spec(_s)
+        _s.loader.exec_module(_pvp)
+        positioning, _ = _pvp.load_positioning()
+        for group, names in positioning.items():
+            for tkr, score in names.items():
+                if score >= 70 and tkr not in priced:
+                    unchecked.append(f"- **{tkr}** ({score}%) — from {group}")
+    except Exception as e:
+        unchecked.append(f"- *could not read the rankings: {type(e).__name__}: {e}*")
     out += sorted(set(unchecked)) if unchecked else ["*None — every highly-rated "
                                                      "name has a price read.*"]
     out += ["", "---", "",
