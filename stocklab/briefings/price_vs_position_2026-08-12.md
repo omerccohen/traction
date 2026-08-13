@@ -9,84 +9,84 @@
 
 | Ticker | Positioned | Cheap vs all | Cheap vs sector | Improving | P/E | Read |
 |---|---|---|---|---|---|---|
-| **PWR** | 89% | 30 | 29 | 83 | 76 | priced for perfection |
-| **EME** | 87% | 55 | 63 | 60 | 25 | positioned, NOT fully priced |
-| **FIX** | 86% | 24 | 22 | 74 | 41 | priced for perfection |
-| **IESC** | 83% | 34 | 37 | 85 | 34 | priced for perfection |
-| **AGX** | 78% | 20 | 16 | 93 | 50 | priced for perfection |
-| **HUBB** | 71% | 40 | 66 | 40 | 30 | priced for perfection |
-| **PLPC** | 62% | 44 | 51 | 80 | 55 | weak and not cheap |
-| **ITRI** | 55% | 74 | 86 | 26 | 17 | cheap for a reason? |
-| **LMB** | 48% | 86 | 85 | 73 | 18 | cheap for a reason? |
-| **MTRX** | 35% | 90 | 92 | 25 | n/m | cheap for a reason? |
+| **PWR** | 89% | 30 | 25 | 83 | 77 | priced for perfection |
+| **EME** | 87% | 55 | 54 | 60 | 26 | positioned, NOT fully priced |
+| **FIX** | 86% | 24 | 19 | 74 | 43 | priced for perfection |
+| **IESC** | 83% | 34 | 30 | 85 | 34 | priced for perfection |
+| **AGX** | 78% | 20 | 12 | 93 | 50 | priced for perfection |
+| **HUBB** | 71% | 41 | 67 | 40 | 30 | priced for perfection |
+| **PLPC** | 62% | 44 | 74 | 80 | 53 | weak and not cheap |
+| **ITRI** | 55% | 75 | 96 | 26 | 16 | cheap for a reason? |
+| **LMB** | 48% | 88 | 87 | 73 | 18 | cheap for a reason? |
+| **MTRX** | 35% | 91 | 92 | 25 | n/m | cheap for a reason? |
 
 ## Oilfield — researched 2026-08-11 (1d ago)
 
 | Ticker | Positioned | Cheap vs all | Cheap vs sector | Improving | P/E | Read |
 |---|---|---|---|---|---|---|
-| **BKR** | 87% | 66 | 63 | 10 | 21 | positioned, NOT fully priced |
+| **BKR** | 87% | 67 | 64 | 10 | 21 | positioned, NOT fully priced |
 | **OIS** | 71% | 66 | 62 | 63 | n/m | positioned, NOT fully priced |
 | **HMH** | 60% | — | — | — | n/m | no filings data |
-| **FTI** | 54% | 46 | 42 | 51 | 25 | weak and not cheap |
-| **WHD** | 45% | 48 | 44 | 90 | 33 | weak and not cheap |
-| **INVX** | 41% | 73 | 71 | 88 | 34 | cheap for a reason? |
-| **FLOC** | 39% | 67 | 64 | 65 | 21 | cheap for a reason? |
-| **DNOW** | 36% | 78 | 74 | 91 | n/m | cheap for a reason? |
-| **NOV** | 31% | 92 | 95 | 15 | 83 | cheap for a reason? |
-| **WFRD** | 27% | 72 | 70 | 7 | 18 | cheap for a reason? |
-| **FET** | 25% | 61 | 60 | 78 | n/m | cheap for a reason? |
+| **FTI** | 54% | 47 | 43 | 51 | 25 | weak and not cheap |
+| **WHD** | 45% | 49 | 44 | 90 | 34 | weak and not cheap |
+| **INVX** | 41% | 72 | 69 | 88 | 35 | cheap for a reason? |
+| **FLOC** | 39% | 66 | 63 | 65 | 21 | cheap for a reason? |
+| **DNOW** | 36% | 78 | 91 | 91 | n/m | cheap for a reason? |
+| **NOV** | 31% | 92 | 93 | 15 | 82 | cheap for a reason? |
+| **WFRD** | 27% | 73 | 71 | 7 | 18 | cheap for a reason? |
+| **FET** | 25% | 61 | 58 | 78 | n/m | cheap for a reason? |
 | **SEI** | 15% | — | — | — | n/m | no filings data |
 
 ## Power — researched 2026-08-07 (5d ago)
 
 | Ticker | Positioned | Cheap vs all | Cheap vs sector | Improving | P/E | Read |
 |---|---|---|---|---|---|---|
-| **CEG** | 82% | 59 | 32 | 3 | 28 | positioned, NOT fully priced |
-| **VST** | 74% | 52 | 22 | 5 | 22 | positioned, NOT fully priced |
-| **TLN** | 67% | 15 | 6 | 4 | n/m | weak and not cheap |
-| **NRG** | 44% | 77 | 74 | 89 | 30 | cheap for a reason? |
-| **OTTR** | 16% | 73 | 62 | 1 | 20 | cheap for a reason? |
+| **CEG** | 82% | 59 | 26 | 3 | 28 | positioned, NOT fully priced |
+| **VST** | 74% | 51 | 15 | 5 | 22 | positioned, NOT fully priced |
+| **TLN** | 67% | 14 | 2 | 4 | n/m | weak and not cheap |
+| **NRG** | 44% | 78 | 67 | 89 | 30 | cheap for a reason? |
+| **OTTR** | 16% | 74 | 100 | 1 | 20 | cheap for a reason? |
 
 ## Utilities — researched 2026-08-11 (1d ago)
 
 | Ticker | Positioned | Cheap vs all | Cheap vs sector | Improving | P/E | Read |
 |---|---|---|---|---|---|---|
-| **SO** | 86% | 65 | 40 | 28 | 23 | positioned, NOT fully priced |
-| **D** | 84% | 73 | 60 | 28 | 20 | positioned, NOT fully priced |
-| **CEG** | 81% | 59 | 32 | 3 | 28 | positioned, NOT fully priced |
-| **AEP** | 79% | 76 | 68 | 28 | 18 | positioned, NOT fully priced |
-| **VST** | 73% | 52 | 22 | 5 | 22 | positioned, NOT fully priced |
-| **FE** | 71% | 76 | 70 | 44 | 26 | positioned, NOT fully priced |
-| **PPL** | 68% | 78 | 76 | 30 | 22 | cheap for a reason? |
-| **NEE** | 65% | 59 | 30 | 36 | 22 | cheap for a reason? |
-| **TLN** | 63% | 15 | 6 | 4 | n/m | weak and not cheap |
-| **ORA** | 62% | 53 | 26 | 4 | 56 | cheap for a reason? |
-| **PNW** | 60% | 82 | 82 | 15 | 19 | cheap for a reason? |
-| **AES** | 58% | 96 | 99 | 76 | 6 | cheap for a reason? |
+| **SO** | 86% | 65 | 30 | 28 | 24 | positioned, NOT fully priced |
+| **D** | 84% | 72 | 54 | 28 | 20 | positioned, NOT fully priced |
+| **CEG** | 81% | 59 | 26 | 3 | 28 | positioned, NOT fully priced |
+| **AEP** | 79% | 75 | 61 | 28 | 18 | positioned, NOT fully priced |
+| **VST** | 73% | 51 | 15 | 5 | 22 | positioned, NOT fully priced |
+| **FE** | 71% | 76 | 63 | 44 | 26 | positioned, NOT fully priced |
+| **PPL** | 68% | 78 | 70 | 30 | 22 | cheap for a reason? |
+| **NEE** | 65% | 59 | 24 | 36 | 22 | cheap for a reason? |
+| **TLN** | 63% | 14 | 2 | 4 | n/m | weak and not cheap |
+| **ORA** | 62% | 54 | 20 | 4 | 55 | cheap for a reason? |
+| **PNW** | 60% | 82 | 78 | 15 | 19 | cheap for a reason? |
+| **AES** | 58% | 96 | 93 | 76 | 6 | cheap for a reason? |
 | **RNW** | 57% | — | — | — | n/m | no filings data |
-| **ES** | 56% | 84 | 86 | 10 | 18 | cheap for a reason? |
+| **ES** | 56% | 84 | 80 | 10 | 18 | cheap for a reason? |
 | **FTS** | 55% | 98 | 98 | 41 | n/m | cheap for a reason? |
-| **MGEE** | 54% | 81 | 47 | — | 21 | cheap for a reason? |
-| **ETR** | 53% | 61 | 36 | 19 | 27 | cheap for a reason? |
-| **DTE** | 52% | 72 | 56 | 25 | 23 | cheap for a reason? |
-| **IDA** | 50% | 68 | 42 | 48 | 24 | cheap for a reason? |
-| **OGE** | 49% | 75 | 66 | 12 | 21 | cheap for a reason? |
-| **CNP** | 47% | 69 | 46 | 19 | 25 | cheap for a reason? |
+| **MGEE** | 54% | 81 | 76 | — | 21 | cheap for a reason? |
+| **ETR** | 53% | 61 | 28 | 19 | 28 | cheap for a reason? |
+| **DTE** | 52% | 72 | 50 | 25 | 23 | cheap for a reason? |
+| **IDA** | 50% | 68 | 35 | 48 | 24 | cheap for a reason? |
+| **OGE** | 49% | 74 | 59 | 12 | 21 | cheap for a reason? |
+| **CNP** | 47% | 69 | 39 | 19 | 25 | cheap for a reason? |
 | **BEP** | 46% | — | — | — | n/m | no filings data |
 | **BEPC** | 44% | — | — | — | n/m | no filings data |
-| **TXNM** | 44% | 71 | 50 | 25 | 38 | cheap for a reason? |
-| **CWEN** | 40% | 77 | 72 | 63 | 78 | cheap for a reason? |
-| **NRG** | 39% | 77 | 74 | 89 | 30 | cheap for a reason? |
-| **EIX** | 38% | 95 | 92 | 1 | 8 | cheap for a reason? |
-| **OTTR** | 36% | 73 | 62 | 1 | 20 | cheap for a reason? |
-| **AQN** | 33% | 100 | 100 | 14 | n/m | cheap for a reason? |
+| **TXNM** | 44% | 71 | 46 | 25 | 38 | cheap for a reason? |
+| **CWEN** | 40% | 77 | 65 | 63 | 78 | cheap for a reason? |
+| **NRG** | 39% | 78 | 67 | 89 | 30 | cheap for a reason? |
+| **EIX** | 38% | 95 | 89 | 1 | 8 | cheap for a reason? |
+| **OTTR** | 36% | 74 | 100 | 1 | 20 | cheap for a reason? |
+| **AQN** | 33% | 99 | 100 | 14 | n/m | cheap for a reason? |
 | **KEP** | 30% | — | — | — | n/m | no filings data |
 | **TAC** | 29% | — | — | — | n/m | no filings data |
-| **HNRG** | 25% | 52 | 24 | 6 | n/m | cheap for a reason? |
+| **HNRG** | 25% | 52 | 17 | 6 | n/m | cheap for a reason? |
 | **HE** | 18% | 98 | 96 | 94 | n/m | cheap for a reason? |
-| **OKLO** | 12% | 41 | 16 | — | n/m | weak and not cheap |
-| **NNE** | 8% | 60 | 34 | — | n/m | cheap for a reason? |
-| **GFUZ** | 5% | 1 | 2 | — | n/m | weak and not cheap |
+| **OKLO** | 12% | 42 | 71 | — | n/m | weak and not cheap |
+| **NNE** | 8% | 61 | 86 | — | n/m | cheap for a reason? |
+| **GFUZ** | 5% | 1 | 14 | — | n/m | weak and not cheap |
 
 ## Bdc — researched 2026-08-07 (5d ago)
 
@@ -94,51 +94,51 @@
 |---|---|---|---|---|---|---|
 | **ARCC** | 82% | 93 | 89 | 66 | 12 | positioned, NOT fully priced |
 | **MAIN** | 80% | 81 | 65 | 33 | 12 | positioned, NOT fully priced |
-| **FDUS** | 75% | 94 | 91 | 7 | 10 | positioned, NOT fully priced |
-| **SLRC** | 67% | 84 | 70 | 17 | 10 | cheap for a reason? |
-| **BCSF** | 63% | 93 | 90 | 38 | 13 | cheap for a reason? |
-| **NMFC** | 57% | 72 | 54 | 10 | n/m | cheap for a reason? |
-| **CION** | 52% | 90 | 86 | 39 | 136 | cheap for a reason? |
-| **MFIC** | 45% | 79 | 62 | 19 | n/m | cheap for a reason? |
+| **FDUS** | 75% | 94 | 92 | 7 | 10 | positioned, NOT fully priced |
+| **SLRC** | 67% | 84 | 68 | 17 | 9 | cheap for a reason? |
+| **BCSF** | 63% | 94 | 90 | 38 | 13 | cheap for a reason? |
+| **NMFC** | 57% | 73 | 54 | 10 | n/m | cheap for a reason? |
+| **CION** | 52% | 91 | 87 | 39 | 135 | cheap for a reason? |
+| **MFIC** | 45% | 79 | 63 | 19 | n/m | cheap for a reason? |
 
 ## Grocery — researched 2026-08-11 (1d ago)
 
 | Ticker | Positioned | Cheap vs all | Cheap vs sector | Improving | P/E | Read |
 |---|---|---|---|---|---|---|
-| **KR** | 85% | 36 | 15 | 11 | n/m | priced for perfection |
-| **SFM** | 80% | 81 | 65 | 38 | 16 | positioned, NOT fully priced |
+| **KR** | 85% | 35 | 16 | 11 | n/m | priced for perfection |
+| **SFM** | 80% | 80 | 68 | 38 | 16 | positioned, NOT fully priced |
 | **TBBB** | 76% | — | — | — | n/m | no filings data |
 | **IMKTA** | 68% | — | — | — | n/m | no filings data |
-| **NGVC** | 58% | 96 | 90 | 34 | 13 | cheap for a reason? |
-| **GO** | 52% | 91 | 85 | 7 | n/m | cheap for a reason? |
+| **NGVC** | 58% | 96 | 95 | 34 | 13 | cheap for a reason? |
+| **GO** | 52% | 89 | 89 | 7 | n/m | cheap for a reason? |
 | **YSWY** | 40% | — | — | — | n/m | no filings data |
-| **ACI** | 38% | 58 | 35 | 32 | n/m | cheap for a reason? |
-| **ARKO** | 30% | 99 | 100 | 68 | 33 | cheap for a reason? |
+| **ACI** | 38% | 60 | 37 | 32 | n/m | cheap for a reason? |
+| **ARKO** | 30% | 99 | 100 | 68 | 34 | cheap for a reason? |
 
 ## Metals — researched 2026-08-12 (today)
 
 | Ticker | Positioned | Cheap vs all | Cheap vs sector | Improving | P/E | Read |
 |---|---|---|---|---|---|---|
-| **SCCO** | 91% | 29 | 31 | 84 | 29 | priced for perfection |
+| **SCCO** | 91% | 29 | 36 | 84 | 29 | priced for perfection |
+| **FCX** | 84% | 53 | 55 | 3 | 24 | positioned, NOT fully priced |
+| **HBM** | 79% | — | — | — | n/m | no filings data |
+| **ERO** | 74% | — | — | — | n/m | no filings data |
 | **RIO** | 62% | — | — | — | n/m | no filings data |
-| **VALE** | 41% | 99 | 100 | — | 8 | cheap for a reason? |
+| **VALE** | 41% | 99 | 100 | — | 9 | cheap for a reason? |
 | **BVN** | 36% | — | — | — | n/m | no filings data |
 | **NEXA** | 33% | — | — | — | n/m | no filings data |
-| **FCX** | 27% | 54 | 62 | 3 | 24 | cheap for a reason? |
 | **IE** | 24% | — | — | — | n/m | no filings data |
-| **CLF** | 18% | 91 | 92 | 70 | n/m | cheap for a reason? |
+| **CLF** | 18% | 91 | 97 | 70 | n/m | cheap for a reason? |
 | **AUGO** | 16% | — | — | — | n/m | no filings data |
-| **MP** | 14% | 16 | 15 | 99 | n/m | weak and not cheap |
+| **MP** | 14% | 17 | 18 | 99 | n/m | weak and not cheap |
 | **ASM** | 13% | — | — | — | n/m | no filings data |
 | **USAS** | 12% | — | — | — | n/m | no filings data |
-| **HBM** | 9% | — | — | — | n/m | no filings data |
 | **LAR** | 9% | — | — | — | n/m | no filings data |
 | **SGML** | 8% | — | — | — | n/m | no filings data |
 | **NB** | 8% | — | — | — | n/m | no filings data |
-| **USAR** | 7% | 35 | 46 | — | n/m | weak and not cheap |
+| **USAR** | 7% | 36 | 43 | — | n/m | weak and not cheap |
 | **DC** | 6% | — | — | — | n/m | no filings data |
 | **CRML** | 5% | — | — | — | n/m | no filings data |
-| **ERO** | 4% | — | — | — | n/m | no filings data |
 | **ALOY** | 4% | — | — | — | n/m | no filings data |
 | **GMTL** | 3% | — | — | — | n/m | no filings data |
 
@@ -146,15 +146,15 @@
 
 | Ticker | Positioned | Cheap vs all | Cheap vs sector | Improving | P/E | Read |
 |---|---|---|---|---|---|---|
-| **NUE** | 88% | 68 | 80 | 73 | 27 | positioned, NOT fully priced |
-| **STLD** | 85% | 63 | 76 | 81 | 24 | positioned, NOT fully priced |
-| **ATI** | 74% | 18 | 15 | 72 | 66 | priced for perfection |
+| **NUE** | 88% | 69 | 79 | 73 | 27 | positioned, NOT fully priced |
+| **STLD** | 85% | 64 | 76 | 81 | 23 | positioned, NOT fully priced |
+| **ATI** | 74% | 18 | 27 | 72 | 66 | priced for perfection |
 | **TX** | 71% | — | — | — | n/m | no filings data |
 | **MT** | 63% | — | — | — | n/m | no filings data |
 | **CMC** | 58% | — | — | — | n/m | no filings data |
 | **FRD** | 48% | — | — | — | n/m | no filings data |
 | **MTUS** | 45% | — | — | — | n/m | no filings data |
-| **CRS** | 40% | 20 | 17 | 66 | 56 | weak and not cheap |
+| **CRS** | 40% | 20 | 20 | 66 | 55 | weak and not cheap |
 | **NWPX** | 32% | — | — | — | n/m | no filings data |
 | **WS** | 28% | — | — | — | n/m | no filings data |
 | **PKX** | 26% | — | — | — | n/m | no filings data |
