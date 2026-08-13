@@ -74,7 +74,8 @@ def load_csv(path: str | Path, verbose: bool = False) -> Panel:
 
 
 def sanitize_corporate_actions(
-    panel: Panel, threshold: float = 0.40, verbose: bool = False
+    panel: Panel, threshold: float = 0.40, verbose: bool = False,
+    dv_calm_ratio: float = 1.5,
 ) -> tuple[Panel, list[str]]:
     """Repair mechanically-identifiable corporate-action data errors.
 
@@ -88,17 +89,41 @@ def sanitize_corporate_actions(
        two-day compounded move is small (<15%) -> a data error (bad split
        row). Both days are respliced so each carries the same fraction of the
        true two-day move.
-    2. NEGATIVE STEP: ret(t) < -threshold with no reversal -> treated as an
-       un-adjusted distribution (spin-off): all PRIOR closes are scaled by
-       (1+ret) — exactly what a split/distribution adjustment does — so the
-       event day becomes a 0% return. (The true total return of the event is
-       unknowable from this data; 0 is far closer than -50%.)
+    2. NEGATIVE STEP: ret(t) < -threshold with no reversal -> *candidate*
+       un-adjusted distribution. Rule 2 now requires POSITIVE EVIDENCE before
+       it rewrites anything (see below).
     3. POSITIVE moves are left alone (large genuine rallies exist, e.g.
        VRTX +62% on trial results in Apr-2013).
+
+    **Rule 2's evidence test (2026-08-13 audit).** The original rule assumed any
+    one-day fall worse than -40% was a data error. That held for the bundled
+    500-name set it was written for, where every event had been hand-checked.
+    On the 2,992-ticker live store it is false: genuine -40% days are routine.
+    Measured across the store, the rule fired 231 times and **210 of those days
+    traded at 3x or more of their trailing 60-day median dollar volume** — they
+    were panics, not split rows. Only 11 looked like real splits. WAL on
+    2023-03-13 (the SVB bank run) fell 47.1% on 28x volume with a $7.46 low
+    against a $30.78 high; the rule recorded it as exactly 0.00% and divided
+    every WAL close from 2018 to that date by 0.5294 — using a future event to
+    rewrite past prices, so the same day read 62.36 from 2023-03-10 and 33.01
+    from today.
+
+    The discriminator is dollar volume. A split renumbers shares and leaves
+    dollars traded unchanged; a crash multiplies them. Rescaling history is the
+    destructive, irreversible action, so it now happens ONLY on evidence that
+    the day was NOT a panic (dollar volume at or below `dv_calm_ratio` x its
+    trailing median). Absent volume data the day is LEFT ALONE — the safe
+    default is to preserve the print, not to rewrite five years behind it.
+    Every decision is logged in both directions.
     """
     close = panel.close.copy()
     notes: list[str] = []
     ret = close.pct_change()
+    # trailing dollar-volume baseline for the evidence test above
+    dv = (panel.close * panel.volume) if panel.volume is not None else None
+    dv_med = (dv.shift(1).rolling(60, min_periods=20).median()
+              if dv is not None else None)
+    kept = 0
     for tkr in close.columns:
         r = ret[tkr]
         hits = r.index[(r.abs() > threshold) & r.notna()]
@@ -121,12 +146,33 @@ def sanitize_corporate_actions(
                     f"respliced to {per_day:+.2%}/day"
                 )
             elif r_d < -threshold:
+                # evidence test: was this a quiet renumbering, or a panic?
+                ratio = np.nan
+                if dv is not None and tkr in dv.columns:
+                    base = dv_med[tkr].iloc[i]
+                    if np.isfinite(base) and base > 0:
+                        ratio = float(dv[tkr].iloc[i]) / base
+                if not np.isfinite(ratio) or ratio > dv_calm_ratio:
+                    kept += 1
+                    notes.append(
+                        f"{tkr} {d.date()}: {r_d:+.1%} LEFT ALONE — "
+                        + (f"dollar volume {ratio:.1f}x its 60d median, "
+                           "consistent with a real move, not a split row"
+                           if np.isfinite(ratio) else
+                           "no volume baseline to justify rewriting history")
+                    )
+                    continue
                 factor = 1 + r_d
                 close.iloc[:i, close.columns.get_loc(tkr)] *= factor
                 notes.append(
                     f"{tkr} {d.date()}: {r_d:+.1%} step treated as un-adjusted "
-                    f"distribution; prior history scaled by {factor:.3f}"
+                    f"distribution (dollar volume only {ratio:.1f}x its 60d "
+                    f"median); prior history scaled by {factor:.3f}"
                 )
+    if kept:
+        notes.append(f"SUMMARY: {kept} large declines preserved as real market "
+                     f"moves; {len([n for n in notes if 'prior history scaled' in n])} "
+                     "treated as un-adjusted distributions.")
     if verbose:
         for n in notes:
             print("sanitize:", n)

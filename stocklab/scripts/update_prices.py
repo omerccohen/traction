@@ -31,18 +31,36 @@ SECTORS = ROOT / "data_cache" / "sp500_sectors.csv"
 BROAD = ROOT / "data_cache" / "universe" / "universe_tickers.txt"
 
 
-def universe() -> list[str]:
+def universe(store: PriceStore | None = None) -> list[str]:
     # broad NYSE+Nasdaq+AMEX universe (liquid operating companies) when present,
     # else the S&P 500 sector map, else the bundled tickers
+    syms: list[str] = []
     if BROAD.exists():
         syms = [s.strip() for s in BROAD.read_text().splitlines() if s.strip()]
-        if syms:
-            return sorted(set(syms))
-    if SECTORS.exists():
-        return sorted(pd.read_csv(SECTORS)["Symbol"].dropna().unique().tolist())
-    from stocklab.data.loaders import load_bundled
-    panel, _ = load_bundled()
-    return sorted(panel.tickers)
+    if not syms and SECTORS.exists():
+        syms = pd.read_csv(SECTORS)["Symbol"].dropna().unique().tolist()
+    if not syms:
+        from stocklab.data.loaders import load_bundled
+        panel, _ = load_bundled()
+        syms = list(panel.tickers)
+
+    # ALWAYS include what the store already holds. The roster file lists
+    # operating companies only, so SPY, QQQ and the commodity/theme proxy ETFs
+    # — plus CBOE and NVR, which fell out of the roster at some point — were in
+    # the panel, read by the analysis layer, and never fetched again. They rot
+    # silently: on 2026-08-13 SPY and QQQ were three days stale while 99.8% of
+    # the store was current, and SPY is the journal's benchmark, so every
+    # excess-return figure was measured against a stale index. Anything in the
+    # store is something the system reads; keep all of it current.
+    if store is not None:
+        held = list(store.last_dates().index)
+        extra = sorted(set(held) - set(syms))
+        if extra:
+            print(f"universe: +{len(extra)} held but not in roster "
+                  f"({', '.join(extra[:8])}{'...' if len(extra) > 8 else ''})",
+                  file=sys.stderr)
+        syms += extra
+    return sorted(set(syms))
 
 
 def main() -> None:
@@ -68,7 +86,7 @@ def main() -> None:
     if args.from_csv:
         rep = update_from_csv(store, args.from_csv)
     else:
-        rep = update_from_network(store, universe(), default_start=args.start)
+        rep = update_from_network(store, universe(store), default_start=args.start)
 
     print(json.dumps(rep.to_dict(), indent=2, default=str))
     if rep.status == "no_network":

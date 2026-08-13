@@ -68,17 +68,42 @@ def load_positioning() -> tuple[dict, str]:
         title = title.replace("_", " ").title() or f.stem
         age = (date.fromisoformat(newest) - date.fromisoformat(fdate)).days
         title = f"{title} — researched {fdate}" + (f" ({age}d ago)" if age else " (today)")
+        # The score must come from the RANKING table, not from any table that
+        # happens to put a number after a bolded ticker. The metals note carries
+        # a short-interest table 45 lines above its ranking, and first-match-wins
+        # read FCX's share count as its score: FCX 84% -> 27%, HBM 79% -> 9%,
+        # ERO 74% -> 4%. FCX then flipped out of "positioned, NOT fully priced"
+        # — the one quadrant this process treats as actionable — and vanished
+        # from the open questions. Row counts cannot catch it: 120 rows in, 120
+        # parsed, 3 silently corrupted.
+        #
+        # So: find the ranking table by its header, and read only its rows. The
+        # ranking row shape is  | <rank> | **TICKER** | **NN%** | ...
+        # Every ranking table in briefings/ opens with a "| Rank | Ticker | ..."
+        # header, so anchor on that and read only the rows beneath it, until the
+        # table ends. Do NOT sniff for keywords anywhere in the line: a first
+        # attempt keyed on "company" or "%" appearing in the row swallowed
+        # SCCO's own ranking row, whose risk column happens to say "Grupo México
+        # controls the company".
         rows = {}
+        in_rank = False
         for line in f.read_text().splitlines():
-            # ticker is the SECOND cell (a rank column precedes it) and the score
-            # may be bolded and may or may not carry a '%': | 1 | **PWR** | **89** |
-            # the score cell may carry trailing annotation, e.g.
-            # | 5 | **BCSF** | **63%** *(LOW-conf.)* | — so don't demand the cell
-            # end right after the number.
-            m = re.search(r"\*\*([A-Z][A-Z0-9.\-]{0,5})\*\*\s*\|\s*\*{0,2}\s*(\d{1,3})\s*%?",
-                          line)
+            if re.match(r"\s*\|\s*\**\s*rank\b", line, re.I):
+                in_rank = True
+                continue
+            if not line.lstrip().startswith("|"):
+                in_rank = False           # table ended
+                continue
+            if not in_rank:
+                continue
+            m = re.match(r"\s*\|\s*\**\s*\d{1,3}\s*\**\s*\|\s*\**\s*"
+                         r"([A-Z][A-Z0-9.\-]{0,5})\s*\**\s*\|\s*\**\s*"
+                         r"(\d{1,3})\s*%?", line)
             if m and 0 <= int(m.group(2)) <= 100:
                 rows.setdefault(m.group(1), int(m.group(2)))
+        if not rows:
+            print(f"  WARNING: no ranking table parsed from {f.name}",
+                  file=sys.stderr)
         if rows:
             out[title] = rows
     return out, newest

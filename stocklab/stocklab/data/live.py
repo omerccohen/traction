@@ -472,14 +472,35 @@ class PriceStore:
         if ld.empty:
             return {"has_data": False}
         newest = ld.max()
-        return {
+        # Report the ALIGNMENT, not just the frontier. `newest` is a max, so a
+        # single ticker updated today made the whole store read "1 day stale"
+        # while 2,648 names sat a day behind — the aborted 2026-08-12 refresh
+        # left four different dates in the store and this said "healthy".
+        # median_date is what the cross-section is actually priced on;
+        # share_on_newest is how much of it reaches the frontier.
+        share = float((ld == newest).mean())
+        stale = ld[ld < newest]
+        out = {
             "has_data": True,
             "newest_date": str(newest.date()),
+            "median_date": str(ld.median().date()),
+            "share_on_newest": round(share, 4),
             "n_tickers": int(len(ld)),
+            "n_behind": int(len(stale)),
             "days_stale_calendar": int(
                 (pd.Timestamp.now(tz=timezone.utc).tz_localize(None) - newest).days),
             "meta": self.meta(),
         }
+        if share < 0.95:
+            out["warning"] = (
+                f"MISALIGNED: only {share:.1%} of tickers reach {newest.date()}; "
+                f"{len(stale)} are behind (oldest {stale.min().date()}). "
+                "Cross-sectional comparisons mix trading days — re-run the update "
+                "before trusting any ranking.")
+        if len(stale):
+            out["most_stale"] = {t: str(d.date()) for t, d
+                                 in stale.nsmallest(10).items()}
+        return out
 
 
 # ---------------------------------------------------------------------------

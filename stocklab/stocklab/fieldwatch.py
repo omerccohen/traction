@@ -144,17 +144,35 @@ def field_snapshot(
     # there must be enough of them for a percentile to mean anything —
     # audit F2: a single comparison point made pctile ∈ {0,1} and let one
     # data point rocket a field to the top of the briefing.
+    # A pair contributes nothing when one leg has no history in the window (a
+    # later IPO, a halt), and pandas .corr() returns NaN for it. Taking a plain
+    # .mean() over the triangle then makes the WHOLE window NaN, and `NaN <= x`
+    # is False — so every unusable window silently counted as "history above
+    # today" and dragged the percentile to the floor. Measured 2026-08-13:
+    # 129 of 130 fields had NaN history, and in the large fields (Technology,
+    # Industrials, Finance, Health Care) ALL 95 history points were NaN, so the
+    # percentile was 0.000 out of zero valid comparisons and the field was
+    # labelled "stocks decoupling". 109 of 130 fields carried that label; only
+    # 40 deserve it, and several invert outright — Basic Materials went 0.00 ->
+    # 0.965 ("trading as one block"), Semiconductors 0.00 -> 0.825. That number
+    # is what produced the "selection market, not a beta market" desk-note
+    # headline. Average over the pairs that exist, and drop unusable windows
+    # rather than counting them as evidence.
+    def _pair_mean(c: np.ndarray) -> float:
+        v = c[np.triu_indices_from(c, 1)]
+        return float(np.nanmean(v)) if np.isfinite(v).any() else np.nan
+
     if len(cols) >= 4:
         r63 = ret1.iloc[-63:]
-        cm = r63.corr().to_numpy()
-        avg_corr_now = float(cm[np.triu_indices_from(cm, 1)].mean())
+        avg_corr_now = _pair_mean(r63.corr().to_numpy())
         hist = []
         for end in range(126, len(ret1) - 63, 21):
             sub = ret1.iloc[max(0, end - 63):end]
             if len(sub) >= 40:
-                c = sub.corr().to_numpy()
-                hist.append(c[np.triu_indices_from(c, 1)].mean())
-        if len(hist) >= 8:
+                h = _pair_mean(sub.corr().to_numpy())
+                if np.isfinite(h):
+                    hist.append(h)
+        if len(hist) >= 8 and np.isfinite(avg_corr_now):
             pct = float((np.array(hist) <= avg_corr_now).mean())
             ind["cohesion"] = {
                 "value": round(avg_corr_now, 3),
