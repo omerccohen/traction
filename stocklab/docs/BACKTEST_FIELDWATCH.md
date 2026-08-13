@@ -1,5 +1,27 @@
 # Does the FieldWatch mechanism point in the right direction?
 
+> **Re-verified 2026-08-13, after the audit — this page HOLDS.** Every other
+> backtest in `docs/` was retracted (see the banners on BACKTEST_VALUATION.md
+> and BACKTEST_IMPROVEMENT.md). This one was re-run on repaired price data (225
+> real crashes restored by the `sanitize_corporate_actions` fix), on corrected
+> sector labels (24 companies moved on revenue evidence), and with the cohesion
+> NaN bug fixed, across 44 dates and 129 fields:
+>
+> | | published | re-run |
+> |---|---|---|
+> | volatility percentile predicts forward volatility | IC +0.109, t 4.13 | **+0.114, t 4.58** |
+> | field trend predicts next 21d | — | +0.073, t 3.17 |
+> | **attention score predicts forward return (21d)** | ~zero | **+0.0009, t 0.05** |
+>
+> The last row is the one that matters most: the system's central honest claim
+> — that the attention score does **not** predict returns and must never be read
+> as a stock signal — reproduces exactly. What persists is *volatility regime*,
+> which is what an attention allocator is for.
+>
+> The independent audit reached the same verdict by its own route
+> (`docs/AUDIT_BACKTESTS.md`): robust to field nesting, per-date z-scoring
+> correct, day-alignment correct, no look-ahead found.
+
 A point-in-time backtest of the attention mechanism over the last 2 years.
 **Real data only, no lookahead, no LLM** (the desk-note LLM knows the future
 from training and cannot be honestly backtested — so this tests the
