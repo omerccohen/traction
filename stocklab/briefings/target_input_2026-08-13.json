@@ -1,0 +1,1737 @@
+{
+  "as_of": "2026-08-13",
+  "regime": {
+    "vol": {
+      "value": 14.55,
+      "pctile": 0.18,
+      "band": "calm",
+      "age_days": 2
+    },
+    "trend": {
+      "value": 0.1882,
+      "band": "uptrend",
+      "age_days": 44
+    },
+    "valuation": {
+      "value": 30.81,
+      "pctile": 0.59,
+      "age_days": 1078
+    },
+    "triggered": [],
+    "elevated": [],
+    "data_quality": {
+      "live": [
+        "vix_level (2d)",
+        "sp500_trend_12m (44d)"
+      ],
+      "stale": [
+        "us_cpi_yoy (1078d old)",
+        "us10y_rate_monthly (1078d old)",
+        "sp500_pe10 (1078d old)"
+      ],
+      "missing": [
+        "us10y_yield",
+        "yield_curve_10y2y",
+        "hy_credit_spread",
+        "breakeven_10y",
+        "semis_industrial_production",
+        "electronics_new_orders",
+        "semis_producer_prices"
+      ],
+      "warning": "MACRO LAYER DEGRADED: only 2 of 12 indicators carry current data (7 unavailable, 3 stale). Treat the regime read as thin \u2014 do not describe macro conditions the data cannot support."
+    }
+  },
+  "field_dossiers": [
+    {
+      "field": "Oil and Gas Field Machinery [sub]",
+      "character": "DISPERSION",
+      "attention": 0.849,
+      "n": 10,
+      "field_median_ret_21d": 0.1191,
+      "winners": [
+        {
+          "ticker": "FET",
+          "ret_21d": 0.5672,
+          "ret_63d": 0.4744,
+          "last_close": 82.42
+        },
+        {
+          "ticker": "WHD",
+          "ret_21d": 0.3595,
+          "ret_63d": 0.2848,
+          "last_close": 72.04
+        },
+        {
+          "ticker": "INVX",
+          "ret_21d": 0.1893,
+          "ret_63d": 0.1225,
+          "last_close": 30.78
+        },
+        {
+          "ticker": "WFRD",
+          "ret_21d": 0.1258,
+          "ret_63d": -0.1557,
+          "last_close": 92.1
+        },
+        {
+          "ticker": "FLOC",
+          "ret_21d": 0.1256,
+          "ret_63d": -0.1421,
+          "last_close": 22.76
+        },
+        {
+          "ticker": "BKR",
+          "ret_21d": 0.1126,
+          "ret_63d": -0.0147,
+          "last_close": 64.28
+        },
+        {
+          "ticker": "NOV",
+          "ret_21d": 0.0645,
+          "ret_63d": 0.0073,
+          "last_close": 20.64
+        },
+        {
+          "ticker": "FTI",
+          "ret_21d": 0.0609,
+          "ret_63d": 0.0549,
+          "last_close": 76.67
+        }
+      ],
+      "losers": [
+        {
+          "ticker": "OIS",
+          "ret_21d": 0.0307,
+          "ret_63d": -0.0322,
+          "last_close": 8.72
+        },
+        {
+          "ticker": "HMH",
+          "ret_21d": 0.0317,
+          "ret_63d": -0.0538,
+          "last_close": 19.87
+        },
+        {
+          "ticker": "FTI",
+          "ret_21d": 0.0609,
+          "ret_63d": 0.0549,
+          "last_close": 76.67
+        },
+        {
+          "ticker": "NOV",
+          "ret_21d": 0.0645,
+          "ret_63d": 0.0073,
+          "last_close": 20.64
+        },
+        {
+          "ticker": "BKR",
+          "ret_21d": 0.1126,
+          "ret_63d": -0.0147,
+          "last_close": 64.28
+        },
+        {
+          "ticker": "FLOC",
+          "ret_21d": 0.1256,
+          "ret_63d": -0.1421,
+          "last_close": 22.76
+        },
+        {
+          "ticker": "WFRD",
+          "ret_21d": 0.1258,
+          "ret_63d": -0.1557,
+          "last_close": 92.1
+        },
+        {
+          "ticker": "INVX",
+          "ret_21d": 0.1893,
+          "ret_63d": 0.1225,
+          "last_close": 30.78
+        }
+      ]
+    },
+    {
+      "field": "Engineering & Construction [sub]",
+      "character": "STRESS",
+      "attention": 0.816,
+      "n": 10,
+      "field_median_ret_21d": -0.0349,
+      "winners": [
+        {
+          "ticker": "IESC",
+          "ret_21d": 0.2437,
+          "ret_63d": 0.1179,
+          "last_close": 766.33
+        },
+        {
+          "ticker": "AMRC",
+          "ret_21d": 0.126,
+          "ret_63d": -0.0411,
+          "last_close": 27.79
+        },
+        {
+          "ticker": "EME",
+          "ret_21d": 0.0757,
+          "ret_63d": -0.0989,
+          "last_close": 833.4
+        },
+        {
+          "ticker": "PWR",
+          "ret_21d": 0.0369,
+          "ret_63d": -0.1305,
+          "last_close": 672.78
+        },
+        {
+          "ticker": "FIX",
+          "ret_21d": -0.0052,
+          "ret_63d": -0.1509,
+          "last_close": 1727.64
+        },
+        {
+          "ticker": "BBUC",
+          "ret_21d": -0.0646,
+          "ret_63d": -0.1039,
+          "last_close": 29.24
+        },
+        {
+          "ticker": "MTRX",
+          "ret_21d": -0.065,
+          "ret_63d": -0.0119,
+          "last_close": 11.66
+        },
+        {
+          "ticker": "AGX",
+          "ret_21d": -0.0826,
+          "ret_63d": -0.2237,
+          "last_close": 558.89
+        }
+      ],
+      "losers": [
+        {
+          "ticker": "LMB",
+          "ret_21d": -0.4265,
+          "ret_63d": -0.3839,
+          "last_close": 44.2
+        },
+        {
+          "ticker": "LGN",
+          "ret_21d": -0.1065,
+          "ret_63d": -0.3676,
+          "last_close": 63.24
+        },
+        {
+          "ticker": "AGX",
+          "ret_21d": -0.0826,
+          "ret_63d": -0.2237,
+          "last_close": 558.89
+        },
+        {
+          "ticker": "MTRX",
+          "ret_21d": -0.065,
+          "ret_63d": -0.0119,
+          "last_close": 11.66
+        },
+        {
+          "ticker": "BBUC",
+          "ret_21d": -0.0646,
+          "ret_63d": -0.1039,
+          "last_close": 29.24
+        },
+        {
+          "ticker": "FIX",
+          "ret_21d": -0.0052,
+          "ret_63d": -0.1509,
+          "last_close": 1727.64
+        },
+        {
+          "ticker": "PWR",
+          "ret_21d": 0.0369,
+          "ret_63d": -0.1305,
+          "last_close": 672.78
+        },
+        {
+          "ticker": "EME",
+          "ret_21d": 0.0757,
+          "ret_63d": -0.0989,
+          "last_close": 833.4
+        }
+      ]
+    },
+    {
+      "field": "Farming/Seeds/Milling [sub]",
+      "character": "STRESS",
+      "attention": 0.807,
+      "n": 9,
+      "field_median_ret_21d": -0.1025,
+      "winners": [
+        {
+          "ticker": "DMC",
+          "ret_21d": 0.068,
+          "ret_63d": -0.1382,
+          "last_close": 30.62
+        },
+        {
+          "ticker": "CALM",
+          "ret_21d": -0.0112,
+          "ret_63d": 0.0422,
+          "last_close": 82.21
+        },
+        {
+          "ticker": "AVO",
+          "ret_21d": -0.0166,
+          "ret_63d": 0.0457,
+          "last_close": 13.03
+        },
+        {
+          "ticker": "DOLE",
+          "ret_21d": -0.0484,
+          "ret_63d": -0.083,
+          "last_close": 13.36
+        },
+        {
+          "ticker": "CTVA",
+          "ret_21d": -0.1025,
+          "ret_63d": -0.0907,
+          "last_close": 75.79
+        },
+        {
+          "ticker": "UVV",
+          "ret_21d": -0.1142,
+          "ret_63d": -0.1656,
+          "last_close": 44.89
+        },
+        {
+          "ticker": "AGRO",
+          "ret_21d": -0.1171,
+          "ret_63d": -0.337,
+          "last_close": 9.05
+        },
+        {
+          "ticker": "ANDE",
+          "ret_21d": -0.1338,
+          "ret_63d": -0.0905,
+          "last_close": 65.14
+        }
+      ],
+      "losers": [
+        {
+          "ticker": "BV",
+          "ret_21d": -0.1951,
+          "ret_63d": -0.0765,
+          "last_close": 11.59
+        },
+        {
+          "ticker": "ANDE",
+          "ret_21d": -0.1338,
+          "ret_63d": -0.0905,
+          "last_close": 65.14
+        },
+        {
+          "ticker": "AGRO",
+          "ret_21d": -0.1171,
+          "ret_63d": -0.337,
+          "last_close": 9.05
+        },
+        {
+          "ticker": "UVV",
+          "ret_21d": -0.1142,
+          "ret_63d": -0.1656,
+          "last_close": 44.89
+        },
+        {
+          "ticker": "CTVA",
+          "ret_21d": -0.1025,
+          "ret_63d": -0.0907,
+          "last_close": 75.79
+        },
+        {
+          "ticker": "DOLE",
+          "ret_21d": -0.0484,
+          "ret_63d": -0.083,
+          "last_close": 13.36
+        },
+        {
+          "ticker": "AVO",
+          "ret_21d": -0.0166,
+          "ret_63d": 0.0457,
+          "last_close": 13.03
+        },
+        {
+          "ticker": "CALM",
+          "ret_21d": -0.0112,
+          "ret_63d": 0.0422,
+          "last_close": 82.21
+        }
+      ]
+    },
+    {
+      "field": "Professional Services [sub]",
+      "character": "MOMENTUM",
+      "attention": 0.773,
+      "n": 21,
+      "field_median_ret_21d": 0.1344,
+      "winners": [
+        {
+          "ticker": "EFOR",
+          "ret_21d": 0.938,
+          "ret_63d": 0.928,
+          "last_close": 33.45
+        },
+        {
+          "ticker": "BWMN",
+          "ret_21d": 0.5985,
+          "ret_63d": 0.2885,
+          "last_close": 42.2
+        },
+        {
+          "ticker": "MAN",
+          "ret_21d": 0.5144,
+          "ret_63d": 1.2657,
+          "last_close": 59.09
+        },
+        {
+          "ticker": "HURN",
+          "ret_21d": 0.3626,
+          "ret_63d": 0.501,
+          "last_close": 155.31
+        },
+        {
+          "ticker": "TBI",
+          "ret_21d": 0.2503,
+          "ret_63d": 0.7453,
+          "last_close": 10.14
+        },
+        {
+          "ticker": "BAH",
+          "ret_21d": 0.2261,
+          "ret_63d": 0.0951,
+          "last_close": 78.4
+        },
+        {
+          "ticker": "RHI",
+          "ret_21d": 0.1929,
+          "ret_63d": 0.7582,
+          "last_close": 43.78
+        },
+        {
+          "ticker": "ICFI",
+          "ret_21d": 0.1452,
+          "ret_63d": 0.4905,
+          "last_close": 89.28
+        }
+      ],
+      "losers": [
+        {
+          "ticker": "ASTH",
+          "ret_21d": -0.1966,
+          "ret_63d": -0.0495,
+          "last_close": 37.79
+        },
+        {
+          "ticker": "BBSI",
+          "ret_21d": -0.157,
+          "ret_63d": 0.1474,
+          "last_close": 33.01
+        },
+        {
+          "ticker": "ONT",
+          "ret_21d": -0.1484,
+          "ret_63d": 0.1269,
+          "last_close": 17.5
+        },
+        {
+          "ticker": "FCN",
+          "ret_21d": -0.0466,
+          "ret_63d": 0.0592,
+          "last_close": 153.41
+        },
+        {
+          "ticker": "RMR",
+          "ret_21d": -0.017,
+          "ret_63d": 0.0454,
+          "last_close": 20.26
+        },
+        {
+          "ticker": "AMN",
+          "ret_21d": 0.0662,
+          "ret_63d": 0.1173,
+          "last_close": 34.49
+        },
+        {
+          "ticker": "KFRC",
+          "ret_21d": 0.0894,
+          "ret_63d": 0.5339,
+          "last_close": 60.45
+        },
+        {
+          "ticker": "EXPO",
+          "ret_21d": 0.0991,
+          "ret_63d": 0.2506,
+          "last_close": 68.21
+        }
+      ]
+    }
+  ],
+  "all_fields": [
+    " Medicinal Chemicals and Botanical Products ",
+    "Advertising",
+    "Aerospace",
+    "Agricultural Chemicals",
+    "Air Freight/Delivery Services",
+    "Apparel",
+    "Auto Manufacturing",
+    "Auto Parts:O.E.M.",
+    "Banks",
+    "Basic Materials",
+    "Beverages (Production/Distribution)",
+    "Biotechnology: Biological Products (No Diagnostic Substances)",
+    "Biotechnology: Commercial Physical & Biological Resarch",
+    "Biotechnology: Electromedical & Electrotherapeutic Apparatus",
+    "Biotechnology: In Vitro & In Vivo Diagnostic Substances",
+    "Biotechnology: Laboratory Analytical Instruments",
+    "Biotechnology: Pharmaceutical Preparations",
+    "Broadcasting",
+    "Building Materials",
+    "Building Products",
+    "Business Services",
+    "Cable & Other Pay Television Services",
+    "Catalog/Specialty Distribution",
+    "Clothing/Shoe/Accessory Stores",
+    "Coal Mining",
+    "Commercial Banks",
+    "Computer Communications Equipment",
+    "Computer Manufacturing",
+    "Computer Software: Prepackaged Software",
+    "Computer Software: Programming Data Processing",
+    "Computer peripheral equipment",
+    "Construction/Ag Equipment/Trucks",
+    "Consumer Discretionary",
+    "Consumer Electronics/Appliances",
+    "Consumer Specialties",
+    "Consumer Staples",
+    "Containers/Packaging",
+    "Department/Specialty Retail Stores",
+    "Development Stage/Pre-Revenue",
+    "Diversified Commercial Services",
+    "EDP Services",
+    "Electric Utilities: Central",
+    "Electrical Products",
+    "Electronic Components",
+    "Energy",
+    "Engineering & Construction",
+    "Environmental Services",
+    "Farming/Seeds/Milling",
+    "Finance",
+    "Finance Companies",
+    "Finance/Investors Services",
+    "Finance: Consumer Services",
+    "Fluid Controls",
+    "Food Chains",
+    "Food Distributors",
+    "Forest Products",
+    "Garments and Clothing",
+    "Health Care",
+    "Home Furnishings",
+    "Homebuilding",
+    "Hospital/Nursing Management",
+    "Hotels/Resorts",
+    "Industrial Machinery/Components",
+    "Industrial Specialties",
+    "Industrials",
+    "Integrated Freight & Logistics",
+    "Integrated oil Companies",
+    "Investment Bankers/Brokers/Service",
+    "Investment Managers",
+    "Life Insurance",
+    "Major Banks",
+    "Major Chemicals",
+    "Marine Transportation",
+    "Meat/Poultry/Fish",
+    "Medical Specialities",
+    "Medical/Dental Instruments",
+    "Medical/Nursing Services",
+    "Memory/compute chain",
+    "Metal Fabrications",
+    "Metal Mining",
+    "Military/Government/Technical",
+    "Mining & Quarrying of Nonmetallic Minerals (No Fuels)",
+    "Misc Health and Biotechnology Services",
+    "Miscellaneous",
+    "Movies/Entertainment",
+    "Natural Gas Distribution",
+    "Office Equipment/Supplies/Services",
+    "Oil & Gas Production",
+    "Oil and Gas Field Machinery",
+    "Oil/Gas Transmission",
+    "Oilfield Services/Equipment",
+    "Ophthalmic Goods",
+    "Other Consumer Services",
+    "Other Metals and Minerals",
+    "Other Specialty Stores",
+    "Package Goods/Cosmetics",
+    "Packaged Foods",
+    "Paper",
+    "Plastic Products",
+    "Power Generation",
+    "Precious Metals",
+    "Professional Services",
+    "Property-Casualty Insurers",
+    "Publishing",
+    "RETAIL: Building Materials",
+    "Radio And Television Broadcasting And Communications Equipment",
+    "Railroads",
+    "Real Estate",
+    "Real Estate Investment Trusts",
+    "Recreational Games/Products/Toys",
+    "Restaurants",
+    "Retail-Auto Dealers and Gas Stations",
+    "Retail: Computer Software & Peripheral Equipment",
+    "Savings Institutions",
+    "Semiconductors",
+    "Services-Misc. Amusement & Recreation",
+    "Shoe Manufacturing",
+    "Specialty Foods",
+    "Specialty Insurers",
+    "Steel/Iron Ore",
+    "Technology",
+    "Telecommunications",
+    "Telecommunications Equipment",
+    "Thematic Proxies",
+    "Transportation Services",
+    "Trucking Freight/Courier Services",
+    "Trusts Except Educational Religious and Charitable",
+    "Utilities",
+    "Water Supply"
+  ],
+  "universe_size": 2992,
+  "physical_proxies": {
+    "n": 20,
+    "movers": [
+      {
+        "ticker": "XME",
+        "ret_21d": 0.117,
+        "ret_63d": -0.0654,
+        "last_close": 115.27,
+        "tracks": "Metals & Mining"
+      },
+      {
+        "ticker": "COPX",
+        "ret_21d": 0.1069,
+        "ret_63d": -0.0695,
+        "last_close": 85.52,
+        "tracks": "Copper Miners"
+      },
+      {
+        "ticker": "URA",
+        "ret_21d": 0.1064,
+        "ret_63d": -0.1512,
+        "last_close": 45.25,
+        "tracks": "Uranium & Nuclear Fuel"
+      },
+      {
+        "ticker": "NLR",
+        "ret_21d": 0.0836,
+        "ret_63d": -0.1311,
+        "last_close": 118.52,
+        "tracks": "Nuclear Energy"
+      },
+      {
+        "ticker": "XLE",
+        "ret_21d": 0.0807,
+        "ret_63d": 0.0595,
+        "last_close": 61.06,
+        "tracks": "Energy Sector"
+      },
+      {
+        "ticker": "GLD",
+        "ret_21d": 0.0715,
+        "ret_63d": -0.0733,
+        "last_close": 398.96,
+        "tracks": "Gold"
+      },
+      {
+        "ticker": "SLX",
+        "ret_21d": 0.0653,
+        "ret_63d": -0.0116,
+        "last_close": 108.5,
+        "tracks": "Steel"
+      },
+      {
+        "ticker": "WOOD",
+        "ret_21d": 0.0612,
+        "ret_63d": 0.0763,
+        "last_close": 72.39,
+        "tracks": "Timber & Forestry"
+      },
+      {
+        "ticker": "ITA",
+        "ret_21d": 0.0561,
+        "ret_63d": 0.1062,
+        "last_close": 249.69,
+        "tracks": "Aerospace & Defense ETF"
+      },
+      {
+        "ticker": "LIT",
+        "ret_21d": 0.0507,
+        "ret_63d": -0.1666,
+        "last_close": 74.66,
+        "tracks": "Lithium & Battery"
+      },
+      {
+        "ticker": "USO",
+        "ret_21d": 0.0301,
+        "ret_63d": -0.1198,
+        "last_close": 125.03,
+        "tracks": "Crude Oil"
+      },
+      {
+        "ticker": "PAVE",
+        "ret_21d": 0.0295,
+        "ret_63d": 0.0326,
+        "last_close": 58.31,
+        "tracks": "Infrastructure"
+      },
+      {
+        "ticker": "KRE",
+        "ret_21d": 0.026,
+        "ret_63d": 0.158,
+        "last_close": 77.75,
+        "tracks": "Regional Banks ETF"
+      },
+      {
+        "ticker": "JETS",
+        "ret_21d": 0.0195,
+        "ret_63d": 0.2193,
+        "last_close": 31.86,
+        "tracks": "Airlines"
+      },
+      {
+        "ticker": "IYT",
+        "ret_21d": 0.0067,
+        "ret_63d": 0.1158,
+        "last_close": 88.14,
+        "tracks": "Transports"
+      },
+      {
+        "ticker": "XHB",
+        "ret_21d": 0.0056,
+        "ret_63d": 0.1066,
+        "last_close": 109.53,
+        "tracks": "Homebuilders"
+      },
+      {
+        "ticker": "REMX",
+        "ret_21d": -0.0068,
+        "ret_63d": -0.2835,
+        "last_close": 76.13,
+        "tracks": "Rare Earth & Strategic Metals"
+      },
+      {
+        "ticker": "SOXX",
+        "ret_21d": -0.0082,
+        "ret_63d": 0.0425,
+        "last_close": 550.74,
+        "tracks": "Semiconductors ETF"
+      },
+      {
+        "ticker": "DBA",
+        "ret_21d": -0.0129,
+        "ret_63d": -0.0386,
+        "last_close": 27.62,
+        "tracks": "Agriculture"
+      },
+      {
+        "ticker": "TAN",
+        "ret_21d": -0.0597,
+        "ret_63d": -0.1777,
+        "last_close": 52.47,
+        "tracks": "Solar"
+      }
+    ]
+  },
+  "value_chain_pulls": {
+    "ai_power_datacenter": {
+      "n_matched": 110,
+      "n_shown": 40,
+      "truncated": true,
+      "selection": "top 20 and bottom 20 by 21d move of 110 matches \u2014 the middle is NOT shown, so this is not a census",
+      "companies": [
+        {
+          "ticker": "MTW",
+          "sector": "Industrials",
+          "industry": "Construction/Ag Equipment/Trucks",
+          "ret_21d": 0.6116,
+          "ret_63d": 0.6472,
+          "last_close": 20.87
+        },
+        {
+          "ticker": "AEHR",
+          "sector": "Technology",
+          "industry": "Electrical Products",
+          "ret_21d": 0.4045,
+          "ret_63d": 0.1942,
+          "last_close": 123.3
+        },
+        {
+          "ticker": "CMCO",
+          "sector": "Industrials",
+          "industry": "Construction/Ag Equipment/Trucks",
+          "ret_21d": 0.3544,
+          "ret_63d": 0.2696,
+          "last_close": 19.07
+        },
+        {
+          "ticker": "FEIM",
+          "sector": "Technology",
+          "industry": "Electrical Products",
+          "ret_21d": 0.3174,
+          "ret_63d": 0.2777,
+          "last_close": 78.08
+        },
+        {
+          "ticker": "PLPC",
+          "sector": "Technology",
+          "industry": "Electrical Products",
+          "ret_21d": 0.2943,
+          "ret_63d": 0.2889,
+          "last_close": 447.39
+        },
+        {
+          "ticker": "IESC",
+          "sector": "Consumer Discretionary",
+          "industry": "Engineering & Construction",
+          "ret_21d": 0.2437,
+          "ret_63d": 0.1179,
+          "last_close": 766.33
+        },
+        {
+          "ticker": "ALNT",
+          "sector": "Technology",
+          "industry": "Electrical Products",
+          "ret_21d": 0.2353,
+          "ret_63d": 0.7546,
+          "last_close": 109.68
+        },
+        {
+          "ticker": "ITRI",
+          "sector": "Technology",
+          "industry": "Electrical Products",
+          "ret_21d": 0.223,
+          "ret_63d": 0.2493,
+          "last_close": 102.72
+        },
+        {
+          "ticker": "TER",
+          "sector": "Technology",
+          "industry": "Electrical Products",
+          "ret_21d": 0.1999,
+          "ret_63d": 0.1297,
+          "last_close": 410.52
+        },
+        {
+          "ticker": "JBL",
+          "sector": "Technology",
+          "industry": "Electrical Products",
+          "ret_21d": 0.1603,
+          "ret_63d": 0.042,
+          "last_close": 370.36
+        },
+        {
+          "ticker": "MLR",
+          "sector": "Industrials",
+          "industry": "Construction/Ag Equipment/Trucks",
+          "ret_21d": 0.1441,
+          "ret_63d": 0.2002,
+          "last_close": 56.36
+        },
+        {
+          "ticker": "OLED",
+          "sector": "Technology",
+          "industry": "Electrical Products",
+          "ret_21d": 0.143,
+          "ret_63d": 0.0019,
+          "last_close": 90.96
+        },
+        {
+          "ticker": "AMRC",
+          "sector": "Consumer Discretionary",
+          "industry": "Engineering & Construction",
+          "ret_21d": 0.126,
+          "ret_63d": -0.0411,
+          "last_close": 27.79
+        },
+        {
+          "ticker": "URA",
+          "sector": "Thematic Proxies",
+          "industry": "Uranium & Nuclear Fuel",
+          "ret_21d": 0.1064,
+          "ret_63d": -0.1512,
+          "last_close": 45.25
+        },
+        {
+          "ticker": "TRNS",
+          "sector": "Technology",
+          "industry": "Electrical Products",
+          "ret_21d": 0.0873,
+          "ret_63d": 0.2485,
+          "last_close": 94.86
+        },
+        {
+          "ticker": "CEG",
+          "sector": "Utilities",
+          "industry": "Electric Utilities: Central",
+          "ret_21d": 0.0868,
+          "ret_63d": -0.0508,
+          "last_close": 278.68
+        },
+        {
+          "ticker": "NLR",
+          "sector": "Thematic Proxies",
+          "industry": "Nuclear Energy",
+          "ret_21d": 0.0836,
+          "ret_63d": -0.1311,
+          "last_close": 118.52
+        },
+        {
+          "ticker": "BEP",
+          "sector": "Utilities",
+          "industry": "Electric Utilities: Central",
+          "ret_21d": 0.0833,
+          "ret_63d": 0.022,
+          "last_close": 35.23
+        },
+        {
+          "ticker": "LFUS",
+          "sector": "Technology",
+          "industry": "Electrical Products",
+          "ret_21d": 0.0832,
+          "ret_63d": -0.0645,
+          "last_close": 450.0
+        },
+        {
+          "ticker": "RNW",
+          "sector": "Utilities",
+          "industry": "Electric Utilities: Central",
+          "ret_21d": 0.0828,
+          "ret_63d": 0.25,
+          "last_close": 6.8
+        },
+        {
+          "ticker": "AGX",
+          "sector": "Consumer Discretionary",
+          "industry": "Engineering & Construction",
+          "ret_21d": -0.0826,
+          "ret_63d": -0.2237,
+          "last_close": 558.89
+        },
+        {
+          "ticker": "CAT",
+          "sector": "Industrials",
+          "industry": "Construction/Ag Equipment/Trucks",
+          "ret_21d": -0.0833,
+          "ret_63d": -0.062,
+          "last_close": 855.6
+        },
+        {
+          "ticker": "VST",
+          "sector": "Utilities",
+          "industry": "Electric Utilities: Central",
+          "ret_21d": -0.0863,
+          "ret_63d": 0.0266,
+          "last_close": 146.4
+        },
+        {
+          "ticker": "ELPC",
+          "sector": "Utilities",
+          "industry": "Electric Utilities: Central",
+          "ret_21d": -0.1009,
+          "ret_63d": -0.087,
+          "last_close": 10.6
+        },
+        {
+          "ticker": "TLN",
+          "sector": "Utilities",
+          "industry": "Electric Utilities: Central",
+          "ret_21d": -0.1043,
+          "ret_63d": 0.021,
+          "last_close": 358.4
+        },
+        {
+          "ticker": "LGN",
+          "sector": "Consumer Discretionary",
+          "industry": "Engineering & Construction",
+          "ret_21d": -0.1065,
+          "ret_63d": -0.3676,
+          "last_close": 63.24
+        },
+        {
+          "ticker": "SEI",
+          "sector": "Utilities",
+          "industry": "Power Generation",
+          "ret_21d": -0.1073,
+          "ret_63d": -0.224,
+          "last_close": 59.9
+        },
+        {
+          "ticker": "PRIM",
+          "sector": "Industrials",
+          "industry": "Water Sewer Pipeline Comm & Power Line Construction",
+          "ret_21d": -0.1081,
+          "ret_63d": -0.284,
+          "last_close": 80.87
+        },
+        {
+          "ticker": "TWI",
+          "sector": "Industrials",
+          "industry": "Construction/Ag Equipment/Trucks",
+          "ret_21d": -0.1113,
+          "ret_63d": -0.103,
+          "last_close": 6.79
+        },
+        {
+          "ticker": "CEPU",
+          "sector": "Utilities",
+          "industry": "Electric Utilities: Central",
+          "ret_21d": -0.1141,
+          "ret_63d": -0.0635,
+          "last_close": 13.28
+        },
+        {
+          "ticker": "HE",
+          "sector": "Utilities",
+          "industry": "Electric Utilities: Central",
+          "ret_21d": -0.1237,
+          "ret_63d": -0.1165,
+          "last_close": 11.83
+        },
+        {
+          "ticker": "NRG",
+          "sector": "Utilities",
+          "industry": "Electric Utilities: Central",
+          "ret_21d": -0.1316,
+          "ret_63d": -0.0864,
+          "last_close": 119.75
+        },
+        {
+          "ticker": "BLBD",
+          "sector": "Industrials",
+          "industry": "Construction/Ag Equipment/Trucks",
+          "ret_21d": -0.1582,
+          "ret_63d": -0.0892,
+          "last_close": 64.67
+        },
+        {
+          "ticker": "POWL",
+          "sector": "Technology",
+          "industry": "Electrical Products",
+          "ret_21d": -0.174,
+          "ret_63d": -0.3218,
+          "last_close": 204.04
+        },
+        {
+          "ticker": "VSH",
+          "sector": "Technology",
+          "industry": "Electrical Products",
+          "ret_21d": -0.1763,
+          "ret_63d": -0.1345,
+          "last_close": 33.32
+        },
+        {
+          "ticker": "MTZ",
+          "sector": "Industrials",
+          "industry": "Water Sewer Pipeline Comm & Power Line Construction",
+          "ret_21d": -0.2002,
+          "ret_63d": -0.3249,
+          "last_close": 286.11
+        },
+        {
+          "ticker": "MYRG",
+          "sector": "Industrials",
+          "industry": "Water Sewer Pipeline Comm & Power Line Construction",
+          "ret_21d": -0.2113,
+          "ret_63d": -0.3006,
+          "last_close": 327.28
+        },
+        {
+          "ticker": "ASTE",
+          "sector": "Industrials",
+          "industry": "Construction/Ag Equipment/Trucks",
+          "ret_21d": -0.2489,
+          "ret_63d": -0.1368,
+          "last_close": 42.34
+        },
+        {
+          "ticker": "VPG",
+          "sector": "Technology",
+          "industry": "Electrical Products",
+          "ret_21d": -0.3666,
+          "ret_63d": -0.316,
+          "last_close": 68.13
+        },
+        {
+          "ticker": "LMB",
+          "sector": "Consumer Discretionary",
+          "industry": "Engineering & Construction",
+          "ret_21d": -0.4265,
+          "ret_63d": -0.3839,
+          "last_close": 44.2
+        }
+      ]
+    },
+    "packaged_foods_ma": {
+      "n_matched": 61,
+      "n_shown": 40,
+      "truncated": true,
+      "selection": "top 20 and bottom 20 by 21d move of 61 matches \u2014 the middle is NOT shown, so this is not a census",
+      "companies": [
+        {
+          "ticker": "UTZ",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": 0.9109,
+          "ret_63d": 1.0374,
+          "last_close": 14.16
+        },
+        {
+          "ticker": "FRPT",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": 0.2934,
+          "ret_63d": 0.4956,
+          "last_close": 72.73
+        },
+        {
+          "ticker": "TBBB",
+          "sector": "Consumer Staples",
+          "industry": "Food Chains",
+          "ret_21d": 0.2399,
+          "ret_63d": 0.3801,
+          "last_close": 49.2
+        },
+        {
+          "ticker": "JJSF",
+          "sector": "Consumer Staples",
+          "industry": "Specialty Foods",
+          "ret_21d": 0.203,
+          "ret_63d": 0.2716,
+          "last_close": 91.01
+        },
+        {
+          "ticker": "LW",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": 0.1807,
+          "ret_63d": 0.2947,
+          "last_close": 53.78
+        },
+        {
+          "ticker": "WEST",
+          "sector": "Consumer Staples",
+          "industry": "Beverages (Production/Distribution)",
+          "ret_21d": 0.1683,
+          "ret_63d": 0.0024,
+          "last_close": 8.4
+        },
+        {
+          "ticker": "SENEA",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": 0.1594,
+          "ret_63d": 0.4086,
+          "last_close": 193.9
+        },
+        {
+          "ticker": "DEO",
+          "sector": "Consumer Staples",
+          "industry": "Beverages (Production/Distribution)",
+          "ret_21d": 0.1557,
+          "ret_63d": 0.1775,
+          "last_close": 95.01
+        },
+        {
+          "ticker": "CHEF",
+          "sector": "Consumer Discretionary",
+          "industry": "Food Distributors",
+          "ret_21d": 0.1468,
+          "ret_63d": 0.3919,
+          "last_close": 112.05
+        },
+        {
+          "ticker": "USFD",
+          "sector": "Consumer Discretionary",
+          "industry": "Food Distributors",
+          "ret_21d": 0.1344,
+          "ret_63d": 0.2927,
+          "last_close": 110.09
+        },
+        {
+          "ticker": "DPZ",
+          "sector": "Consumer Discretionary",
+          "industry": "Food Distributors",
+          "ret_21d": 0.1287,
+          "ret_63d": 0.1374,
+          "last_close": 350.88
+        },
+        {
+          "ticker": "SFM",
+          "sector": "Consumer Staples",
+          "industry": "Food Chains",
+          "ret_21d": 0.128,
+          "ret_63d": -0.0633,
+          "last_close": 82.68
+        },
+        {
+          "ticker": "GO",
+          "sector": "Consumer Staples",
+          "industry": "Food Chains",
+          "ret_21d": 0.1151,
+          "ret_63d": 0.3953,
+          "last_close": 10.8
+        },
+        {
+          "ticker": "MZTI",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": 0.1133,
+          "ret_63d": 0.0277,
+          "last_close": 117.42
+        },
+        {
+          "ticker": "SJM",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": 0.1065,
+          "ret_63d": 0.1959,
+          "last_close": 120.63
+        },
+        {
+          "ticker": "HSY",
+          "sector": "Consumer Staples",
+          "industry": "Specialty Foods",
+          "ret_21d": 0.0931,
+          "ret_63d": -0.0488,
+          "last_close": 186.12
+        },
+        {
+          "ticker": "CAG",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": 0.0923,
+          "ret_63d": 0.0923,
+          "last_close": 15.39
+        },
+        {
+          "ticker": "SAM",
+          "sector": "Consumer Staples",
+          "industry": "Beverages (Production/Distribution)",
+          "ret_21d": 0.0873,
+          "ret_63d": 0.0315,
+          "last_close": 184.84
+        },
+        {
+          "ticker": "DAR",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": 0.0845,
+          "ret_63d": 0.0559,
+          "last_close": 65.74
+        },
+        {
+          "ticker": "MDLZ",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": 0.0819,
+          "ret_63d": 0.0327,
+          "last_close": 63.53
+        },
+        {
+          "ticker": "UNFI",
+          "sector": "Consumer Discretionary",
+          "industry": "Food Distributors",
+          "ret_21d": 0.0012,
+          "ret_63d": -0.0679,
+          "last_close": 48.58
+        },
+        {
+          "ticker": "KHC",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": -0.0028,
+          "ret_63d": 0.0949,
+          "last_close": 25.38
+        },
+        {
+          "ticker": "PRMB",
+          "sector": "Consumer Staples",
+          "industry": "Beverages (Production/Distribution)",
+          "ret_21d": -0.0064,
+          "ret_63d": 0.0572,
+          "last_close": 24.77
+        },
+        {
+          "ticker": "BG",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": -0.0258,
+          "ret_63d": -0.1055,
+          "last_close": 112.73
+        },
+        {
+          "ticker": "ADM",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": -0.0261,
+          "ret_63d": -0.0331,
+          "last_close": 80.15
+        },
+        {
+          "ticker": "OFRM",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": -0.0265,
+          "ret_63d": 0.0441,
+          "last_close": 17.28
+        },
+        {
+          "ticker": "IMKTA",
+          "sector": "Consumer Staples",
+          "industry": "Food Chains",
+          "ret_21d": -0.0269,
+          "ret_63d": 0.036,
+          "last_close": 87.53
+        },
+        {
+          "ticker": "CELH",
+          "sector": "Consumer Staples",
+          "industry": "Beverages (Production/Distribution)",
+          "ret_21d": -0.0473,
+          "ret_63d": 0.033,
+          "last_close": 28.78
+        },
+        {
+          "ticker": "PFGC",
+          "sector": "Consumer Discretionary",
+          "industry": "Food Distributors",
+          "ret_21d": -0.0537,
+          "ret_63d": 0.0903,
+          "last_close": 104.48
+        },
+        {
+          "ticker": "MNST",
+          "sector": "Consumer Staples",
+          "industry": "Beverages (Production/Distribution)",
+          "ret_21d": -0.0543,
+          "ret_63d": 0.0738,
+          "last_close": 46.68
+        },
+        {
+          "ticker": "POST",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": -0.055,
+          "ret_63d": -0.2279,
+          "last_close": 80.54
+        },
+        {
+          "ticker": "MAMA",
+          "sector": "Consumer Staples",
+          "industry": "Specialty Foods",
+          "ret_21d": -0.0572,
+          "ret_63d": 0.2429,
+          "last_close": 16.99
+        },
+        {
+          "ticker": "SMPL",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": -0.0589,
+          "ret_63d": -0.0018,
+          "last_close": 11.18
+        },
+        {
+          "ticker": "FLO",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": -0.0873,
+          "ret_63d": -0.0259,
+          "last_close": 7.53
+        },
+        {
+          "ticker": "BRBR",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": -0.091,
+          "ret_63d": 0.1881,
+          "last_close": 10.99
+        },
+        {
+          "ticker": "FMX",
+          "sector": "Consumer Staples",
+          "industry": "Beverages (Production/Distribution)",
+          "ret_21d": -0.0952,
+          "ret_63d": -0.0531,
+          "last_close": 116.51
+        },
+        {
+          "ticker": "NGVC",
+          "sector": "Consumer Staples",
+          "industry": "Food Chains",
+          "ret_21d": -0.1194,
+          "ret_63d": -0.0025,
+          "last_close": 28.02
+        },
+        {
+          "ticker": "COCO",
+          "sector": "Consumer Staples",
+          "industry": "Beverages (Production/Distribution)",
+          "ret_21d": -0.1276,
+          "ret_63d": -0.1279,
+          "last_close": 65.21
+        },
+        {
+          "ticker": "VITL",
+          "sector": "Consumer Staples",
+          "industry": "Packaged Foods",
+          "ret_21d": -0.1472,
+          "ret_63d": 0.3914,
+          "last_close": 11.59
+        },
+        {
+          "ticker": "ACI",
+          "sector": "Consumer Staples",
+          "industry": "Food Chains",
+          "ret_21d": -0.1484,
+          "ret_63d": -0.2503,
+          "last_close": 12.4
+        }
+      ]
+    },
+    "private_credit_bdc": {
+      "n_matched": 91,
+      "n_shown": 40,
+      "truncated": true,
+      "selection": "top 20 and bottom 20 by 21d move of 91 matches \u2014 the middle is NOT shown, so this is not a census",
+      "companies": [
+        {
+          "ticker": "CHYM",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": 0.4568,
+          "ret_63d": 0.8505,
+          "last_close": 32.18
+        },
+        {
+          "ticker": "OPRT",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": 0.3474,
+          "ret_63d": 0.4415,
+          "last_close": 7.64
+        },
+        {
+          "ticker": "ABTC",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": 0.2956,
+          "ret_63d": -0.5643,
+          "last_close": 7.32
+        },
+        {
+          "ticker": "PGY",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": 0.1949,
+          "ret_63d": 0.6307,
+          "last_close": 21.46
+        },
+        {
+          "ticker": "CION",
+          "sector": "Finance",
+          "industry": "Finance/Investors Services",
+          "ret_21d": 0.1889,
+          "ret_63d": 0.1311,
+          "last_close": 7.68
+        },
+        {
+          "ticker": "IREN",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": 0.1693,
+          "ret_63d": -0.1887,
+          "last_close": 44.76
+        },
+        {
+          "ticker": "BMNR",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": 0.1583,
+          "ret_63d": -0.1364,
+          "last_close": 18.29
+        },
+        {
+          "ticker": "CRCL",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": 0.1475,
+          "ret_63d": -0.4044,
+          "last_close": 75.38
+        },
+        {
+          "ticker": "PWP",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": 0.1328,
+          "ret_63d": 0.0011,
+          "last_close": 18.0
+        },
+        {
+          "ticker": "JCAP",
+          "sector": "Finance",
+          "industry": "Finance Companies",
+          "ret_21d": 0.129,
+          "ret_63d": 0.1581,
+          "last_close": 21.61
+        },
+        {
+          "ticker": "ECPG",
+          "sector": "Finance",
+          "industry": "Finance Companies",
+          "ret_21d": 0.1273,
+          "ret_63d": 0.2818,
+          "last_close": 101.29
+        },
+        {
+          "ticker": "PRAA",
+          "sector": "Finance",
+          "industry": "Finance Companies",
+          "ret_21d": 0.1231,
+          "ret_63d": 0.3776,
+          "last_close": 20.25
+        },
+        {
+          "ticker": "HQH",
+          "sector": "Finance",
+          "industry": "Finance Companies",
+          "ret_21d": 0.1223,
+          "ret_63d": 0.1632,
+          "last_close": 23.59
+        },
+        {
+          "ticker": "ENVA",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": 0.1114,
+          "ret_63d": 0.6045,
+          "last_close": 261.92
+        },
+        {
+          "ticker": "MAIN",
+          "sector": "Finance",
+          "industry": "Finance/Investors Services",
+          "ret_21d": 0.109,
+          "ret_63d": 0.1611,
+          "last_close": 59.23
+        },
+        {
+          "ticker": "HASI",
+          "sector": "Finance",
+          "industry": "Finance/Investors Services",
+          "ret_21d": 0.1029,
+          "ret_63d": 0.0421,
+          "last_close": 42.35
+        },
+        {
+          "ticker": "SII",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": 0.0959,
+          "ret_63d": -0.1757,
+          "last_close": 117.6
+        },
+        {
+          "ticker": "BCX",
+          "sector": "Finance",
+          "industry": "Finance/Investors Services",
+          "ret_21d": 0.0957,
+          "ret_63d": 0.0088,
+          "last_close": 12.6
+        },
+        {
+          "ticker": "NMFC",
+          "sector": "Finance",
+          "industry": "Finance/Investors Services",
+          "ret_21d": 0.0956,
+          "ret_63d": -0.0359,
+          "last_close": 7.79
+        },
+        {
+          "ticker": "SLM",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": 0.0947,
+          "ret_63d": 0.3011,
+          "last_close": 27.74
+        },
+        {
+          "ticker": "SPGI",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.0491,
+          "ret_63d": 0.0397,
+          "last_close": 422.67
+        },
+        {
+          "ticker": "CACC",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.0542,
+          "ret_63d": 0.1103,
+          "last_close": 582.89
+        },
+        {
+          "ticker": "PFSI",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.0647,
+          "ret_63d": -0.0941,
+          "last_close": 79.48
+        },
+        {
+          "ticker": "COIN",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.0796,
+          "ret_63d": -0.2374,
+          "last_close": 153.9
+        },
+        {
+          "ticker": "PURR",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.1038,
+          "ret_63d": 0.1236,
+          "last_close": 6.82
+        },
+        {
+          "ticker": "BKKT",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.1041,
+          "ret_63d": -0.0773,
+          "last_close": 7.4
+        },
+        {
+          "ticker": "CORZ",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.1294,
+          "ret_63d": -0.1758,
+          "last_close": 19.78
+        },
+        {
+          "ticker": "WD",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.1345,
+          "ret_63d": -0.2054,
+          "last_close": 42.78
+        },
+        {
+          "ticker": "GPGI",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.1415,
+          "ret_63d": 0.0651,
+          "last_close": 12.92
+        },
+        {
+          "ticker": "WULF",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.158,
+          "ret_63d": -0.2946,
+          "last_close": 16.31
+        },
+        {
+          "ticker": "CIFR",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.1636,
+          "ret_63d": -0.2175,
+          "last_close": 16.62
+        },
+        {
+          "ticker": "CLSK",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.1847,
+          "ret_63d": -0.1338,
+          "last_close": 11.52
+        },
+        {
+          "ticker": "HUT",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.1949,
+          "ret_63d": -0.2342,
+          "last_close": 82.95
+        },
+        {
+          "ticker": "OPFI",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.2284,
+          "ret_63d": -0.1953,
+          "last_close": 7.13
+        },
+        {
+          "ticker": "DAVE",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.2383,
+          "ret_63d": 0.3903,
+          "last_close": 333.77
+        },
+        {
+          "ticker": "MARA",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.2506,
+          "ret_63d": -0.2776,
+          "last_close": 9.21
+        },
+        {
+          "ticker": "TREE",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.2804,
+          "ret_63d": -0.0912,
+          "last_close": 32.87
+        },
+        {
+          "ticker": "BTDR",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.3031,
+          "ret_63d": -0.3374,
+          "last_close": 8.76
+        },
+        {
+          "ticker": "SEZL",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.3112,
+          "ret_63d": 0.2683,
+          "last_close": 129.87
+        },
+        {
+          "ticker": "SECZ",
+          "sector": "Finance",
+          "industry": "Finance: Consumer Services",
+          "ret_21d": -0.3246,
+          "ret_63d": -0.537,
+          "last_close": 5.7
+        }
+      ]
+    }
+  }
+}

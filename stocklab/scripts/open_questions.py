@@ -104,6 +104,17 @@ def main() -> None:
                              r"\s*(\d+|—)\s*\|\s*(\d+|—)\s*\|\s*(\d+|—)\s*\|\s*([\d.]+|n/m)\s*\|", line)
                 if m:
                     disagree.append(m.groups())
+    # A company researched in two groups yields two rows — CEG and VST are in
+    # both the power and the utilities rankings — so the count overstated the
+    # number of distinct leads (18 rows, 16 companies). Keep the highest
+    # positioning score per ticker and say how many were merged, rather than
+    # presenting the same company twice as two separate opportunities.
+    dupes = len(disagree) - len({d[0] for d in disagree})
+    best: dict[str, tuple] = {}
+    for row in disagree:
+        if row[0] not in best or int(row[1]) > int(best[row[0]][1]):
+            best[row[0]] = row
+    disagree = sorted(best.values(), key=lambda r: -int(r[1]))
     out += ["## 1. Where the research and the price disagree", "",
             "*The only place a variant view can exist. Strong on the filings AND "
             "still in the cheaper half — everything else is already consensus.*", ""]
@@ -111,6 +122,12 @@ def main() -> None:
         out += ["| Ticker | Positioned | Cheap vs all | Cheap vs sector | Improving | P/E |",
                 "|---|---|---|---|---|---|"]
         out += [f"| **{t}** | {p}% | {c} | {cs} | {i} | {pe} |" for t, p, c, cs, i, pe in disagree]
+        if dupes:
+            out += ["", f"*{dupes} company/companies appeared in two research "
+                        "groups (CEG and VST are ranked in both power and "
+                        "utilities); each is listed once at its highest "
+                        "positioning score, so this is a count of distinct "
+                        "names, not of table rows.*"]
     elif not pvp.exists():
         # "no disagreements" and "the input file is not there" are different
         # answers, and this printed the reassuring one for both. Moving the
