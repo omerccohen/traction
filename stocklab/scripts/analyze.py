@@ -119,22 +119,50 @@ def main() -> None:
             # Advertising (rank 8, +13.0%). A reader who asked "where are the
             # chip and memory groups?" was right: they were in the hole between
             # the two lists. The only correct test is "not shown to the analyst".
-            if (tr.get("pctile") or 0) >= 0.80 and s.name not in top_names:
+            if s.name in top_names:
+                continue
+            # ...and it tested ONLY trend_21d, so a field could be at the most
+            # extreme reading in its entire history on any of the other four
+            # indicators and still be invisible. Electronic Components on
+            # 2026-08-13 is the case in point: trend a mere 67th percentile, but
+            # DISPERSION at the 100th — the widest its members have ever pulled
+            # apart — while it holds the memory and storage names. Closing the
+            # rank hole alone did not surface it. Every indicator gets checked,
+            # and the pack says WHICH one fired.
+            reasons = []
+            if (tr.get("pctile") or 0) >= 0.80:
+                reasons.append(f"trend p{(tr['pctile'] or 0) * 100:.0f}")
+            for key in ("dispersion", "volatility", "cohesion", "volume_influx"):
+                pc = s.indicators.get(key, {}).get("pctile")
+                if pc is None:
+                    continue
+                # tighter bar for the secondary indicators (two-tailed at 0.80
+                # would flag most of the board); both tails matter — volume at
+                # p8 means money LEAVING, which is as informative as p92.
+                if pc >= 0.90 or pc <= 0.10:
+                    reasons.append(f"{key} p{pc * 100:.0f}")
+            if reasons:
                 buried.append({
                     "field": s.name, "attention_rank": i, "n_fields": len(ranked_all),
                     "ret_21d": tr.get("value"), "trend_pctile": tr.get("pctile"),
                     "volume_influx_pctile": s.indicators.get("volume_influx", {}).get("pctile"),
+                    "extreme_on": reasons,
                     "movers": s.members_moving,
                 })
-        buried.sort(key=lambda b: -abs(b["ret_21d"] or 0))
+        buried.sort(key=lambda b: (-len(b["extreme_on"]), -abs(b["ret_21d"] or 0)))
         pack_dict["buried_moves"] = {
             "n": len(buried),
-            "note": "Large one-sided moves the composite attention score ranked "
-                    "OUTSIDE the top 15. Trend at/above the 80th percentile of the "
-                    "field's own history. A high trend with LOW volume_influx means "
-                    "the price moved without money arriving — treat as unexplained, "
-                    "not as confirmation.",
-            "fields": buried[:12],
+            "n_shown": min(len(buried), 20),
+            "note": "Fields NOT in top_fields that are at an extreme reading of "
+                    "their own history: trend at/above the 80th percentile, or "
+                    "dispersion/volatility/cohesion/volume_influx at/above the "
+                    "90th or at/below the 10th. `extreme_on` names which. The "
+                    "attention score is a MEAN over these five, so one extreme "
+                    "reading is diluted by four ordinary ones — a field can be "
+                    "at the most extreme dispersion in its history and rank "
+                    "10th. A high trend with LOW volume_influx means price moved "
+                    "without money arriving: unexplained, not confirmation.",
+            "fields": buried[:20],
         }
     except Exception as e:
         pack_dict["buried_moves"] = {"error": str(e)}
