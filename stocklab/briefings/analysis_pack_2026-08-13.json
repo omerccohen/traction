@@ -381,6 +381,8 @@
   },
   "buried_moves": {
     "n": 35,
+    "n_expected_by_chance": 31,
+    "selectivity": "AT CHANCE \u2014 read individual rows sceptically",
     "n_shown": 20,
     "note": "Fields NOT in top_fields that are at an extreme reading of their own history: trend at/above the 80th percentile, OR at least TWO of dispersion/volatility/cohesion/volume_influx at/above the 95th or at/below the 5th. Two independent extremes occur ~5% of the time by chance; one at the 90th occurs 59% of the time, which is why a single secondary reading is not enough. `extreme_on` names which. The attention score is a MEAN over these five, so one extreme reading is diluted by four ordinary ones \u2014 a field can be at the most extreme dispersion in its history and rank 10th. A high trend with LOW volume_influx means price moved without money arriving: unexplained, not confirmation.",
     "fields": [
