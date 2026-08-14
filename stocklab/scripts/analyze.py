@@ -111,7 +111,15 @@ def main() -> None:
         buried = []
         for i, s in enumerate(ranked_all, start=1):
             tr = s.indicators.get("trend_21d", {})
-            if i > 15 and (tr.get("pctile") or 0) >= 0.80 and s.name not in top_names:
+            # The cut was `i > 15` while the analyst only ever sees the top 6,
+            # so ranks 7-15 appeared in NEITHER list — nine fields a week,
+            # visible nowhere. On 2026-08-13 that gap held Electronic Components
+            # (rank 10, +14.6%/21d, dispersion at the 100th percentile — the
+            # memory and storage names), Technology (rank 9, +9.3%) and
+            # Advertising (rank 8, +13.0%). A reader who asked "where are the
+            # chip and memory groups?" was right: they were in the hole between
+            # the two lists. The only correct test is "not shown to the analyst".
+            if (tr.get("pctile") or 0) >= 0.80 and s.name not in top_names:
                 buried.append({
                     "field": s.name, "attention_rank": i, "n_fields": len(ranked_all),
                     "ret_21d": tr.get("value"), "trend_pctile": tr.get("pctile"),

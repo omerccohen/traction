@@ -61,6 +61,15 @@ PROXY_TO_FIELDS = {
 }
 BIG_MOVE = 0.10          # a proxy move worth explaining
 TOP_N_ATTENTION = 15     # "has equity attention" = inside the top N of 130
+# Two different questions were sharing the constant above, and the mismatch made
+# a hole. "Is anyone watching this field?" is fairly answered by the top 15. But
+# "did the analyst actually SEE this field?" is answered by the top 6, because
+# that is all analyze.py puts in the pack. Sections 2b/2c used 15, so ranks 7-15
+# were shown in neither the pack's top_fields nor the buried list — nine fields
+# a week, invisible. On 2026-08-13 that gap held Electronic Components (rank 10,
+# +14.6%/21d, the memory and storage names), Technology (rank 9) and Advertising
+# (rank 8). Anything outside the top 6 is unseen and must be eligible to surface.
+TOP_N_SHOWN = 6          # what analyze.py actually hands the analyst
 TREND_PCTILE = 0.80      # a move this extreme should not be buried by averaging
 FLAT_AVG = 0.03          # group average this small reads as "nothing happening"
 SPLIT_SPREAD = 0.50      # ...while members this far apart means plenty happened
@@ -180,7 +189,8 @@ def main() -> None:
     # composite hides, so it is surfaced here directly.
     out += ["## 2b. Big moves the attention score buried", "",
             f"*Trend at/above the {int(TREND_PCTILE*100)}th percentile of the "
-            f"field's own history, yet ranked outside the top {TOP_N_ATTENTION}. "
+            f"field's own history, yet ranked outside the top {TOP_N_SHOWN} the "
+            "analyst is shown. "
             "The composite averages five indicators, so a single extreme reading "
             "gets diluted — these are large one-sided moves the ranking "
             "de-emphasised.*", ""]
@@ -211,7 +221,7 @@ def main() -> None:
                              "vi": i.get("volume_influx", {}).get("pctile")})
         d = pd.DataFrame(rows).dropna(subset=["att", "tp"])
         d["rk"] = d["att"].rank(ascending=False)
-        hit = d[(d["tp"] >= TREND_PCTILE) & (d["rk"] > TOP_N_ATTENTION)]
+        hit = d[(d["tp"] >= TREND_PCTILE) & (d["rk"] > TOP_N_SHOWN)]
         n_qual, n_shown = len(hit), min(len(hit), 10)
         for r in hit.sort_values("ret", key=abs, ascending=False).head(10).itertuples():
             vi = f"volume p{r.vi*100:.0f}" if r.vi == r.vi else "volume n/a"
@@ -253,7 +263,7 @@ def main() -> None:
             v = r21[cols]
             avg, spread = float(v.mean()), float(v.max() - v.min())
             rk, _ = field_rank(n.split(" [")[0])
-            if abs(avg) < FLAT_AVG and spread > SPLIT_SPREAD and rk and rk > TOP_N_ATTENTION:
+            if abs(avg) < FLAT_AVG and spread > SPLIT_SPREAD and rk and rk > TOP_N_SHOWN:
                 split.append((spread, f"- **{n}** — average {avg:+.1%} but best "
                                       f"{v.max():+.0%} / worst {v.min():+.0%} across "
                                       f"{len(cols)} companies, attention rank "
