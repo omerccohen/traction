@@ -129,18 +129,30 @@ def main() -> None:
             # apart — while it holds the memory and storage names. Closing the
             # rank hole alone did not surface it. Every indicator gets checked,
             # and the pack says WHICH one fired.
-            reasons = []
-            if (tr.get("pctile") or 0) >= 0.80:
-                reasons.append(f"trend p{(tr['pctile'] or 0) * 100:.0f}")
+            # THRESHOLDS ARE SET AGAINST CHANCE, not by eye. With four secondary
+            # indicators, a two-tailed 90/10 bar fires on at least one of them
+            # 59% of the time by pure chance — and a first cut at that bar
+            # flagged 89 of 129 fields (69%), i.e. exactly noise. A list that
+            # flags two thirds of the board carries no information.
+            #   two-tailed 0.05, >=1 of 4:  34.4% by chance   (still too loose)
+            #   two-tailed 0.05, >=2 of 4:   5.2% by chance   <- the bar used
+            # A big one-sided move stays sufficient on its own, because that is
+            # the original, separately-motivated rule and direction is
+            # intrinsically interesting. Anything else must corroborate itself.
+            trend_hit = (tr.get("pctile") or 0) >= 0.80
+            secondary = []
             for key in ("dispersion", "volatility", "cohesion", "volume_influx"):
                 pc = s.indicators.get(key, {}).get("pctile")
                 if pc is None:
                     continue
-                # tighter bar for the secondary indicators (two-tailed at 0.80
-                # would flag most of the board); both tails matter — volume at
-                # p8 means money LEAVING, which is as informative as p92.
-                if pc >= 0.90 or pc <= 0.10:
-                    reasons.append(f"{key} p{pc * 100:.0f}")
+                # both tails matter — volume_influx at p8 means money LEAVING,
+                # which is as informative as p92
+                if pc >= 0.95 or pc <= 0.05:
+                    secondary.append(f"{key} p{pc * 100:.0f}")
+            if not (trend_hit or len(secondary) >= 2):
+                continue
+            reasons = ([f"trend p{(tr['pctile'] or 0) * 100:.0f}"] if trend_hit
+                       else []) + secondary
             if reasons:
                 buried.append({
                     "field": s.name, "attention_rank": i, "n_fields": len(ranked_all),
@@ -150,13 +162,27 @@ def main() -> None:
                     "movers": s.members_moving,
                 })
         buried.sort(key=lambda b: (-len(b["extreme_on"]), -abs(b["ret_21d"] or 0)))
+        # Report what this bar would flag on RANDOM data, so the reader can see
+        # whether the list carries information. p(trend) = 0.20 one-tailed at
+        # the 80th; p(>=2 of 4 secondary at 95/5) = 0.052. A count near the
+        # expected figure means the section is mostly noise no matter how
+        # convincing the individual rows read.
+        p_chance = 1 - (1 - 0.20) * (1 - 0.052)
+        expected = round(p_chance * len(ranked_all))
         pack_dict["buried_moves"] = {
             "n": len(buried),
+            "n_expected_by_chance": expected,
+            "selectivity": ("informative" if len(buried) < 0.6 * expected else
+                            "AT CHANCE — read individual rows sceptically"
+                            if len(buried) >= 0.9 * expected else "modest"),
             "n_shown": min(len(buried), 20),
             "note": "Fields NOT in top_fields that are at an extreme reading of "
-                    "their own history: trend at/above the 80th percentile, or "
-                    "dispersion/volatility/cohesion/volume_influx at/above the "
-                    "90th or at/below the 10th. `extreme_on` names which. The "
+                    "their own history: trend at/above the 80th percentile, OR "
+                    "at least TWO of dispersion/volatility/cohesion/"
+                    "volume_influx at/above the 95th or at/below the 5th. Two "
+                    "independent extremes occur ~5% of the time by chance; one "
+                    "at the 90th occurs 59% of the time, which is why a single "
+                    "secondary reading is not enough. `extreme_on` names which. The "
                     "attention score is a MEAN over these five, so one extreme "
                     "reading is diluted by four ordinary ones — a field can be "
                     "at the most extreme dispersion in its history and rank "

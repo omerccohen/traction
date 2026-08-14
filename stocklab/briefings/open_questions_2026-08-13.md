@@ -37,7 +37,7 @@
 
 ## 2b. Big moves the attention score buried
 
-*Trend at/above the 80th percentile of the field's own history, yet ranked outside the top 15. The composite averages five indicators, so a single extreme reading gets diluted — these are large one-sided moves the ranking de-emphasised.*
+*Trend at/above the 80th percentile of the field's own history, yet ranked outside the top 6 the analyst is shown. The composite averages five indicators, so a single extreme reading gets diluted — these are large one-sided moves the ranking de-emphasised.*
 
 - **Precious Metals [sub]** — +22.6%/21d at the 86th pctile of its own history, volume p19, but attention rank **24/129**
 - **Plastic Products [sub]** — +19.2%/21d at the 95th pctile of its own history, volume p53, but attention rank **25/129**
@@ -47,9 +47,9 @@
 - **Specialty Insurers [sub]** — +14.8%/21d at the 98th pctile of its own history, volume p51, but attention rank **38/129**
 - **Computer Software: Prepackaged Software [sub]** — +14.4%/21d at the 98th pctile of its own history, volume p50, but attention rank **82/129**
 - **Biotechnology: Laboratory Analytical Instruments [sub]** — +14.1%/21d at the 91th pctile of its own history, volume p80, but attention rank **26/129**
+- **Advertising [sub]** — +13.0%/21d at the 90th pctile of its own history, volume p10, but attention rank **8/129**
 - **Medical/Dental Instruments [sub]** — +12.8%/21d at the 99th pctile of its own history, volume p36, but attention rank **90/129**
-- **Publishing [sub]** — +11.7%/21d at the 90th pctile of its own history, volume p66, but attention rank **96/129**
-- *…and 14 more qualifying fields not shown (24 qualified, top 10 by size listed).*
+- *…and 18 more qualifying fields not shown (28 qualified, top 10 by size listed).*
 
 ## 2c. Groups that look calm but are split inside
 
@@ -62,8 +62,8 @@
 - **Finance: Consumer Services [sub]** — average -1.2% but best +46% / worst -32% across 64 companies, attention rank **78/130**
 - **Development Stage/Pre-Revenue [sub]** — average +2.8% but best +43% / worst -32% across 11 companies, attention rank **87/130**
 - **Real Estate** — average -1.4% but best +37% / worst -36% across 157 companies, attention rank **32/130**
-- **Apparel [sub]** — average -2.0% but best +49% / worst -22% across 14 companies, attention rank **111/130**
-- *…and 7 more split groups not shown (15 qualified, widest 7 listed).*
+- **Other Consumer Services [sub]** — average -0.6% but best +37% / worst -36% across 25 companies, attention rank **14/130**
+- *…and 10 more split groups not shown (18 qualified, widest 7 listed).*
 
 ## 3. Rated highly by the research, never price-checked
 

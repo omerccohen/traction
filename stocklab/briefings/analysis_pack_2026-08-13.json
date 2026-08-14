@@ -4,10 +4,10 @@
   "universe_size": 2992,
   "regime": {
     "vol": {
-      "value": 14.55,
+      "value": 14.63,
       "pctile": 0.18,
       "band": "calm",
-      "age_days": 2
+      "age_days": 1
     },
     "trend": {
       "value": 0.1882,
@@ -23,7 +23,7 @@
     "elevated": [],
     "data_quality": {
       "live": [
-        "vix_level (2d)",
+        "vix_level (1d)",
         "sp500_trend_12m (44d)"
       ],
       "stale": [
@@ -380,9 +380,48 @@
     ]
   },
   "buried_moves": {
-    "n": 24,
-    "note": "Large one-sided moves the composite attention score ranked OUTSIDE the top 15. Trend at/above the 80th percentile of the field's own history. A high trend with LOW volume_influx means the price moved without money arriving \u2014 treat as unexplained, not as confirmation.",
+    "n": 35,
+    "n_shown": 20,
+    "note": "Fields NOT in top_fields that are at an extreme reading of their own history: trend at/above the 80th percentile, OR at least TWO of dispersion/volatility/cohesion/volume_influx at/above the 95th or at/below the 5th. Two independent extremes occur ~5% of the time by chance; one at the 90th occurs 59% of the time, which is why a single secondary reading is not enough. `extreme_on` names which. The attention score is a MEAN over these five, so one extreme reading is diluted by four ordinary ones \u2014 a field can be at the most extreme dispersion in its history and rank 10th. A high trend with LOW volume_influx means price moved without money arriving: unexplained, not confirmation.",
     "fields": [
+      {
+        "field": "Advertising [sub]",
+        "attention_rank": 8,
+        "n_fields": 130,
+        "ret_21d": 0.13,
+        "trend_pctile": 0.9007936507936508,
+        "volume_influx_pctile": 0.10317460317460317,
+        "extreme_on": [
+          "trend p90",
+          "dispersion p99",
+          "volatility p99"
+        ],
+        "movers": [
+          "CRTO -19%",
+          "GRPN -15%",
+          "IBTA +23%",
+          "WPP +45%"
+        ]
+      },
+      {
+        "field": "Major Chemicals [sub]",
+        "attention_rank": 13,
+        "n_fields": 130,
+        "ret_21d": 0.0332,
+        "trend_pctile": 0.5515873015873016,
+        "volume_influx_pctile": 0.015873015873015872,
+        "extreme_on": [
+          "dispersion p96",
+          "cohesion p0",
+          "volume_influx p2"
+        ],
+        "movers": [
+          "ASIX -20%",
+          "ECVT -18%",
+          "KRO +29%",
+          "FTK +32%"
+        ]
+      },
       {
         "field": "Precious Metals [sub]",
         "attention_rank": 24,
@@ -390,6 +429,10 @@
         "ret_21d": 0.2255,
         "trend_pctile": 0.8611111111111112,
         "volume_influx_pctile": 0.19047619047619047,
+        "extreme_on": [
+          "trend p86",
+          "cohesion p100"
+        ],
         "movers": [
           "IDR +3%",
           "MUX +6%",
@@ -404,6 +447,10 @@
         "ret_21d": 0.192,
         "trend_pctile": 0.9523809523809523,
         "volume_influx_pctile": 0.5317460317460317,
+        "extreme_on": [
+          "trend p95",
+          "dispersion p99"
+        ],
         "movers": [
           "ATR +3%",
           "MYE +8%",
@@ -418,6 +465,10 @@
         "ret_21d": 0.182,
         "trend_pctile": 0.8571428571428571,
         "volume_influx_pctile": 0.14682539682539683,
+        "extreme_on": [
+          "trend p86",
+          "cohesion p96"
+        ],
         "movers": [
           "MAGN -10%",
           "LAR -6%",
@@ -426,59 +477,21 @@
         ]
       },
       {
-        "field": "Biotechnology: Electromedical & Electrotherapeutic Apparatus [sub]",
-        "attention_rank": 75,
+        "field": "Electronic Components [sub]",
+        "attention_rank": 10,
         "n_fields": 130,
-        "ret_21d": 0.1584,
-        "trend_pctile": 0.9365079365079365,
-        "volume_influx_pctile": 0.21031746031746032,
+        "ret_21d": 0.1461,
+        "trend_pctile": 0.6746031746031746,
+        "volume_influx_pctile": 0.07539682539682539,
+        "extreme_on": [
+          "dispersion p100",
+          "volatility p96"
+        ],
         "movers": [
-          "INMD -1%",
-          "LIVN +4%",
-          "AXGN +24%",
-          "ITGR +31%"
-        ]
-      },
-      {
-        "field": "Paper [sub]",
-        "attention_rank": 95,
-        "n_fields": 130,
-        "ret_21d": 0.1527,
-        "trend_pctile": 0.9365079365079365,
-        "volume_influx_pctile": 0.4246031746031746,
-        "movers": [
-          "MAGN -10%",
-          "SUZ -2%",
-          "CLW +42%",
-          "MATV +56%"
-        ]
-      },
-      {
-        "field": "Specialty Insurers [sub]",
-        "attention_rank": 38,
-        "n_fields": 130,
-        "ret_21d": 0.1479,
-        "trend_pctile": 0.9761904761904762,
-        "volume_influx_pctile": 0.5079365079365079,
-        "movers": [
-          "FNF -2%",
-          "STC -1%",
-          "ARX +54%",
-          "LIFE +90%"
-        ]
-      },
-      {
-        "field": "Computer Software: Prepackaged Software [sub]",
-        "attention_rank": 83,
-        "n_fields": 130,
-        "ret_21d": 0.1445,
-        "trend_pctile": 0.9801587301587301,
-        "volume_influx_pctile": 0.49603174603174605,
-        "movers": [
-          "RBLX -34%",
-          "CLBT -32%",
-          "PAYC +55%",
-          "TEAM +81%"
+          "NVMI -13%",
+          "TGLS -8%",
+          "P +66%",
+          "QMCO +140%"
         ]
       },
       {
@@ -488,53 +501,15 @@
         "ret_21d": 0.1405,
         "trend_pctile": 0.9087301587301587,
         "volume_influx_pctile": 0.8015873015873016,
+        "extreme_on": [
+          "trend p91",
+          "dispersion p99"
+        ],
         "movers": [
           "EYPT -3%",
           "BRKR -1%",
           "ALMR +26%",
           "TXG +27%"
-        ]
-      },
-      {
-        "field": "Medical/Dental Instruments [sub]",
-        "attention_rank": 91,
-        "n_fields": 130,
-        "ret_21d": 0.1284,
-        "trend_pctile": 0.9880952380952381,
-        "volume_influx_pctile": 0.3611111111111111,
-        "movers": [
-          "LMAT -18%",
-          "TCMD -17%",
-          "SGHT +58%",
-          "PLSE +71%"
-        ]
-      },
-      {
-        "field": "Publishing [sub]",
-        "attention_rank": 97,
-        "n_fields": 130,
-        "ret_21d": 0.117,
-        "trend_pctile": 0.8968253968253969,
-        "volume_influx_pctile": 0.6626984126984127,
-        "movers": [
-          "WBTN -21%",
-          "CMPR -5%",
-          "MH +42%",
-          "PMTS +54%"
-        ]
-      },
-      {
-        "field": "Integrated oil Companies [sub]",
-        "attention_rank": 43,
-        "n_fields": 130,
-        "ret_21d": 0.1137,
-        "trend_pctile": 0.8174603174603174,
-        "volume_influx_pctile": 0.07936507936507936,
-        "movers": [
-          "YPF -2%",
-          "IEP +0%",
-          "CLMT +22%",
-          "PBF +27%"
         ]
       },
       {
@@ -544,11 +519,231 @@
         "ret_21d": 0.1102,
         "trend_pctile": 0.9682539682539683,
         "volume_influx_pctile": 0.40476190476190477,
+        "extreme_on": [
+          "trend p97",
+          "dispersion p95"
+        ],
         "movers": [
           "LZ -26%",
           "HQ -24%",
           "PAYS +53%",
           "RNG +67%"
+        ]
+      },
+      {
+        "field": "Technology",
+        "attention_rank": 9,
+        "n_fields": 130,
+        "ret_21d": 0.0932,
+        "trend_pctile": 0.8611111111111112,
+        "volume_influx_pctile": 0.23809523809523808,
+        "extreme_on": [
+          "trend p86",
+          "cohesion p2"
+        ],
+        "movers": [
+          "SEDG -41%",
+          "VPG -37%",
+          "TEAM +81%",
+          "QMCO +140%"
+        ]
+      },
+      {
+        "field": "RETAIL: Building Materials [sub]",
+        "attention_rank": 21,
+        "n_fields": 130,
+        "ret_21d": 0.0775,
+        "trend_pctile": 0.8650793650793651,
+        "volume_influx_pctile": 0.17063492063492064,
+        "extreme_on": [
+          "trend p87",
+          "dispersion p98"
+        ],
+        "movers": [
+          "BLDR -5%",
+          "QXO -3%",
+          "ASPN +15%",
+          "TSCO +20%"
+        ]
+      },
+      {
+        "field": "Other Metals and Minerals [sub]",
+        "attention_rank": 50,
+        "n_fields": 130,
+        "ret_21d": 0.077,
+        "trend_pctile": 0.5555555555555556,
+        "volume_influx_pctile": 0.12698412698412698,
+        "extreme_on": [
+          "dispersion p4",
+          "cohesion p100"
+        ],
+        "movers": [
+          "IPX -3%",
+          "ALM -1%",
+          "NXE +12%",
+          "ATI +17%"
+        ]
+      },
+      {
+        "field": "Specialty Foods [sub]",
+        "attention_rank": 76,
+        "n_fields": 130,
+        "ret_21d": 0.0717,
+        "trend_pctile": 0.8174603174603174,
+        "volume_influx_pctile": 0.031746031746031744,
+        "extreme_on": [
+          "trend p82",
+          "volume_influx p3"
+        ],
+        "movers": [
+          "MAMA -6%",
+          "JBSS +4%",
+          "HSY +9%",
+          "JJSF +20%"
+        ]
+      },
+      {
+        "field": "Diversified Commercial Services [sub]",
+        "attention_rank": 52,
+        "n_fields": 130,
+        "ret_21d": 0.0693,
+        "trend_pctile": 0.8650793650793651,
+        "volume_influx_pctile": 0.5793650793650794,
+        "extreme_on": [
+          "trend p87",
+          "cohesion p0"
+        ],
+        "movers": [
+          "ROL -17%",
+          "UPBD -10%",
+          "ALLE +23%",
+          "ABNB +25%"
+        ]
+      },
+      {
+        "field": "Food Distributors [sub]",
+        "attention_rank": 73,
+        "n_fields": 130,
+        "ret_21d": 0.0661,
+        "trend_pctile": 0.8134920634920635,
+        "volume_influx_pctile": 0.5,
+        "extreme_on": [
+          "trend p81",
+          "cohesion p0"
+        ],
+        "movers": [
+          "PFGC -5%",
+          "UNFI +0%",
+          "USFD +13%",
+          "CHEF +15%"
+        ]
+      },
+      {
+        "field": "Telecommunications",
+        "attention_rank": 56,
+        "n_fields": 130,
+        "ret_21d": 0.0386,
+        "trend_pctile": 0.5555555555555556,
+        "volume_influx_pctile": 0.04365079365079365,
+        "extreme_on": [
+          "cohesion p4",
+          "volume_influx p4"
+        ],
+        "movers": [
+          "ADTN -32%",
+          "ATEN -26%",
+          "ATNI +35%",
+          "BDC +35%"
+        ]
+      },
+      {
+        "field": "Consumer Staples",
+        "attention_rank": 45,
+        "n_fields": 130,
+        "ret_21d": 0.0308,
+        "trend_pctile": 0.8055555555555556,
+        "volume_influx_pctile": 0.32936507936507936,
+        "extreme_on": [
+          "trend p81",
+          "dispersion p100"
+        ],
+        "movers": [
+          "BV -20%",
+          "ACI -15%",
+          "FRPT +29%",
+          "UTZ +91%"
+        ]
+      },
+      {
+        "field": "Telecommunications Equipment [sub]",
+        "attention_rank": 36,
+        "n_fields": 130,
+        "ret_21d": 0.023,
+        "trend_pctile": 0.38492063492063494,
+        "volume_influx_pctile": 0.03968253968253968,
+        "extreme_on": [
+          "cohesion p2",
+          "volume_influx p4"
+        ],
+        "movers": [
+          "ADTN -32%",
+          "TIMB -23%",
+          "ATNI +35%",
+          "BDC +35%"
+        ]
+      },
+      {
+        "field": "Retail-Auto Dealers and Gas Stations [sub]",
+        "attention_rank": 7,
+        "n_fields": 130,
+        "ret_21d": -0.017,
+        "trend_pctile": 0.34523809523809523,
+        "volume_influx_pctile": 0.23412698412698413,
+        "extreme_on": [
+          "dispersion p99",
+          "cohesion p0"
+        ],
+        "movers": [
+          "ARKO -42%",
+          "SAH -21%",
+          "LAD +14%",
+          "YSWY +28%"
+        ]
+      },
+      {
+        "field": "Other Consumer Services [sub]",
+        "attention_rank": 14,
+        "n_fields": 130,
+        "ret_21d": -0.0056,
+        "trend_pctile": 0.36507936507936506,
+        "volume_influx_pctile": 0.8333333333333334,
+        "extreme_on": [
+          "dispersion p96",
+          "volatility p98"
+        ],
+        "movers": [
+          "UTI -36%",
+          "LINC -32%",
+          "HRB +30%",
+          "IT +37%"
+        ]
+      },
+      {
+        "field": " Medicinal Chemicals and Botanical Products  [sub]",
+        "attention_rank": 11,
+        "n_fields": 130,
+        "ret_21d": -0.0005,
+        "trend_pctile": 0.4246031746031746,
+        "volume_influx_pctile": 0.7936507936507936,
+        "extreme_on": [
+          "volatility p2",
+          "cohesion p0"
+        ],
+        "movers": [
+          "GLAS -10%",
+          "MO -8%",
+          "PM +4%",
+          "TRLV +11%"
         ]
       }
     ]
