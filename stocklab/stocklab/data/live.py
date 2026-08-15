@@ -275,6 +275,8 @@ def validate_rows(df: pd.DataFrame, prior_tail: pd.DataFrame | None = None
     ctx = df if prior_tail is None or prior_tail.empty else pd.concat(
         [prior_tail[STORE_COLUMNS], df], ignore_index=False)
     drop: list = []
+    dropped_detail: list[str] = []
+    kept_large: list[str] = []
     for t, g in ctx.groupby("ticker", sort=False):
         g = g.sort_values("date")
         lc = np.log(g["close"].to_numpy(dtype=float))
@@ -283,13 +285,37 @@ def validate_rows(df: pd.DataFrame, prior_tail: pd.DataFrame | None = None
         two_day = np.abs(lr + lr_next)
         spike = ((np.abs(lr) > log_thresh) & (np.abs(lr_next) > log_thresh)
                  & (np.sign(lr) == -np.sign(lr_next)) & (two_day < np.log(1.15)))
+        big = np.abs(lr) > log_thresh
         for pos in np.where(spike)[0]:
             idx = g.index[pos]
             if idx in incoming_idx:          # never drop stored context rows
                 drop.append(idx)
+                dropped_detail.append(
+                    f"{t} {g['date'].iloc[pos].date()} "
+                    f"{np.expm1(lr[pos]):+.1%} then {np.expm1(lr_next[pos]):+.1%} "
+                    f"(nets {np.expm1(lr[pos] + lr_next[pos]):+.1%})")
+        # A large move that does NOT reverse is a real market event and is kept.
+        # It used to pass through silently, which is the wrong kind of quiet:
+        # these are the single most consequential rows in the file — the ones
+        # the corporate-action heuristic will later have to judge as crash or
+        # split. Name them on the way in so the decision is reviewable.
+        for pos in np.where(big & ~spike)[0]:
+            if g.index[pos] in incoming_idx and np.isfinite(lr[pos]):
+                kept_large.append(f"{t} {g['date'].iloc[pos].date()} "
+                                  f"{np.expm1(lr[pos]):+.1%}")
     if drop:
-        problems.append(f"dropped {len(drop)} implausible spike rows")
+        problems.append(f"dropped {len(drop)} implausible spike rows (a >"
+                        f"{MAX_ABS_DAILY_MOVE:.0%} move immediately reversed, "
+                        f"netting <15%): " + "; ".join(dropped_detail[:10])
+                        + (f" ...and {len(dropped_detail) - 10} more"
+                           if len(dropped_detail) > 10 else ""))
         df = df.drop(index=drop)
+    if kept_large:
+        problems.append(f"KEPT {len(kept_large)} large one-day moves as real "
+                        "market events (no reversal): "
+                        + "; ".join(kept_large[:10])
+                        + (f" ...and {len(kept_large) - 10} more"
+                           if len(kept_large) > 10 else ""))
     return df, problems
 
 
@@ -548,6 +574,13 @@ def update_from_network(
     default_start: str = "2018-01-01",
     source_order: tuple = ("stockanalysis", "stooq", "yahoo"),
     max_tickers_per_run: int = 4000,
+    # DELIBERATE, do not "optimise". 0.4s x ~3,000 tickers is ~20 minutes of
+    # waiting on purpose, and it is the price of not being blocked: the
+    # 2026-08-12 run was rate-limited into aborting after 174 of 2,991 tickers
+    # and left the store split across four dates. Owner decision 2026-08-13,
+    # asked explicitly whether to trade this for speed: choose SAFETY. Parallel
+    # or shorter-pause fetching needs the vendor's blessing, not a smaller
+    # number here.
     pause_s: float = 0.4,
 ) -> UpdateReport:
     rep = UpdateReport(started_at=datetime.now(timezone.utc).isoformat(),
