@@ -40,19 +40,22 @@ def _ema(df: pd.DataFrame, span: int) -> pd.DataFrame:
 
 def compute_stock_features(panel: Panel) -> dict[str, pd.DataFrame]:
     """Per-stock trailing features as wide (date x ticker) frames."""
-    c = panel.close
+    # explicit ffill = the old pad default, kept deliberately: features are
+    # computed off each name's last real print (the point-in-time eligibility
+    # mask decides who is tradeable); pandas 3 drops the implicit pad
+    c = panel.close.ffill()
     v = panel.volume
-    ret1 = c.pct_change()
+    ret1 = c.pct_change(fill_method=None)
 
     out: dict[str, pd.DataFrame] = {}
     out["ret_1d"] = ret1
-    out["ret_5d"] = c.pct_change(5)
+    out["ret_5d"] = c.pct_change(5, fill_method=None)
 
-    out["mom_21"] = c.pct_change(21)
-    out["mom_63"] = c.pct_change(63)
-    out["mom_126"] = c.pct_change(126)
+    out["mom_21"] = c.pct_change(21, fill_method=None)
+    out["mom_63"] = c.pct_change(63, fill_method=None)
+    out["mom_126"] = c.pct_change(126, fill_method=None)
     # classic 12-1: 252d return skipping the most recent 21d (avoids reversal)
-    out["mom_12_1"] = c.shift(21).pct_change(231)
+    out["mom_12_1"] = c.shift(21).pct_change(231, fill_method=None)
 
     out["vol_21"] = ret1.rolling(21).std() * np.sqrt(252)
     out["vol_63"] = ret1.rolling(63).std() * np.sqrt(252)
@@ -94,7 +97,7 @@ def compute_stock_features(panel: Panel) -> dict[str, pd.DataFrame]:
 
     # consistency: share of positive non-overlapping 21d blocks in the 12-1
     # window (11 blocks spanning t-252..t-21) — "steady" vs "one-jump" momentum
-    pos_month = (c.pct_change(21) > 0).astype(float)
+    pos_month = (c.pct_change(21, fill_method=None) > 0).astype(float)
     out["mom_consistency"] = (
         sum(pos_month.shift(21 * i) for i in range(1, 12)) / 11.0
     )
@@ -120,7 +123,7 @@ def compute_market_features(panel: Panel) -> pd.DataFrame:
     *use* of stock features on the regime (e.g. momentum behaves differently
     in high-vol markets).
     """
-    ret1 = panel.close.pct_change()
+    ret1 = panel.close.pct_change(fill_method=None)
     mkt_ret = ret1.mean(axis=1)  # equal-weight market daily return
     out = pd.DataFrame(index=panel.dates)
     out["mkt_ret_21"] = mkt_ret.rolling(21).sum()

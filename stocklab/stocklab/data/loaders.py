@@ -118,7 +118,11 @@ def sanitize_corporate_actions(
     """
     close = panel.close.copy()
     notes: list[str] = []
-    ret = close.pct_change()
+    # explicit ffill = the old pad default, kept deliberately: the crash/split
+    # judge must compare each print to the LAST REAL price so a move across a
+    # halt gap is still seen (fill_method=None would blind it); pandas 3 drops
+    # the implicit pad, so spell it out
+    ret = close.ffill().pct_change(fill_method=None)
     # trailing dollar-volume baseline for the evidence test above
     dv = (panel.close * panel.volume) if panel.volume is not None else None
     dv_med = (dv.shift(1).rolling(60, min_periods=20).median()

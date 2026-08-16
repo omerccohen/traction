@@ -115,6 +115,12 @@ def close(path: Path, entry_id: str, reason: str, when=None) -> None:
         raise ValueError(
             f"no journal entry with id {entry_id!r}. Known ids: "
             + (", ".join(ids.tolist()) if len(ids) else "(journal is empty)"))
+    if int(m.sum()) > 1:
+        # loose matching can collide (a stored "0001" and a stored "1");
+        # closing every match silently would alter entries the user never named
+        raise ValueError(
+            f"id {entry_id!r} is ambiguous — matches "
+            f"{', '.join(ids[m].tolist())}. Close by the exact stored id.")
     df.loc[m, "status"] = "closed"
     df.loc[m, "close_date"] = str(pd.Timestamp(
         when or datetime.now(timezone.utc).date()).date())

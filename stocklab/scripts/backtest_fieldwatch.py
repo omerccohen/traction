@@ -60,7 +60,10 @@ def _field_eqw_return(close: pd.DataFrame, members, start, end) -> float:
     sub = close[cols].loc[start:end]
     if len(sub) < 2:
         return np.nan
-    daily = sub.pct_change().mean(axis=1)         # equal-weight field daily return
+    # fill_method=None: a member with no print contributes NOTHING to the
+    # field's forward return, instead of a padded 0% forever — a delisted
+    # name must drop out of the outcome, not dampen it
+    daily = sub.pct_change(fill_method=None).mean(axis=1)
     return float((1 + daily).prod() - 1)
 
 
@@ -69,7 +72,7 @@ def _field_fwd_vol(close: pd.DataFrame, members, start, end) -> float:
     if len(cols) < 3:
         return np.nan
     sub = close[cols].loc[start:end]
-    daily = sub.pct_change().mean(axis=1)
+    daily = sub.pct_change(fill_method=None).mean(axis=1)
     return float(daily.std() * np.sqrt(252))
 
 
@@ -78,7 +81,7 @@ def _field_fwd_dispersion(close: pd.DataFrame, members, start, end) -> float:
     if len(cols) < 3:
         return np.nan
     sub = close[cols].loc[start:end]
-    return float(sub.pct_change().std(axis=1).mean())
+    return float(sub.pct_change(fill_method=None).std(axis=1).mean())
 
 
 def run() -> dict:

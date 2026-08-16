@@ -75,7 +75,8 @@ def main() -> None:
     if etfs:
         sub = sectors["GICS Sub-Industry"]
         pmv = member_moves(panel, etfs, as_of)
-        recs = [{**r, "tracks": str(sub.get(r["ticker"], ""))} for r in _records(pmv)]
+        recs = [{**r, "tracks": ("" if pd.isna(sub.get(r["ticker"])) else
+                                 str(sub.get(r["ticker"])))} for r in _records(pmv)]
         inp["physical_proxies"] = {"n": len(recs), "movers": recs}
 
     inp["value_chain_pulls"] = {}

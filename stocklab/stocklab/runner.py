@@ -87,10 +87,14 @@ def _walk_forward_ensemble(
         if pos == 0:
             continue
         prior = fold_order[:pos]
-        if have_baseline:
-            base_prior = pd.concat(
-                [fold_preds[BASELINE_NAME][j] for j in prior if j in fold_preds[BASELINE_NAME]]
-            )
+        base_parts = ([fold_preds[BASELINE_NAME][j] for j in prior
+                       if j in fold_preds[BASELINE_NAME]] if have_baseline else [])
+        # pd.concat([]) raises: a baseline that errored on the prior folds but
+        # succeeded later killed the whole walk-forward, discarding every
+        # completed fold. No prior baseline -> gate against 0, same as the
+        # no-baseline path.
+        if base_parts:
+            base_prior = pd.concat(base_parts)
             base_ic = _quick_ic(base_prior, fwd_ret.loc[base_prior.index.intersection(fwd_ret.index)])
             admitted = []
             for name in candidates:
@@ -214,6 +218,12 @@ def run_walk_forward(
     if cfg.backtest.neutralize:
         from .neutralize import neutralize_scores
         cols = [c for c in cfg.backtest.neutralize if c in ds.ranked_features.columns]
+        # a typo'd exposure column must not silently deliver un-neutralized
+        # results labelled as the configured experiment
+        missing = [c for c in cfg.backtest.neutralize if c not in ds.ranked_features.columns]
+        if missing:
+            print(f"WARNING: neutralize columns not in features, ignored: {missing}"
+                  + ("" if cols else " — neutralization SKIPPED entirely"))
         if cols:
             exposures = ds.ranked_features[cols]
             res.oos_scores = {
@@ -361,9 +371,18 @@ def run_leakage_suite(
     p = m.predict(ds_shuf, fold.test_dates)
     ic_shuf = _quick_ic(p, y_shuf.loc[p.index])
     out["tabular_shuffled_ic"] = ic_shuf
-    out["tabular_shuffled_verdict"] = (
-        "PASS (no train/test row contamination detected)" if abs(ic_shuf) < 0.02
-        else f"FAIL: |IC|={abs(ic_shuf):.4f} on shuffled labels — rows leak across the split"
+
+    # NaN must read INCONCLUSIVE, never FAIL: `abs(nan) < x` is False, so a
+    # too-small dataset produced confident FAIL verdicts in both directions.
+    def _verdict(ic, passes, pass_msg, fail_msg):
+        if not np.isfinite(ic):
+            return "INCONCLUSIVE — too little data for this check to run"
+        return pass_msg if passes(ic) else fail_msg
+
+    out["tabular_shuffled_verdict"] = _verdict(
+        ic_shuf, lambda v: abs(v) < 0.02,
+        "PASS (no train/test row contamination detected)",
+        f"FAIL: |IC|={abs(ic_shuf):.4f} on shuffled labels — rows leak across the split",
     )
 
     # 2) tabular canary: future return as feature -> metric must fire
@@ -377,9 +396,10 @@ def run_leakage_suite(
     p2 = m2.predict(ds_can, fold.test_dates)
     ic_can = _quick_ic(p2, ds.fwd_ret.loc[p2.index])
     out["tabular_canary_ic"] = ic_can
-    out["tabular_canary_verdict"] = (
-        "PASS (detector fires on planted leak)" if ic_can > 0.2
-        else "FAIL: planted leak NOT detected — detector broken"
+    out["tabular_canary_verdict"] = _verdict(
+        ic_can, lambda v: v > 0.2,
+        "PASS (detector fires on planted leak)",
+        "FAIL: planted leak NOT detected — detector broken",
     )
 
     if include_sequence_path:
@@ -407,9 +427,10 @@ def run_leakage_suite(
         # 3) sequence shuffled labels
         ic_seq_shuf = _seq_ic(ds.ranked_features[feats], y_shuf, y_shuf)
         out["sequence_shuffled_ic"] = ic_seq_shuf
-        out["sequence_shuffled_verdict"] = (
-            "PASS (no train/test row contamination detected)" if abs(ic_seq_shuf) < 0.03
-            else f"FAIL: |IC|={abs(ic_seq_shuf):.4f} — sequence path leaks across the split"
+        out["sequence_shuffled_verdict"] = _verdict(
+            ic_seq_shuf, lambda v: abs(v) < 0.03,
+            "PASS (no train/test row contamination detected)",
+            f"FAIL: |IC|={abs(ic_seq_shuf):.4f} — sequence path leaks across the split",
         )
 
         # 4) sequence canary: rank of the future return as an extra feature plane
@@ -419,10 +440,10 @@ def run_leakage_suite(
         ranked_can["__canary"] = ranked_can["__canary"].fillna(0.0)
         ic_seq_can = _seq_ic(ranked_can, ds.y, ds.fwd_ret)
         out["sequence_canary_ic"] = ic_seq_can
-        out["sequence_canary_verdict"] = (
-            "PASS (window indexing exposes the current row, as designed; detector fires)"
-            if ic_seq_can > 0.2 else
-            "FAIL: canary in the sequence window NOT detected — window math suspect"
+        out["sequence_canary_verdict"] = _verdict(
+            ic_seq_can, lambda v: v > 0.2,
+            "PASS (window indexing exposes the current row, as designed; detector fires)",
+            "FAIL: canary in the sequence window NOT detected — window math suspect",
         )
 
     if verbose:

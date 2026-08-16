@@ -83,6 +83,16 @@ def review_signal(
     ic = sig.get("ic_mean", np.nan)
     t = sig.get("ic_tstat_nw", np.nan)
 
+    # Every check below is gated on isfinite, so an evaluation that produced
+    # NO usable numbers (empty ic series, failed backtest) raised zero flags —
+    # and "no flags raised" read as a clean bill of health. Missing evidence
+    # is its own finding.
+    if not (np.isfinite(ic) or np.isfinite(t)):
+        r.add("FATAL", "no evidence",
+              "core metrics (ic_mean, ic_tstat_nw) are missing or non-finite — "
+              "this signal has NOT been evaluated; a clean-looking report here "
+              "would mean 'nothing was checked', not 'nothing was found'.")
+
     # --- leakage tripwires ---------------------------------------------------
     # Prefer the 1-day-horizon IC (directly comparable to the literature's
     # reference ranges) when the tear sheet computed it; otherwise scale the

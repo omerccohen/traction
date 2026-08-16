@@ -34,7 +34,10 @@ def quarterly(points, as_of_iso: str) -> list[dict]:
     """Point-in-time quarterly (flow) series, deduped by period end."""
     q = [p for p in points if p["filed"] <= as_of_iso and p.get("start")
          and 80 <= (_d(p["end"]) - _d(p["start"])).days <= 100]
-    q.sort(key=lambda p: p["end"])
+    # sort by (end, filed): sorting by end alone is stable on raw file order,
+    # so "earliest-filed wins" was a comment, not code — a restated quarter's
+    # value depended on cache ordering and could differ between refetches
+    q.sort(key=lambda p: (p["end"], p["filed"]))
     seen: dict[str, dict] = {}
     for p in q:
         seen.setdefault(p["end"], p)      # earliest-filed wins = first knowledge
@@ -46,7 +49,7 @@ def annual(points, as_of_iso: str) -> list[dict]:
     a = [p for p in points if p["filed"] <= as_of_iso and p.get("start")
          and 350 <= (_d(p["end"]) - _d(p["start"])).days <= 380]
     seen: dict[str, dict] = {}
-    for p in sorted(a, key=lambda p: p["end"]):
+    for p in sorted(a, key=lambda p: (p["end"], p["filed"])):   # earliest-filed wins
         seen.setdefault(p["end"], p)
     return sorted(seen.values(), key=lambda p: p["end"])
 

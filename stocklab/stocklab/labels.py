@@ -43,7 +43,15 @@ def cross_sectional_rank(wide: pd.DataFrame) -> pd.DataFrame:
     r = wide.rank(axis=1)                       # average ranks, NaN preserved
     n = wide.notna().sum(axis=1)
     out = (2.0 * (r - 1.0)).div(n - 1.0, axis=0) - 1.0
-    out[n == 1] = 0.0
+    # `out[n == 1] = 0.0` assigned the ENTIRE row: every NaN cell on a
+    # single-valid-name date was fabricated into a 0.0 "rank", which then
+    # passed downstream all-finite completeness checks. Only the one real
+    # cell maps to 0; missing stays missing.
+    single = out.index[n == 1]
+    if len(single):
+        out.loc[single] = pd.DataFrame(
+            0.0, index=single, columns=out.columns
+        ).where(wide.loc[single].notna())
     return out
 
 

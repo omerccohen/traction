@@ -140,7 +140,11 @@ def backtest_long_short(
     else:
         neutrality_violation_days = 0
 
-    ret1 = close.pct_change()
+    # explicit ffill = the old pad default, kept deliberately: a held position
+    # with no print marks flat until the next real price (the missing-price
+    # forced-exit logic handles true disappearances); pandas 3 drops the
+    # implicit pad, so spell it out
+    ret1 = close.ffill().pct_change(fill_method=None)
     gross_full = w_eff.mul(ret1.fillna(0.0)).sum(axis=1)
     dw_full = w_eff.diff().abs().sum(axis=1)
 
