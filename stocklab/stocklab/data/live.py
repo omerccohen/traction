@@ -163,8 +163,11 @@ def fetch_stockanalysis(ticker: str, start: str | None = None
     # pick the smallest range that covers `start` (fewer bytes for daily jobs)
     span_days = (datetime.now(timezone.utc) - pd.Timestamp(start or "2018-01-01")
                  .tz_localize("UTC")).days if start else 3650
-    rng = "1M" if span_days <= 25 else ("1Y" if span_days <= 366
-          else ("5Y" if span_days <= 1830 else "10Y"))
+    # thresholds sit BELOW each range's actual coverage (1Y ~ 365d, 5Y ~ 1826d):
+    # at the boundary a too-generous threshold fetched a range starting AFTER
+    # the last stored date, and the missed sessions were never refetched
+    rng = "1M" if span_days <= 25 else ("1Y" if span_days <= 360
+          else ("5Y" if span_days <= 1820 else "10Y"))
     sym = ticker.replace(".", "-")   # stockanalysis uses BRK-B style
     url = (f"https://stockanalysis.com/api/symbol/s/{sym}/history"
            f"?range={rng}&period=Daily")
@@ -442,7 +445,13 @@ class PriceStore:
                                    self.path, compression="gzip")
                 return len(new), 0, 0, []
 
-            settle_cut = new["date"].max() - pd.Timedelta(days=SETTLEMENT_DAYS)
+            # Anchor settlement to TODAY, not to the batch: anchored to the
+            # batch's own max date, a purely-historical backfill got a
+            # replaceable window at its own tail — years inside settled
+            # history — and silently overwrote stored values as "restatements".
+            settle_cut = (max(new["date"].max(),
+                              pd.Timestamp(datetime.now(timezone.utc).date()))
+                          - pd.Timedelta(days=SETTLEMENT_DAYS))
             incoming = new.set_index(["date", "ticker"])
             key_cur = cur.set_index(["date", "ticker"])
             overlap = incoming.index.intersection(key_cur.index)
@@ -498,8 +507,17 @@ class PriceStore:
             if n:
                 self._atomic_write(cur[cur["ticker"] != ticker],
                                    self.path, compression="gzip")
+            # The recorded actions must go with the prices: append_actions
+            # dedups with keep="first", so a wrong stored action could never
+            # be replaced by the refetch if it survived the restate.
+            acts = self.load_actions()
+            n_act = int((acts["ticker"] == ticker).sum()) if not acts.empty else 0
+            if n_act:
+                self._atomic_write(acts[acts["ticker"] != ticker],
+                                   self.actions_path)
         with open(self.log_path, "a") as f:
             f.write(json.dumps({"restate": ticker, "rows_dropped": n,
+                                "actions_dropped": n_act,
                                 "at": datetime.now(timezone.utc).isoformat()}) + "\n")
         return n
 
@@ -548,15 +566,23 @@ class PriceStore:
 # ---------------------------------------------------------------------------
 
 def apply_split_adjustments(panel, actions: pd.DataFrame):
-    """Back-adjust close AND volume by exact split factors so the series is
-    split-continuous (price-return regime; dividends stay unapplied and
-    documented). Returns (panel, notes)."""
+    """Back-adjust ALL price columns (close/open/high/low) and volume by exact
+    split factors so the series is split-continuous (price-return regime;
+    dividends stay unapplied and documented). Returns (panel, notes).
+
+    open/high/low must move with close: adjusting close alone left a post-4:1
+    pre-split close of 25.0 next to that day's unadjusted high/low of 101/99 —
+    an internally impossible bar any future high/low feature would ingest.
+    """
     from .panel import Panel
     notes = []
     if actions is None or actions.empty:
         return panel, notes
     close = panel.close.copy()
     volume = panel.volume.copy()
+    others = {name: (getattr(panel, name).copy()
+                     if getattr(panel, name, None) is not None else None)
+              for name in ("open", "high", "low")}
     splits = actions[actions["type"] == "split"]
     for _, row in splits.iterrows():
         t, d, f = row["ticker"], pd.Timestamp(row["date"]), float(row["value"])
@@ -565,9 +591,13 @@ def apply_split_adjustments(panel, actions: pd.DataFrame):
         mask = close.index < d
         close.loc[mask, t] = close.loc[mask, t] / f
         volume.loc[mask, t] = volume.loc[mask, t] * f
-        notes.append(f"{t} {d.date()}: split factor {f:g} back-applied (close/volume)")
-    return Panel(close=close, volume=volume, open=panel.open,
-                 high=panel.high, low=panel.low), notes
+        for px in others.values():
+            if px is not None and t in px.columns:
+                px.loc[mask, t] = px.loc[mask, t] / f
+        notes.append(f"{t} {d.date()}: split factor {f:g} back-applied "
+                     "(close/open/high/low/volume)")
+    return Panel(close=close, volume=volume, open=others["open"],
+                 high=others["high"], low=others["low"]), notes
 
 
 # ---------------------------------------------------------------------------
@@ -664,8 +694,19 @@ def update_from_csv(store: PriceStore, csv_path: str | Path) -> UpdateReport:
     Never raises — failures become a logged report with status='error'."""
     rep = UpdateReport(started_at=datetime.now(timezone.utc).isoformat())
     try:
-        from .loaders import _normalize_columns
+        from .loaders import _normalize_columns, ADJUSTED_ALIASES
         df = pd.read_csv(csv_path)
+        # The store's regime is RAW prints (M3). The shared normalizer prefers
+        # the ADJUSTED close (right for the backtest loader, wrong here): a
+        # yfinance-style CSV with both columns got its adjusted close ingested
+        # next to raw high/low, so pre-split rows failed the high/low check
+        # and silently vanished. Keep the raw close for the store.
+        low = {c.strip().lower(): c for c in df.columns}
+        adj_present = [low[a] for a in ADJUSTED_ALIASES if a in low]
+        if adj_present and "close" in low:
+            df = df.drop(columns=adj_present)
+            rep.problems.append(f"ignored adjusted-close column(s) "
+                                f"{adj_present} — the store keeps raw prints")
         df, _note = _normalize_columns(df)
         for c in ("open", "high", "low"):     # per-column fill (audit M1)
             if c not in df.columns:
@@ -675,7 +716,7 @@ def update_from_csv(store: PriceStore, csv_path: str | Path) -> UpdateReport:
         tickers = df["ticker"].astype(str).unique().tolist() if "ticker" in df.columns else []
         tail = _tail_for(store, tickers)
         df, problems = validate_rows(df, prior_tail=tail)
-        rep.problems = problems
+        rep.problems += problems   # += : the adjusted-close note above survives
         appended, restated, conflicts, details = store.append(df)
         rep.rows_appended, rep.rows_restated = appended, restated
         rep.conflicts, rep.conflict_details = conflicts, details

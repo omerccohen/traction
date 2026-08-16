@@ -81,15 +81,33 @@ def test_validate_close_outside_range_dropped():
 # ---------------------------------------------------------------------------
 
 def test_settlement_window_restates_recent_rows(tmp_path):
+    # Settlement is anchored to WALL-CLOCK today (an old backfill must never
+    # get its own replaceable window), so "yesterday's partial print" has to
+    # actually be recent for the correction to be allowed.
+    d0, d1, d2 = pd.bdate_range(end=pd.Timestamp.now().normalize(), periods=3)
     store = PriceStore(tmp_path)
-    store.append(_rows("AAA", ["2024-01-08", "2024-01-09"], [10.0, 10.5]))
+    store.append(_rows("AAA", [d0, d1], [10.0, 10.5]))
     # next-day run corrects yesterday's partial print (within settlement)
-    fix = _rows("AAA", ["2024-01-09", "2024-01-10"], [11.2, 11.3])
+    fix = _rows("AAA", [d1, d2], [11.2, 11.3])
     appended, restated, conflicts, details = store.append(fix)
     assert restated == 1 and conflicts == 0 and appended == 1
     df = store.load()
-    v = df[df["date"] == pd.Timestamp("2024-01-09")]["close"].iloc[0]
+    v = df[df["date"] == d1]["close"].iloc[0]
     assert np.isclose(v, 11.2), "settlement window must let the correction win"
+
+
+def test_settlement_anchored_to_today_not_batch(tmp_path):
+    # A purely-historical backfill used to carry a replaceable window at its
+    # own tail — years inside settled history — and silently overwrote stored
+    # values as benign "restatements".
+    store = PriceStore(tmp_path)
+    dates = pd.bdate_range("2020-01-06", periods=5)
+    store.append(_rows("AAA", dates, [100.0] * 5))
+    bad = _rows("AAA", dates, [999.0] * 5)
+    appended, restated, conflicts, details = store.append(bad)
+    assert restated == 0, "old rows must not be replaceable via a stale batch"
+    assert conflicts == 5
+    assert (store.load()["close"] == 100.0).all(), "stored settled values win"
 
 
 def test_settled_history_is_immutable_with_conflict_details(tmp_path):
