@@ -1,0 +1,740 @@
+{
+  "signal_reports": {
+    "momentum_12_1": {
+      "name": "momentum_12_1",
+      "ic_mean": -0.0014340994235741812,
+      "ic_std": 0.19025483368790377,
+      "icir": -0.007537781804372743,
+      "ic_tstat_nw": -0.08283087980715342,
+      "ic_positive_share": 0.4860050890585242,
+      "n_days": 393,
+      "quantile_returns": {
+        "0": 0.0027828085014574137,
+        "1": 0.00343156918577321,
+        "2": 0.0024546094450994585,
+        "3": 0.0030497268155470813,
+        "4": 0.00298461750428726,
+        "5": 0.002954248460114813,
+        "6": 0.0024417147855450433,
+        "7": 0.002444762710690223,
+        "8": 0.00226581584641919,
+        "9": 0.0023980625553888316
+      },
+      "monotonicity": -0.7454545454545454,
+      "top_bottom_spread": -0.0003847459460685821,
+      "rank_autocorr_1d": 0.993743321931567,
+      "ic_by_horizon": {
+        "1": 0.010523915992713951,
+        "10": -0.010058533174365695,
+        "21": -0.01769302565787057
+      }
+    },
+    "ridge": {
+      "name": "ridge",
+      "ic_mean": 0.0021304451999737614,
+      "ic_std": 0.130747610584175,
+      "icir": 0.016294333720048303,
+      "ic_tstat_nw": 0.18581155337464675,
+      "ic_positive_share": 0.5012722646310432,
+      "n_days": 393,
+      "quantile_returns": {
+        "0": 0.002976027821341669,
+        "1": 0.002860063609758529,
+        "2": 0.002558250092734266,
+        "3": 0.002650543221125755,
+        "4": 0.0025107001912074334,
+        "5": 0.002719117349233501,
+        "6": 0.0022913069077258046,
+        "7": 0.0028099199061745106,
+        "8": 0.0028345503521340298,
+        "9": 0.0030007473188946128
+      },
+      "monotonicity": 0.06666666666666665,
+      "top_bottom_spread": 2.4719497552943594e-05,
+      "rank_autocorr_1d": 0.9537827909451644,
+      "ic_by_horizon": {
+        "1": 0.011465819300652888,
+        "10": -0.008978699154562403,
+        "21": -0.014604984725776128
+      }
+    },
+    "lightgbm": {
+      "name": "lightgbm",
+      "ic_mean": -0.016217426778720893,
+      "ic_std": 0.13178421038631868,
+      "icir": -0.12306046931614398,
+      "ic_tstat_nw": -1.3822658293068466,
+      "ic_positive_share": 0.46055979643765904,
+      "n_days": 393,
+      "quantile_returns": {
+        "0": 0.0031114770672975986,
+        "1": 0.004320547293670826,
+        "2": 0.0038243775427909688,
+        "3": 0.0033503826226248764,
+        "4": 0.002106215093191008,
+        "5": 0.0006612171507412651,
+        "6": 0.0020020522033542165,
+        "7": 0.0027450159978225585,
+        "8": 0.002347566247556331,
+        "9": 0.0023641747123500164
+      },
+      "monotonicity": -0.5757575757575757,
+      "top_bottom_spread": -0.0007473023549475822,
+      "rank_autocorr_1d": 0.8243005886493678,
+      "ic_by_horizon": {
+        "1": -0.0013807918293786121,
+        "10": -0.017602593346415174,
+        "21": -0.02786360503609302
+      }
+    }
+  },
+  "backtests": {
+    "momentum_12_1": {
+      "name": "momentum_12_1",
+      "stats_net": {
+        "n_days": 397,
+        "ann_return": -0.04830460088669296,
+        "ann_vol": 0.149873497102513,
+        "sharpe": -0.32230248723463606,
+        "sharpe_tstat_nw": -0.4435918846413227,
+        "max_drawdown": -0.19283750366373809,
+        "skew": -0.7910658014759798,
+        "kurtosis": 5.3868984235830215,
+        "worst_day": -0.047300448535590726,
+        "best_day": 0.030994196393540622,
+        "deflated_sharpe_prob": 0.16833721570255156
+      },
+      "stats_gross": {
+        "n_days": 397,
+        "ann_return": -0.016582793042144533,
+        "ann_vol": 0.149859639604107,
+        "sharpe": -0.11065549794429154,
+        "sharpe_tstat_nw": -0.15261682494750983,
+        "max_drawdown": -0.175302860015782,
+        "skew": -0.7931675786003797,
+        "kurtosis": 5.391446197114468,
+        "worst_day": -0.04719563220906011,
+        "best_day": 0.0311315025159896
+      },
+      "stats_by_cost": {
+        "0.0": {
+          "n_days": 397,
+          "ann_return": -0.016582793042144533,
+          "ann_vol": 0.149859639604107,
+          "sharpe": -0.11065549794429154,
+          "sharpe_tstat_nw": -0.15261682494750983,
+          "max_drawdown": -0.175302860015782,
+          "skew": -0.7931675786003797,
+          "kurtosis": 5.391446197114468,
+          "worst_day": -0.04719563220906011,
+          "best_day": 0.0311315025159896
+        },
+        "5.0": {
+          "n_days": 397,
+          "ann_return": -0.03244369696441875,
+          "ann_vol": 0.1498659600107329,
+          "sharpe": -0.21648476386562523,
+          "sharpe_tstat_nw": -0.29827023867720315,
+          "max_drawdown": -0.1835767543337341,
+          "skew": -0.7921256337801499,
+          "kurtosis": 5.389237199319284,
+          "worst_day": -0.04724804037232542,
+          "best_day": 0.03106284945476511
+        },
+        "10.0": {
+          "n_days": 397,
+          "ann_return": -0.04830460088669296,
+          "ann_vol": 0.149873497102513,
+          "sharpe": -0.32230248723463606,
+          "sharpe_tstat_nw": -0.4435918846413227,
+          "max_drawdown": -0.19283750366373809,
+          "skew": -0.7910658014759798,
+          "kurtosis": 5.3868984235830215,
+          "worst_day": -0.047300448535590726,
+          "best_day": 0.030994196393540622
+        },
+        "25.0": {
+          "n_days": 397,
+          "ann_return": -0.09588731265351551,
+          "ann_vol": 0.14990340650541514,
+          "sharpe": -0.6396606647498144,
+          "sharpe_tstat_nw": -0.8773806355282897,
+          "max_drawdown": -0.21999798651448843,
+          "skew": -0.7877840383456932,
+          "kurtosis": 5.379106677736246,
+          "worst_day": -0.04745767302538664,
+          "best_day": 0.03078823720986715
+        }
+      },
+      "leg_stats": {
+        "long": {
+          "n_days": 397,
+          "ann_return": 0.12059477645383763,
+          "ann_vol": 0.12715975653308587,
+          "sharpe": 0.9483721874102513,
+          "sharpe_tstat_nw": 1.4715412511544537,
+          "max_drawdown": -0.07743380440640968,
+          "skew": -0.7982290961225594,
+          "kurtosis": 5.873888217601381,
+          "worst_day": -0.0363871315604468,
+          "best_day": 0.02542886900592577
+        },
+        "short": {
+          "n_days": 397,
+          "ann_return": -0.13717756949598217,
+          "ann_vol": 0.13503687830222733,
+          "sharpe": -1.015852641298207,
+          "sharpe_tstat_nw": -1.2954003610462264,
+          "max_drawdown": -0.26608262775221436,
+          "skew": -0.09973804982250209,
+          "kurtosis": 3.502651068954302,
+          "worst_day": -0.026306227615895097,
+          "best_day": 0.0271210624563552
+        }
+      },
+      "by_year": {
+        "2016": {
+          "ann_return": -0.37049867872377906,
+          "sharpe": -2.860713094594129,
+          "max_drawdown": -0.17901749172863424
+        },
+        "2017": {
+          "ann_return": 0.050667064836168424,
+          "sharpe": 0.31520047526263945,
+          "max_drawdown": -0.15042780361520403
+        }
+      },
+      "avg_daily_turnover": 0.12588018985931906,
+      "breakeven_cost_bps": -5.227568719729949
+    },
+    "ridge": {
+      "name": "ridge",
+      "stats_net": {
+        "n_days": 397,
+        "ann_return": -0.08543351812547087,
+        "ann_vol": 0.09940822146648091,
+        "sharpe": -0.8594210505443746,
+        "sharpe_tstat_nw": -1.2914277709841748,
+        "max_drawdown": -0.19868165102811586,
+        "skew": -0.8924608253864194,
+        "kurtosis": 6.39493251661212,
+        "worst_day": -0.03782909660030351,
+        "best_day": 0.018624552225900155,
+        "deflated_sharpe_prob": 0.048069311061406585
+      },
+      "stats_gross": {
+        "n_days": 397,
+        "ann_return": -0.0016987919649814676,
+        "ann_vol": 0.09941665156175294,
+        "sharpe": -0.017087599896947425,
+        "sharpe_tstat_nw": -0.025536308838872753,
+        "max_drawdown": -0.13803610152923296,
+        "skew": -0.8995435801405732,
+        "kurtosis": 6.420276349985962,
+        "worst_day": -0.03757348435540555,
+        "best_day": 0.018880164470798114
+      },
+      "stats_by_cost": {
+        "0.0": {
+          "n_days": 397,
+          "ann_return": -0.0016987919649814676,
+          "ann_vol": 0.09941665156175294,
+          "sharpe": -0.017087599896947425,
+          "sharpe_tstat_nw": -0.025536308838872753,
+          "max_drawdown": -0.13803610152923296,
+          "skew": -0.8995435801405732,
+          "kurtosis": 6.420276349985962,
+          "worst_day": -0.03757348435540555,
+          "best_day": 0.018880164470798114
+        },
+        "5.0": {
+          "n_days": 397,
+          "ann_return": -0.04356615504522619,
+          "ann_vol": 0.09941158419376746,
+          "sharpe": -0.4382402252066469,
+          "sharpe_tstat_nw": -0.6567555870598507,
+          "max_drawdown": -0.16890935867931667,
+          "skew": -0.8960248059553192,
+          "kurtosis": 6.407716491376765,
+          "worst_day": -0.03770129047785453,
+          "best_day": 0.018752358348349134
+        },
+        "10.0": {
+          "n_days": 397,
+          "ann_return": -0.08543351812547087,
+          "ann_vol": 0.09940822146648091,
+          "sharpe": -0.8594210505443746,
+          "sharpe_tstat_nw": -1.2914277709841748,
+          "max_drawdown": -0.19868165102811586,
+          "skew": -0.8924608253864194,
+          "kurtosis": 6.39493251661212,
+          "worst_day": -0.03782909660030351,
+          "best_day": 0.018624552225900155
+        },
+        "25.0": {
+          "n_days": 397,
+          "ann_return": -0.21103560736620494,
+          "ann_vol": 0.09940836242025834,
+          "sharpe": -2.1229160427573666,
+          "sharpe_tstat_nw": -3.214067929239647,
+          "max_drawdown": -0.306086338544737,
+          "skew": -0.8815035458293605,
+          "kurtosis": 6.3552629894764685,
+          "worst_day": -0.03821251496765045,
+          "best_day": 0.018241133858553214
+        }
+      },
+      "leg_stats": {
+        "long": {
+          "n_days": 397,
+          "ann_return": 0.14912610904280485,
+          "ann_vol": 0.11520951034628561,
+          "sharpe": 1.2943906157970466,
+          "sharpe_tstat_nw": 1.8814247554170889,
+          "max_drawdown": -0.06131241004880139,
+          "skew": -0.564309170402133,
+          "kurtosis": 5.218457218851136,
+          "worst_day": -0.03603325808122711,
+          "best_day": 0.019888587228495812
+        },
+        "short": {
+          "n_days": 397,
+          "ann_return": -0.15082490100778637,
+          "ann_vol": 0.10095040374120214,
+          "sharpe": -1.4940495076616354,
+          "sharpe_tstat_nw": -1.8775319908929966,
+          "max_drawdown": -0.2661024605998452,
+          "skew": 0.06013765582332944,
+          "kurtosis": 5.542835045687221,
+          "worst_day": -0.026868640389861545,
+          "best_day": 0.02376157418441955
+        }
+      },
+      "by_year": {
+        "2016": {
+          "ann_return": -0.2993874110970232,
+          "sharpe": -2.5161475813494505,
+          "max_drawdown": -0.13912779011742527
+        },
+        "2017": {
+          "ann_return": -0.011970148266761823,
+          "sharpe": -0.13771520187571804,
+          "max_drawdown": -0.08323170998834784
+        }
+      },
+      "avg_daily_turnover": 0.33228065936702134,
+      "breakeven_cost_bps": -0.2028778313223947
+    },
+    "lightgbm": {
+      "name": "lightgbm",
+      "stats_net": {
+        "n_days": 397,
+        "ann_return": -0.15141099354993395,
+        "ann_vol": 0.09604933892087855,
+        "sharpe": -1.5763876696190489,
+        "sharpe_tstat_nw": -2.1300678487610942,
+        "max_drawdown": -0.24044412761726452,
+        "skew": -1.1640813911498464,
+        "kurtosis": 7.567335743116314,
+        "worst_day": -0.034804104379825465,
+        "best_day": 0.0149379145194376,
+        "deflated_sharpe_prob": 0.0038950853538754675
+      },
+      "stats_gross": {
+        "n_days": 397,
+        "ann_return": -0.04597362019908864,
+        "ann_vol": 0.09606143889616894,
+        "sharpe": -0.4785855878005397,
+        "sharpe_tstat_nw": -0.6393569262528306,
+        "max_drawdown": -0.12842247773151183,
+        "skew": -1.1821719746550798,
+        "kurtosis": 7.618158790339254,
+        "worst_day": -0.03451365540023363,
+        "best_day": 0.015317016560253928
+      },
+      "stats_by_cost": {
+        "0.0": {
+          "n_days": 397,
+          "ann_return": -0.04597362019908864,
+          "ann_vol": 0.09606143889616894,
+          "sharpe": -0.4785855878005397,
+          "sharpe_tstat_nw": -0.6393569262528306,
+          "max_drawdown": -0.12842247773151183,
+          "skew": -1.1821719746550798,
+          "kurtosis": 7.618158790339254,
+          "worst_day": -0.03451365540023363,
+          "best_day": 0.015317016560253928
+        },
+        "5.0": {
+          "n_days": 397,
+          "ann_return": -0.0986923068745113,
+          "ann_vol": 0.09604450351562614,
+          "sharpe": -1.0275685048281225,
+          "sharpe_tstat_nw": -1.381291115459552,
+          "max_drawdown": -0.1775946360330557,
+          "skew": -1.1735189116667044,
+          "kurtosis": 7.594944537320666,
+          "worst_day": -0.03465887989002955,
+          "best_day": 0.015127465539845765
+        },
+        "10.0": {
+          "n_days": 397,
+          "ann_return": -0.15141099354993395,
+          "ann_vol": 0.09604933892087855,
+          "sharpe": -1.5763876696190489,
+          "sharpe_tstat_nw": -2.1300678487610942,
+          "max_drawdown": -0.24044412761726452,
+          "skew": -1.1640813911498464,
+          "kurtosis": 7.567335743116314,
+          "worst_day": -0.034804104379825465,
+          "best_day": 0.0149379145194376
+        },
+        "25.0": {
+          "n_days": 397,
+          "ann_return": -0.3095670535762019,
+          "ann_vol": 0.09619436311315496,
+          "sharpe": -3.2181413084678696,
+          "sharpe_tstat_nw": -4.388789768596175,
+          "max_drawdown": -0.4023108109625174,
+          "skew": -1.1313488383038417,
+          "kurtosis": 7.459054842365315,
+          "worst_day": -0.03523977784921322,
+          "best_day": 0.014369261458213111
+        }
+      },
+      "leg_stats": {
+        "long": {
+          "n_days": 397,
+          "ann_return": 0.09737917728546651,
+          "ann_vol": 0.10124616714268012,
+          "sharpe": 0.961806061736993,
+          "sharpe_tstat_nw": 1.3444024339599252,
+          "max_drawdown": -0.06582377633324299,
+          "skew": -0.6378815439327208,
+          "kurtosis": 5.586181975566246,
+          "worst_day": -0.03338954207682439,
+          "best_day": 0.017901270845844648
+        },
+        "short": {
+          "n_days": 397,
+          "ann_return": -0.14335279748455507,
+          "ann_vol": 0.1062775453368497,
+          "sharpe": -1.3488531093769083,
+          "sharpe_tstat_nw": -1.7983832115745932,
+          "max_drawdown": -0.2598505278360774,
+          "skew": -0.11197666281567727,
+          "kurtosis": 5.021912835202865,
+          "worst_day": -0.0287328693676422,
+          "best_day": 0.024686151924616876
+        }
+      },
+      "by_year": {
+        "2016": {
+          "ann_return": -0.21514657523092395,
+          "sharpe": -1.9573179225438861,
+          "max_drawdown": -0.13957987794183047
+        },
+        "2017": {
+          "ann_return": -0.10164831579820925,
+          "sharpe": -1.116166232179062,
+          "max_drawdown": -0.11717693437819499
+        }
+      },
+      "avg_daily_turnover": 0.418402275201767,
+      "breakeven_cost_bps": -4.3602774555195305
+    }
+  },
+  "skeptic": {
+    "momentum_12_1": {
+      "model": "momentum_12_1",
+      "fatal": false,
+      "flags": [
+        {
+          "severity": "WARN",
+          "check": "significance",
+          "message": "NW t-stat -0.08 < 2 required given 3 trials \u2014 consistent with noise (Harvey-Liu-Zhu)."
+        },
+        {
+          "severity": "WARN",
+          "check": "cost fragility",
+          "message": "break-even cost -5 bps/side \u2014 the edge dies within realistic retail cost ranges (10-25 bps)."
+        },
+        {
+          "severity": "WARN",
+          "check": "deflated Sharpe",
+          "message": "DSR probability 0.17 < 0.95 given 3 trials \u2014 the Sharpe is not distinguishable from the best of that many noise strategies."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SURVIVORSHIP BIAS: universe = S&P 500 constituents as of 2018; delisted/failed companies are missing. Long-side results are inflated."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SINGLE REGIME: Feb-2013..Feb-2018 is one bull market; no bear-market evidence."
+        }
+      ]
+    },
+    "ridge": {
+      "model": "ridge",
+      "fatal": false,
+      "flags": [
+        {
+          "severity": "WARN",
+          "check": "significance",
+          "message": "NW t-stat 0.19 < 2 required given 3 trials \u2014 consistent with noise (Harvey-Liu-Zhu)."
+        },
+        {
+          "severity": "WARN",
+          "check": "quantile monotonicity",
+          "message": "decile monotonicity 0.07 \u2014 returns are not smooth across ranks; edge may be a tail artifact."
+        },
+        {
+          "severity": "WARN",
+          "check": "cost fragility",
+          "message": "break-even cost -0 bps/side \u2014 the edge dies within realistic retail cost ranges (10-25 bps)."
+        },
+        {
+          "severity": "WARN",
+          "check": "deflated Sharpe",
+          "message": "DSR probability 0.05 < 0.95 given 3 trials \u2014 the Sharpe is not distinguishable from the best of that many noise strategies."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SURVIVORSHIP BIAS: universe = S&P 500 constituents as of 2018; delisted/failed companies are missing. Long-side results are inflated."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SINGLE REGIME: Feb-2013..Feb-2018 is one bull market; no bear-market evidence."
+        }
+      ]
+    },
+    "lightgbm": {
+      "model": "lightgbm",
+      "fatal": false,
+      "flags": [
+        {
+          "severity": "WARN",
+          "check": "significance",
+          "message": "NW t-stat -1.38 < 2 required given 3 trials \u2014 consistent with noise (Harvey-Liu-Zhu)."
+        },
+        {
+          "severity": "NOTE",
+          "check": "baseline",
+          "message": "does not beat momentum baseline IC (-0.0014); per design rules this model is not admitted to the ensemble."
+        },
+        {
+          "severity": "WARN",
+          "check": "cost fragility",
+          "message": "break-even cost -4 bps/side \u2014 the edge dies within realistic retail cost ranges (10-25 bps)."
+        },
+        {
+          "severity": "WARN",
+          "check": "deflated Sharpe",
+          "message": "DSR probability 0.00 < 0.95 given 3 trials \u2014 the Sharpe is not distinguishable from the best of that many noise strategies."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SURVIVORSHIP BIAS: universe = S&P 500 constituents as of 2018; delisted/failed companies are missing. Long-side results are inflated."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SINGLE REGIME: Feb-2013..Feb-2018 is one bull market; no bear-market evidence."
+        }
+      ]
+    }
+  },
+  "fold_log": [
+    {
+      "fold": 0,
+      "model": "momentum_12_1",
+      "n_pred": 30656,
+      "seconds": 0.0
+    },
+    {
+      "fold": 0,
+      "model": "ridge",
+      "n_pred": 30656,
+      "seconds": 0.3
+    },
+    {
+      "fold": 0,
+      "model": "lightgbm",
+      "n_pred": 30656,
+      "seconds": 1.3
+    },
+    {
+      "fold": 1,
+      "model": "momentum_12_1",
+      "n_pred": 30721,
+      "seconds": 0.0
+    },
+    {
+      "fold": 1,
+      "model": "ridge",
+      "n_pred": 30721,
+      "seconds": 0.2
+    },
+    {
+      "fold": 1,
+      "model": "lightgbm",
+      "n_pred": 30721,
+      "seconds": 1.4
+    },
+    {
+      "fold": 2,
+      "model": "momentum_12_1",
+      "n_pred": 30978,
+      "seconds": 0.0
+    },
+    {
+      "fold": 2,
+      "model": "ridge",
+      "n_pred": 30978,
+      "seconds": 0.2
+    },
+    {
+      "fold": 2,
+      "model": "lightgbm",
+      "n_pred": 30978,
+      "seconds": 1.1
+    },
+    {
+      "fold": 3,
+      "model": "momentum_12_1",
+      "n_pred": 31023,
+      "seconds": 0.0
+    },
+    {
+      "fold": 3,
+      "model": "ridge",
+      "n_pred": 31023,
+      "seconds": 0.2
+    },
+    {
+      "fold": 3,
+      "model": "lightgbm",
+      "n_pred": 31023,
+      "seconds": 1.1
+    },
+    {
+      "fold": 4,
+      "model": "momentum_12_1",
+      "n_pred": 31170,
+      "seconds": 0.0
+    },
+    {
+      "fold": 4,
+      "model": "ridge",
+      "n_pred": 31170,
+      "seconds": 0.2
+    },
+    {
+      "fold": 4,
+      "model": "lightgbm",
+      "n_pred": 31170,
+      "seconds": 1.4
+    },
+    {
+      "fold": 5,
+      "model": "momentum_12_1",
+      "n_pred": 31082,
+      "seconds": 0.0
+    },
+    {
+      "fold": 5,
+      "model": "ridge",
+      "n_pred": 31082,
+      "seconds": 0.8
+    },
+    {
+      "fold": 5,
+      "model": "lightgbm",
+      "n_pred": 31082,
+      "seconds": 2.3
+    },
+    {
+      "fold": 6,
+      "model": "momentum_12_1",
+      "n_pred": 7397,
+      "seconds": 0.0
+    },
+    {
+      "fold": 6,
+      "model": "ridge",
+      "n_pred": 7397,
+      "seconds": 1.2
+    },
+    {
+      "fold": 6,
+      "model": "lightgbm",
+      "n_pred": 7397,
+      "seconds": 1.3
+    }
+  ],
+  "n_trials": 3,
+  "dataset_biases": [
+    "SURVIVORSHIP BIAS: universe = S&P 500 constituents as of 2018; delisted/failed companies are missing. Long-side results are inflated.",
+    "SINGLE REGIME: Feb-2013..Feb-2018 is one bull market; no bear-market evidence."
+  ],
+  "leakage": {
+    "shuffled_label_ic": 0.001213178444095706,
+    "shuffled_label_verdict": "PASS (no pipeline leak detected)",
+    "canary_ic": 0.9821663975256743,
+    "canary_verdict": "PASS (detector fires on planted leak)"
+  },
+  "timings": {
+    "setup": 7.854109287261963,
+    "total": 28.777809143066406
+  },
+  "config": {
+    "label": {
+      "horizon": 5,
+      "lag": 1,
+      "target": "rank"
+    },
+    "universe": {
+      "min_history": 300,
+      "min_price": 5.0,
+      "min_dollar_volume": 1000000.0
+    },
+    "split": {
+      "min_train_days": 550,
+      "test_span": 63,
+      "embargo": 5
+    },
+    "backtest": {
+      "n_quantiles": 10,
+      "cost_bps": 10.0,
+      "cost_grid": [
+        0.0,
+        5.0,
+        10.0,
+        25.0
+      ],
+      "ann_factor": 252
+    },
+    "sequence": {
+      "length": 40,
+      "train_stride": 2,
+      "features": [
+        "ret_1d",
+        "ret_5d",
+        "mom_21",
+        "mom_63",
+        "mom_12_1",
+        "vol_21",
+        "boll_z",
+        "pct_from_high_252",
+        "rsi_14",
+        "log_adv_21"
+      ]
+    },
+    "seed": 7
+  }
+}

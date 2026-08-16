@@ -1,0 +1,548 @@
+{
+  "as_of": "2026-08-11",
+  "source": "live",
+  "universe_size": 2992,
+  "regime": {
+    "vol": {
+      "value": 15.28,
+      "pctile": 0.24,
+      "band": "calm",
+      "age_days": 1
+    },
+    "trend": {
+      "value": 0.1882,
+      "band": "uptrend",
+      "age_days": 42
+    },
+    "valuation": {
+      "value": 30.81,
+      "pctile": 0.59,
+      "age_days": 1076
+    },
+    "triggered": [],
+    "elevated": [],
+    "data_quality": {
+      "live": [
+        "vix_level (1d)",
+        "sp500_trend_12m (42d)"
+      ],
+      "stale": [
+        "us_cpi_yoy (1076d old)",
+        "us10y_rate_monthly (1076d old)",
+        "sp500_pe10 (1076d old)"
+      ],
+      "missing": [
+        "us10y_yield",
+        "yield_curve_10y2y",
+        "hy_credit_spread",
+        "breakeven_10y",
+        "semis_industrial_production",
+        "electronics_new_orders",
+        "semis_producer_prices"
+      ],
+      "warning": "MACRO LAYER DEGRADED: only 2 of 12 indicators carry current data (7 unavailable, 3 stale). Treat the regime read as thin \u2014 do not describe macro conditions the data cannot support."
+    }
+  },
+  "top_fields": [
+    {
+      "name": "Oil and Gas Field Machinery [sub]",
+      "n_members": 12,
+      "attention": 0.921,
+      "character": "DISPERSION",
+      "headline": "splitting into winners and losers (stock-picker's phase)",
+      "trend_21d": 0.1568,
+      "volatility_pctile": 0.9841269841269841,
+      "dispersion_pctile": 0.9642857142857143,
+      "cohesion_pctile": 0.010638297872340425,
+      "movers": [
+        "SEI -12%",
+        "HMH +0%",
+        "WHD +35%",
+        "FET +64%"
+      ],
+      "flags": "elevated: trend_21d, volatility, dispersion; depressed: volume_influx, cohesion"
+    },
+    {
+      "name": "Utilities",
+      "n_members": 108,
+      "attention": 0.908,
+      "character": "DISPERSION",
+      "headline": "splitting into winners and losers (stock-picker's phase)",
+      "trend_21d": -0.0339,
+      "volatility_pctile": 0.8253968253968254,
+      "dispersion_pctile": 0.996031746031746,
+      "cohesion_pctile": 0.0,
+      "movers": [
+        "ADTN -38%",
+        "GFUZ -21%",
+        "FN +11%",
+        "RNW +11%"
+      ],
+      "flags": "elevated: dispersion; depressed: trend_21d, volume_influx, cohesion"
+    },
+    {
+      "name": "Electric Utilities: Central [sub]",
+      "n_members": 45,
+      "attention": 0.892,
+      "character": "STRESS",
+      "headline": "under pressure \u2014 falling with elevated volatility",
+      "trend_21d": -0.0307,
+      "volatility_pctile": 1.0,
+      "dispersion_pctile": 0.9761904761904762,
+      "cohesion_pctile": 0.0,
+      "movers": [
+        "GFUZ -21%",
+        "FISN -20%",
+        "CEG +8%",
+        "RNW +11%"
+      ],
+      "flags": "elevated: volatility, dispersion; depressed: cohesion"
+    },
+    {
+      "name": "Advertising [sub]",
+      "n_members": 7,
+      "attention": 0.864,
+      "character": "DISPERSION",
+      "headline": "splitting into winners and losers (stock-picker's phase)",
+      "trend_21d": 0.0994,
+      "volatility_pctile": 0.996031746031746,
+      "dispersion_pctile": 0.9920634920634921,
+      "cohesion_pctile": 0.10638297872340426,
+      "movers": [
+        "CRTO -26%",
+        "GRPN -3%",
+        "IBTA +19%",
+        "WPP +43%"
+      ],
+      "flags": "elevated: volatility, dispersion; depressed: volume_influx"
+    },
+    {
+      "name": "Food Chains [sub]",
+      "n_members": 9,
+      "attention": 0.863,
+      "character": "STRESS",
+      "headline": "under pressure \u2014 falling with elevated volatility",
+      "trend_21d": -0.0987,
+      "volatility_pctile": 0.8849206349206349,
+      "dispersion_pctile": 1.0,
+      "cohesion_pctile": 0.0,
+      "movers": [
+        "ARKO -46%",
+        "ACI -17%",
+        "TBBB -1%",
+        "SFM +6%"
+      ],
+      "flags": "elevated: dispersion; depressed: trend_21d, cohesion"
+    },
+    {
+      "name": "Finance/Investors Services [sub]",
+      "n_members": 16,
+      "attention": 0.85,
+      "character": "DISPERSION",
+      "headline": "splitting into winners and losers (stock-picker's phase)",
+      "trend_21d": 0.0412,
+      "volatility_pctile": 0.9285714285714286,
+      "dispersion_pctile": 0.9007936507936508,
+      "cohesion_pctile": 0.0851063829787234,
+      "movers": [
+        "NMCO -3%",
+        "FDUS -1%",
+        "MAIN +12%",
+        "CION +17%"
+      ],
+      "flags": "elevated: trend_21d, volatility, dispersion; depressed: volume_influx, cohesion"
+    }
+  ],
+  "cross_cutting": [
+    "Breadth: 4/6 top fields are in a stock-picker's phase (names decoupling) \u2014 a selection market, not a beta market.",
+    "Stress cluster: Electric Utilities: Central [sub], Food Chains [sub] under pressure together."
+  ],
+  "dislocations": [
+    {
+      "ticker": "QMCO",
+      "move_21d": 1.01,
+      "field": "Electronic Components [sub]"
+    },
+    {
+      "ticker": "UTZ",
+      "move_21d": 0.84,
+      "field": "Packaged Foods [sub]"
+    },
+    {
+      "ticker": "EFOR",
+      "move_21d": 0.8,
+      "field": "Professional Services [sub]"
+    },
+    {
+      "ticker": "FBRX",
+      "move_21d": 0.74,
+      "field": "Biotechnology: Pharmaceutical Preparations [sub]"
+    },
+    {
+      "ticker": "LIFE",
+      "move_21d": 0.73,
+      "field": "Specialty Insurers [sub]"
+    },
+    {
+      "ticker": "AEHR",
+      "move_21d": 0.72,
+      "field": "Industrials"
+    },
+    {
+      "ticker": "VREX",
+      "move_21d": 0.72,
+      "field": "Industrial Machinery/Components [sub]"
+    },
+    {
+      "ticker": "PLSE",
+      "move_21d": 0.71,
+      "field": "Medical/Dental Instruments [sub]"
+    },
+    {
+      "ticker": "BXC",
+      "move_21d": 0.66,
+      "field": "Consumer Discretionary"
+    },
+    {
+      "ticker": "NEWP",
+      "move_21d": 0.65,
+      "field": "Precious Metals [sub]"
+    },
+    {
+      "ticker": "MATV",
+      "move_21d": 0.65,
+      "field": "Paper [sub]"
+    },
+    {
+      "ticker": "FET",
+      "move_21d": 0.64,
+      "field": "Oil and Gas Field Machinery [sub]"
+    }
+  ],
+  "caveats": [
+    "'Attention' marks unusual activity, NOT direction \u2014 field momentum's forward IC on this data measured ~zero.",
+    "This is research triage (where to look), not buy/sell advice.",
+    "Universe is current-constituent (survivorship-flagged); corporate actions handled heuristically, not from an exact event feed."
+  ],
+  "physical_proxies": {
+    "field": "Thematic Proxies",
+    "n": 20,
+    "note": "Commodity/theme ETFs \u2014 physical supply/demand cross-check. Real 21d/63d moves; use to confirm or question equity themes.",
+    "movers": [
+      {
+        "ticker": "COPX",
+        "ret_21d": 0.1915,
+        "ret_63d": 0.0114,
+        "last_close": 88.59,
+        "tracks": "Copper Miners"
+      },
+      {
+        "ticker": "XME",
+        "ret_21d": 0.1542,
+        "ret_63d": -0.0539,
+        "last_close": 117.83,
+        "tracks": "Metals & Mining"
+      },
+      {
+        "ticker": "SLX",
+        "ret_21d": 0.1105,
+        "ret_63d": 0.0178,
+        "last_close": 110.07,
+        "tracks": "Steel"
+      },
+      {
+        "ticker": "URA",
+        "ret_21d": 0.1093,
+        "ret_63d": -0.2107,
+        "last_close": 45.17,
+        "tracks": "Uranium & Nuclear Fuel"
+      },
+      {
+        "ticker": "GLD",
+        "ret_21d": 0.0921,
+        "ret_63d": -0.0775,
+        "last_close": 400.96,
+        "tracks": "Gold"
+      },
+      {
+        "ticker": "NLR",
+        "ret_21d": 0.0886,
+        "ret_63d": -0.1817,
+        "last_close": 119.18,
+        "tracks": "Nuclear Energy"
+      },
+      {
+        "ticker": "USO",
+        "ret_21d": 0.0834,
+        "ret_63d": -0.0797,
+        "last_close": 127.61,
+        "tracks": "Crude Oil"
+      },
+      {
+        "ticker": "WOOD",
+        "ret_21d": 0.0805,
+        "ret_63d": 0.0616,
+        "last_close": 73.19,
+        "tracks": "Timber & Forestry"
+      },
+      {
+        "ticker": "XLE",
+        "ret_21d": 0.0738,
+        "ret_63d": 0.0658,
+        "last_close": 60.93,
+        "tracks": "Energy Sector"
+      },
+      {
+        "ticker": "ITA",
+        "ret_21d": 0.072,
+        "ret_63d": 0.115,
+        "last_close": 251.98,
+        "tracks": "Aerospace & Defense ETF"
+      },
+      {
+        "ticker": "LIT",
+        "ret_21d": 0.0551,
+        "ret_63d": -0.1911,
+        "last_close": 74.11,
+        "tracks": "Lithium & Battery"
+      },
+      {
+        "ticker": "PAVE",
+        "ret_21d": 0.0439,
+        "ret_63d": 0.0291,
+        "last_close": 58.7,
+        "tracks": "Infrastructure"
+      },
+      {
+        "ticker": "KRE",
+        "ret_21d": 0.0225,
+        "ret_63d": 0.1205,
+        "last_close": 76.81,
+        "tracks": "Regional Banks ETF"
+      },
+      {
+        "ticker": "REMX",
+        "ret_21d": 0.0059,
+        "ret_63d": -0.2996,
+        "last_close": 76.72,
+        "tracks": "Rare Earth & Strategic Metals"
+      },
+      {
+        "ticker": "DBA",
+        "ret_21d": 0.0018,
+        "ret_63d": -0.0054,
+        "last_close": 27.82,
+        "tracks": "Agriculture"
+      },
+      {
+        "ticker": "XHB",
+        "ret_21d": -0.0034,
+        "ret_63d": 0.0559,
+        "last_close": 108.24,
+        "tracks": "Homebuilders"
+      },
+      {
+        "ticker": "TAN",
+        "ret_21d": -0.0079,
+        "ret_63d": -0.1642,
+        "last_close": 52.7,
+        "tracks": "Solar"
+      },
+      {
+        "ticker": "IYT",
+        "ret_21d": -0.0138,
+        "ret_63d": 0.0758,
+        "last_close": 86.91,
+        "tracks": "Transports"
+      },
+      {
+        "ticker": "JETS",
+        "ret_21d": -0.0203,
+        "ret_63d": 0.1441,
+        "last_close": 31.44,
+        "tracks": "Airlines"
+      },
+      {
+        "ticker": "SOXX",
+        "ret_21d": -0.0351,
+        "ret_63d": 0.0027,
+        "last_close": 534.2,
+        "tracks": "Semiconductors ETF"
+      }
+    ]
+  },
+  "buried_moves": {
+    "n": 24,
+    "note": "Large one-sided moves the composite attention score ranked OUTSIDE the top 15. Trend at/above the 80th percentile of the field's own history. A high trend with LOW volume_influx means the price moved without money arriving \u2014 treat as unexplained, not as confirmation.",
+    "fields": [
+      {
+        "field": "Precious Metals [sub]",
+        "attention_rank": 24,
+        "n_fields": 130,
+        "ret_21d": 0.2611,
+        "trend_pctile": 0.9484126984126984,
+        "volume_influx_pctile": 0.10317460317460317,
+        "movers": [
+          "VMET +7%",
+          "MUX +10%",
+          "AYA +46%",
+          "NEWP +65%"
+        ]
+      },
+      {
+        "field": "Basic Materials",
+        "attention_rank": 69,
+        "n_fields": 130,
+        "ret_21d": 0.2054,
+        "trend_pctile": 0.9246031746031746,
+        "volume_influx_pctile": 0.07936507936507936,
+        "movers": [
+          "ALM -11%",
+          "LXU -10%",
+          "MATV +65%",
+          "NEWP +65%"
+        ]
+      },
+      {
+        "field": "Plastic Products [sub]",
+        "attention_rank": 21,
+        "n_fields": 130,
+        "ret_21d": 0.2,
+        "trend_pctile": 0.9603174603174603,
+        "volume_influx_pctile": 0.36904761904761907,
+        "movers": [
+          "ENTG +6%",
+          "MYE +6%",
+          "SWIM +28%",
+          "KRT +44%"
+        ]
+      },
+      {
+        "field": "Paper [sub]",
+        "attention_rank": 64,
+        "n_fields": 130,
+        "ret_21d": 0.1904,
+        "trend_pctile": 0.9801587301587301,
+        "volume_influx_pctile": 0.4007936507936508,
+        "movers": [
+          "MAGN -4%",
+          "SUZ -3%",
+          "CLW +49%",
+          "MATV +65%"
+        ]
+      },
+      {
+        "field": "Biotechnology: Laboratory Analytical Instruments [sub]",
+        "attention_rank": 26,
+        "n_fields": 130,
+        "ret_21d": 0.1545,
+        "trend_pctile": 0.9444444444444444,
+        "volume_influx_pctile": 0.7857142857142857,
+        "movers": [
+          "EYPT -9%",
+          "BRKR -3%",
+          "ALMR +33%",
+          "TXG +40%"
+        ]
+      },
+      {
+        "field": "Biotechnology: Electromedical & Electrotherapeutic Apparatus [sub]",
+        "attention_rank": 58,
+        "n_fields": 130,
+        "ret_21d": 0.1346,
+        "trend_pctile": 0.9246031746031746,
+        "volume_influx_pctile": 0.15873015873015872,
+        "movers": [
+          "LIVN -5%",
+          "INMD -0%",
+          "BLFS +24%",
+          "ITGR +30%"
+        ]
+      },
+      {
+        "field": "Home Furnishings [sub]",
+        "attention_rank": 74,
+        "n_fields": 130,
+        "ret_21d": 0.1333,
+        "trend_pctile": 0.9365079365079365,
+        "volume_influx_pctile": 0.16666666666666666,
+        "movers": [
+          "LEG -12%",
+          "SGI -10%",
+          "MHK +26%",
+          "HBB +52%"
+        ]
+      },
+      {
+        "field": "RETAIL: Building Materials [sub]",
+        "attention_rank": 48,
+        "n_fields": 130,
+        "ret_21d": 0.1185,
+        "trend_pctile": 0.9761904761904762,
+        "volume_influx_pctile": 0.20238095238095238,
+        "movers": [
+          "BLDR +2%",
+          "HD +5%",
+          "TSCO +17%",
+          "ASPN +19%"
+        ]
+      },
+      {
+        "field": "Computer Software: Prepackaged Software [sub]",
+        "attention_rank": 54,
+        "n_fields": 130,
+        "ret_21d": 0.1138,
+        "trend_pctile": 0.9642857142857143,
+        "volume_influx_pctile": 0.42063492063492064,
+        "movers": [
+          "RBLX -34%",
+          "BAND -30%",
+          "LIME +56%",
+          "TEAM +60%"
+        ]
+      },
+      {
+        "field": "Aerospace [sub]",
+        "attention_rank": 31,
+        "n_fields": 130,
+        "ret_21d": 0.113,
+        "trend_pctile": 0.9444444444444444,
+        "volume_influx_pctile": 0.6507936507936508,
+        "movers": [
+          "HONA -22%",
+          "PAC -7%",
+          "BETA +41%",
+          "ACHR +49%"
+        ]
+      },
+      {
+        "field": "Medical/Dental Instruments [sub]",
+        "attention_rank": 41,
+        "n_fields": 130,
+        "ret_21d": 0.1099,
+        "trend_pctile": 0.9563492063492064,
+        "volume_influx_pctile": 0.32936507936507936,
+        "movers": [
+          "LMAT -17%",
+          "TCMD -17%",
+          "SGHT +44%",
+          "PLSE +71%"
+        ]
+      },
+      {
+        "field": "Steel/Iron Ore [sub]",
+        "attention_rank": 86,
+        "n_fields": 130,
+        "ret_21d": 0.1045,
+        "trend_pctile": 0.8412698412698413,
+        "volume_influx_pctile": 0.36904761904761907,
+        "movers": [
+          "NWPX -16%",
+          "CRS -5%",
+          "FRD +24%",
+          "ATI +25%"
+        ]
+      }
+    ]
+  }
+}

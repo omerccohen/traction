@@ -1,0 +1,64 @@
+models: ['momentum_12_1', 'ridge', 'lightgbm', 'mlp', 'lstm', 'transformer'] | prior trials: 36 | neutralize: ('beta_63',)
+Panel: 1259 dates (2013-02-08 -> 2018-02-07), 500 tickers, 618,377 observations
+FeatureDataset: 484,529 rows, 25 features, 1000 dates (2014-02-20 -> 2018-02-07)
+9 folds; gap=11 trading days (purge+embargo)
+Fold 0: train 2014-02-20..2015-10-20 (421d) -> test 2015-11-04..2016-02-04 (63d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1786151709.446226   18060 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1786151711.479637   18060 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Fold 1: train 2014-02-20..2016-01-21 (484d) -> test 2016-02-05..2016-05-05 (63d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+Fold 2: train 2014-02-20..2016-04-21 (547d) -> test 2016-05-06..2016-08-04 (63d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+Fold 3: train 2014-02-20..2016-07-21 (610d) -> test 2016-08-05..2016-11-02 (63d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+Fold 4: train 2014-02-20..2016-10-19 (673d) -> test 2016-11-03..2017-02-03 (63d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+Fold 5: train 2014-02-20..2017-01-20 (736d) -> test 2017-02-06..2017-05-05 (63d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+Fold 6: train 2014-02-20..2017-04-21 (799d) -> test 2017-05-08..2017-08-04 (63d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+Fold 7: train 2014-02-20..2017-07-21 (862d) -> test 2017-08-07..2017-11-02 (63d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+Fold 8: train 2014-02-20..2017-10-19 (925d) -> test 2017-11-03..2018-01-30 (59d)
+/usr/local/lib/python3.11/dist-packages/lightgbm/sklearn.py:1106: LGBMDeprecationWarning: The argument 'eval_set' is deprecated, use 'eval_X' and 'eval_y' instead.
+  eval_set = _validate_eval_set_Xy(eval_set=eval_set, eval_X=eval_X, eval_y=eval_y)
+ensemble: walk-forward admission active on 1 folds
+scores neutralized against: ['beta_63']
+leakage suite: {
+  "tabular_shuffled_ic": -0.003564588632355059,
+  "tabular_shuffled_verdict": "PASS (no train/test row contamination detected)",
+  "tabular_canary_ic": 0.980994452484759,
+  "tabular_canary_verdict": "PASS (detector fires on planted leak)",
+  "sequence_shuffled_ic": -0.0047032219326492795,
+  "sequence_shuffled_verdict": "PASS (no train/test row contamination detected)",
+  "sequence_canary_ic": 0.9999999200710789,
+  "sequence_canary_verdict": "PASS (window indexing exposes the current row, as designed; detector fires)"
+}
+
+saved -> experiments/final/report.md
+  lightgbm       IC=+0.0125 ICIR=+0.110 t=+1.49
+  ridge          IC=+0.0122 ICIR=+0.109 t=+1.31
+  mlp            IC=+0.0118 ICIR=+0.102 t=+1.22
+  momentum_12_1  IC=+0.0087 ICIR=+0.050 t=+0.61
+  ensemble       IC=+0.0004 ICIR=+0.004 t=+0.02
+  lstm           IC=-0.0011 ICIR=-0.010 t=-0.12
+  transformer    IC=-0.0038 ICIR=-0.032 t=-0.40
+HOLDOUT-ONLY:
+  ridge          IC=+0.0408 t=+2.45
+  mlp            IC=+0.0349 t=+1.89
+  momentum_12_1  IC=+0.0344 t=+1.25
+  lightgbm       IC=+0.0230 t=+1.39
+  lstm           IC=+0.0184 t=+0.99
+  transformer    IC=+0.0053 t=+0.39
+  ensemble       IC=+0.0004 t=+0.02

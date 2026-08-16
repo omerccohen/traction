@@ -1,0 +1,27 @@
+# FieldWatch configuration — user-editable.
+#
+# sectors:      auto-build all GICS sectors from data_cache/sp500_sectors.csv
+# subindustries: auto-build every sub-industry with >= min_members names
+# custom:       your own cross-sector value chains — any list of >=3 tickers
+#               becomes a watched field. Edit freely; the weekly briefing
+#               picks changes up on its next run.
+
+auto:
+  sectors: true
+  subindustries: true
+  min_members: 5
+
+custom:
+  Memory/compute chain:
+    - MU
+    - INTC
+    - NVDA
+    - AMD
+    - TXN
+    - AMAT
+    - LRCX
+    - KLAC
+    - WDC
+    - STX
+    - HPQ
+    - AAPL

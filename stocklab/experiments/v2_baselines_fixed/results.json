@@ -1,0 +1,969 @@
+{
+  "signal_reports": {
+    "momentum_12_1": {
+      "name": "momentum_12_1",
+      "ic_mean": -0.022127952071800124,
+      "ic_std": 0.22941178032051038,
+      "icir": -0.09645516913206804,
+      "ic_tstat_nw": -0.9935317191499197,
+      "ic_positive_share": 0.4417989417989418,
+      "n_days": 378,
+      "quantile_returns": {
+        "0": 0.003534545083044753,
+        "1": 0.003472397161157538,
+        "2": 0.0026169665092264796,
+        "3": 0.002597284939305858,
+        "4": 0.002828906951519428,
+        "5": 0.0021944708212657785,
+        "6": 0.0014217084153290117,
+        "7": 0.0012982338573883135,
+        "8": 0.0016758421723271182,
+        "9": 0.0011173218067433034
+      },
+      "monotonicity": -0.9272727272727272,
+      "top_bottom_spread": -0.0024172232763014496,
+      "rank_autocorr_1d": 0.9936585016433388,
+      "n_dates_dropped": 0,
+      "ic_by_horizon": {
+        "1": -0.003565528496885834,
+        "10": -0.03622737169216445,
+        "21": -0.05021876161427782
+      }
+    },
+    "ridge": {
+      "name": "ridge",
+      "ic_mean": -0.014306347241473977,
+      "ic_std": 0.1830672006996572,
+      "icir": -0.07814806358932115,
+      "ic_tstat_nw": -0.821261925167169,
+      "ic_positive_share": 0.43915343915343913,
+      "n_days": 378,
+      "quantile_returns": {
+        "0": 0.0037635410589284208,
+        "1": 0.002844477773367375,
+        "2": 0.0026224478768306202,
+        "3": 0.0028378048232122637,
+        "4": 0.0016625297071722342,
+        "5": 0.0019209766057974485,
+        "6": 0.0026429182916381166,
+        "7": 0.0021768137426846227,
+        "8": 0.0013260133295054021,
+        "9": 0.000948882384526726
+      },
+      "monotonicity": -0.8303030303030302,
+      "top_bottom_spread": -0.002814658674401695,
+      "rank_autocorr_1d": 0.9471102535312838,
+      "n_dates_dropped": 0,
+      "ic_by_horizon": {
+        "1": 0.0006623707081696714,
+        "10": -0.03484524317500911,
+        "21": -0.05736865229901874
+      }
+    },
+    "lightgbm": {
+      "name": "lightgbm",
+      "ic_mean": -0.0061157535590485946,
+      "ic_std": 0.17027021302800507,
+      "icir": -0.035917929802594374,
+      "ic_tstat_nw": -0.36593595071081164,
+      "ic_positive_share": 0.47619047619047616,
+      "n_days": 378,
+      "quantile_returns": {
+        "0": 0.0027242174743572155,
+        "1": 0.0017825032185848238,
+        "2": 0.002486833984406582,
+        "3": 0.001836517218598876,
+        "4": 0.001734411058050043,
+        "5": 0.0015256343144522786,
+        "6": 0.0009832613717955297,
+        "7": 0.0004613053937135356,
+        "8": 0.0012750535468653936,
+        "9": 0.0032744887648027536
+      },
+      "monotonicity": -0.38181818181818183,
+      "top_bottom_spread": 0.000550271290445538,
+      "rank_autocorr_1d": 0.8749190413297001,
+      "n_dates_dropped": 0,
+      "ic_by_horizon": {
+        "1": 0.004372828185703314,
+        "10": -0.0105090943590397,
+        "21": -0.012876976295635296
+      }
+    },
+    "ensemble": {
+      "name": "ensemble",
+      "ic_mean": -0.018660842419237333,
+      "ic_std": 0.11002308027033758,
+      "icir": -0.16960843464131517,
+      "ic_tstat_nw": -1.1859063579392777,
+      "ic_positive_share": 0.47619047619047616,
+      "n_days": 126,
+      "quantile_returns": {
+        "0": 0.004823152734617251,
+        "1": 0.006362901800172958,
+        "2": 0.0041738172962707135,
+        "3": 0.004888198012516106,
+        "4": 0.00412874947655289,
+        "5": 0.00484387087939121,
+        "6": 0.005162078323072429,
+        "7": 0.004790630414432625,
+        "8": 0.002831199963450556,
+        "9": 0.0026155351337642653
+      },
+      "monotonicity": -0.5393939393939393,
+      "top_bottom_spread": -0.002207617600852986,
+      "rank_autocorr_1d": 0.8777658332072369,
+      "n_dates_dropped": 0,
+      "ic_by_horizon": {
+        "1": -0.0017998523575199095,
+        "10": -0.024675345502462913,
+        "21": -0.037833923727882655
+      }
+    }
+  },
+  "backtests": {
+    "momentum_12_1": {
+      "name": "momentum_12_1",
+      "stats_net": {
+        "n_days": 382,
+        "ann_return": -0.1531484321490082,
+        "ann_vol": 0.19429768900172065,
+        "sharpe": -0.7882154076863568,
+        "sharpe_tstat_nw": -0.9649171952371065,
+        "max_drawdown": -0.35881544443022373,
+        "skew": 0.15140768667193127,
+        "kurtosis": 4.264327824342528,
+        "worst_day": -0.04440955350423984,
+        "best_day": 0.04640577923880447,
+        "deflated_sharpe_prob": 0.2342019289207818
+      },
+      "stats_gross": {
+        "n_days": 382,
+        "ann_return": -0.12149315914975622,
+        "ann_vol": 0.19434677771907785,
+        "sharpe": -0.6251359583917093,
+        "sharpe_tstat_nw": -0.7650744946057058,
+        "max_drawdown": -0.336984072620357,
+        "skew": 0.1477501473185226,
+        "kurtosis": 4.257313986311299,
+        "worst_day": -0.04432622017090651,
+        "best_day": 0.046514112572137806
+      },
+      "stats_by_cost": {
+        "0.0": {
+          "n_days": 382,
+          "ann_return": -0.12149315914975622,
+          "ann_vol": 0.19434677771907785,
+          "sharpe": -0.6251359583917093,
+          "sharpe_tstat_nw": -0.7650744946057058,
+          "max_drawdown": -0.336984072620357,
+          "skew": 0.1477501473185226,
+          "kurtosis": 4.257313986311299,
+          "worst_day": -0.04432622017090651,
+          "best_day": 0.046514112572137806
+        },
+        "5.0": {
+          "n_days": 382,
+          "ann_return": -0.13732079564938218,
+          "ann_vol": 0.19432159372570584,
+          "sharpe": -0.7066677100395595,
+          "sharpe_tstat_nw": -0.8649818299911248,
+          "max_drawdown": -0.34686225378167723,
+          "skew": 0.14957494092559429,
+          "kurtosis": 4.260859432131744,
+          "worst_day": -0.04436788683757318,
+          "best_day": 0.04645994590547114
+        },
+        "10.0": {
+          "n_days": 382,
+          "ann_return": -0.1531484321490082,
+          "ann_vol": 0.19429768900172065,
+          "sharpe": -0.7882154076863568,
+          "sharpe_tstat_nw": -0.9649171952371065,
+          "max_drawdown": -0.35881544443022373,
+          "skew": 0.15140768667193127,
+          "kurtosis": 4.264327824342528,
+          "worst_day": -0.04440955350423984,
+          "best_day": 0.04640577923880447
+        },
+        "25.0": {
+          "n_days": 382,
+          "ann_return": -0.20063134164788632,
+          "ann_vol": 0.1942336550429699,
+          "sharpe": -1.0329380951179705,
+          "sharpe_tstat_nw": -1.2648085943627196,
+          "max_drawdown": -0.3954073769748968,
+          "skew": 0.1569475260844494,
+          "kurtosis": 4.27426218996176,
+          "worst_day": -0.04453455350423984,
+          "best_day": 0.046243279238804474
+        }
+      },
+      "leg_stats": {
+        "long": {
+          "n_days": 382,
+          "ann_return": 0.05537451562233803,
+          "ann_vol": 0.15160922816339914,
+          "sharpe": 0.36524502032724093,
+          "sharpe_tstat_nw": 0.508126588844628,
+          "max_drawdown": -0.18845812873885237,
+          "skew": -0.594851716881473,
+          "kurtosis": 5.207670856596238,
+          "worst_day": -0.041189459000541606,
+          "best_day": 0.027628169707102353
+        },
+        "short": {
+          "n_days": 382,
+          "ann_return": -0.1768676747720941,
+          "ann_vol": 0.2198908126301985,
+          "sharpe": -0.8043431767635578,
+          "sharpe_tstat_nw": -0.9661639425148832,
+          "max_drawdown": -0.45066044570269315,
+          "skew": 0.18188574498024365,
+          "kurtosis": 4.718241432935633,
+          "worst_day": -0.04168823907466188,
+          "best_day": 0.054494527043377504
+        }
+      },
+      "by_year": {
+        "2016": {
+          "ann_return": -0.34567795700503995,
+          "sharpe": -1.6437862798228715,
+          "max_drawdown": -0.35077173817732965
+        },
+        "2017": {
+          "ann_return": 0.058922235853248066,
+          "sharpe": 0.4712349551376906,
+          "max_drawdown": -0.048662270194319235
+        }
+      },
+      "avg_daily_turnover": 0.12561616269544468,
+      "breakeven_cost_bps": -38.380069934202375,
+      "forced_exit_days": 0,
+      "neutrality_violation_days": 0
+    },
+    "ridge": {
+      "name": "ridge",
+      "stats_net": {
+        "n_days": 382,
+        "ann_return": -0.21740967457472402,
+        "ann_vol": 0.14374302507259856,
+        "sharpe": -1.5124885152856602,
+        "sharpe_tstat_nw": -1.9964849332370294,
+        "max_drawdown": -0.3377062715450847,
+        "skew": 0.11934057811865309,
+        "kurtosis": 6.4873272603375,
+        "worst_day": -0.04363599218104478,
+        "best_day": 0.04356286758564417,
+        "deflated_sharpe_prob": 0.13339217012387583
+      },
+      "stats_gross": {
+        "n_days": 382,
+        "ann_return": -0.13736307771608527,
+        "ann_vol": 0.14373911730588018,
+        "sharpe": -0.9556415837991648,
+        "sharpe_tstat_nw": -1.2580724912914776,
+        "max_drawdown": -0.2614263849379106,
+        "skew": 0.11157963251926276,
+        "kurtosis": 6.488999750923918,
+        "worst_day": -0.04341558401777947,
+        "best_day": 0.04378786758564417
+      },
+      "stats_by_cost": {
+        "0.0": {
+          "n_days": 382,
+          "ann_return": -0.13736307771608527,
+          "ann_vol": 0.14373911730588018,
+          "sharpe": -0.9556415837991648,
+          "sharpe_tstat_nw": -1.2580724912914776,
+          "max_drawdown": -0.2614263849379106,
+          "skew": 0.11157963251926276,
+          "kurtosis": 6.488999750923918,
+          "worst_day": -0.04341558401777947,
+          "best_day": 0.04378786758564417
+        },
+        "5.0": {
+          "n_days": 382,
+          "ann_return": -0.1773863761454047,
+          "ann_vol": 0.14374018455268192,
+          "sharpe": -1.2340764463147824,
+          "sharpe_tstat_nw": -1.626841052233376,
+          "max_drawdown": -0.3006024167797402,
+          "skew": 0.11545986752356589,
+          "kurtosis": 6.4882503100191435,
+          "worst_day": -0.04352578809941213,
+          "best_day": 0.04367536758564417
+        },
+        "10.0": {
+          "n_days": 382,
+          "ann_return": -0.21740967457472402,
+          "ann_vol": 0.14374302507259856,
+          "sharpe": -1.5124885152856602,
+          "sharpe_tstat_nw": -1.9964849332370294,
+          "max_drawdown": -0.3377062715450847,
+          "skew": 0.11934057811865309,
+          "kurtosis": 6.4873272603375,
+          "worst_day": -0.04363599218104478,
+          "best_day": 0.04356286758564417
+        },
+        "25.0": {
+          "n_days": 382,
+          "ann_return": -0.3374795698626822,
+          "ann_vol": 0.14376218489182957,
+          "sharpe": -2.3474849809538623,
+          "sharpe_tstat_nw": -3.1099836532794014,
+          "max_drawdown": -0.4387885912224251,
+          "skew": 0.1309781541737076,
+          "kurtosis": 6.483517977838703,
+          "worst_day": -0.04396660442594274,
+          "best_day": 0.04322536758564417
+        }
+      },
+      "leg_stats": {
+        "long": {
+          "n_days": 382,
+          "ann_return": 0.04901428251728281,
+          "ann_vol": 0.14256298733752684,
+          "sharpe": 0.34380790857895266,
+          "sharpe_tstat_nw": 0.48662561807830196,
+          "max_drawdown": -0.17042197748943377,
+          "skew": -0.45590908075090064,
+          "kurtosis": 4.611154433065252,
+          "worst_day": -0.03671760602599377,
+          "best_day": 0.028127853066534713
+        },
+        "short": {
+          "n_days": 382,
+          "ann_return": -0.18637736023336812,
+          "ann_vol": 0.1722287026257846,
+          "sharpe": -1.0821504046182446,
+          "sharpe_tstat_nw": -1.3489160669255051,
+          "max_drawdown": -0.3753171945883532,
+          "skew": 0.3481211543978406,
+          "kurtosis": 5.393765024337538,
+          "worst_day": -0.033486447761136594,
+          "best_day": 0.04833569142061799
+        }
+      },
+      "by_year": {
+        "2016": {
+          "ann_return": -0.3261223834270258,
+          "sharpe": -1.9912344565367666,
+          "max_drawdown": -0.28643802907672467
+        },
+        "2017": {
+          "ann_return": -0.13757272965731274,
+          "sharpe": -1.5072720171293805,
+          "max_drawdown": -0.062162576547328596
+        }
+      },
+      "avg_daily_turnover": 0.3176452256295188,
+      "breakeven_cost_bps": -17.160389461486627,
+      "forced_exit_days": 0,
+      "neutrality_violation_days": 0
+    },
+    "lightgbm": {
+      "name": "lightgbm",
+      "stats_net": {
+        "n_days": 382,
+        "ann_return": -0.0840384167515574,
+        "ann_vol": 0.14097960732542814,
+        "sharpe": -0.5961033538529342,
+        "sharpe_tstat_nw": -0.7037793507929183,
+        "max_drawdown": -0.22893651246896163,
+        "skew": 0.27919460628313764,
+        "kurtosis": 5.9150775148025865,
+        "worst_day": -0.033556429266953056,
+        "best_day": 0.03778911481464171,
+        "deflated_sharpe_prob": 0.2676472597177627
+      },
+      "stats_gross": {
+        "n_days": 382,
+        "ann_return": 0.01234830725741788,
+        "ann_vol": 0.14098071041837879,
+        "sharpe": 0.08758862982582975,
+        "sharpe_tstat_nw": 0.10337222420506126,
+        "max_drawdown": -0.1540501070831113,
+        "skew": 0.2612596758858938,
+        "kurtosis": 5.886295285628396,
+        "worst_day": -0.033223095933619724,
+        "best_day": 0.03802244814797504
+      },
+      "stats_by_cost": {
+        "0.0": {
+          "n_days": 382,
+          "ann_return": 0.01234830725741788,
+          "ann_vol": 0.14098071041837879,
+          "sharpe": 0.08758862982582975,
+          "sharpe_tstat_nw": 0.10337222420506126,
+          "max_drawdown": -0.1540501070831113,
+          "skew": 0.2612596758858938,
+          "kurtosis": 5.886295285628396,
+          "worst_day": -0.033223095933619724,
+          "best_day": 0.03802244814797504
+        },
+        "5.0": {
+          "n_days": 382,
+          "ann_return": -0.03584505474706973,
+          "ann_vol": 0.14097257800635077,
+          "sharpe": -0.25426969736947647,
+          "sharpe_tstat_nw": -0.30020004150998675,
+          "max_drawdown": -0.18619414843118698,
+          "skew": 0.2702664392623948,
+          "kurtosis": 5.901537099779363,
+          "worst_day": -0.03338976260028639,
+          "best_day": 0.037905781481308375
+        },
+        "10.0": {
+          "n_days": 382,
+          "ann_return": -0.0840384167515574,
+          "ann_vol": 0.14097960732542814,
+          "sharpe": -0.5961033538529342,
+          "sharpe_tstat_nw": -0.7037793507929183,
+          "max_drawdown": -0.22893651246896163,
+          "skew": 0.27919460628313764,
+          "kurtosis": 5.9150775148025865,
+          "worst_day": -0.033556429266953056,
+          "best_day": 0.03778911481464171
+        },
+        "25.0": {
+          "n_days": 382,
+          "ann_return": -0.2286185027650204,
+          "ann_vol": 0.14109161856890717,
+          "sharpe": -1.620354951512349,
+          "sharpe_tstat_nw": -1.9087879761647855,
+          "max_drawdown": -0.3755170937726996,
+          "skew": 0.3053769847227338,
+          "kurtosis": 5.945342862080864,
+          "worst_day": -0.034056429266953056,
+          "best_day": 0.03743911481464171
+        }
+      },
+      "leg_stats": {
+        "long": {
+          "n_days": 382,
+          "ann_return": 0.14770512925434207,
+          "ann_vol": 0.1463417680902395,
+          "sharpe": 1.0093162818920014,
+          "sharpe_tstat_nw": 1.1692543063967091,
+          "max_drawdown": -0.17138403794036527,
+          "skew": -0.3080556025692593,
+          "kurtosis": 6.177762660394324,
+          "worst_day": -0.035157273905848295,
+          "best_day": 0.032217688501700745
+        },
+        "short": {
+          "n_days": 382,
+          "ann_return": -0.1353568219969242,
+          "ann_vol": 0.16717660396266332,
+          "sharpe": -0.8096636657791801,
+          "sharpe_tstat_nw": -1.0521154896379807,
+          "max_drawdown": -0.3350137258707476,
+          "skew": 0.6711214407853102,
+          "kurtosis": 6.740461859425723,
+          "worst_day": -0.032247306057633596,
+          "best_day": 0.058824001313528426
+        }
+      },
+      "by_year": {
+        "2016": {
+          "ann_return": -0.1191543282991766,
+          "sharpe": -0.7752659516547382,
+          "max_drawdown": -0.1446175527037029
+        },
+        "2017": {
+          "ann_return": -0.2614372009466015,
+          "sharpe": -4.0812942288336345,
+          "max_drawdown": -0.086068774068218
+        }
+      },
+      "avg_daily_turnover": 0.3824870000356163,
+      "breakeven_cost_bps": 1.2811211693705904,
+      "forced_exit_days": 0,
+      "neutrality_violation_days": 0
+    },
+    "ensemble": {
+      "name": "ensemble",
+      "stats_net": {
+        "n_days": 130,
+        "ann_return": -0.20199076015153505,
+        "ann_vol": 0.09223469179319406,
+        "sharpe": -2.1899651446164405,
+        "sharpe_tstat_nw": -2.329176694989672,
+        "max_drawdown": -0.11061510534124996,
+        "skew": -0.9375170296468418,
+        "kurtosis": 8.152845143994687,
+        "worst_day": -0.030240939493132404,
+        "best_day": 0.014937469657866478,
+        "deflated_sharpe_prob": 0.18236311953091122
+      },
+      "stats_gross": {
+        "n_days": 130,
+        "ann_return": -0.10207757333834827,
+        "ann_vol": 0.09211413479663344,
+        "sharpe": -1.108164057163559,
+        "sharpe_tstat_nw": -1.1897495410872623,
+        "max_drawdown": -0.06884761756350388,
+        "skew": -0.9690326236903601,
+        "kurtosis": 8.24700837317783,
+        "worst_day": -0.029938898676805874,
+        "best_day": 0.01520685741296852
+      },
+      "stats_by_cost": {
+        "0.0": {
+          "n_days": 130,
+          "ann_return": -0.10207757333834827,
+          "ann_vol": 0.09211413479663344,
+          "sharpe": -1.108164057163559,
+          "sharpe_tstat_nw": -1.1897495410872623,
+          "max_drawdown": -0.06884761756350388,
+          "skew": -0.9690326236903601,
+          "kurtosis": 8.24700837317783,
+          "worst_day": -0.029938898676805874,
+          "best_day": 0.01520685741296852
+        },
+        "5.0": {
+          "n_days": 130,
+          "ann_return": -0.1520341667449417,
+          "ann_vol": 0.0921697891243814,
+          "sharpe": -1.6495010804437715,
+          "sharpe_tstat_nw": -1.7633791374977212,
+          "max_drawdown": -0.08986883624156627,
+          "skew": -0.9533935538638056,
+          "kurtosis": 8.200910432040653,
+          "worst_day": -0.03008991908496914,
+          "best_day": 0.0150721635354175
+        },
+        "10.0": {
+          "n_days": 130,
+          "ann_return": -0.20199076015153505,
+          "ann_vol": 0.09223469179319406,
+          "sharpe": -2.1899651446164405,
+          "sharpe_tstat_nw": -2.329176694989672,
+          "max_drawdown": -0.11061510534124996,
+          "skew": -0.9375170296468418,
+          "kurtosis": 8.152845143994687,
+          "worst_day": -0.030240939493132404,
+          "best_day": 0.014937469657866478
+        },
+        "25.0": {
+          "n_days": 130,
+          "ann_return": -0.3518605403713153,
+          "ann_vol": 0.09248468126860329,
+          "sharpe": -3.8045277936289428,
+          "sharpe_tstat_nw": -3.9656793623416986,
+          "max_drawdown": -0.17008459896663786,
+          "skew": -0.8886621904480366,
+          "kurtosis": 7.997507697636415,
+          "worst_day": -0.0306940007176222,
+          "best_day": 0.014533388025213418
+        }
+      },
+      "leg_stats": {
+        "long": {
+          "n_days": 130,
+          "ann_return": 0.137940701156867,
+          "ann_vol": 0.10230250369283383,
+          "sharpe": 1.348360950881885,
+          "sharpe_tstat_nw": 1.2626668668148242,
+          "max_drawdown": -0.04359639485899469,
+          "skew": -0.283143306571864,
+          "kurtosis": 3.790667061038057,
+          "worst_day": -0.020890785308086753,
+          "best_day": 0.014274204901977519
+        },
+        "short": {
+          "n_days": 130,
+          "ann_return": -0.24001827449521526,
+          "ann_vol": 0.09048182675429818,
+          "sharpe": -2.652668310366685,
+          "sharpe_tstat_nw": -2.1961731839353034,
+          "max_drawdown": -0.11993516423229067,
+          "skew": -0.01272710770059493,
+          "kurtosis": 3.5320699923147885,
+          "worst_day": -0.016636999702267754,
+          "best_day": 0.014651553699139345
+        }
+      },
+      "by_year": {
+        "2017": {
+          "ann_return": -0.2018673039558728,
+          "sharpe": -3.149376626207351,
+          "max_drawdown": -0.07362767540082138
+        }
+      },
+      "avg_daily_turnover": 0.3964809000523286,
+      "breakeven_cost_bps": -10.21662671306925,
+      "forced_exit_days": 0,
+      "neutrality_violation_days": 0
+    }
+  },
+  "holdout_signal_reports": {},
+  "holdout_backtests": {},
+  "ensemble_membership": {
+    "1": [],
+    "2": [
+      "lightgbm"
+    ],
+    "3": [
+      "lightgbm"
+    ],
+    "4": [
+      "lightgbm",
+      "ridge"
+    ],
+    "5": [
+      "lightgbm",
+      "ridge"
+    ]
+  },
+  "skeptic": {
+    "momentum_12_1": {
+      "model": "momentum_12_1",
+      "fatal": false,
+      "flags": [
+        {
+          "severity": "WARN",
+          "check": "significance",
+          "message": "NW t-stat -0.99 < 2 required given 7 trials \u2014 consistent with noise (Harvey-Liu-Zhu)."
+        },
+        {
+          "severity": "WARN",
+          "check": "cost fragility",
+          "message": "break-even cost -38 bps/side \u2014 the edge dies within realistic retail cost ranges (10-25 bps)."
+        },
+        {
+          "severity": "WARN",
+          "check": "deflated Sharpe",
+          "message": "DSR probability 0.23 < 0.95 given 7 trials \u2014 the Sharpe is not distinguishable from the best of that many noise strategies."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SURVIVORSHIP BIAS: universe = S&P 500 constituents as of 2018; delisted/failed companies are missing. Long-side results are inflated."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SINGLE REGIME: Feb-2013..Feb-2018 is one bull market; no bear-market evidence."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "PRICE (NOT TOTAL) RETURNS: closes are split-adjusted but NOT dividend-adjusted, so every ex-div date injects ~-(div/price) into the payer's label. Labels carry a small systematic anti-yield tilt; the long leg's P&L understates by roughly the universe's ~2%/yr dividend yield."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "DATA REPAIRS: 6 corporate-action rows mechanically repaired at load (see loaders.sanitize_corporate_actions): BAX 2015-07-01: -44.4% step treated as un-adjusted distribution; prior history scaled by 0.556; DISCA 2014-08-07: -50.6% step treated as un-adjusted distribution; prior history scaled by 0.494; DISCK 2014-08-07: -51.0% step treated as un-adjusted distribution; prior history scaled by 0.490; EBAY 2015-07-20: -56.9% step treated as un-adjusted distribution; prior history scaled by 0.431; LNT 2016-05-19: reversal pair (-49.4% then +101.0%) respliced to +0.79%/day; NI 2015-07-02: -62.6% step treated as un-adjusted distribution; prior history scaled by 0.374"
+        }
+      ]
+    },
+    "ridge": {
+      "model": "ridge",
+      "fatal": false,
+      "flags": [
+        {
+          "severity": "WARN",
+          "check": "significance",
+          "message": "NW t-stat -0.82 < 2 required given 7 trials \u2014 consistent with noise (Harvey-Liu-Zhu)."
+        },
+        {
+          "severity": "WARN",
+          "check": "cost fragility",
+          "message": "break-even cost -17 bps/side \u2014 the edge dies within realistic retail cost ranges (10-25 bps)."
+        },
+        {
+          "severity": "WARN",
+          "check": "deflated Sharpe",
+          "message": "DSR probability 0.13 < 0.95 given 7 trials \u2014 the Sharpe is not distinguishable from the best of that many noise strategies."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SURVIVORSHIP BIAS: universe = S&P 500 constituents as of 2018; delisted/failed companies are missing. Long-side results are inflated."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SINGLE REGIME: Feb-2013..Feb-2018 is one bull market; no bear-market evidence."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "PRICE (NOT TOTAL) RETURNS: closes are split-adjusted but NOT dividend-adjusted, so every ex-div date injects ~-(div/price) into the payer's label. Labels carry a small systematic anti-yield tilt; the long leg's P&L understates by roughly the universe's ~2%/yr dividend yield."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "DATA REPAIRS: 6 corporate-action rows mechanically repaired at load (see loaders.sanitize_corporate_actions): BAX 2015-07-01: -44.4% step treated as un-adjusted distribution; prior history scaled by 0.556; DISCA 2014-08-07: -50.6% step treated as un-adjusted distribution; prior history scaled by 0.494; DISCK 2014-08-07: -51.0% step treated as un-adjusted distribution; prior history scaled by 0.490; EBAY 2015-07-20: -56.9% step treated as un-adjusted distribution; prior history scaled by 0.431; LNT 2016-05-19: reversal pair (-49.4% then +101.0%) respliced to +0.79%/day; NI 2015-07-02: -62.6% step treated as un-adjusted distribution; prior history scaled by 0.374"
+        }
+      ]
+    },
+    "lightgbm": {
+      "model": "lightgbm",
+      "fatal": false,
+      "flags": [
+        {
+          "severity": "WARN",
+          "check": "significance",
+          "message": "NW t-stat -0.37 < 2 required given 7 trials \u2014 consistent with noise (Harvey-Liu-Zhu)."
+        },
+        {
+          "severity": "WARN",
+          "check": "decay",
+          "message": "second-half OOS IC (-0.0318) is less than half of first-half (0.0196) \u2014 edge is decaying (Fischer-Krauss pattern)."
+        },
+        {
+          "severity": "WARN",
+          "check": "cost fragility",
+          "message": "break-even cost 1 bps/side \u2014 the edge dies within realistic retail cost ranges (10-25 bps)."
+        },
+        {
+          "severity": "WARN",
+          "check": "deflated Sharpe",
+          "message": "DSR probability 0.27 < 0.95 given 7 trials \u2014 the Sharpe is not distinguishable from the best of that many noise strategies."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SURVIVORSHIP BIAS: universe = S&P 500 constituents as of 2018; delisted/failed companies are missing. Long-side results are inflated."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SINGLE REGIME: Feb-2013..Feb-2018 is one bull market; no bear-market evidence."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "PRICE (NOT TOTAL) RETURNS: closes are split-adjusted but NOT dividend-adjusted, so every ex-div date injects ~-(div/price) into the payer's label. Labels carry a small systematic anti-yield tilt; the long leg's P&L understates by roughly the universe's ~2%/yr dividend yield."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "DATA REPAIRS: 6 corporate-action rows mechanically repaired at load (see loaders.sanitize_corporate_actions): BAX 2015-07-01: -44.4% step treated as un-adjusted distribution; prior history scaled by 0.556; DISCA 2014-08-07: -50.6% step treated as un-adjusted distribution; prior history scaled by 0.494; DISCK 2014-08-07: -51.0% step treated as un-adjusted distribution; prior history scaled by 0.490; EBAY 2015-07-20: -56.9% step treated as un-adjusted distribution; prior history scaled by 0.431; LNT 2016-05-19: reversal pair (-49.4% then +101.0%) respliced to +0.79%/day; NI 2015-07-02: -62.6% step treated as un-adjusted distribution; prior history scaled by 0.374"
+        }
+      ]
+    },
+    "ensemble": {
+      "model": "ensemble",
+      "fatal": false,
+      "flags": [
+        {
+          "severity": "WARN",
+          "check": "significance",
+          "message": "NW t-stat -1.19 < 2 required given 7 trials \u2014 consistent with noise (Harvey-Liu-Zhu)."
+        },
+        {
+          "severity": "WARN",
+          "check": "cost fragility",
+          "message": "break-even cost -10 bps/side \u2014 the edge dies within realistic retail cost ranges (10-25 bps)."
+        },
+        {
+          "severity": "WARN",
+          "check": "deflated Sharpe",
+          "message": "DSR probability 0.18 < 0.95 given 7 trials \u2014 the Sharpe is not distinguishable from the best of that many noise strategies."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SURVIVORSHIP BIAS: universe = S&P 500 constituents as of 2018; delisted/failed companies are missing. Long-side results are inflated."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "SINGLE REGIME: Feb-2013..Feb-2018 is one bull market; no bear-market evidence."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "PRICE (NOT TOTAL) RETURNS: closes are split-adjusted but NOT dividend-adjusted, so every ex-div date injects ~-(div/price) into the payer's label. Labels carry a small systematic anti-yield tilt; the long leg's P&L understates by roughly the universe's ~2%/yr dividend yield."
+        },
+        {
+          "severity": "NOTE",
+          "check": "dataset",
+          "message": "DATA REPAIRS: 6 corporate-action rows mechanically repaired at load (see loaders.sanitize_corporate_actions): BAX 2015-07-01: -44.4% step treated as un-adjusted distribution; prior history scaled by 0.556; DISCA 2014-08-07: -50.6% step treated as un-adjusted distribution; prior history scaled by 0.494; DISCK 2014-08-07: -51.0% step treated as un-adjusted distribution; prior history scaled by 0.490; EBAY 2015-07-20: -56.9% step treated as un-adjusted distribution; prior history scaled by 0.431; LNT 2016-05-19: reversal pair (-49.4% then +101.0%) respliced to +0.79%/day; NI 2015-07-02: -62.6% step treated as un-adjusted distribution; prior history scaled by 0.374"
+        }
+      ]
+    }
+  },
+  "fold_log": [
+    {
+      "fold": 0,
+      "model": "momentum_12_1",
+      "n_pred": 30489,
+      "seconds": 0.0
+    },
+    {
+      "fold": 0,
+      "model": "ridge",
+      "n_pred": 30489,
+      "seconds": 0.3
+    },
+    {
+      "fold": 0,
+      "model": "lightgbm",
+      "n_pred": 30489,
+      "seconds": 1.1
+    },
+    {
+      "fold": 1,
+      "model": "momentum_12_1",
+      "n_pred": 30501,
+      "seconds": 0.0
+    },
+    {
+      "fold": 1,
+      "model": "ridge",
+      "n_pred": 30501,
+      "seconds": 0.1
+    },
+    {
+      "fold": 1,
+      "model": "lightgbm",
+      "n_pred": 30501,
+      "seconds": 1.0
+    },
+    {
+      "fold": 2,
+      "model": "momentum_12_1",
+      "n_pred": 30582,
+      "seconds": 0.0
+    },
+    {
+      "fold": 2,
+      "model": "ridge",
+      "n_pred": 30582,
+      "seconds": 0.1
+    },
+    {
+      "fold": 2,
+      "model": "lightgbm",
+      "n_pred": 30582,
+      "seconds": 1.1
+    },
+    {
+      "fold": 3,
+      "model": "momentum_12_1",
+      "n_pred": 30842,
+      "seconds": 0.0
+    },
+    {
+      "fold": 3,
+      "model": "ridge",
+      "n_pred": 30842,
+      "seconds": 0.1
+    },
+    {
+      "fold": 3,
+      "model": "lightgbm",
+      "n_pred": 30842,
+      "seconds": 1.1
+    },
+    {
+      "fold": 4,
+      "model": "momentum_12_1",
+      "n_pred": 30915,
+      "seconds": 0.0
+    },
+    {
+      "fold": 4,
+      "model": "ridge",
+      "n_pred": 30915,
+      "seconds": 0.2
+    },
+    {
+      "fold": 4,
+      "model": "lightgbm",
+      "n_pred": 30915,
+      "seconds": 0.9
+    },
+    {
+      "fold": 5,
+      "model": "momentum_12_1",
+      "n_pred": 31165,
+      "seconds": 0.0
+    },
+    {
+      "fold": 5,
+      "model": "ridge",
+      "n_pred": 31165,
+      "seconds": 0.2
+    },
+    {
+      "fold": 5,
+      "model": "lightgbm",
+      "n_pred": 31165,
+      "seconds": 1.0
+    }
+  ],
+  "n_trials": 7,
+  "dataset_biases": [
+    "SURVIVORSHIP BIAS: universe = S&P 500 constituents as of 2018; delisted/failed companies are missing. Long-side results are inflated.",
+    "SINGLE REGIME: Feb-2013..Feb-2018 is one bull market; no bear-market evidence.",
+    "PRICE (NOT TOTAL) RETURNS: closes are split-adjusted but NOT dividend-adjusted, so every ex-div date injects ~-(div/price) into the payer's label. Labels carry a small systematic anti-yield tilt; the long leg's P&L understates by roughly the universe's ~2%/yr dividend yield.",
+    "DATA REPAIRS: 6 corporate-action rows mechanically repaired at load (see loaders.sanitize_corporate_actions): BAX 2015-07-01: -44.4% step treated as un-adjusted distribution; prior history scaled by 0.556; DISCA 2014-08-07: -50.6% step treated as un-adjusted distribution; prior history scaled by 0.494; DISCK 2014-08-07: -51.0% step treated as un-adjusted distribution; prior history scaled by 0.490; EBAY 2015-07-20: -56.9% step treated as un-adjusted distribution; prior history scaled by 0.431; LNT 2016-05-19: reversal pair (-49.4% then +101.0%) respliced to +0.79%/day; NI 2015-07-02: -62.6% step treated as un-adjusted distribution; prior history scaled by 0.374"
+  ],
+  "leakage": {
+    "tabular_shuffled_ic": -0.0019927303953861893,
+    "tabular_shuffled_verdict": "PASS (no train/test row contamination detected)",
+    "tabular_canary_ic": 0.9809771401245135,
+    "tabular_canary_verdict": "PASS (detector fires on planted leak)",
+    "sequence_shuffled_ic": -0.0047032219326492795,
+    "sequence_shuffled_verdict": "PASS (no train/test row contamination detected)",
+    "sequence_canary_ic": 0.9999999200710789,
+    "sequence_canary_verdict": "PASS (window indexing exposes the current row, as designed; detector fires)"
+  },
+  "timings": {
+    "setup": 7.059619665145874,
+    "total": 26.378178358078003
+  },
+  "config": {
+    "label": {
+      "horizon": 5,
+      "lag": 1,
+      "target": "rank"
+    },
+    "universe": {
+      "min_history": 260,
+      "min_price": 5.0,
+      "min_dollar_volume": 1000000.0
+    },
+    "split": {
+      "min_train_days": 420,
+      "test_span": 63,
+      "embargo": 5,
+      "holdout_start": "2017-06-01"
+    },
+    "backtest": {
+      "n_quantiles": 10,
+      "cost_bps": 10.0,
+      "cost_grid": [
+        0.0,
+        5.0,
+        10.0,
+        25.0
+      ],
+      "ann_factor": 252
+    },
+    "sequence": {
+      "length": 40,
+      "train_stride": 2,
+      "features": [
+        "ret_1d",
+        "ret_5d",
+        "mom_21",
+        "mom_63",
+        "mom_12_1",
+        "vol_21",
+        "boll_z",
+        "pct_from_high_252",
+        "rsi_14",
+        "log_adv_21"
+      ]
+    },
+    "seed": 7
+  },
+  "holdout_included": false
+}

@@ -1,0 +1,225 @@
+#!/usr/bin/env python3
+"""Build the analysis pack from the current live data and save it.
+
+This is the deterministic input to the hedge-fund-analyst desk note. It reuses
+the exact same panel/field/indicator machinery as the weekly briefing, so the
+pack can never disagree with the briefing it accompanies.
+
+Output: briefings/analysis_pack_<as_of>.json
+"""
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+# reuse the briefing's data loaders so pack and briefing are always consistent
+import importlib.util
+_wb_path = Path(__file__).resolve().parent / "weekly_briefing.py"
+_spec = importlib.util.spec_from_file_location("weekly_briefing", _wb_path)
+wb = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(wb)
+
+from stocklab.fieldwatch import field_snapshot
+from stocklab.analyst import build_analysis_pack
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def main() -> None:
+    panel, source, banner = wb.load_panel()
+    as_of = panel.dates[-1]
+    fields, _warn = wb.load_field_config(list(panel.tickers))
+    snaps = [field_snapshot(panel, members, name, as_of=as_of)
+             for name, members in fields.items()]
+    snaps = [s for s in snaps if s]
+
+    from stocklab.indicators import load_registry, refresh_all
+    inds = load_registry()
+    states = refresh_all(inds)
+
+    pack = build_analysis_pack(
+        snaps, inds, states, as_of=as_of, source=source,
+        universe_size=len(panel.tickers), top_n=6,
+    )
+    pack_dict = pack.to_dict()
+
+    # Coverage warning. load_panel() already DETECTS a partial store and builds
+    # the banner; this line used to drop it into `_banner` and the pack shipped
+    # with no trace of it. On 2026-08-12 a pack went out built on 135 of 2,992
+    # tickers (4.5%) with four of the six top fields carrying 0-1 members that
+    # had actually printed, and nothing in the file said so. The check is
+    # worthless if its answer is discarded, so it rides at the top of the pack
+    # and the analyst brief is required to read it.
+    ld = panel.close.apply(lambda s: s.last_valid_index())
+    share = float((ld == as_of).mean())
+    pack_dict["coverage"] = {
+        "as_of": str(as_of.date()),
+        "tickers_total": int(len(ld)),
+        "tickers_priced_on_as_of": int((ld == as_of).sum()),
+        "share_on_as_of": round(share, 4),
+        "banner": banner or "",
+        "ok": bool(share >= 0.95),
+    }
+    if share < 0.95:
+        pack_dict["coverage"]["warning"] = (
+            f"PARTIAL DATA: only {share:.1%} of tickers are priced on {as_of.date()}. "
+            "Field scores mix trading days and thin fields may be built on one or "
+            "two names. Do not rank fields against each other from this pack — "
+            "re-run the price update first.")
+        print(f"WARNING: pack built on {share:.1%} coverage", file=sys.stderr)
+
+    # Physical-proxy panel: the commodity/theme ETF field is a physical
+    # supply/demand cross-check, but it rarely ranks top-6 (percentiles are vs
+    # its own history), so inject it explicitly so the analyst ALWAYS sees which
+    # physical thing is actually moving. Real moves only, from the same panel.
+    try:
+        from stocklab.target_finder import member_moves
+        etfs = fields.get("Thematic Proxies", [])
+        if etfs:
+            import pandas as pd
+            sec = pd.read_csv(ROOT / "data_cache" / "universe" / "broad_sectors.csv").set_index("Symbol")
+            sub = sec["GICS Sub-Industry"]
+            mv = member_moves(panel, etfs, as_of)
+            recs = []
+            for r in mv.to_dict("records"):
+                r["tracks"] = str(sub.get(r["ticker"], ""))
+                recs.append(r)
+            pack_dict["physical_proxies"] = {
+                "field": "Thematic Proxies", "n": len(recs),
+                "note": "Commodity/theme ETFs — physical supply/demand cross-check. "
+                        "Real 21d/63d moves; use to confirm or question equity themes.",
+                "movers": recs,
+            }
+    except Exception as e:  # never let the cross-check kill the pack
+        pack_dict["physical_proxies"] = {"error": str(e)}
+
+    # Buried moves: the attention score is a MEAN over ~5 indicators, so one
+    # extreme reading gets diluted by four ordinary ones. Measured on 2026-08-11:
+    # 24 of 129 fields had a 21d trend at/above the 80th percentile of their own
+    # history yet ranked outside the top 15 (Basic Materials +20.5% at rank 68,
+    # Paper +19.0% at rank 63). The analyst only ever sees `top_fields`, so those
+    # moves were invisible to it. Surfaced here so a large one-sided move cannot
+    # be averaged out of the briefing.
+    try:
+        import numpy as np
+        ranked_all = sorted([s for s in snaps if s and np.isfinite(s.score)],
+                            key=lambda s: -s.score)
+        top_names = {s.name for s in ranked_all[:6]}
+        buried = []
+        n_candidates = 0   # fields actually eligible (not shown in top_fields)
+        for i, s in enumerate(ranked_all, start=1):
+            tr = s.indicators.get("trend_21d", {})
+            # The cut was `i > 15` while the analyst only ever sees the top 6,
+            # so ranks 7-15 appeared in NEITHER list — nine fields a week,
+            # visible nowhere. On 2026-08-13 that gap held Electronic Components
+            # (rank 10, +14.6%/21d, dispersion at the 100th percentile — the
+            # memory and storage names), Technology (rank 9, +9.3%) and
+            # Advertising (rank 8, +13.0%). A reader who asked "where are the
+            # chip and memory groups?" was right: they were in the hole between
+            # the two lists. The only correct test is "not shown to the analyst".
+            if s.name in top_names:
+                continue
+            n_candidates += 1
+            # ...and it tested ONLY trend_21d, so a field could be at the most
+            # extreme reading in its entire history on any of the other four
+            # indicators and still be invisible. Electronic Components on
+            # 2026-08-13 is the case in point: trend a mere 67th percentile, but
+            # DISPERSION at the 100th — the widest its members have ever pulled
+            # apart — while it holds the memory and storage names. Closing the
+            # rank hole alone did not surface it. Every indicator gets checked,
+            # and the pack says WHICH one fired.
+            # THRESHOLDS ARE SET AGAINST CHANCE, not by eye. With four secondary
+            # indicators, a two-tailed 90/10 bar fires on at least one of them
+            # 59% of the time by pure chance — and a first cut at that bar
+            # flagged 89 of 129 fields (69%), i.e. exactly noise. A list that
+            # flags two thirds of the board carries no information.
+            #   two-tailed 0.05, >=1 of 4:  34.4% by chance   (still too loose)
+            #   two-tailed 0.05, >=2 of 4:   5.2% by chance   <- the bar used
+            # A big one-sided move stays sufficient on its own, because that is
+            # the original, separately-motivated rule and direction is
+            # intrinsically interesting. Anything else must corroborate itself.
+            # SYMMETRIC at 90/10, same 0.20 chance budget the old one-tailed
+            # 80th spent: the one-tailed bar could not surface a CRASH — a
+            # field at the most extreme negative reading of its history was
+            # invisible unless two secondaries independently fired, which
+            # contradicts this section's own "one-sided moves get diluted"
+            # rationale. Both directions now qualify at the same selectivity.
+            tp = tr.get("pctile")
+            trend_hit = tp is not None and (tp >= 0.90 or tp <= 0.10)
+            secondary = []
+            for key in ("dispersion", "volatility", "cohesion", "volume_influx"):
+                pc = s.indicators.get(key, {}).get("pctile")
+                if pc is None:
+                    continue
+                # both tails matter — volume_influx at p8 means money LEAVING,
+                # which is as informative as p92
+                if pc >= 0.95 or pc <= 0.05:
+                    secondary.append(f"{key} p{pc * 100:.0f}")
+            if not (trend_hit or len(secondary) >= 2):
+                continue
+            reasons = ([f"trend p{(tr['pctile'] or 0) * 100:.0f}"] if trend_hit
+                       else []) + secondary
+            if reasons:
+                buried.append({
+                    "field": s.name, "attention_rank": i, "n_fields": len(ranked_all),
+                    "ret_21d": tr.get("value"), "trend_pctile": tr.get("pctile"),
+                    "volume_influx_pctile": s.indicators.get("volume_influx", {}).get("pctile"),
+                    "extreme_on": reasons,
+                    "movers": s.members_moving,
+                })
+        buried.sort(key=lambda b: (-len(b["extreme_on"]), -abs(b["ret_21d"] or 0)))
+        # Report what this bar would flag on RANDOM data, so the reader can see
+        # whether the list carries information. p(trend) = 0.20 one-tailed at
+        # the 80th; p(>=2 of 4 secondary at 95/5) = 0.052. A count near the
+        # expected figure means the section is mostly noise no matter how
+        # convincing the individual rows read.
+        # p(trend two-tailed at 90/10) = 0.20; p(>=2 of 4 secondary) = 0.052.
+        # Base = CANDIDATES, not all fields: the excluded top 6 were counted
+        # before, overstating expected. (The top 6 are also not random, so
+        # even this slightly overstates chance among the remainder.)
+        p_chance = 1 - (1 - 0.20) * (1 - 0.052)
+        expected = round(p_chance * n_candidates)
+        ratio = (len(buried) / expected) if expected else float("inf")
+        pack_dict["buried_moves"] = {
+            "n": len(buried),
+            "n_expected_by_chance": expected,
+            # a count far ABOVE expected is not "at chance" either — it means
+            # more extremes than noise alone would give (excess may be real;
+            # individual rows still unverified)
+            "selectivity": ("informative" if ratio < 0.6 else
+                            "modest" if ratio < 0.9 else
+                            "AT CHANCE — read individual rows sceptically"
+                            if ratio <= 1.5 else
+                            "ABOVE CHANCE — more flagged than noise alone "
+                            "would give; the excess may be real, but each "
+                            "row is still unverified"),
+            "n_shown": min(len(buried), 20),
+            "note": "Fields NOT in top_fields that are at an extreme reading of "
+                    "their own history: trend at/above the 90th OR at/below the "
+                    "10th percentile (both directions — a crash is as buried as "
+                    "a rally), OR at least TWO of dispersion/volatility/"
+                    "cohesion/volume_influx at/above the 95th or at/below the "
+                    "5th. Two independent secondary extremes occur ~5% of the "
+                    "time by chance, which is why a single one is not enough. "
+                    "`extreme_on` names which. The "
+                    "attention score is a MEAN over these five, so one extreme "
+                    "reading is diluted by four ordinary ones — a field can be "
+                    "at the most extreme dispersion in its history and rank "
+                    "10th. A high trend with LOW volume_influx means price moved "
+                    "without money arriving: unexplained, not confirmation.",
+            "fields": buried[:20],
+        }
+    except Exception as e:
+        pack_dict["buried_moves"] = {"error": str(e)}
+
+    out = ROOT / "briefings" / f"analysis_pack_{pack.as_of}.json"
+    out.write_text(json.dumps(pack_dict, indent=2, default=float))
+    print(json.dumps(pack_dict, indent=2, default=float))
+    print(f"\nsaved -> {out}", file=sys.stderr)
+
+
+if __name__ == "__main__":
+    main()

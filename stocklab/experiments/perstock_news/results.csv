@@ -1,0 +1,6 @@
+arm,model,ic,nw_t,net_sharpe,n_days
+UNIVARIATE,nws_net_decay,0.0024,0.14,,378
+BASE,ridge,0.0405,1.97,0.46,378
+BASE,lightgbm,0.0254,1.61,0.39,378
+NEWS,ridge,0.0316,1.68,0.33,378
+NEWS,lightgbm,0.0293,2.26,0.14,378

@@ -1,0 +1,5 @@
+arm,model,ic,nw_t,net_sharpe,n_days
+BASE,ridge,0.0003,0.01,-1.14,158
+BASE,lightgbm,0.0311,1.77,0.92,158
+NEWS,ridge,0.0003,0.01,-1.14,158
+NEWS,lightgbm,0.021,1.11,0.6,158

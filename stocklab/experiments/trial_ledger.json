@@ -1,0 +1,156 @@
+{
+  "total_trials": 90,
+  "runs": [
+    {
+      "at": "2026-08-07T23:55:00+00:00",
+      "out": "experiments/v1_baselines",
+      "models": [
+        "lightgbm",
+        "momentum_12_1",
+        "ridge"
+      ],
+      "n_new_trials": 4,
+      "note": "BACKFILL (round-2 review finding 6): v1's 3 trials pre-dated the ledger, +1 nominal charge for the v1->v2 fold-layout change",
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T00:14:26.354977+00:00",
+      "out": "experiments/v2_baselines_fixed",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "momentum_12_1",
+        "ridge"
+      ],
+      "n_new_trials": 4,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T00:57:51.450806+00:00",
+      "out": "experiments/v3_full_ladder",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "lstm",
+        "mlp",
+        "momentum_12_1",
+        "ridge",
+        "transformer"
+      ],
+      "n_new_trials": 7,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T01:02:12.375448+00:00",
+      "out": "experiments/v4_neutralized",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "mlp",
+        "momentum_12_1",
+        "ridge"
+      ],
+      "n_new_trials": 5,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T01:03:25.044914+00:00",
+      "out": "experiments/h1_sweep",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "momentum_12_1",
+        "ridge"
+      ],
+      "n_new_trials": 4,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T01:04:09.002218+00:00",
+      "out": "experiments/h5_sweep",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "momentum_12_1",
+        "ridge"
+      ],
+      "n_new_trials": 4,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T01:04:44.585778+00:00",
+      "out": "experiments/h10_sweep",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "momentum_12_1",
+        "ridge"
+      ],
+      "n_new_trials": 4,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T01:05:20.152048+00:00",
+      "out": "experiments/h21_sweep",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "momentum_12_1",
+        "ridge"
+      ],
+      "n_new_trials": 4,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T02:31:32.767083+00:00",
+      "out": "experiments/final",
+      "models": [
+        "ensemble",
+        "lightgbm",
+        "lstm",
+        "mlp",
+        "momentum_12_1",
+        "ridge",
+        "transformer"
+      ],
+      "n_new_trials": 7,
+      "include_holdout": true
+    },
+    {
+      "at": "2026-08-08T11:24:47.417644+00:00",
+      "out": "experiments/combination_sweep",
+      "models": [
+        "combination_sweep"
+      ],
+      "n_new_trials": 30,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T11:27:02.045140+00:00",
+      "out": "experiments/news_sentiment",
+      "models": [
+        "news_sentiment_ab"
+      ],
+      "n_new_trials": 4,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T17:33:22.103147+00:00",
+      "out": "experiments/perstock_news",
+      "models": [
+        "perstock_news_ab"
+      ],
+      "n_new_trials": 5,
+      "include_holdout": false
+    },
+    {
+      "at": "2026-08-08T17:42:14.606982+00:00",
+      "out": "experiments/field_effects",
+      "models": [
+        "field_effects"
+      ],
+      "n_new_trials": 8,
+      "include_holdout": false
+    }
+  ]
+}

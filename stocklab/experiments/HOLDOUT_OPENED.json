@@ -1,0 +1,17 @@
+{
+  "opens": [
+    {
+      "at": "2026-08-08T01:14:59.683621+00:00",
+      "models": [
+        "momentum",
+        "ridge",
+        "lightgbm",
+        "mlp",
+        "lstm",
+        "transformer"
+      ],
+      "prior_trials": 36,
+      "out": "experiments/final"
+    }
+  ]
+}

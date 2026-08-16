@@ -1,0 +1,681 @@
+{
+  "universe": 646,
+  "asof_range": [
+    "2018-11-30",
+    "2026-01-09"
+  ],
+  "pit_screen_usd_per_day": 150000000.0,
+  "note": "`full` includes every observation, including names that were microcaps on the as-of date and only became liquid later. `pit_screened` keeps only observations whose trailing 252d median dollar volume ON THAT DATE cleared the screen \u2014 the cut a real book could have traded. Read pit_screened. NOTE: the screen cannot repair the other half of the selection \u2014 companies that were liquid then and are gone or illiquid now were never downloaded, so survivorship remains.",
+  "full": {
+    "n_obs": 25042,
+    "n_asof_dates": 59,
+    "median_names_per_date": 529,
+    "median_pit_dv_musd": 224.5,
+    "IC_63d": {
+      "IMPROVEMENT": {
+        "mean_ic": 0.012840390679962795,
+        "nw_t": 1.1104788568841621,
+        "n_dates": 47,
+        "held_out_ic": 0.012572966624109477,
+        "held_out_n": 22,
+        "tainted_ic": 0.013075723849113714,
+        "tainted_n": 25
+      },
+      "VALUE": {
+        "mean_ic": 0.03408921608547808,
+        "nw_t": 1.4716661694614475,
+        "n_dates": 47,
+        "held_out_ic": 0.03361185600039584,
+        "held_out_n": 22,
+        "tainted_ic": 0.034509292960350456,
+        "tainted_n": 25
+      },
+      "LEVELS": {
+        "mean_ic": -0.03759575874941891,
+        "nw_t": -1.7555456395437008,
+        "n_dates": 47,
+        "held_out_ic": -0.017896059936141216,
+        "held_out_n": 22,
+        "tainted_ic": -0.05493149370510328,
+        "tainted_n": 25
+      },
+      "IMPROV_VALUE": {
+        "mean_ic": 0.03455564694255023,
+        "nw_t": 2.863793234553121,
+        "n_dates": 47,
+        "held_out_ic": 0.03102715932985894,
+        "held_out_n": 22,
+        "tainted_ic": 0.03766071604171857,
+        "tainted_n": 25
+      },
+      "LEVELS_VALUE": {
+        "mean_ic": -0.006803683133578639,
+        "nw_t": -0.2394952528049795,
+        "n_dates": 47,
+        "held_out_ic": 0.01805146988347431,
+        "held_out_n": 22,
+        "tainted_ic": -0.028676217788585243,
+        "tainted_n": 25
+      },
+      "IMPROVEMENT_sn": {
+        "mean_ic": 0.01945864886581533,
+        "nw_t": 2.186448624957024,
+        "n_dates": 47,
+        "held_out_ic": 0.01580305946918517,
+        "held_out_n": 22,
+        "tainted_ic": 0.022675567534849863,
+        "tainted_n": 25
+      },
+      "VALUE_sn": {
+        "mean_ic": 0.04519908657307663,
+        "nw_t": 2.412560928734776,
+        "n_dates": 47,
+        "held_out_ic": 0.058144285201815964,
+        "held_out_n": 22,
+        "tainted_ic": 0.03380731177978602,
+        "tainted_n": 25
+      },
+      "LEVELS_sn": {
+        "mean_ic": -0.03598497004374766,
+        "nw_t": -1.99486044543343,
+        "n_dates": 47,
+        "held_out_ic": -0.00919696739429194,
+        "held_out_n": 22,
+        "tainted_ic": -0.059558412375268696,
+        "tainted_n": 25
+      },
+      "IMPROV_VALUE_sn": {
+        "mean_ic": 0.04281729669200953,
+        "nw_t": 3.4223750948974083,
+        "n_dates": 47,
+        "held_out_ic": 0.04837853250579998,
+        "held_out_n": 22,
+        "tainted_ic": 0.037923409175873925,
+        "tainted_n": 25
+      },
+      "LEVELS_VALUE_sn": {
+        "mean_ic": 0.000741086798886541,
+        "nw_t": 0.033112655572106194,
+        "n_dates": 47,
+        "held_out_ic": 0.03424185930830016,
+        "held_out_n": 22,
+        "tainted_ic": -0.028739593009397445,
+        "tainted_n": 25
+      },
+      "momentum": {
+        "mean_ic": 0.028059532699074033,
+        "nw_t": 1.042943260629668,
+        "n_dates": 47,
+        "held_out_ic": 0.024855449308951692,
+        "held_out_n": 22,
+        "tainted_ic": 0.030879126082381685,
+        "tainted_n": 25
+      },
+      "ALL": {
+        "mean_ic": 0.04877338113705162,
+        "nw_t": 1.939009770761148,
+        "n_dates": 47,
+        "held_out_ic": 0.04462900494930799,
+        "held_out_n": 22,
+        "tainted_ic": 0.05242043218226602,
+        "tainted_n": 25
+      }
+    },
+    "components_63d": {
+      "earnings_yield": {
+        "mean_ic": 0.011487258337698892,
+        "nw_t": 0.46120975189194663,
+        "n_dates": 47,
+        "held_out_ic": 0.024016666820337415,
+        "held_out_n": 22,
+        "tainted_ic": 0.0004613788729769941,
+        "tainted_n": 25
+      },
+      "book_to_price": {
+        "mean_ic": 0.023522537016309977,
+        "nw_t": 1.3769365053954752,
+        "n_dates": 47,
+        "held_out_ic": -0.0013237546078364198,
+        "held_out_n": 22,
+        "tainted_ic": 0.045387273645558814,
+        "tainted_n": 25
+      },
+      "sales_to_price": {
+        "mean_ic": 0.07022873551817521,
+        "nw_t": 3.1816807746042253,
+        "n_dates": 47,
+        "held_out_ic": 0.09097786629749932,
+        "held_out_n": 22,
+        "tainted_ic": 0.05196950043237,
+        "tainted_n": 25
+      }
+    },
+    "spread_63d": {
+      "VALUE": {
+        "mean": -0.04978909599188323,
+        "median": 0.004527547298513429,
+        "nw_t": -1.0534365217710817,
+        "hit_rate": 0.5106382978723404,
+        "held_out_mean": 0.04529382924295689,
+        "tainted_mean": -0.1334620701985425
+      },
+      "IMPROV_VALUE": {
+        "mean": -0.01407766273243092,
+        "median": 0.01017090981382067,
+        "nw_t": -0.7427493202908547,
+        "hit_rate": 0.574468085106383,
+        "held_out_mean": 0.02848707877821051,
+        "tainted_mean": -0.051534635261795386
+      },
+      "ALL": {
+        "mean": 0.026979768751567153,
+        "median": 0.033154572091312146,
+        "nw_t": 1.1803634987332279,
+        "hit_rate": 0.5957446808510638,
+        "held_out_mean": 0.03061457722571488,
+        "tainted_mean": 0.023781137294317158
+      }
+    },
+    "IC_126d": {
+      "IMPROVEMENT": {
+        "mean_ic": 0.01765507253487394,
+        "nw_t": 1.3769910973427568,
+        "n_dates": 47,
+        "held_out_ic": 0.009757624177053762,
+        "held_out_n": 22,
+        "tainted_ic": 0.024604827089755702,
+        "tainted_n": 25
+      },
+      "VALUE": {
+        "mean_ic": 0.030217421495740814,
+        "nw_t": 1.2170651616100554,
+        "n_dates": 47,
+        "held_out_ic": 0.03389905356367171,
+        "held_out_n": 22,
+        "tainted_ic": 0.026977585275961623,
+        "tainted_n": 25
+      },
+      "LEVELS": {
+        "mean_ic": -0.06489336256751982,
+        "nw_t": -2.8833208535722656,
+        "n_dates": 47,
+        "held_out_ic": -0.043630015153021645,
+        "held_out_n": 22,
+        "tainted_ic": -0.08360510829227823,
+        "tainted_n": 25
+      },
+      "IMPROV_VALUE": {
+        "mean_ic": 0.034364240394124175,
+        "nw_t": 2.470229998786605,
+        "n_dates": 47,
+        "held_out_ic": 0.027291104743163378,
+        "held_out_n": 22,
+        "tainted_ic": 0.04058859976696967,
+        "tainted_n": 25
+      },
+      "LEVELS_VALUE": {
+        "mean_ic": -0.029055741976350333,
+        "nw_t": -0.993068860782802,
+        "n_dates": 47,
+        "held_out_ic": -0.00012101097049301911,
+        "held_out_n": 22,
+        "tainted_ic": -0.054518305261504786,
+        "tainted_n": 25
+      },
+      "IMPROVEMENT_sn": {
+        "mean_ic": 0.021334313951263315,
+        "nw_t": 2.207624556701415,
+        "n_dates": 47,
+        "held_out_ic": 0.012632311021743501,
+        "held_out_n": 22,
+        "tainted_ic": 0.02899207652924076,
+        "tainted_n": 25
+      },
+      "VALUE_sn": {
+        "mean_ic": 0.05008564452238896,
+        "nw_t": 2.1775103468857377,
+        "n_dates": 47,
+        "held_out_ic": 0.07018485220640108,
+        "held_out_n": 22,
+        "tainted_ic": 0.03239834176045826,
+        "tainted_n": 25
+      },
+      "LEVELS_sn": {
+        "mean_ic": -0.06036805643114141,
+        "nw_t": -3.4764029892382995,
+        "n_dates": 47,
+        "held_out_ic": -0.028359929747629783,
+        "held_out_n": 22,
+        "tainted_ic": -0.08853520791263164,
+        "tainted_n": 25
+      },
+      "IMPROV_VALUE_sn": {
+        "mean_ic": 0.04472658557251556,
+        "nw_t": 2.7385341839381905,
+        "n_dates": 47,
+        "held_out_ic": 0.052533827386330896,
+        "held_out_n": 22,
+        "tainted_ic": 0.03785621277635808,
+        "tainted_n": 25
+      },
+      "LEVELS_VALUE_sn": {
+        "mean_ic": -0.0122540244460545,
+        "nw_t": -0.506348713068041,
+        "n_dates": 47,
+        "held_out_ic": 0.028910228030159742,
+        "held_out_n": 22,
+        "tainted_ic": -0.04847856662512306,
+        "tainted_n": 25
+      },
+      "momentum": {
+        "mean_ic": 0.08646222622108556,
+        "nw_t": 3.0988418688356765,
+        "n_dates": 47,
+        "held_out_ic": 0.08327448645777764,
+        "held_out_n": 22,
+        "tainted_ic": 0.0892674372127965,
+        "tainted_n": 25
+      },
+      "ALL": {
+        "mean_ic": 0.0901402606988031,
+        "nw_t": 3.6376686724694087,
+        "n_dates": 47,
+        "held_out_ic": 0.08482367749603373,
+        "held_out_n": 22,
+        "tainted_ic": 0.09481885391724015,
+        "tainted_n": 25
+      }
+    },
+    "components_126d": {
+      "earnings_yield": {
+        "mean_ic": -0.010475992204022453,
+        "nw_t": -0.41819812150619035,
+        "n_dates": 47,
+        "held_out_ic": 0.009768424390710077,
+        "held_out_n": 22,
+        "tainted_ic": -0.02829107880738708,
+        "tainted_n": 25
+      },
+      "book_to_price": {
+        "mean_ic": 0.02081365721143638,
+        "nw_t": 0.974255227682772,
+        "n_dates": 47,
+        "held_out_ic": -0.011866696839896022,
+        "held_out_n": 22,
+        "tainted_ic": 0.049572368776608894,
+        "tainted_n": 25
+      },
+      "sales_to_price": {
+        "mean_ic": 0.08349274392454326,
+        "nw_t": 3.4343335164355855,
+        "n_dates": 47,
+        "held_out_ic": 0.12533904721005132,
+        "held_out_n": 22,
+        "tainted_ic": 0.04666799703329617,
+        "tainted_n": 25
+      }
+    },
+    "spread_126d": {
+      "VALUE": {
+        "mean": -0.11300055080754139,
+        "median": 0.016613150817185812,
+        "nw_t": -1.4762832719938908,
+        "hit_rate": 0.5531914893617021,
+        "held_out_mean": 0.09512277700490107,
+        "tainted_mean": -0.29614907928249073
+      },
+      "IMPROV_VALUE": {
+        "mean": -0.054669662693884465,
+        "median": -0.024488393020938554,
+        "nw_t": -1.2745830823189075,
+        "hit_rate": 0.3829787234042553,
+        "held_out_mean": 0.060165619771590274,
+        "tainted_mean": -0.1557247112635022
+      },
+      "ALL": {
+        "mean": 0.09110518320049615,
+        "median": 0.060391101490698304,
+        "nw_t": 1.643768260091267,
+        "hit_rate": 0.6382978723404256,
+        "held_out_mean": 0.11144975851054485,
+        "tainted_mean": 0.0732019569276533
+      }
+    }
+  },
+  "pit_screened": {
+    "n_obs": 16195,
+    "n_asof_dates": 59,
+    "median_names_per_date": 331,
+    "median_pit_dv_musd": 317.0,
+    "IC_63d": {
+      "IMPROVEMENT": {
+        "mean_ic": 0.006528656640625396,
+        "nw_t": 0.45489512780556357,
+        "n_dates": 44,
+        "held_out_ic": 0.015277574923680683,
+        "held_out_n": 19,
+        "tainted_ic": -0.00012052125449662554,
+        "tainted_n": 25
+      },
+      "VALUE": {
+        "mean_ic": 0.036096890688182386,
+        "nw_t": 1.2128490865365,
+        "n_dates": 44,
+        "held_out_ic": -0.008673013394749808,
+        "held_out_n": 19,
+        "tainted_ic": 0.07012201779121086,
+        "tainted_n": 25
+      },
+      "LEVELS": {
+        "mean_ic": -0.02200559253724941,
+        "nw_t": -0.8993463949859438,
+        "n_dates": 44,
+        "held_out_ic": -0.009161518173998413,
+        "held_out_n": 19,
+        "tainted_ic": -0.03176708905332017,
+        "tainted_n": 25
+      },
+      "IMPROV_VALUE": {
+        "mean_ic": 0.037352901762463114,
+        "nw_t": 1.7453057437319583,
+        "n_dates": 44,
+        "held_out_ic": 0.012655862458606027,
+        "held_out_n": 19,
+        "tainted_ic": 0.05612265163339448,
+        "tainted_n": 25
+      },
+      "LEVELS_VALUE": {
+        "mean_ic": -0.002547273301881354,
+        "nw_t": -0.09244064831031627,
+        "n_dates": 44,
+        "held_out_ic": -0.0041671538815532885,
+        "held_out_n": 19,
+        "tainted_ic": -0.0013161640613306924,
+        "tainted_n": 25
+      },
+      "IMPROVEMENT_sn": {
+        "mean_ic": 0.01061493394662203,
+        "nw_t": 0.9410484548781151,
+        "n_dates": 44,
+        "held_out_ic": 0.01721747114953105,
+        "held_out_n": 19,
+        "tainted_ic": 0.005597005672411175,
+        "tainted_n": 25
+      },
+      "VALUE_sn": {
+        "mean_ic": 0.04364800476448891,
+        "nw_t": 1.7286260922096952,
+        "n_dates": 44,
+        "held_out_ic": 0.024604511797158408,
+        "held_out_n": 19,
+        "tainted_ic": 0.05812105941966007,
+        "tainted_n": 25
+      },
+      "LEVELS_sn": {
+        "mean_ic": -0.0212056715805805,
+        "nw_t": -1.0552495965177047,
+        "n_dates": 44,
+        "held_out_ic": -0.00554816365613029,
+        "held_out_n": 19,
+        "tainted_ic": -0.03310537760316266,
+        "tainted_n": 25
+      },
+      "IMPROV_VALUE_sn": {
+        "mean_ic": 0.04002470912238246,
+        "nw_t": 1.910007798635939,
+        "n_dates": 44,
+        "held_out_ic": 0.034987551821472056,
+        "held_out_n": 19,
+        "tainted_ic": 0.043852948671074365,
+        "tainted_n": 25
+      },
+      "LEVELS_VALUE_sn": {
+        "mean_ic": 0.0056008245145520935,
+        "nw_t": 0.2685544339126323,
+        "n_dates": 44,
+        "held_out_ic": 0.013631784129217575,
+        "held_out_n": 19,
+        "tainted_ic": -0.0005027047925936757,
+        "tainted_n": 25
+      },
+      "momentum": {
+        "mean_ic": -0.001214278549997695,
+        "nw_t": -0.038362029581604534,
+        "n_dates": 44,
+        "held_out_ic": 0.005351485869119808,
+        "held_out_n": 19,
+        "tainted_ic": -0.0062042595085269985,
+        "tainted_n": 25
+      },
+      "ALL": {
+        "mean_ic": 0.03279562161629504,
+        "nw_t": 1.0063368672234083,
+        "n_dates": 44,
+        "held_out_ic": 0.025164137693623048,
+        "held_out_n": 19,
+        "tainted_ic": 0.03859554939752576,
+        "tainted_n": 25
+      }
+    },
+    "components_63d": {
+      "earnings_yield": {
+        "mean_ic": 0.03648793205505786,
+        "nw_t": 1.1869610976314429,
+        "n_dates": 44,
+        "held_out_ic": 0.007138077158587593,
+        "held_out_n": 19,
+        "tainted_ic": 0.05879382177637527,
+        "tainted_n": 25
+      },
+      "book_to_price": {
+        "mean_ic": 0.01912303006260828,
+        "nw_t": 0.8427329160185075,
+        "n_dates": 44,
+        "held_out_ic": -0.019464193767379862,
+        "held_out_n": 19,
+        "tainted_ic": 0.04844932017339927,
+        "tainted_n": 25
+      },
+      "sales_to_price": {
+        "mean_ic": 0.047939033155098947,
+        "nw_t": 1.8430700350208613,
+        "n_dates": 44,
+        "held_out_ic": 0.04228470922208374,
+        "held_out_n": 19,
+        "tainted_ic": 0.05223631934419051,
+        "tainted_n": 25
+      }
+    },
+    "spread_63d": {
+      "VALUE": {
+        "mean": 0.019563542025824943,
+        "median": 0.0190335439563235,
+        "nw_t": 0.8548872619846066,
+        "hit_rate": 0.5454545454545454,
+        "held_out_mean": 0.012103121475862212,
+        "tainted_mean": 0.02523346164379662
+      },
+      "IMPROV_VALUE": {
+        "mean": 0.025498104036758406,
+        "median": 0.01927063377486093,
+        "nw_t": 1.983568822768219,
+        "hit_rate": 0.6590909090909091,
+        "held_out_mean": 0.027217890431573223,
+        "tainted_mean": 0.024191066376699145
+      },
+      "ALL": {
+        "mean": 0.047455755518261755,
+        "median": 0.05853141240408791,
+        "nw_t": 1.944441655583142,
+        "hit_rate": 0.6363636363636364,
+        "held_out_mean": 0.022535483198449155,
+        "tainted_mean": 0.06639516248131931
+      }
+    },
+    "IC_126d": {
+      "IMPROVEMENT": {
+        "mean_ic": 0.0028081185103186216,
+        "nw_t": 0.17488515264196006,
+        "n_dates": 44,
+        "held_out_ic": 0.0036531139738046753,
+        "held_out_n": 19,
+        "tainted_ic": 0.0021659219580692224,
+        "tainted_n": 25
+      },
+      "VALUE": {
+        "mean_ic": 0.03686825765460417,
+        "nw_t": 1.068938474268864,
+        "n_dates": 44,
+        "held_out_ic": -0.01722962546191953,
+        "held_out_n": 19,
+        "tainted_ic": 0.07798264882316219,
+        "tainted_n": 25
+      },
+      "LEVELS": {
+        "mean_ic": -0.028681118894403793,
+        "nw_t": -0.9564516328967478,
+        "n_dates": 44,
+        "held_out_ic": 0.00041374063058218256,
+        "held_out_n": 19,
+        "tainted_ic": -0.050793212133393134,
+        "tainted_n": 25
+      },
+      "IMPROV_VALUE": {
+        "mean_ic": 0.037604429875289565,
+        "nw_t": 1.4530804200831964,
+        "n_dates": 44,
+        "held_out_ic": 0.0031988352177704966,
+        "held_out_n": 19,
+        "tainted_ic": 0.06375268181500406,
+        "tainted_n": 25
+      },
+      "LEVELS_VALUE": {
+        "mean_ic": -0.011250463041678222,
+        "nw_t": -0.3741517113240664,
+        "n_dates": 44,
+        "held_out_ic": -0.005996179227531362,
+        "held_out_n": 19,
+        "tainted_ic": -0.015243718740429832,
+        "tainted_n": 25
+      },
+      "IMPROVEMENT_sn": {
+        "mean_ic": 0.003550586137944252,
+        "nw_t": 0.2896747956510693,
+        "n_dates": 44,
+        "held_out_ic": -0.001454786042942768,
+        "held_out_n": 19,
+        "tainted_ic": 0.007354668995418387,
+        "tainted_n": 25
+      },
+      "VALUE_sn": {
+        "mean_ic": 0.052475137325536506,
+        "nw_t": 1.6182765689366405,
+        "n_dates": 44,
+        "held_out_ic": 0.03518884964139172,
+        "held_out_n": 19,
+        "tainted_ic": 0.06561271596548655,
+        "tainted_n": 25
+      },
+      "LEVELS_sn": {
+        "mean_ic": -0.026212905466562155,
+        "nw_t": -1.0557671812231133,
+        "n_dates": 44,
+        "held_out_ic": 0.006610985858187501,
+        "held_out_n": 19,
+        "tainted_ic": -0.051159062873371894,
+        "tainted_n": 25
+      },
+      "IMPROV_VALUE_sn": {
+        "mean_ic": 0.03609534792241216,
+        "nw_t": 1.3939883850617214,
+        "n_dates": 44,
+        "held_out_ic": 0.02905822215518784,
+        "held_out_n": 19,
+        "tainted_ic": 0.04144356350550264,
+        "tainted_n": 25
+      },
+      "LEVELS_VALUE_sn": {
+        "mean_ic": 0.004289310043306579,
+        "nw_t": 0.1738871067773747,
+        "n_dates": 44,
+        "held_out_ic": 0.025545020733962993,
+        "held_out_n": 19,
+        "tainted_ic": -0.011865030081592294,
+        "tainted_n": 25
+      },
+      "momentum": {
+        "mean_ic": 0.04284086841826013,
+        "nw_t": 1.3774579390984791,
+        "n_dates": 44,
+        "held_out_ic": 0.03095781901880681,
+        "held_out_n": 19,
+        "tainted_ic": 0.05187198596184467,
+        "tainted_n": 25
+      },
+      "ALL": {
+        "mean_ic": 0.0618593815518712,
+        "nw_t": 1.8326478946003595,
+        "n_dates": 44,
+        "held_out_ic": 0.03832099829192286,
+        "held_out_n": 19,
+        "tainted_ic": 0.07974855282943195,
+        "tainted_n": 25
+      }
+    },
+    "components_126d": {
+      "earnings_yield": {
+        "mean_ic": 0.032347121037132484,
+        "nw_t": 1.0028758387016619,
+        "n_dates": 44,
+        "held_out_ic": 0.007472063758593937,
+        "held_out_n": 19,
+        "tainted_ic": 0.05125216456882178,
+        "tainted_n": 25
+      },
+      "book_to_price": {
+        "mean_ic": 0.016376767307845517,
+        "nw_t": 0.530375873473225,
+        "n_dates": 44,
+        "held_out_ic": -0.034972481519211986,
+        "held_out_n": 19,
+        "tainted_ic": 0.055402196416409207,
+        "tainted_n": 25
+      },
+      "sales_to_price": {
+        "mean_ic": 0.05144577536445101,
+        "nw_t": 1.9281317953633879,
+        "n_dates": 44,
+        "held_out_ic": 0.055006785170156815,
+        "held_out_n": 19,
+        "tainted_ic": 0.04873940791211461,
+        "tainted_n": 25
+      }
+    },
+    "spread_126d": {
+      "VALUE": {
+        "mean": 0.03294508034961172,
+        "median": 0.00026620158080901957,
+        "nw_t": 1.0355446624066242,
+        "hit_rate": 0.5,
+        "held_out_mean": 0.041315193348621854,
+        "tainted_mean": 0.026583794470364016
+      },
+      "IMPROV_VALUE": {
+        "mean": 0.037308520657231864,
+        "median": 0.04400986614730997,
+        "nw_t": 2.1411317675258825,
+        "hit_rate": 0.6363636363636364,
+        "held_out_mean": 0.03917988068139716,
+        "tainted_mean": 0.035886287038866226
+      },
+      "ALL": {
+        "mean": 0.1188578658962889,
+        "median": 0.10982701674091784,
+        "nw_t": 2.456113694274494,
+        "hit_rate": 0.7272727272727273,
+        "held_out_mean": 0.05274492780471627,
+        "tainted_mean": 0.16910369884588414
+      }
+    }
+  }
+}
