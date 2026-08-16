@@ -57,9 +57,10 @@ self-grade first.** The attention score is a *mean* over ~5 indicators, so one
 extreme reading gets diluted by four ordinary ones — which means `top_fields`
 alone systematically hides large one-sided moves. This section lists every
 field OUTSIDE the 6 shown in `top_fields` that is extreme on ANY indicator:
-trend at/above the 80th percentile of its own history, OR at least two of
-dispersion/volatility/cohesion/volume_influx at/above the 95th or at/below
-the 5th. The section grades its own selectivity on every run: read
+trend at/above the 90th OR at/below the 10th percentile of its own history
+(both directions — a crashing field is as buried as a rallying one), OR at
+least two of dispersion/volatility/cohesion/volume_influx at/above the 95th
+or at/below the 5th. The section grades its own selectivity on every run: read
 `selectivity` and `n_expected_by_chance` BEFORE using it. When it says
 **AT CHANCE**, the list caught roughly as many fields as random data would —
 each row is still a true fact about that field, but *being on the list* is

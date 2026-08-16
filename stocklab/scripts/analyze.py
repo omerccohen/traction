@@ -109,6 +109,7 @@ def main() -> None:
                             key=lambda s: -s.score)
         top_names = {s.name for s in ranked_all[:6]}
         buried = []
+        n_candidates = 0   # fields actually eligible (not shown in top_fields)
         for i, s in enumerate(ranked_all, start=1):
             tr = s.indicators.get("trend_21d", {})
             # The cut was `i > 15` while the analyst only ever sees the top 6,
@@ -121,6 +122,7 @@ def main() -> None:
             # the two lists. The only correct test is "not shown to the analyst".
             if s.name in top_names:
                 continue
+            n_candidates += 1
             # ...and it tested ONLY trend_21d, so a field could be at the most
             # extreme reading in its entire history on any of the other four
             # indicators and still be invisible. Electronic Components on
@@ -139,7 +141,14 @@ def main() -> None:
             # A big one-sided move stays sufficient on its own, because that is
             # the original, separately-motivated rule and direction is
             # intrinsically interesting. Anything else must corroborate itself.
-            trend_hit = (tr.get("pctile") or 0) >= 0.80
+            # SYMMETRIC at 90/10, same 0.20 chance budget the old one-tailed
+            # 80th spent: the one-tailed bar could not surface a CRASH — a
+            # field at the most extreme negative reading of its history was
+            # invisible unless two secondaries independently fired, which
+            # contradicts this section's own "one-sided moves get diluted"
+            # rationale. Both directions now qualify at the same selectivity.
+            tp = tr.get("pctile")
+            trend_hit = tp is not None and (tp >= 0.90 or tp <= 0.10)
             secondary = []
             for key in ("dispersion", "volatility", "cohesion", "volume_influx"):
                 pc = s.indicators.get(key, {}).get("pctile")
@@ -167,22 +176,35 @@ def main() -> None:
         # the 80th; p(>=2 of 4 secondary at 95/5) = 0.052. A count near the
         # expected figure means the section is mostly noise no matter how
         # convincing the individual rows read.
+        # p(trend two-tailed at 90/10) = 0.20; p(>=2 of 4 secondary) = 0.052.
+        # Base = CANDIDATES, not all fields: the excluded top 6 were counted
+        # before, overstating expected. (The top 6 are also not random, so
+        # even this slightly overstates chance among the remainder.)
         p_chance = 1 - (1 - 0.20) * (1 - 0.052)
-        expected = round(p_chance * len(ranked_all))
+        expected = round(p_chance * n_candidates)
+        ratio = (len(buried) / expected) if expected else float("inf")
         pack_dict["buried_moves"] = {
             "n": len(buried),
             "n_expected_by_chance": expected,
-            "selectivity": ("informative" if len(buried) < 0.6 * expected else
+            # a count far ABOVE expected is not "at chance" either — it means
+            # more extremes than noise alone would give (excess may be real;
+            # individual rows still unverified)
+            "selectivity": ("informative" if ratio < 0.6 else
+                            "modest" if ratio < 0.9 else
                             "AT CHANCE — read individual rows sceptically"
-                            if len(buried) >= 0.9 * expected else "modest"),
+                            if ratio <= 1.5 else
+                            "ABOVE CHANCE — more flagged than noise alone "
+                            "would give; the excess may be real, but each "
+                            "row is still unverified"),
             "n_shown": min(len(buried), 20),
             "note": "Fields NOT in top_fields that are at an extreme reading of "
-                    "their own history: trend at/above the 80th percentile, OR "
-                    "at least TWO of dispersion/volatility/cohesion/"
-                    "volume_influx at/above the 95th or at/below the 5th. Two "
-                    "independent extremes occur ~5% of the time by chance; one "
-                    "at the 90th occurs 59% of the time, which is why a single "
-                    "secondary reading is not enough. `extreme_on` names which. The "
+                    "their own history: trend at/above the 90th OR at/below the "
+                    "10th percentile (both directions — a crash is as buried as "
+                    "a rally), OR at least TWO of dispersion/volatility/"
+                    "cohesion/volume_influx at/above the 95th or at/below the "
+                    "5th. Two independent secondary extremes occur ~5% of the "
+                    "time by chance, which is why a single one is not enough. "
+                    "`extreme_on` names which. The "
                     "attention score is a MEAN over these five, so one extreme "
                     "reading is diluted by four ordinary ones — a field can be "
                     "at the most extreme dispersion in its history and rank "

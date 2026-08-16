@@ -70,7 +70,8 @@ TOP_N_ATTENTION = 15     # "has equity attention" = inside the top N of 130
 # +14.6%/21d, the memory and storage names), Technology (rank 9) and Advertising
 # (rank 8). Anything outside the top 6 is unseen and must be eligible to surface.
 TOP_N_SHOWN = 6          # what analyze.py actually hands the analyst
-TREND_PCTILE = 0.80      # a move this extreme should not be buried by averaging
+TREND_PCTILE = 0.90      # two-tailed with TREND_PCTILE_LOW: same 0.20 chance
+TREND_PCTILE_LOW = 0.10  # budget as the old one-tailed 80th, but crashes count
 FLAT_AVG = 0.03          # group average this small reads as "nothing happening"
 SPLIT_SPREAD = 0.50      # ...while members this far apart means plenty happened
 
@@ -133,8 +134,7 @@ def main() -> None:
         out += [f"| **{t}** | {p}% | {c} | {cs} | {i} | {pe} |" for t, p, c, cs, i, pe in disagree]
         if dupes:
             out += ["", f"*{dupes} company/companies appeared in two research "
-                        "groups (CEG and VST are ranked in both power and "
-                        "utilities); each is listed once at its highest "
+                        "groups; each is listed once at its highest "
                         "positioning score, so this is a count of distinct "
                         "names, not of table rows.*"]
     elif not pvp.exists():
@@ -210,9 +210,10 @@ def main() -> None:
     # A big one-sided move on draining volume is precisely the shape the
     # composite hides, so it is surfaced here directly.
     out += ["## 2b. Big moves the attention score buried", "",
-            f"*Trend at/above the {int(TREND_PCTILE*100)}th percentile of the "
-            f"field's own history, yet ranked outside the top {TOP_N_SHOWN} the "
-            "analyst is shown. "
+            f"*Trend at/above the {int(TREND_PCTILE*100)}th or at/below the "
+            f"{int(TREND_PCTILE_LOW*100)}th percentile of the field's own "
+            f"history (a crash is as buried as a rally), yet ranked outside "
+            f"the top {TOP_N_SHOWN} the analyst is shown. "
             "The composite averages five indicators, so a single extreme reading "
             "gets diluted — these are large one-sided moves the ranking "
             "de-emphasised.*", ""]
@@ -243,7 +244,8 @@ def main() -> None:
                              "vi": i.get("volume_influx", {}).get("pctile")})
         d = pd.DataFrame(rows).dropna(subset=["att", "tp"])
         d["rk"] = d["att"].rank(ascending=False)
-        hit = d[(d["tp"] >= TREND_PCTILE) & (d["rk"] > TOP_N_SHOWN)]
+        hit = d[((d["tp"] >= TREND_PCTILE) | (d["tp"] <= TREND_PCTILE_LOW))
+                & (d["rk"] > TOP_N_SHOWN)]
         n_qual, n_shown = len(hit), min(len(hit), 10)
         for r in hit.sort_values("ret", key=abs, ascending=False).head(10).itertuples():
             vi = f"volume p{r.vi*100:.0f}" if r.vi == r.vi else "volume n/a"
