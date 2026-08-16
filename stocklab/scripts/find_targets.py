@@ -67,7 +67,7 @@ def main() -> None:
                              as_of)
 
     sectors = pd.read_csv(ROOT / "data_cache" / "universe" / "broad_sectors.csv").set_index("Symbol")
-    from stocklab.target_finder import member_moves
+    from stocklab.target_finder import member_moves, _records
 
     # physical-proxy panel: which commodity/theme ETF is actually moving, so the
     # target-finder can verify a supply/demand thesis against the physical tape
@@ -75,7 +75,7 @@ def main() -> None:
     if etfs:
         sub = sectors["GICS Sub-Industry"]
         pmv = member_moves(panel, etfs, as_of)
-        recs = [{**r, "tracks": str(sub.get(r["ticker"], ""))} for r in pmv.to_dict("records")]
+        recs = [{**r, "tracks": str(sub.get(r["ticker"], ""))} for r in _records(pmv)]
         inp["physical_proxies"] = {"n": len(recs), "movers": recs}
 
     inp["value_chain_pulls"] = {}
@@ -102,7 +102,7 @@ def main() -> None:
                           f"top {keep // 2} and bottom {keep - keep // 2} by 21d "
                           f"move of {len(merged)} matches — the middle is NOT "
                           "shown, so this is not a census"),
-            "companies": shown.to_dict("records"),
+            "companies": _records(shown),
         }
 
     out = ROOT / "briefings" / f"target_input_{inp['as_of']}.json"

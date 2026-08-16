@@ -2,10 +2,10 @@
   "as_of": "2026-08-13",
   "regime": {
     "vol": {
-      "value": 14.55,
+      "value": 14.63,
       "pctile": 0.18,
       "band": "calm",
-      "age_days": 2
+      "age_days": 1
     },
     "trend": {
       "value": 0.1882,
@@ -21,7 +21,7 @@
     "elevated": [],
     "data_quality": {
       "live": [
-        "vix_level (2d)",
+        "vix_level (1d)",
         "sp500_trend_12m (44d)"
       ],
       "stale": [
@@ -47,6 +47,7 @@
       "character": "DISPERSION",
       "attention": 0.849,
       "n": 10,
+      "n_members_total": 10,
       "field_median_ret_21d": 0.1191,
       "winners": [
         {
@@ -78,24 +79,6 @@
           "ret_21d": 0.1256,
           "ret_63d": -0.1421,
           "last_close": 22.76
-        },
-        {
-          "ticker": "BKR",
-          "ret_21d": 0.1126,
-          "ret_63d": -0.0147,
-          "last_close": 64.28
-        },
-        {
-          "ticker": "NOV",
-          "ret_21d": 0.0645,
-          "ret_63d": 0.0073,
-          "last_close": 20.64
-        },
-        {
-          "ticker": "FTI",
-          "ret_21d": 0.0609,
-          "ret_63d": 0.0549,
-          "last_close": 76.67
         }
       ],
       "losers": [
@@ -128,32 +111,16 @@
           "ret_21d": 0.1126,
           "ret_63d": -0.0147,
           "last_close": 64.28
-        },
-        {
-          "ticker": "FLOC",
-          "ret_21d": 0.1256,
-          "ret_63d": -0.1421,
-          "last_close": 22.76
-        },
-        {
-          "ticker": "WFRD",
-          "ret_21d": 0.1258,
-          "ret_63d": -0.1557,
-          "last_close": 92.1
-        },
-        {
-          "ticker": "INVX",
-          "ret_21d": 0.1893,
-          "ret_63d": 0.1225,
-          "last_close": 30.78
         }
-      ]
+      ],
+      "lists_note": "small field: top/bottom 5 shown so the two lists cannot overlap"
     },
     {
       "field": "Engineering & Construction [sub]",
       "character": "STRESS",
       "attention": 0.816,
       "n": 10,
+      "n_members_total": 10,
       "field_median_ret_21d": -0.0349,
       "winners": [
         {
@@ -185,24 +152,6 @@
           "ret_21d": -0.0052,
           "ret_63d": -0.1509,
           "last_close": 1727.64
-        },
-        {
-          "ticker": "BBUC",
-          "ret_21d": -0.0646,
-          "ret_63d": -0.1039,
-          "last_close": 29.24
-        },
-        {
-          "ticker": "MTRX",
-          "ret_21d": -0.065,
-          "ret_63d": -0.0119,
-          "last_close": 11.66
-        },
-        {
-          "ticker": "AGX",
-          "ret_21d": -0.0826,
-          "ret_63d": -0.2237,
-          "last_close": 558.89
         }
       ],
       "losers": [
@@ -235,32 +184,16 @@
           "ret_21d": -0.0646,
           "ret_63d": -0.1039,
           "last_close": 29.24
-        },
-        {
-          "ticker": "FIX",
-          "ret_21d": -0.0052,
-          "ret_63d": -0.1509,
-          "last_close": 1727.64
-        },
-        {
-          "ticker": "PWR",
-          "ret_21d": 0.0369,
-          "ret_63d": -0.1305,
-          "last_close": 672.78
-        },
-        {
-          "ticker": "EME",
-          "ret_21d": 0.0757,
-          "ret_63d": -0.0989,
-          "last_close": 833.4
         }
-      ]
+      ],
+      "lists_note": "small field: top/bottom 5 shown so the two lists cannot overlap"
     },
     {
       "field": "Farming/Seeds/Milling [sub]",
       "character": "STRESS",
       "attention": 0.807,
       "n": 9,
+      "n_members_total": 9,
       "field_median_ret_21d": -0.1025,
       "winners": [
         {
@@ -286,30 +219,6 @@
           "ret_21d": -0.0484,
           "ret_63d": -0.083,
           "last_close": 13.36
-        },
-        {
-          "ticker": "CTVA",
-          "ret_21d": -0.1025,
-          "ret_63d": -0.0907,
-          "last_close": 75.79
-        },
-        {
-          "ticker": "UVV",
-          "ret_21d": -0.1142,
-          "ret_63d": -0.1656,
-          "last_close": 44.89
-        },
-        {
-          "ticker": "AGRO",
-          "ret_21d": -0.1171,
-          "ret_63d": -0.337,
-          "last_close": 9.05
-        },
-        {
-          "ticker": "ANDE",
-          "ret_21d": -0.1338,
-          "ret_63d": -0.0905,
-          "last_close": 65.14
         }
       ],
       "losers": [
@@ -336,38 +245,16 @@
           "ret_21d": -0.1142,
           "ret_63d": -0.1656,
           "last_close": 44.89
-        },
-        {
-          "ticker": "CTVA",
-          "ret_21d": -0.1025,
-          "ret_63d": -0.0907,
-          "last_close": 75.79
-        },
-        {
-          "ticker": "DOLE",
-          "ret_21d": -0.0484,
-          "ret_63d": -0.083,
-          "last_close": 13.36
-        },
-        {
-          "ticker": "AVO",
-          "ret_21d": -0.0166,
-          "ret_63d": 0.0457,
-          "last_close": 13.03
-        },
-        {
-          "ticker": "CALM",
-          "ret_21d": -0.0112,
-          "ret_63d": 0.0422,
-          "last_close": 82.21
         }
-      ]
+      ],
+      "lists_note": "small field: top/bottom 4 shown so the two lists cannot overlap"
     },
     {
       "field": "Professional Services [sub]",
       "character": "MOMENTUM",
       "attention": 0.773,
       "n": 21,
+      "n_members_total": 21,
       "field_median_ret_21d": 0.1344,
       "winners": [
         {

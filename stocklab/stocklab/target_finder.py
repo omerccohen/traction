@@ -27,18 +27,31 @@ def member_moves(panel: Panel, tickers: list[str], as_of, lookback=(21, 63)) -> 
     cols = [t for t in tickers if t in panel.close.columns]
     if not cols:
         return pd.DataFrame(columns=["ticker", "ret_21d", "ret_63d", "last_close"])
-    close = panel.close[cols].loc[:pd.Timestamp(as_of)]
+    ts_as_of = pd.Timestamp(as_of)
+    close = panel.close[cols].loc[:ts_as_of]
     rows = []
     for t in cols:
         s = close[t].dropna()
         if len(s) < max(lookback) + 1:
             continue
-        rows.append({
+        row = {
             "ticker": t,
             "ret_21d": round(float(s.iloc[-1] / s.iloc[-1 - lookback[0]] - 1), 4),
             "ret_63d": round(float(s.iloc[-1] / s.iloc[-1 - lookback[1]] - 1), 4),
             "last_close": round(float(s.iloc[-1]), 2),
-        })
+        }
+        # dropna() anchors the window at the ticker's LAST TRADE, not at
+        # as_of — a delisted/halted name would ship a months-old price next
+        # to current ones with nothing marking it. Flag, don't hide.
+        days_stale = (ts_as_of - s.index[-1]).days
+        if days_stale > 5:
+            row["stale"] = (f"last price {s.index[-1].date()}, "
+                            f"{days_stale} days before as_of")
+        rows.append(row)
+    if not rows:
+        # every candidate lacked enough history: sort_values on a columnless
+        # frame raised KeyError and killed the whole targets stage
+        return pd.DataFrame(columns=["ticker", "ret_21d", "ret_63d", "last_close"])
     df = pd.DataFrame(rows).sort_values("ret_21d", ascending=False)
     return df
 
@@ -69,19 +82,42 @@ def keyword_universe_search(sectors_df: pd.DataFrame, keywords: list[str]) -> pd
     return out.reset_index(drop=True)
 
 
+def _records(df: pd.DataFrame) -> list[dict]:
+    """to_dict('records') minus NaN cells (an absent flag is absent, not nan)."""
+    return [{k: v for k, v in r.items()
+             if not (isinstance(v, float) and pd.isna(v))}
+            for r in df.to_dict("records")]
+
+
 def field_dossier(panel: Panel, name: str, members: list[str], as_of, top_k: int = 8) -> dict:
     """A field's real winners/losers as of a date — the evidence base for a
     thesis about that field."""
     mv = member_moves(panel, members, as_of)
     if mv.empty:
-        return {"field": name, "n": 0}
-    return {
+        # 0 here means "no member could be measured" — which includes a failed
+        # name lookup upstream; say so instead of shipping a bare zero
+        return {"field": name, "n": 0, "n_members_total": len(members),
+                "note": "no member had enough price history to measure"}
+    # head(k)/tail(k) OVERLAP when a field has fewer than 2k measured members:
+    # 3 of 4 dossiers on 2026-08-13 listed the same tickers as both winner and
+    # loser (16 rows, 10 companies). Cap each list at half the field so they
+    # are provably disjoint.
+    k = min(top_k, len(mv) // 2)
+    out = {
         "field": name,
         "n": int(len(mv)),
+        "n_members_total": len(members),
         "field_median_ret_21d": round(float(mv["ret_21d"].median()), 4),
-        "winners": mv.head(top_k).to_dict("records"),
-        "losers": mv.tail(top_k).iloc[::-1].to_dict("records"),
+        "winners": _records(mv.head(k)),
+        "losers": _records(mv.tail(k).iloc[::-1]),
     }
+    if len(mv) < len(members):
+        out["note"] = (f"{len(members) - len(mv)} of {len(members)} members "
+                       "not measured (insufficient price history)")
+    if k < top_k:
+        out["lists_note"] = (f"small field: top/bottom {k} shown so the two "
+                             "lists cannot overlap")
+    return out
 
 
 def build_target_input(pack: dict, panel: Panel, fields: dict, sectors_df: pd.DataFrame,
