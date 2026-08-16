@@ -40,15 +40,15 @@
 *Trend at/above the 80th percentile of the field's own history, yet ranked outside the top 6 the analyst is shown. The composite averages five indicators, so a single extreme reading gets diluted — these are large one-sided moves the ranking de-emphasised.*
 
 - **Precious Metals [sub]** — +22.6%/21d at the 86th pctile of its own history, volume p19, but attention rank **24/129**
-- **Plastic Products [sub]** — +19.2%/21d at the 95th pctile of its own history, volume p53, but attention rank **25/129**
-- **Basic Materials** — +18.2%/21d at the 86th pctile of its own history, volume p15, but attention rank **76/129**
-- **Biotechnology: Electromedical & Electrotherapeutic Apparatus [sub]** — +15.8%/21d at the 94th pctile of its own history, volume p21, but attention rank **74/129**
-- **Paper [sub]** — +15.3%/21d at the 94th pctile of its own history, volume p42, but attention rank **94/129**
-- **Specialty Insurers [sub]** — +14.8%/21d at the 98th pctile of its own history, volume p51, but attention rank **38/129**
-- **Computer Software: Prepackaged Software [sub]** — +14.4%/21d at the 98th pctile of its own history, volume p50, but attention rank **82/129**
+- **Plastic Products [sub]** — +19.2%/21d at the 95th pctile of its own history, volume p53, but attention rank **24/129**
+- **Basic Materials** — +18.2%/21d at the 86th pctile of its own history, volume p15, but attention rank **71/129**
+- **Biotechnology: Electromedical & Electrotherapeutic Apparatus [sub]** — +15.8%/21d at the 94th pctile of its own history, volume p21, but attention rank **75/129**
+- **Paper [sub]** — +15.3%/21d at the 94th pctile of its own history, volume p42, but attention rank **95/129**
+- **Specialty Insurers [sub]** — +14.8%/21d at the 98th pctile of its own history, volume p51, but attention rank **40/129**
+- **Computer Software: Prepackaged Software [sub]** — +14.4%/21d at the 98th pctile of its own history, volume p50, but attention rank **80/129**
 - **Biotechnology: Laboratory Analytical Instruments [sub]** — +14.1%/21d at the 91th pctile of its own history, volume p80, but attention rank **26/129**
-- **Advertising [sub]** — +13.0%/21d at the 90th pctile of its own history, volume p10, but attention rank **8/129**
-- **Medical/Dental Instruments [sub]** — +12.8%/21d at the 99th pctile of its own history, volume p36, but attention rank **90/129**
+- **Advertising [sub]** — +13.0%/21d at the 90th pctile of its own history, volume p10, but attention rank **6/129**
+- **Medical/Dental Instruments [sub]** — +12.8%/21d at the 99th pctile of its own history, volume p36, but attention rank **93/129**
 - *…and 18 more qualifying fields not shown (28 qualified, top 10 by size listed).*
 
 ## 2c. Groups that look calm but are split inside
@@ -63,13 +63,16 @@
 - **Development Stage/Pre-Revenue [sub]** — average +2.8% but best +43% / worst -32% across 11 companies, attention rank **87/130**
 - **Real Estate** — average -1.4% but best +37% / worst -36% across 157 companies, attention rank **32/130**
 - **Other Consumer Services [sub]** — average -0.6% but best +37% / worst -36% across 25 companies, attention rank **14/130**
-- *…and 10 more split groups not shown (18 qualified, widest 7 listed).*
+- *…and 10 more split groups not shown (18 qualified, widest 8 listed).*
 
 ## 3. Rated highly by the research, never price-checked
 
 *Deep-research score >= 70% but missing from the price table — the positioning is known, what you would pay for it is not.*
 
-*None — every highly-rated name has a price read.*
+- **HBM** (79%) — from Metals — researched 2026-08-12 (today) *(in the price table, but with no filings data — what you would pay for it is still unknown)*
+- **TBBB** (76%) — from Grocery — researched 2026-08-11 (1d ago) *(in the price table, but with no filings data — what you would pay for it is still unknown)*
+- **ERO** (74%) — from Metals — researched 2026-08-12 (today) *(in the price table, but with no filings data — what you would pay for it is still unknown)*
+- **TX** (71%) — from Steel — researched 2026-08-12 (today) *(in the price table, but with no filings data — what you would pay for it is still unknown)*
 
 ---
 

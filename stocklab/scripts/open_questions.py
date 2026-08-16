@@ -158,7 +158,13 @@ def main() -> None:
             f"fields that should follow it sit outside the top {TOP_N_ATTENTION} of "
             f"{len(scores)}. Something is happening that nobody is watching.*", ""]
     orphans, unmapped = [], []
-    for mv in pack.get("physical_proxies", {}).get("movers", []):
+    # "The section is missing" and "no orphan moves" are different answers.
+    # analyze.py writes {"error": ...} into physical_proxies when the fetch
+    # fails, and .get(..., {}).get("movers", []) turned that — and an absent
+    # key — into the same confident "*None*" as a genuinely clean week.
+    pp = pack.get("physical_proxies")
+    pp_ok = isinstance(pp, dict) and isinstance(pp.get("movers"), list)
+    for mv in (pp["movers"] if pp_ok else []):
         t, r21 = mv["ticker"], mv.get("ret_21d")
         if r21 is None or abs(r21) < BIG_MOVE:
             continue
@@ -167,12 +173,28 @@ def main() -> None:
             continue
         ranks = [(f,) + field_rank(f) for f in PROXY_TO_FIELDS[t]]
         known = [(f, rk, sc) for f, rk, sc in ranks if rk]
-        if known and all(rk > TOP_N_ATTENTION for _, rk, _ in known):
+        if not known:
+            # Every mapped field is absent from this week's scores (e.g. TAN
+            # maps only to "Solar Energy"): that is "cannot check", not
+            # "checked and covered" — it must not vanish silently.
+            unmapped.append(f"{t} ({r21:+.1%}; its mapped equity fields are "
+                            "not in this week's scores)")
+            continue
+        if all(rk > TOP_N_ATTENTION for _, rk, _ in known):
             detail = ", ".join(f"{f} rank {rk}/{len(scores)}" for f, rk, _ in known)
             orphans.append(f"- **{t} {r21:+.1%}/21d** ({mv.get('tracks','')}) — "
                            f"equity attention absent: {detail}")
-    out += orphans if orphans else ["*None — every large physical move has a "
-                                    "corresponding equity field drawing attention.*"]
+    if not pp_ok:
+        why = pp.get("error", "malformed section") if isinstance(pp, dict) \
+            else "section missing from the pack"
+        out.append(f"> **CANNOT ANSWER — no physical-proxy data ({why}).** This "
+                   "section is blank because its input is missing, not because "
+                   "every move is covered.")
+    elif orphans:
+        out += orphans
+    else:
+        out.append("*None — every large physical move has a "
+                   "corresponding equity field drawing attention.*")
     if unmapped:
         out += ["", f"*Unmapped proxies (no equity field assigned, so not checked): "
                     f"{', '.join(unmapped)}*"]
@@ -262,7 +284,9 @@ def main() -> None:
                 continue
             v = r21[cols]
             avg, spread = float(v.mean()), float(v.max() - v.min())
-            rk, _ = field_rank(n.split(" [")[0])
+            # Exact score key first: stripping "[sub]" before lookup handed
+            # "Real Estate [sub]" the rank of the broad "Real Estate" field.
+            rk = rank_of.get(n) or field_rank(n.split(" [")[0])[0]
             if abs(avg) < FLAT_AVG and spread > SPLIT_SPREAD and rk and rk > TOP_N_SHOWN:
                 split.append((spread, f"- **{n}** — average {avg:+.1%} but best "
                                       f"{v.max():+.0%} / worst {v.min():+.0%} across "
@@ -272,7 +296,7 @@ def main() -> None:
         split = [s for _, s in sorted(split, key=lambda x: -x[0])][:8]
         if n_split > len(split):
             split.append(f"- *…and {n_split - len(split)} more split groups not "
-                         f"shown ({n_split} qualified, widest {len(split) - 1} listed).*")
+                         f"shown ({n_split} qualified, widest {len(split)} listed).*")
     except Exception as e:
         split = [f"*could not compute: {type(e).__name__}: {e}*"]
     out += split if split else ["*None — no group is hiding a violent internal "
@@ -284,8 +308,19 @@ def main() -> None:
             "*Deep-research score >= 70% but missing from the price table — the "
             "positioning is known, what you would pay for it is not.*", ""]
     priced = {d[0] for d in disagree}
+    in_table: set[str] = set()
     if pvp.exists():
-        priced |= set(re.findall(r"\|\s*\*\*([A-Z][A-Z0-9.\-]{0,5})\*\*\s*\|", pvp.read_text()))
+        # A row only counts as PRICE-CHECKED when its cheapness cell is a
+        # number. The table also carries rows reading "no filings data" with
+        # every cell em-dashed; counting any bold ticker as checked turned
+        # four unpriced names (HBM and ERO among them, both 70%+) into a
+        # false "*None*" on 2026-08-13 — "could not check" is not "checked".
+        for t, cheap in re.findall(
+                r"\|\s*\*\*([A-Z][A-Z0-9.\-]{0,5})\*\*\s*\|\s*\d{1,3}%\s*\|\s*(\d+|—)\s*\|",
+                pvp.read_text()):
+            in_table.add(t)
+            if cheap != "—":
+                priced.add(t)
     # Two bugs lived here. It globbed ONE exact date while the price table
     # accumulates 100 days of research, so the committed 2026-08-11 file
     # announced "every highly-rated name has a price read" while 17 names at
@@ -293,7 +328,12 @@ def main() -> None:
     # loose ticker regex that read FCX's short-interest share count as its
     # score. Reuse price_vs_position's parser — one accumulation window, one
     # ranking-table anchor, one place to fix.
-    unchecked = []
+    # One entry per COMPANY, not per (company, group): a ticker ranked in two
+    # research groups made 1 lead read as 2 — the same double-count section 1
+    # fixed for CEG/VST. And a parse failure is "cannot answer", not a lead:
+    # appending the error string made the count report 1 on total failure.
+    unchecked: dict[str, tuple[int, set]] = {}
+    parse_error = None
     try:
         import importlib.util
         _s = importlib.util.spec_from_file_location(
@@ -304,11 +344,25 @@ def main() -> None:
         for group, names in positioning.items():
             for tkr, score in names.items():
                 if score >= 70 and tkr not in priced:
-                    unchecked.append(f"- **{tkr}** ({score}%) — from {group}")
+                    prev, groups = unchecked.get(tkr, (0, set()))
+                    groups.add(group)
+                    unchecked[tkr] = (max(prev, score), groups)
     except Exception as e:
-        unchecked.append(f"- *could not read the rankings: {type(e).__name__}: {e}*")
-    out += sorted(set(unchecked)) if unchecked else ["*None — every highly-rated "
-                                                     "name has a price read.*"]
+        parse_error = f"{type(e).__name__}: {e}"
+    if parse_error:
+        out.append(f"> **CANNOT ANSWER — could not read the rankings "
+                   f"({parse_error}).** This section is blank because its input "
+                   "is unreadable, not because every name was checked.")
+    elif unchecked:
+        for tkr in sorted(unchecked, key=lambda t: -unchecked[t][0]):
+            score, groups = unchecked[tkr]
+            note = (" *(in the price table, but with no filings data — what "
+                    "you would pay for it is still unknown)*"
+                    if tkr in in_table else "")
+            out.append(f"- **{tkr}** ({score}%) — from "
+                       f"{', '.join(sorted(groups))}{note}")
+    else:
+        out.append("*None — every highly-rated name has a price read.*")
     out += ["", "---", "",
             "*Generated mechanically from this week's pack, price table and deep "
             "rankings. It exists because a human summary once reported a week as "
@@ -316,8 +370,12 @@ def main() -> None:
 
     dest = ROOT / "briefings" / f"open_questions_{as_of}.md"
     dest.write_text("\n".join(out))
-    print(f"disagreements: {len(disagree)} | orphan physical signals: {len(orphans)} "
-          f"| unpriced high-rated: {len(set(unchecked))}")
+    print(f"disagreements: {len(disagree)}"
+          f"{'' if pvp.exists() else ' (CANNOT ANSWER — price table missing)'}"
+          f" | orphan physical signals: "
+          f"{len(orphans) if pp_ok else 'CANNOT ANSWER (no proxy data)'}"
+          f" | unpriced high-rated: "
+          f"{'CANNOT ANSWER (rankings unreadable)' if parse_error else len(unchecked)}")
     print(f"saved -> {dest}")
 
 
