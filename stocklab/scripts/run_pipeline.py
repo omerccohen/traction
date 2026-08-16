@@ -36,43 +36,74 @@ ROOT = Path(__file__).resolve().parents[1]
 MIN_ALIGNMENT = 0.95
 
 
-def gate_store_aligned() -> tuple[bool, str]:
+MIN_STORE_TICKERS = 1000   # ~2,990 expected; 95% of a truncated store is vacuous
+
+
+def gate_store_aligned(since: float = 0.0) -> tuple[bool, str]:
     """The cross-section must be priced on ONE day before anything ranks it."""
     sys.path.insert(0, str(ROOT))
     from stocklab.data.live import PriceStore
     f = PriceStore(ROOT / "data_cache" / "live").freshness()
+    # An empty store must gate-fail with a sentence, not KeyError the runner:
+    # this gate exists precisely for the no-data case.
+    if not f.get("has_data"):
+        return False, "price store is EMPTY or unreadable — nothing to rank"
+    n = f.get("n_tickers", 0)
+    if n < MIN_STORE_TICKERS:
+        return False, (f"store holds only {n} tickers (expected ~2,990) — "
+                       "alignment on a truncated store proves nothing")
     share = f.get("share_on_newest", 0.0)
     ok = share >= MIN_ALIGNMENT
-    return ok, (f"{share:.2%} of {f['n_tickers']} tickers on {f['newest_date']}"
+    return ok, (f"{share:.2%} of {n} tickers on {f['newest_date']}"
                 + ("" if ok else f" — below the {MIN_ALIGNMENT:.0%} floor; "
                                  f"{f.get('n_behind')} behind, comparing them "
                                  "would mix trading days"))
 
 
-def gate_pack_coverage() -> tuple[bool, str]:
+def _fresh_artifact(pattern: str, since: float):
+    """Newest file matching pattern, but ONLY if written after this run began.
+
+    Grading the newest glob match let a stage that exited 0 without writing
+    anything pass on LAST cycle's artifact — stale served as fresh, inside the
+    very machinery meant to prevent it.
+    """
+    files = sorted(ROOT.glob(pattern))
+    if not files:
+        return None, f"no file matching {pattern} written"
+    newest = files[-1]
+    if since and newest.stat().st_mtime < since:
+        return None, (f"{newest.name} predates this run — the stage exited 0 "
+                      "but wrote no new artifact this cycle")
+    return newest, ""
+
+
+def gate_pack_coverage(since: float = 0.0) -> tuple[bool, str]:
     """The pack must say what it was built on, and it must be enough."""
-    packs = sorted(ROOT.glob("briefings/analysis_pack_*.json"))
-    if not packs:
-        return False, "no analysis pack written"
-    pack = json.loads(packs[-1].read_text())
+    newest, why = _fresh_artifact("briefings/analysis_pack_*.json", since)
+    if newest is None:
+        return False, why
+    try:
+        pack = json.loads(newest.read_text())
+    except Exception as e:
+        return False, f"{newest.name} is unreadable: {type(e).__name__}: {e}"
     cov = pack.get("coverage")
     if not cov:
-        return False, f"{packs[-1].name} carries no coverage block"
+        return False, f"{newest.name} carries no coverage block"
     share = cov.get("share_on_as_of", 0.0)
     return (share >= MIN_ALIGNMENT,
-            f"{packs[-1].name}: {share:.2%} priced on {cov.get('as_of')}")
+            f"{newest.name}: {share:.2%} priced on {cov.get('as_of')}")
 
 
-def gate_positions_parsed() -> tuple[bool, str]:
+def gate_positions_parsed(since: float = 0.0) -> tuple[bool, str]:
     """The price table must actually contain the researched companies."""
-    tables = sorted(ROOT.glob("briefings/price_vs_position_*.md"))
-    if not tables:
-        return False, "no price table written"
-    text = tables[-1].read_text()
+    newest, why = _fresh_artifact("briefings/price_vs_position_*.md", since)
+    if newest is None:
+        return False, why
+    text = newest.read_text()
     import re
     n = len(re.findall(r"^\| \*\*[A-Z]", text, re.M))
     groups = len(re.findall(r"^## .+researched", text, re.M))
-    return n > 0, f"{tables[-1].name}: {n} companies across {groups} groups"
+    return n > 0, f"{newest.name}: {n} companies across {groups} groups"
 
 
 STAGES: dict[str, tuple[list[str], list[str], object]] = {
@@ -139,7 +170,12 @@ def main() -> None:
             continue
 
         if gate is not None:
-            ok, msg = gate()
+            # A gate that raises is a FAILED gate, not a dead runner: the
+            # summary and SKIPPED reporting below must always be reached.
+            try:
+                ok, msg = gate(t0)
+            except Exception as e:
+                ok, msg = False, f"gate itself crashed: {type(e).__name__}: {e}"
             print(f"    gate: {msg}", flush=True)
             if not ok:
                 status[name] = "gate-failed"
