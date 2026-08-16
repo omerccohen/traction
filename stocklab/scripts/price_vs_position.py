@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
-"""Positioning vs price — the missing half of the research funnel.
+"""Positioning vs price — what the market already charges.
 
-The deep-research rankings answer "who is best positioned?". The backtest showed
-that question ALONE sorts backwards, because good positioning is public and
-therefore already in the price. This script adds the second axis: what does the
-market already charge for that positioning?
+The deep-research rankings answer "who is best positioned?". Positioning is
+public information, so it may already be in the price. This script adds the
+second axis: what does the market charge for that positioning?
+
+Do NOT reintroduce backtest claims here. The valuation/positioning backtests
+were retracted on 2026-08-13 (survivorship-biased universe — see
+docs/BACKTEST_VALUATION.md): the "sorts backwards" result, the positioning+
+price sign flip, and the decile spread all failed re-measurement on the
+tradeable universe. No direction claim survives.
 
 For each researched company it reports, from real point-in-time data:
   * positioning  — the filings-based probability from the deep-research ranking
@@ -153,10 +158,13 @@ def main() -> None:
             continue
         rows.append({"ticker": t, "price": px, **val,
                      **{k: (imp or {}).get(k) for k in IMPROV}})
-    uni = pd.DataFrame(rows).set_index("ticker")
-    if uni.empty:
+    # Guard BEFORE set_index: on an empty/missing fundamentals cache rows is
+    # [], and set_index("ticker") on a columnless frame raises KeyError —
+    # killing the run before the message that says how to fix it.
+    if not rows:
         print("no universe data — run scripts/fetch_fundamentals.py first")
         return
+    uni = pd.DataFrame(rows).set_index("ticker")
 
     # cheapness + improvement composites, percentile-ranked across the universe
     uni["VALUE"] = pd.concat([_z(uni[c]) for c in VALUE], axis=1).mean(axis=1, skipna=True)
@@ -189,9 +197,9 @@ def main() -> None:
            "(earnings yield / book-to-price / sales-to-price). Positioning = the "
            "filings-based probability from the deep-research rankings.*",
            "",
-           "> **What this is:** the second axis the backtest said was missing. "
-           "Positioning alone sorts *backwards* because it is public and already "
-           "in the price. This shows what the market already charges for it. "
+           "> **What this is:** what the market already charges for each "
+           "researched name. Positioning is public information, so a strong "
+           "filings read may already be in the price. "
            "**Descriptive, not advice — it does not predict returns.**",
            stale_note,
            ""]
@@ -218,36 +226,33 @@ def main() -> None:
 
     out += ["## How to read the four quadrants", "",
             "- **positioned, NOT fully priced** — strong on the filings *and* still "
-            "in the cheaper half. The only quadrant where the research and the "
-            "price disagree, so it is where a variant view could exist.",
-            "- **priced for perfection** — genuinely strong, but the market already "
-            "knows. This is exactly the group the backtest found underperforms.",
+            "in the cheaper half. The research and the price disagree here, which "
+            "makes it the natural place to ask questions — it is NOT evidence that "
+            "these names will do well.",
+            "- **priced for perfection** — genuinely strong, and the market already "
+            "charges for it.",
             "- **cheap for a reason?** — the market is discounting it; the research "
             "says it is weakly positioned. Usually the market is right.",
             "- **weak and not cheap** — neither the filings nor the price argue for it.",
             "",
-            "## What the backtest says about using this (read before acting)",
+            "## What the evidence says about using this (read before acting)",
             "",
-            "Adding price genuinely **fixed the direction** of the ranking: "
-            "positioning alone had a forward rank-IC of −0.058, positioning+price "
-            "+0.042 (t 2.7, and it held in a period never used to build it). That "
-            "is a real, replicated sign flip.",
+            "**Nothing here is a measured edge.** The backtests that once claimed "
+            "cheapness helped (a positioning/price \"sign flip\", a cheap-decile "
+            "spread) were **retracted on 2026-08-13**: they were run on a universe "
+            "built from today's biggest names applied back in time, which flattered "
+            "every result. Re-measured on the universe actually tradeable at the "
+            "time, no version of the signal passed the evidence bar, and the "
+            "cheap-vs-expensive spread flipped sign. Full record: "
+            "docs/BACKTEST_VALUATION.md.",
             "",
-            "**But it is NOT a buy rule.** Sorting the universe into cheapness "
-            "deciles over 2022-2026, the *most expensive* decile returned **+22.6%** "
-            "per 6 months versus **+14.6%** for the cheapest — the giant winners "
-            "lived in the expensive names. Cheap stocks won slightly more *often* "
-            "(hence the positive rank-IC) while expensive stocks won far *bigger*. "
-            "Buying the cheap end would have underperformed.",
-            "",
-            "So use the two columns to ask *\"is my thesis already in the price?\"* — "
-            "never as a screen to buy the cheap end.",
+            "So use the two columns only to ask *\"is my thesis already in the "
+            "price?\"* — never as a screen, in either direction.",
             "",
             "*Honest footer: 'Cheap vs all' compares a bank to a software firm on raw "
             "multiples, which is why lenders (BDCs) look uniformly cheap — read "
             "'Cheap vs sector' for those. Positioning comes from one quarter of "
-            "filings. Every decile was positive in this sample (2022-2026 was a bull "
-            "market); none of this forecasts returns.*"]
+            "filings. None of this forecasts returns.*"]
 
     dest = ROOT / "briefings" / f"price_vs_position_{iso}.md"
     dest.write_text("\n".join(out))
