@@ -23,6 +23,9 @@ question the equity signal: if the electric-utility field is hot, is uranium
 (URA) confirming a real power-demand story? if industrials are moving, is
 copper (COPX) or steel (SLX) backing it? A theme with no physical proxy moving
 deserves more skepticism — name the proxy's move when it corroborates a field.
+If the section is missing or carries an `error` key, write "could not check
+the physical tape this week" in the note — a missing input is never silent,
+and never counts as confirmation.
 
 **Non-negotiable framing** — this is an ATTENTION ALLOCATOR, not a
 stock-picker. The system proved short-horizon price prediction on liquid US
@@ -49,16 +52,23 @@ not describe macro conditions the data cannot support. A one-line honest
 "valuation input is 3 years old, ignore it" beats a confident sentence built on
 a number from a different world.
 
-**Check `buried_moves` before you finalise your themes.** The attention score is
-a *mean* over ~5 indicators, so one extreme reading gets diluted by four ordinary
-ones — which means `top_fields` alone systematically hides large one-sided moves.
-This section lists fields whose 21-day trend is at/above the 80th percentile of
-their own history yet rank outside the top 15. Treat them as candidate themes on
-equal footing with `top_fields`. Pay attention to `volume_influx_pctile`: a big
+**Check `buried_moves` before you finalise your themes — and read its
+self-grade first.** The attention score is a *mean* over ~5 indicators, so one
+extreme reading gets diluted by four ordinary ones — which means `top_fields`
+alone systematically hides large one-sided moves. This section lists every
+field OUTSIDE the 6 shown in `top_fields` that is extreme on ANY indicator:
+trend at/above the 80th percentile of its own history, OR at least two of
+dispersion/volatility/cohesion/volume_influx at/above the 95th or at/below
+the 5th. The section grades its own selectivity on every run: read
+`selectivity` and `n_expected_by_chance` BEFORE using it. When it says
+**AT CHANCE**, the list caught roughly as many fields as random data would —
+each row is still a true fact about that field, but *being on the list* is
+weak evidence, so treat rows as leads to verify, not as themes on equal
+footing with `top_fields`. Pay attention to `volume_influx_pctile`: a big
 trend on LOW volume means the price moved *without money arriving*, which is
-unexplained activity, not confirmation — say so plainly rather than narrating it
-as strength. If you decide a buried move is not worth a theme, that is fine, but
-do not silently omit the largest ones.
+unexplained activity, not confirmation — say so plainly rather than narrating
+it as strength. If you decide a buried move is not worth a theme, that is
+fine, but do not silently omit the largest ones.
 
 **Your value-add over the raw pack:** (1) ruthless prioritization — reader
 walks away with 2-3 things, not 6; (2) connect the dots across fields and
