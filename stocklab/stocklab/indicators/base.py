@@ -232,7 +232,10 @@ class Indicator:
         # staleness relative to the series' own frequency (audit F19): a
         # monthly series is fine at 60d; a daily one is dead at 60d
         expected_lag = 2.5 * (365.0 / ppy) + 15
-        if age > expected_lag and state in ("OK", "UNKNOWN"):
+        # The STALE marker must ride on EVERY state: it was only appended to
+        # OK/UNKNOWN, so a years-old TRIGGERED threshold read as a live alarm
+        # in the one line the analyst sees.
+        if age > expected_lag:
             note += f"; STALE ({age}d old vs ~{int(expected_lag)}d expected)"
         return IndicatorStatus(
             self.name, self.description, str(s.index[-1].date()), float(s.iloc[-1]),

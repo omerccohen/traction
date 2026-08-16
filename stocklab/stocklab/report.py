@@ -43,7 +43,11 @@ def latest_ranking(
     ).sort_values()
     model.fit(ds, labeled_dates)
     scores = model.predict(ds, pd.DatetimeIndex([as_of]))
-    s = scores.xs(as_of, level="date").sort_values(ascending=False)
+    s_all = scores.xs(as_of, level="date")
+    # NaN sorts LAST in sort_values, so unscored names would fill the
+    # "Bottom N (lowest scores)" table as the model's most bearish picks.
+    n_unscored = int(s_all.isna().sum())
+    s = s_all.dropna().sort_values(ascending=False)
     pct = s.rank(pct=True)
 
     x_today = ds.X.xs(as_of, level="date")
@@ -80,18 +84,23 @@ def latest_ranking(
     ]
     if skeptic_summary:
         md += ["**Skeptic flags on the underlying signal:**", "", "```", skeptic_summary, "```", ""]
+    # head/tail overlap when fewer than 2*top_n names have scores — the same
+    # ticker must never appear as both a highest and a lowest score
+    k = min(top_n, len(table) // 2) if len(table) < 2 * top_n else top_n
     md += [
-        f"## Top {top_n} (highest scores)",
+        f"## Top {k} (highest scores)",
         "",
-        table.head(top_n).to_markdown(index=False),
+        table.head(k).to_markdown(index=False),
         "",
-        f"## Bottom {top_n} (lowest scores)",
+        f"## Bottom {k} (lowest scores)",
         "",
-        table.tail(top_n).iloc[::-1].to_markdown(index=False),
+        table.tail(k).iloc[::-1].to_markdown(index=False),
         "",
         f"*The model assigns only {n_distinct} distinct score levels across "
-        f"{len(s)} names — tied scores mean the model genuinely cannot "
-        "distinguish those stocks; the within-tie ordering is arbitrary.*",
+        f"{len(s)} scored names — tied scores mean the model genuinely cannot "
+        "distinguish those stocks; the within-tie ordering is arbitrary.*"
+        + (f" *{n_unscored} name(s) had no usable score and are excluded "
+           "from both tables.*" if n_unscored else ""),
         "",
         "*Scores are cross-sectional relative rankings for the configured horizon — "
         "not price targets, not probabilities, not advice.*",

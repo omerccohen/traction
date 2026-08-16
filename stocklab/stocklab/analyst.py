@@ -119,7 +119,9 @@ def _regime_from_indicators(inds, states: dict) -> dict:
         else:
             reg["data_quality"]["live"].append(f"{ind.name} ({age}d)")
     dq = reg["data_quality"]
-    if len(dq["live"]) <= 2:
+    # warn whenever LESS THAN HALF the layer is current — the old <=2 cutoff
+    # stayed silent at 3 live / 9 unusable of 12
+    if len(dq["live"]) < 0.5 * len(inds):
         dq["warning"] = (
             f"MACRO LAYER DEGRADED: only {len(dq['live'])} of {len(inds)} "
             f"indicators carry current data ({len(dq['missing'])} unavailable, "
@@ -127,10 +129,14 @@ def _regime_from_indicators(inds, states: dict) -> dict:
             "describe macro conditions the data cannot support.")
     for ind in inds:
         st = ind.status(states.get(ind.name, "cache"))
+        # Age travels WITH the alarm: with FRED blocked, a threshold crossed
+        # in 2023 would otherwise be served as a current macro alarm.
+        age_tag = (f" [data {st.data_age_days}d old]"
+                   if (st.data_age_days or 0) > STALE_AFTER_DAYS else "")
         if st.threshold_state == "TRIGGERED":
-            reg["triggered"].append(f"{ind.name}: {st.threshold_note}")
+            reg["triggered"].append(f"{ind.name}: {st.threshold_note}{age_tag}")
         elif st.threshold_state == "ELEVATED":
-            reg["elevated"].append(f"{ind.name}: {st.threshold_note}")
+            reg["elevated"].append(f"{ind.name}: {st.threshold_note}{age_tag}")
         if ind.name == "vix_level" and st.pctile_5y is not None:
             band = ("calm" if st.pctile_5y < 0.4 else
                     "stressed" if st.pctile_5y > 0.8 else "normal")

@@ -137,7 +137,11 @@ def main() -> None:
     # --as-of is the documented backfill escape hatch: it bypasses the guard
     # (audit F4 — a backfill run must never clobber history with a notice).
     # Negative staleness = future-dated data = an error, not freshness (F5).
-    stale = source == "live" and args.as_of is None and (
+    # startswith, not ==: the loader also reports "live-misaligned", and an
+    # exact match let a store that was BOTH misaligned and arbitrarily stale
+    # (or future-dated) write a full, normally-named briefing — the exact
+    # thing this guard exists to prevent. Demo/synthetic sources stay exempt.
+    stale = source.startswith("live") and args.as_of is None and (
         stale_days > args.max_stale_days or stale_days < 0)
 
     if stale:
@@ -164,7 +168,13 @@ def main() -> None:
 
     # delta vs previous run — only comparable runs compare (audit F3):
     # same source, same field membership, and a gap within ~one month
-    prev = json.loads(STATE.read_text()) if STATE.exists() else {}
+    # A corrupt state file means "no comparable previous run", not a dead run.
+    try:
+        prev = json.loads(STATE.read_text()) if STATE.exists() else {}
+    except (json.JSONDecodeError, OSError) as e:
+        prev = {}
+        banner += (f"\n> WARNING: previous state unreadable ({e}); "
+                   "deltas suppressed this run.\n")
     deltas, delta_note = [], ""
     prev_scores = prev.get("scores", {})
     prev_members = prev.get("n_members", {})
