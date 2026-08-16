@@ -79,7 +79,14 @@ class FieldSnapshot:
 
 
 def _trailing_pctile(series: pd.Series, window: int = 252) -> float:
-    """Percentile of the last value within its own trailing window."""
+    """Percentile of the last value within its own trailing window.
+
+    The CURRENT value must itself be real. dropna()-then-last silently
+    substituted the most recent valid reading — a weeks-old number presented
+    as today's percentile when the current value was missing.
+    """
+    if len(series) == 0 or not np.isfinite(series.iloc[-1]):
+        return np.nan
     s = series.dropna()
     if len(s) < window // 2:
         return np.nan
@@ -102,40 +109,58 @@ def field_snapshot(
     if as_of is not None:
         close = close.loc[:as_of]
         volume = volume.loc[:as_of]
-    ret1 = close.pct_change()
+    # fill_method=None: a day with no print is UNKNOWN, not "unchanged".
+    # pandas' default pad turned every stale/halted/delisted member into an
+    # endless run of 0.0% returns — deflating vol and dispersion, and letting
+    # a field with no data at all ship a calm-looking snapshot.
+    ret1 = close.pct_change(fill_method=None)
 
     eq_idx = ret1.mean(axis=1)                       # equal-weight field return
     ind: dict[str, dict] = {}
 
-    mom21 = float((1 + eq_idx.iloc[-21:]).prod() - 1)
+    tail21 = eq_idx.iloc[-21:]
+    # prod() over an all-NaN window returns 1.0 (min_count=0), i.e. a dead
+    # field would read "+0.0%"; require at least one real day.
+    mom21 = float((1 + tail21).prod() - 1) if tail21.notna().any() else np.nan
     ind["trend_21d"] = {
         "value": round(mom21, 4),
-        "pctile": _trailing_pctile((1 + eq_idx).cumprod().pct_change(21)),
-        "note": f"field 21d return {mom21:+.1%}",
+        "pctile": _trailing_pctile(
+            (1 + eq_idx).cumprod().pct_change(21, fill_method=None)),
+        "note": f"field 21d return {mom21:+.1%}" if np.isfinite(mom21)
+        else "no member printed in the last 21 days — return unknown",
     }
 
     vol21 = eq_idx.rolling(21).std() * np.sqrt(252)
+    vol_last = float(vol21.iloc[-1])
     ind["volatility"] = {
-        "value": round(float(vol21.iloc[-1]), 3),
+        "value": round(vol_last, 3),
         "pctile": _trailing_pctile(vol21),
-        "note": f"field vol {float(vol21.iloc[-1]):.0%} annualized",
+        "note": f"field vol {vol_last:.0%} annualized" if np.isfinite(vol_last)
+        else "field vol unknown — data gaps in the last 21 days",
     }
 
     disp = ret1.std(axis=1).rolling(21).mean()
+    disp_p = _trailing_pctile(disp)
     ind["dispersion"] = {
         "value": round(float(disp.iloc[-1]), 4),
-        "pctile": _trailing_pctile(disp),
-        "note": "members diverging (winners/losers separating)"
-        if _trailing_pctile(disp) > 0.8 else "members moving together",
+        "pctile": disp_p,
+        "note": "dispersion unknown — data gaps" if not np.isfinite(disp_p)
+        else ("members diverging (winners/losers separating)"
+              if disp_p > 0.8 else "members moving together"),
     }
 
-    dv = (close * volume).sum(axis=1)
+    # min_count=1: a day where NO member has data is unknown dollar volume,
+    # not zero — sum's default turned pre-listing history into a phantom
+    # zero-volume era that manufactured extreme influx percentiles.
+    dv = (close * volume).sum(axis=1, min_count=1)
     dv_ratio = dv.rolling(21).mean() / dv.rolling(126).mean()
+    dv_last = float(dv_ratio.iloc[-1])
     ind["volume_influx"] = {
-        "value": round(float(dv_ratio.iloc[-1]), 3),
+        "value": round(dv_last, 3),
         "pctile": _trailing_pctile(dv_ratio),
-        "note": "money/attention flowing in" if float(dv_ratio.iloc[-1]) > 1.1
-        else ("attention draining" if float(dv_ratio.iloc[-1]) < 0.9 else "normal turnover"),
+        "note": "turnover unknown — data gaps" if not np.isfinite(dv_last)
+        else ("money/attention flowing in" if dv_last > 1.1
+              else ("attention draining" if dv_last < 0.9 else "normal turnover")),
     }
 
     # average pairwise correlation over 63d vs its history: a BREAK in
@@ -162,14 +187,18 @@ def field_snapshot(
         v = c[np.triu_indices_from(c, 1)]
         return float(np.nanmean(v)) if np.isfinite(v).any() else np.nan
 
+    # min_periods=40 (mirroring the >=40-row history rule): a pair whose legs
+    # share fewer than 40 real days is noise, not a correlation — and a field
+    # whose data STOPPED mid-window must read unknown, not ship a weeks-old
+    # correlation as today's.
     if len(cols) >= 4:
         r63 = ret1.iloc[-63:]
-        avg_corr_now = _pair_mean(r63.corr().to_numpy())
+        avg_corr_now = _pair_mean(r63.corr(min_periods=40).to_numpy())
         hist = []
         for end in range(126, len(ret1) - 63, 21):
             sub = ret1.iloc[max(0, end - 63):end]
             if len(sub) >= 40:
-                h = _pair_mean(sub.corr().to_numpy())
+                h = _pair_mean(sub.corr(min_periods=40).to_numpy())
                 if np.isfinite(h):
                     hist.append(h)
         if len(hist) >= 8 and np.isfinite(avg_corr_now):
@@ -203,7 +232,8 @@ def field_snapshot(
                             "proven non-predictive on this data)",
                 }
 
-    score = float(np.nanmean([abs(v["pctile"] - 0.5) * 2 for v in ind.values()]))
+    devs = np.array([abs(v["pctile"] - 0.5) * 2 for v in ind.values()])
+    score = float(np.nanmean(devs)) if np.isfinite(devs).any() else np.nan
 
     # Extremes must never be contaminated by MISSING data. Vendors publish some
     # tickers a day late, so on any given as_of a slice of the universe has no
@@ -211,7 +241,11 @@ def field_snapshot(
     # not-yet-reported names to "biggest gainer" in the movers list the analyst
     # reads. Tolerate a few days of per-ticker lag (measure each name from its
     # own last real price), then drop anything still unknown.
-    m21 = close.ffill(limit=3).pct_change(21).iloc[-1].dropna().sort_values()
+    # fill_method=None is load-bearing: pct_change's own default pad forward-
+    # filled PAST the deliberate 3-day tolerance, so ".dropna()" never dropped
+    # anything and names halted for weeks reappeared as "+0%" movers.
+    m21 = (close.ffill(limit=3).pct_change(21, fill_method=None)
+           .iloc[-1].dropna().sort_values())
     if len(m21) >= 4:
         picks = list(m21.index[:2]) + list(m21.index[-2:])
     else:
@@ -225,7 +259,10 @@ def field_snapshot(
 
 
 def briefing(snapshots: list[FieldSnapshot], as_of, top_n: int = 8) -> str:
-    snaps = sorted([s for s in snapshots if s], key=lambda s: -s.score)
+    # A NaN score must not enter the sort: NaN comparisons break the ordering
+    # and can seat an unmeasurable field above real ones.
+    snaps = sorted([s for s in snapshots if s and np.isfinite(s.score)],
+                   key=lambda s: -s.score)
     lines = [
         f"# FieldWatch briefing — as of {pd.Timestamp(as_of).date()}",
         "",
@@ -242,9 +279,16 @@ def briefing(snapshots: list[FieldSnapshot], as_of, top_n: int = 8) -> str:
         lines.append("")
         lines.append(f"**{s.headline()}**")
         lines.append("")
-        for k, v in sorted(s.indicators.items(), key=lambda kv: -abs(kv[1]['pctile'] - 0.5)):
-            bar = "#" * int(round(v["pctile"] * 10))
-            lines.append(f"- {k:15s} p{v['pctile']*100:3.0f} {bar:<10s} {v['note']}")
+        def _dev(kv):
+            p = kv[1]["pctile"]
+            return -abs(p - 0.5) if np.isfinite(p) else 1.0  # unknowns sort last
+        for k, v in sorted(s.indicators.items(), key=_dev):
+            p = v["pctile"]
+            if np.isfinite(p):
+                bar = "#" * int(round(p * 10))
+                lines.append(f"- {k:15s} p{p*100:3.0f} {bar:<10s} {v['note']}")
+            else:
+                lines.append(f"- {k:15s} p ——  {'':<10s} {v['note']}")
         lines.append(f"- extremes 21d: {', '.join(s.members_moving)}")
         lines.append("")
         lines.append("**Next (human) step:** what physical series would confirm or kill a "

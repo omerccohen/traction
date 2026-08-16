@@ -207,7 +207,12 @@ def build_analysis_pack(
     top_n: int = 6,
     caveats: list | None = None,
 ) -> AnalysisPack:
-    ranked = sorted([s for s in snaps if s], key=lambda s: -s.score)
+    # np.isfinite matters: a NaN score breaks the sort's ordering and can seat
+    # an unmeasurable field inside top_fields while the buried-moves section
+    # (which does filter NaN) excludes a different set — reopening the
+    # "shown nowhere" rank hole from the opposite side.
+    ranked = sorted([s for s in snaps if s and np.isfinite(s.score)],
+                    key=lambda s: -s.score)
     top = [classify_field(s) for s in ranked[:top_n]]
     patterns, dislocations = _cross_cutting(top, ranked)
     regime = _regime_from_indicators(inds, indicator_states)
