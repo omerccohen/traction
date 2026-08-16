@@ -250,7 +250,7 @@ def main() -> None:
         for r in hit.sort_values("ret", key=abs, ascending=False).head(10).itertuples():
             vi = f"volume p{r.vi*100:.0f}" if r.vi == r.vi else "volume n/a"
             buried.append(f"- **{r.field}** — {r.ret:+.1%}/21d at the "
-                          f"{r.tp*100:.0f}th pctile of its own history, {vi}, "
+                          f"p{r.tp*100:.0f} of its own history, {vi}, "
                           f"but attention rank **{r.rk:.0f}/{len(d)}**")
         # a cap that does not announce itself reads as a census — Steel/Iron Ore
         # was one of the entries silently dropped here

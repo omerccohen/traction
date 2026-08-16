@@ -7,9 +7,13 @@
 >
 > | | before the fix | after |
 > |---|---|---|
-> | volatility percentile predicts forward volatility | +0.114, t 4.58 | **+0.111, t 3.92 — holds** |
-> | field trend predicts next 21d | +0.073, t 3.17 | **+0.051, t 2.02 — weakened, barely clears t=2** |
-> | **attention score predicts forward return (21d)** | +0.0009, t 0.05 | **−0.014, t −1.01 — still null** |
+> | volatility percentile predicts forward volatility | +0.114, t 4.58 | **+0.111, t 3.95 — holds** |
+> | field trend predicts next 21d | +0.073, t 3.17 | **+0.050, t 2.00 — weakened, barely clears t=2** |
+> | **attention score predicts forward return (21d)** | +0.0009, t 0.05 | **−0.013, t −0.95 — still null** |
+>
+> (Outcome measurement was also made honest — a delisted member now drops out
+> of a field's forward return instead of counting as 0% forever; it moved
+> nothing materially.)
 >
 > Read the middle row honestly: part of the trend result's published strength
 > came from contaminated data (padded fake 0% returns), and at t 2.02 it

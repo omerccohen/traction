@@ -25,7 +25,7 @@
 | **OIS** | 71% | 67 | 63 | 63 | n/m |
 | **FE** | 71% | 77 | 63 | 44 | 26 |
 
-*2 company/companies appeared in two research groups (CEG and VST are ranked in both power and utilities); each is listed once at its highest positioning score, so this is a count of distinct names, not of table rows.*
+*2 company/companies appeared in two research groups; each is listed once at its highest positioning score, so this is a count of distinct names, not of table rows.*
 
 ## 2. Physical moves with NO equity attention
 
@@ -37,19 +37,19 @@
 
 ## 2b. Big moves the attention score buried
 
-*Trend at/above the 80th percentile of the field's own history, yet ranked outside the top 6 the analyst is shown. The composite averages five indicators, so a single extreme reading gets diluted — these are large one-sided moves the ranking de-emphasised.*
+*Trend at/above the 90th or at/below the 10th percentile of the field's own history (a crash is as buried as a rally), yet ranked outside the top 6 the analyst is shown. The composite averages five indicators, so a single extreme reading gets diluted — these are large one-sided moves the ranking de-emphasised.*
 
-- **Precious Metals [sub]** — +22.6%/21d at the 86th pctile of its own history, volume p19, but attention rank **24/129**
-- **Plastic Products [sub]** — +19.2%/21d at the 95th pctile of its own history, volume p53, but attention rank **24/129**
-- **Basic Materials** — +18.2%/21d at the 86th pctile of its own history, volume p15, but attention rank **71/129**
-- **Biotechnology: Electromedical & Electrotherapeutic Apparatus [sub]** — +15.8%/21d at the 94th pctile of its own history, volume p21, but attention rank **75/129**
-- **Paper [sub]** — +15.3%/21d at the 94th pctile of its own history, volume p42, but attention rank **95/129**
-- **Specialty Insurers [sub]** — +14.8%/21d at the 98th pctile of its own history, volume p51, but attention rank **40/129**
-- **Computer Software: Prepackaged Software [sub]** — +14.4%/21d at the 98th pctile of its own history, volume p50, but attention rank **80/129**
-- **Biotechnology: Laboratory Analytical Instruments [sub]** — +14.1%/21d at the 91th pctile of its own history, volume p80, but attention rank **26/129**
-- **Advertising [sub]** — +13.0%/21d at the 90th pctile of its own history, volume p10, but attention rank **6/129**
-- **Medical/Dental Instruments [sub]** — +12.8%/21d at the 99th pctile of its own history, volume p36, but attention rank **93/129**
-- *…and 18 more qualifying fields not shown (28 qualified, top 10 by size listed).*
+- **Plastic Products [sub]** — +19.2%/21d at the p95 of its own history, volume p53, but attention rank **24/129**
+- **Biotechnology: Electromedical & Electrotherapeutic Apparatus [sub]** — +15.8%/21d at the p94 of its own history, volume p21, but attention rank **75/129**
+- **Paper [sub]** — +15.3%/21d at the p94 of its own history, volume p42, but attention rank **95/129**
+- **Specialty Insurers [sub]** — +14.8%/21d at the p98 of its own history, volume p51, but attention rank **40/129**
+- **Misc Health and Biotechnology Services [sub]** — -14.6%/21d at the p1 of its own history, volume p82, but attention rank **70/129**
+- **Computer Software: Prepackaged Software [sub]** — +14.4%/21d at the p98 of its own history, volume p50, but attention rank **80/129**
+- **Biotechnology: Laboratory Analytical Instruments [sub]** — +14.1%/21d at the p91 of its own history, volume p80, but attention rank **26/129**
+- **Advertising [sub]** — +13.0%/21d at the p90 of its own history, volume p10, but attention rank **6/129**
+- **Medical/Dental Instruments [sub]** — +12.8%/21d at the p99 of its own history, volume p36, but attention rank **93/129**
+- **EDP Services [sub]** — +11.0%/21d at the p97 of its own history, volume p40, but attention rank **41/129**
+- *…and 5 more qualifying fields not shown (15 qualified, top 10 by size listed).*
 
 ## 2c. Groups that look calm but are split inside
 
