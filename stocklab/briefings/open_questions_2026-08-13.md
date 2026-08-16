@@ -31,9 +31,9 @@
 
 *A proxy moved more than 10% over 21 days while the equity fields that should follow it sit outside the top 15 of 130. Something is happening that nobody is watching.*
 
-- **XME +11.7%/21d** (Metals & Mining) — equity attention absent: Metal Mining rank 70/130, Steel/Iron Ore rank 123/130, Metal Fabrications rank 57/130
-- **COPX +10.7%/21d** (Copper Miners) — equity attention absent: Metal Mining rank 70/130, Other Metals and Minerals rank 50/130
-- **URA +10.6%/21d** (Uranium & Nuclear Fuel) — equity attention absent: Metal Mining rank 70/130, Electric Utilities: Central rank 64/130
+- **XME +11.7%/21d** (Metals & Mining) — equity attention absent: Metal Mining rank 61/130, Steel/Iron Ore rank 124/130, Metal Fabrications rank 50/130
+- **COPX +10.7%/21d** (Copper Miners) — equity attention absent: Metal Mining rank 61/130, Other Metals and Minerals rank 51/130
+- **URA +10.6%/21d** (Uranium & Nuclear Fuel) — equity attention absent: Metal Mining rank 61/130, Electric Utilities: Central rank 62/130
 
 ## 2b. Big moves the attention score buried
 
@@ -55,15 +55,15 @@
 
 *Average move near zero, but the members are pulling violently apart — the winners and losers cancel out in the headline number. The group looks asleep; individual companies are not.*
 
-- **Biotechnology: Pharmaceutical Preparations [sub]** — average +2.5% but best +76% / worst -88% across 202 companies, attention rank **103/130**
-- **Finance** — average +2.7% but best +90% / worst -36% across 510 companies, attention rank **17/130**
-- **Consumer Staples** — average +2.8% but best +91% / worst -20% across 71 companies, attention rank **45/130**
+- **Biotechnology: Pharmaceutical Preparations [sub]** — average +2.5% but best +76% / worst -88% across 202 companies, attention rank **106/130**
+- **Finance** — average +2.7% but best +90% / worst -36% across 510 companies, attention rank **18/130**
+- **Consumer Staples** — average +2.8% but best +91% / worst -20% across 71 companies, attention rank **47/130**
 - **Semiconductors [sub]** — average -2.5% but best +45% / worst -41% across 74 companies, attention rank **22/130**
-- **Finance: Consumer Services [sub]** — average -1.2% but best +46% / worst -32% across 64 companies, attention rank **78/130**
-- **Development Stage/Pre-Revenue [sub]** — average +2.8% but best +43% / worst -32% across 11 companies, attention rank **87/130**
-- **Real Estate** — average -1.4% but best +37% / worst -36% across 157 companies, attention rank **32/130**
-- **Other Consumer Services [sub]** — average -0.6% but best +37% / worst -36% across 25 companies, attention rank **14/130**
-- *…and 10 more split groups not shown (18 qualified, widest 8 listed).*
+- **Finance: Consumer Services [sub]** — average -1.2% but best +46% / worst -32% across 64 companies, attention rank **75/130**
+- **Development Stage/Pre-Revenue [sub]** — average +2.8% but best +43% / worst -32% across 11 companies, attention rank **84/130**
+- **Real Estate** — average -1.4% but best +37% / worst -36% across 157 companies, attention rank **33/130**
+- **Other Consumer Services [sub]** — average -0.6% but best +37% / worst -36% across 25 companies, attention rank **13/130**
+- *…and 9 more split groups not shown (17 qualified, widest 8 listed).*
 
 ## 3. Rated highly by the research, never price-checked
 

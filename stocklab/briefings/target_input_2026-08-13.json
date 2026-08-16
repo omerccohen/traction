@@ -2,32 +2,32 @@
   "as_of": "2026-08-13",
   "regime": {
     "vol": {
-      "value": 14.63,
-      "pctile": 0.18,
+      "value": 14.25,
+      "pctile": 0.16,
       "band": "calm",
-      "age_days": 1
+      "age_days": 2
     },
     "trend": {
       "value": 0.1882,
       "band": "uptrend",
-      "age_days": 44
+      "age_days": 46
     },
     "valuation": {
       "value": 30.81,
       "pctile": 0.59,
-      "age_days": 1078
+      "age_days": 1080
     },
     "triggered": [],
     "elevated": [],
     "data_quality": {
       "live": [
-        "vix_level (1d)",
-        "sp500_trend_12m (44d)"
+        "vix_level (2d)"
       ],
       "stale": [
-        "us_cpi_yoy (1078d old)",
-        "us10y_rate_monthly (1078d old)",
-        "sp500_pe10 (1078d old)"
+        "us_cpi_yoy (1080d old)",
+        "us10y_rate_monthly (1080d old)",
+        "sp500_pe10 (1080d old)",
+        "sp500_trend_12m (46d old)"
       ],
       "missing": [
         "us10y_yield",
@@ -38,14 +38,14 @@
         "electronics_new_orders",
         "semis_producer_prices"
       ],
-      "warning": "MACRO LAYER DEGRADED: only 2 of 12 indicators carry current data (7 unavailable, 3 stale). Treat the regime read as thin \u2014 do not describe macro conditions the data cannot support."
+      "warning": "MACRO LAYER DEGRADED: only 1 of 12 indicators carry current data (7 unavailable, 4 stale). Treat the regime read as thin \u2014 do not describe macro conditions the data cannot support."
     }
   },
   "field_dossiers": [
     {
       "field": "Oil and Gas Field Machinery [sub]",
       "character": "DISPERSION",
-      "attention": 0.849,
+      "attention": 0.856,
       "n": 10,
       "n_members_total": 10,
       "field_median_ret_21d": 0.1191,
@@ -118,7 +118,7 @@
     {
       "field": "Engineering & Construction [sub]",
       "character": "STRESS",
-      "attention": 0.816,
+      "attention": 0.815,
       "n": 10,
       "n_members_total": 10,
       "field_median_ret_21d": -0.0349,
@@ -191,7 +191,7 @@
     {
       "field": "Farming/Seeds/Milling [sub]",
       "character": "STRESS",
-      "attention": 0.807,
+      "attention": 0.806,
       "n": 9,
       "n_members_total": 9,
       "field_median_ret_21d": -0.1025,
@@ -252,7 +252,7 @@
     {
       "field": "Professional Services [sub]",
       "character": "MOMENTUM",
-      "attention": 0.773,
+      "attention": 0.793,
       "n": 21,
       "n_members_total": 21,
       "field_median_ret_21d": 0.1344,

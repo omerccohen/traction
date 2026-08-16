@@ -1,5 +1,21 @@
 # Does the FieldWatch mechanism point in the right direction?
 
+> **Re-measured 2026-08-16, after the missing-data fix.** pandas' `pct_change`
+> default was silently turning days with no price print into 0.0% returns
+> inside every indicator. With that fixed (missing = unknown, not unchanged),
+> the backtest was re-run on the same 44 dates and 129 fields:
+>
+> | | before the fix | after |
+> |---|---|---|
+> | volatility percentile predicts forward volatility | +0.114, t 4.58 | **+0.111, t 3.92 — holds** |
+> | field trend predicts next 21d | +0.073, t 3.17 | **+0.051, t 2.02 — weakened, barely clears t=2** |
+> | **attention score predicts forward return (21d)** | +0.0009, t 0.05 | **−0.014, t −1.01 — still null** |
+>
+> Read the middle row honestly: part of the trend result's published strength
+> came from contaminated data (padded fake 0% returns), and at t 2.02 it
+> should be treated as fragile. The volatility result survives cleanly. The
+> null survives too — the fix introduced no leakage.
+
 > **Re-verified 2026-08-13, after the audit — this page HOLDS.** Every other
 > backtest in `docs/` was retracted (see the banners on BACKTEST_VALUATION.md
 > and BACKTEST_IMPROVEMENT.md). This one was re-run on repaired price data (225

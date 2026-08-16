@@ -4,32 +4,32 @@
   "universe_size": 2992,
   "regime": {
     "vol": {
-      "value": 14.63,
-      "pctile": 0.18,
+      "value": 14.25,
+      "pctile": 0.16,
       "band": "calm",
-      "age_days": 1
+      "age_days": 2
     },
     "trend": {
       "value": 0.1882,
       "band": "uptrend",
-      "age_days": 44
+      "age_days": 46
     },
     "valuation": {
       "value": 30.81,
       "pctile": 0.59,
-      "age_days": 1078
+      "age_days": 1080
     },
     "triggered": [],
     "elevated": [],
     "data_quality": {
       "live": [
-        "vix_level (1d)",
-        "sp500_trend_12m (44d)"
+        "vix_level (2d)"
       ],
       "stale": [
-        "us_cpi_yoy (1078d old)",
-        "us10y_rate_monthly (1078d old)",
-        "sp500_pe10 (1078d old)"
+        "us_cpi_yoy (1080d old)",
+        "us10y_rate_monthly (1080d old)",
+        "sp500_pe10 (1080d old)",
+        "sp500_trend_12m (46d old)"
       ],
       "missing": [
         "us10y_yield",
@@ -40,20 +40,20 @@
         "electronics_new_orders",
         "semis_producer_prices"
       ],
-      "warning": "MACRO LAYER DEGRADED: only 2 of 12 indicators carry current data (7 unavailable, 3 stale). Treat the regime read as thin \u2014 do not describe macro conditions the data cannot support."
+      "warning": "MACRO LAYER DEGRADED: only 1 of 12 indicators carry current data (7 unavailable, 4 stale). Treat the regime read as thin \u2014 do not describe macro conditions the data cannot support."
     }
   },
   "top_fields": [
     {
       "name": "Oil and Gas Field Machinery [sub]",
       "n_members": 10,
-      "attention": 0.849,
+      "attention": 0.856,
       "character": "DISPERSION",
       "headline": "splitting into winners and losers (stock-picker's phase)",
       "trend_21d": 0.1654,
       "volatility_pctile": 0.9484126984126984,
       "dispersion_pctile": 0.9642857142857143,
-      "cohesion_pctile": 0.12280701754385964,
+      "cohesion_pctile": 0.10714285714285714,
       "movers": [
         "OIS +3%",
         "HMH +3%",
@@ -65,13 +65,13 @@
     {
       "name": "Engineering & Construction [sub]",
       "n_members": 10,
-      "attention": 0.816,
+      "attention": 0.815,
       "character": "STRESS",
       "headline": "under pressure \u2014 falling with elevated volatility",
       "trend_21d": -0.0292,
       "volatility_pctile": 0.9642857142857143,
       "dispersion_pctile": 1.0,
-      "cohesion_pctile": 0.8421052631578947,
+      "cohesion_pctile": 0.8392857142857143,
       "movers": [
         "LMB -43%",
         "LGN -11%",
@@ -83,13 +83,13 @@
     {
       "name": "Farming/Seeds/Milling [sub]",
       "n_members": 9,
-      "attention": 0.807,
+      "attention": 0.806,
       "character": "STRESS",
       "headline": "under pressure \u2014 falling with elevated volatility",
       "trend_21d": -0.0732,
       "volatility_pctile": 0.9920634920634921,
       "dispersion_pctile": 1.0,
-      "cohesion_pctile": 0.19298245614035087,
+      "cohesion_pctile": 0.19642857142857142,
       "movers": [
         "BV -20%",
         "ANDE -13%",
@@ -101,13 +101,13 @@
     {
       "name": "Professional Services [sub]",
       "n_members": 21,
-      "attention": 0.773,
+      "attention": 0.793,
       "character": "MOMENTUM",
       "headline": "attracting money on a rising trend",
       "trend_21d": 0.1742,
       "volatility_pctile": 0.753968253968254,
       "dispersion_pctile": 0.9920634920634921,
-      "cohesion_pctile": 0.17543859649122806,
+      "cohesion_pctile": 0.125,
       "movers": [
         "ASTH -20%",
         "BBSI -16%",
@@ -125,7 +125,7 @@
       "trend_21d": 0.1062,
       "volatility_pctile": 0.5555555555555556,
       "dispersion_pctile": 0.9682539682539683,
-      "cohesion_pctile": 0.07017543859649122,
+      "cohesion_pctile": 0.07142857142857142,
       "movers": [
         "GEV -1%",
         "GE +0%",
@@ -135,26 +135,26 @@
       "flags": "elevated: trend_21d, dispersion; depressed: volume_influx, cohesion"
     },
     {
-      "name": "Packaged Foods [sub]",
-      "n_members": 23,
+      "name": "Retail-Auto Dealers and Gas Stations [sub]",
+      "n_members": 16,
       "attention": 0.74,
-      "character": "VOLATILE",
-      "headline": "unusually volatile without a clear direction",
-      "trend_21d": 0.08,
-      "volatility_pctile": 0.8849206349206349,
-      "dispersion_pctile": 0.9841269841269841,
-      "cohesion_pctile": 0.3157894736842105,
+      "character": "DISPERSION",
+      "headline": "splitting into winners and losers (stock-picker's phase)",
+      "trend_21d": -0.017,
+      "volatility_pctile": 0.9404761904761905,
+      "dispersion_pctile": 0.9880952380952381,
+      "cohesion_pctile": 0.0,
       "movers": [
-        "VITL -15%",
-        "BRBR -9%",
-        "FRPT +29%",
-        "UTZ +91%"
+        "ARKO -42%",
+        "SAH -21%",
+        "LAD +14%",
+        "YSWY +28%"
       ],
-      "flags": "elevated: trend_21d, dispersion"
+      "flags": "elevated: volatility, dispersion; depressed: cohesion"
     }
   ],
   "cross_cutting": [
-    "Breadth: 2/6 top fields are in a stock-picker's phase (names decoupling) \u2014 a selection market, not a beta market.",
+    "Breadth: 3/6 top fields are in a stock-picker's phase (names decoupling) \u2014 a selection market, not a beta market.",
     "Stress cluster: Engineering & Construction [sub], Farming/Seeds/Milling [sub] under pressure together."
   ],
   "dislocations": [
@@ -181,12 +181,12 @@
     {
       "ticker": "TENX",
       "move_21d": -0.88,
-      "field": "Biotechnology: Pharmaceutical Preparations [sub]"
+      "field": "Health Care"
     },
     {
       "ticker": "SION",
       "move_21d": -0.85,
-      "field": "Biotechnology: Pharmaceutical Preparations [sub]"
+      "field": "Health Care"
     },
     {
       "ticker": "TEAM",
@@ -196,12 +196,12 @@
     {
       "ticker": "HELP",
       "move_21d": 0.76,
-      "field": "Biotechnology: Pharmaceutical Preparations [sub]"
+      "field": "Health Care"
     },
     {
       "ticker": "FBRX",
       "move_21d": 0.74,
-      "field": "Biotechnology: Pharmaceutical Preparations [sub]"
+      "field": "Health Care"
     },
     {
       "ticker": "NEWP",
@@ -380,7 +380,7 @@
     ]
   },
   "buried_moves": {
-    "n": 35,
+    "n": 36,
     "n_expected_by_chance": 31,
     "selectivity": "AT CHANCE \u2014 read individual rows sceptically",
     "n_shown": 20,
@@ -388,7 +388,7 @@
     "fields": [
       {
         "field": "Advertising [sub]",
-        "attention_rank": 8,
+        "attention_rank": 7,
         "n_fields": 130,
         "ret_21d": 0.13,
         "trend_pctile": 0.9007936507936508,
@@ -407,7 +407,7 @@
       },
       {
         "field": "Major Chemicals [sub]",
-        "attention_rank": 13,
+        "attention_rank": 12,
         "n_fields": 130,
         "ret_21d": 0.0332,
         "trend_pctile": 0.5515873015873016,
@@ -462,14 +462,14 @@
       },
       {
         "field": "Basic Materials",
-        "attention_rank": 77,
+        "attention_rank": 72,
         "n_fields": 130,
         "ret_21d": 0.182,
         "trend_pctile": 0.8571428571428571,
         "volume_influx_pctile": 0.14682539682539683,
         "extreme_on": [
           "trend p86",
-          "cohesion p96"
+          "cohesion p100"
         ],
         "movers": [
           "MAGN -10%",
@@ -480,7 +480,7 @@
       },
       {
         "field": "Electronic Components [sub]",
-        "attention_rank": 10,
+        "attention_rank": 20,
         "n_fields": 130,
         "ret_21d": 0.1461,
         "trend_pctile": 0.6746031746031746,
@@ -516,7 +516,7 @@
       },
       {
         "field": "EDP Services [sub]",
-        "attention_rank": 55,
+        "attention_rank": 41,
         "n_fields": 130,
         "ret_21d": 0.1102,
         "trend_pctile": 0.9682539682539683,
@@ -541,13 +541,31 @@
         "volume_influx_pctile": 0.23809523809523808,
         "extreme_on": [
           "trend p86",
-          "cohesion p2"
+          "cohesion p0"
         ],
         "movers": [
           "SEDG -41%",
           "VPG -37%",
           "TEAM +81%",
           "QMCO +140%"
+        ]
+      },
+      {
+        "field": "Packaged Foods [sub]",
+        "attention_rank": 8,
+        "n_fields": 130,
+        "ret_21d": 0.08,
+        "trend_pctile": 0.9444444444444444,
+        "volume_influx_pctile": 0.14682539682539683,
+        "extreme_on": [
+          "trend p94",
+          "dispersion p98"
+        ],
+        "movers": [
+          "VITL -15%",
+          "BRBR -9%",
+          "FRPT +29%",
+          "UTZ +91%"
         ]
       },
       {
@@ -570,7 +588,7 @@
       },
       {
         "field": "Other Metals and Minerals [sub]",
-        "attention_rank": 50,
+        "attention_rank": 51,
         "n_fields": 130,
         "ret_21d": 0.077,
         "trend_pctile": 0.5555555555555556,
@@ -588,7 +606,7 @@
       },
       {
         "field": "Specialty Foods [sub]",
-        "attention_rank": 76,
+        "attention_rank": 78,
         "n_fields": 130,
         "ret_21d": 0.0717,
         "trend_pctile": 0.8174603174603174,
@@ -606,7 +624,7 @@
       },
       {
         "field": "Diversified Commercial Services [sub]",
-        "attention_rank": 52,
+        "attention_rank": 54,
         "n_fields": 130,
         "ret_21d": 0.0693,
         "trend_pctile": 0.8650793650793651,
@@ -641,8 +659,26 @@
         ]
       },
       {
+        "field": "Investment Managers [sub]",
+        "attention_rank": 30,
+        "n_fields": 130,
+        "ret_21d": 0.0647,
+        "trend_pctile": 0.9047619047619048,
+        "volume_influx_pctile": 0.2896825396825397,
+        "extreme_on": [
+          "trend p90",
+          "cohesion p2"
+        ],
+        "movers": [
+          "ABX -22%",
+          "EVR -12%",
+          "HLNE +25%",
+          "OWL +31%"
+        ]
+      },
+      {
         "field": "Telecommunications",
-        "attention_rank": 56,
+        "attention_rank": 58,
         "n_fields": 130,
         "ret_21d": 0.0386,
         "trend_pctile": 0.5555555555555556,
@@ -660,7 +696,7 @@
       },
       {
         "field": "Consumer Staples",
-        "attention_rank": 45,
+        "attention_rank": 47,
         "n_fields": 130,
         "ret_21d": 0.0308,
         "trend_pctile": 0.8055555555555556,
@@ -678,7 +714,7 @@
       },
       {
         "field": "Telecommunications Equipment [sub]",
-        "attention_rank": 36,
+        "attention_rank": 35,
         "n_fields": 130,
         "ret_21d": 0.023,
         "trend_pctile": 0.38492063492063494,
@@ -695,57 +731,21 @@
         ]
       },
       {
-        "field": "Retail-Auto Dealers and Gas Stations [sub]",
-        "attention_rank": 7,
+        "field": "Medical/Nursing Services [sub]",
+        "attention_rank": 17,
         "n_fields": 130,
-        "ret_21d": -0.017,
-        "trend_pctile": 0.34523809523809523,
-        "volume_influx_pctile": 0.23412698412698413,
+        "ret_21d": -0.0118,
+        "trend_pctile": 0.24206349206349206,
+        "volume_influx_pctile": 0.6547619047619048,
         "extreme_on": [
-          "dispersion p99",
-          "cohesion p0"
+          "dispersion p97",
+          "cohesion p4"
         ],
         "movers": [
-          "ARKO -42%",
-          "SAH -21%",
-          "LAD +14%",
-          "YSWY +28%"
-        ]
-      },
-      {
-        "field": "Other Consumer Services [sub]",
-        "attention_rank": 14,
-        "n_fields": 130,
-        "ret_21d": -0.0056,
-        "trend_pctile": 0.36507936507936506,
-        "volume_influx_pctile": 0.8333333333333334,
-        "extreme_on": [
-          "dispersion p96",
-          "volatility p98"
-        ],
-        "movers": [
-          "UTI -36%",
-          "LINC -32%",
-          "HRB +30%",
-          "IT +37%"
-        ]
-      },
-      {
-        "field": " Medicinal Chemicals and Botanical Products  [sub]",
-        "attention_rank": 11,
-        "n_fields": 130,
-        "ret_21d": -0.0005,
-        "trend_pctile": 0.4246031746031746,
-        "volume_influx_pctile": 0.7936507936507936,
-        "extreme_on": [
-          "volatility p2",
-          "cohesion p0"
-        ],
-        "movers": [
-          "GLAS -10%",
-          "MO -8%",
-          "PM +4%",
-          "TRLV +11%"
+          "AHCO -46%",
+          "TDOC -28%",
+          "AVAH +18%",
+          "WGS +20%"
         ]
       }
     ]
