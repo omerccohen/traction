@@ -30,11 +30,13 @@ Three themes a week is how you end up owning a diluted version of the market.
 ## Step 2 — Check the physical proxy. This is your cheapest filter.
 Same file, the `physical_proxies` read.
 
-Does the real-world commodity confirm the story? Copper up **+17%** confirmed
-the construction story this week. Uranium down **−20% over 3 months**
-contradicted the nuclear story.
+Does the real-world commodity confirm the story? A rallying copper price
+supports a construction story; a falling uranium price argues against a
+nuclear one. (One week this check killed a nuclear theme outright.)
 
 > **If no physical proxy confirms the theme, stop here and do nothing this week.**
+> And if the proxy data is missing ("could not check"), that is also a stop —
+> a missing input is not a green light.
 
 ## Step 3 — Read the target groups. Separate VERIFIED from HYPOTHESIS.
 `briefings/target_groups_<date>.md`
@@ -49,16 +51,21 @@ You are looking for exactly one thing: a company where the **research says
 strong** and the **price says not yet expensive** ("positioned, NOT fully
 priced").
 
-If every name in your theme reads *"priced for perfection"* — as the whole
-construction group did this week — **the answer is no action.** The work already
-paid for itself by telling you that.
+Know what that disagreement is worth: **nothing.** No measured edge. The
+backtest that once suggested this quadrant worked was retracted — it was run
+on a survivorship-biased universe, and nothing survived re-measurement
+(docs/BACKTEST_VALUATION.md). A disagreement is a reason to ask a question,
+never a reason to buy.
+
+If every name in your theme reads *"priced for perfection"*, **the answer is
+no action.** The work already paid for itself by telling you that.
 
 ## Step 5 — Write one sentence.
 *"I believe ____, and the price does not."*
 
 If you cannot fill in the blank, you have no reason to act. Most weeks you will
-not be able to. "Company X is excellent" is **not** a valid sentence — the
-backtest showed excellence is already in the price.
+not be able to. "Company X is excellent" is **not** a valid sentence —
+excellence is public information, and the price usually knows it already.
 
 ## Step 6 — Write the falsifier.
 *"I am wrong if ____ by ____."*
@@ -114,9 +121,10 @@ says so out loud. At smaller sizes a coin flip looks like genius.
   This is the strongest thing here.
 - **Company level — "who is exposed, and is the story real?"** True and useful;
   it is verifiable fact, not prediction.
-- **"Which one will rise?"** No evidence. The naive version (buy the
-  best-positioned) sorted *backwards*, and even after adding valuation the
-  cheap end lost to the expensive end in this sample.
+- **"Which one will rise?"** No evidence. Every backtest that tried it —
+  positioning alone, valuation added, the two combined — was either null or
+  retracted for survivorship bias (docs/BACKTEST_VALUATION.md). Nothing
+  cleared the evidence bar.
 
 So run the loop for the first two, and let the journal — not a backtest, and
 not me — tell you whether the third is ever worth acting on.
