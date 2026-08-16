@@ -272,8 +272,22 @@ def validate_rows(df: pd.DataFrame, prior_tail: pd.DataFrame | None = None
     # nets -28% must be kept — audit finding)
     log_thresh = np.log(1.0 + MAX_ABS_DAILY_MOVE)
     incoming_idx = df.index
-    ctx = df if prior_tail is None or prior_tail.empty else pd.concat(
-        [prior_tail[STORE_COLUMNS], df], ignore_index=False)
+    if prior_tail is None or prior_tail.empty:
+        ctx = df
+    else:
+        # The tail keeps its labels from the full-store read and the incoming
+        # frame carries its own RangeIndex — two unrelated label spaces that
+        # overlap. A collision made `idx in incoming_idx` treat a STORED row
+        # as incoming: an unrelated incoming row of a different ticker was
+        # deleted and the report blamed the tail ticker. Move the tail into a
+        # disjoint (negative) label space; row identity here is positional
+        # bookkeeping, not meaning.
+        tail = prior_tail[STORE_COLUMNS].copy()
+        tail.index = pd.RangeIndex(-len(tail), 0)
+        if not tail.index.intersection(incoming_idx).empty:
+            raise ValueError("validate_rows: incoming frame uses negative "
+                             "index labels; cannot build disjoint context")
+        ctx = pd.concat([tail, df], ignore_index=False)
     drop: list = []
     dropped_detail: list[str] = []
     kept_large: list[str] = []
